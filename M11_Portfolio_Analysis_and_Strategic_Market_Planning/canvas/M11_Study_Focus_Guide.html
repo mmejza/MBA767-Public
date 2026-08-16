@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MKT 472 · Module 11 · Study Focus Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:      #0D9B87;
+    --teal-dk:   #0a7a6b;
+    --teal-lt:   #e6f7f5;
+    --teal-mid:  #b3e4de;
+    --navy:      #0F2027;
+    --amber:     #E6A800;
+    --amber-lt:  #fff8e1;
+    --amber-dk:  #b37f00;
+    --gray-lt:   #F2F4F5;
+    --gray-mid:  #D0D5D8;
+    --gray-dk:   #6b7280;
+    --white:     #ffffff;
+    --text:      #1a2630;
+    --text-soft: #4a5568;
+
+    --font-head: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+    --font-body: 'Barlow', Arial, sans-serif;
+
+    --radius:    8px;
+    --shadow:    0 2px 8px rgba(15,32,39,0.10);
+    --shadow-md: 0 4px 16px rgba(15,32,39,0.13);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    background: var(--gray-lt);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+  }
+
+  .page-header {
+    background: var(--navy);
+    padding: 36px 40px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 6px;
+    background: var(--teal);
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 40px; right: 40px;
+    height: 1px;
+    background: rgba(13,155,135,0.35);
+  }
+  .eyebrow {
+    font-family: var(--font-head);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .header-subtitle {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--teal-mid);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .badge {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border-right: 1px solid var(--gray-mid);
+  }
+  .badge:last-child { border-right: none; }
+  .badge-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .badge-label {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--gray-dk);
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .badge-value {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .purpose-block {
+    padding: 28px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+    border-left: 5px solid var(--teal);
+    background: var(--teal-lt);
+  }
+  .purpose-block p {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .purpose-block p:last-child { margin-bottom: 0; }
+  .purpose-block strong { color: var(--navy); font-weight: 600; }
+
+  .gate-section {
+    padding: 32px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .section-label {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-dk);
+    margin-bottom: 16px;
+  }
+  .gate-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .gate-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .gate-card-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .gate-card--g1 .gate-card-header { background: var(--teal); }
+  .gate-card--g2 .gate-card-header { background: var(--navy); }
+  .gate-card-title {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .gate-badge {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .gate-card--g1 .gate-badge {
+    background: rgba(255,255,255,0.25);
+    color: var(--white);
+  }
+  .gate-card--g2 .gate-badge {
+    background: var(--teal);
+    color: var(--white);
+  }
+  .gate-card-body {
+    padding: 16px 20px;
+    background: var(--white);
+    border: 1px solid var(--gray-mid);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+  .gate-spec {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray-lt);
+    font-size: 13.5px;
+  }
+  .gate-spec:last-child { border-bottom: none; padding-bottom: 0; }
+  .gate-spec-key { color: var(--gray-dk); font-weight: 500; }
+  .gate-spec-val {
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+    text-align: right;
+  }
+  .gate-spec-val--teal { color: var(--teal); }
+  .gate-spec-val--amber { color: var(--amber-dk); }
+
+  .tips-section {
+    padding: 32px 40px;
+    background: var(--gray-lt);
+    border-bottom: 2px solid var(--gray-mid);
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .tip-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 12px;
+  }
+  .tip-icon { font-size: 22px; margin-top: 1px; flex-shrink: 0; }
+  .tip-title {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 5px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .tip-body { font-size: 13px; color: #444; line-height: 1.5; }
+
+  .questions-section {
+    padding: 32px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .q-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .q-block {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--gray-mid);
+    background: var(--white);
+  }
+  .q-block--g1 { border-left: 4px solid var(--teal); }
+  .q-block--g2 { border-left: 4px solid var(--navy); }
+  .q-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .q-block--g1 .q-num { background: var(--teal); }
+  .q-block--g2 .q-num { background: var(--navy); color: var(--amber); }
+  .q-body {
+    background: var(--white);
+    padding: 12px 16px 12px 14px;
+  }
+  .q-tag {
+    display: inline-block;
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-bottom: 7px;
+  }
+  .q-block--g1 .q-tag { background: var(--teal-lt); color: var(--teal-dk); }
+  .q-block--g2 .q-tag { background: #e8ecf0; color: var(--navy); }
+  .q-topic {
+    font-family: var(--font-head);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-size: 15px;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .q-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .q-loc {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    background: var(--gray-lt);
+    border: 1px solid var(--gray-mid);
+    border-radius: 3px;
+    padding: 2px 8px;
+  }
+  .q-hint {
+    padding-top: 10px;
+    border-top: 1px solid var(--gray-lt);
+    font-size: 13px;
+    color: var(--text-soft);
+    font-style: italic;
+  }
+
+  .formula-box {
+    margin-top: 10px;
+    background: var(--navy);
+    border-radius: 6px;
+    padding: 12px 14px;
+    color: #e8f8f8;
+  }
+  .formula-label {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+  }
+  .formula-text {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #ffffff;
+  }
+  .fo-var { color: #f5c842; }
+
+  .amber-callout {
+    background: var(--amber-lt);
+    border: 2px solid var(--amber);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 28px 40px 0;
+  }
+  .amber-callout-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .amber-callout-icon { font-size: 22px; }
+  .amber-callout-title {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--amber-dk);
+  }
+  .amber-callout-body {
+    font-size: 14px;
+    color: #5a4000;
+    line-height: 1.65;
+  }
+  .amber-callout-body strong { color: #3a2800; }
+  .amber-callout-list { margin-top: 10px; padding-left: 18px; }
+  .amber-callout-list li { margin-bottom: 6px; font-size: 13.5px; color: #5a4000; }
+
+  .sequence-footer {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin: 44px 40px 0;
+  }
+  .sf-label {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+  }
+  .sf-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sf-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .sf-step-num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(13,155,135,.25);
+    border: 1.5px solid var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-top: 1px;
+  }
+  .sf-step-text {
+    font-size: 14px;
+    color: #c0d8d5;
+    line-height: 1.4;
+  }
+  .sf-step-text strong { color: var(--white); }
+  .sf-step-text .arrow { color: var(--teal); font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .page-header { padding: 24px 20px 20px; }
+    .badge-row { flex-direction: column; }
+    .badge { border-right: none; border-bottom: 1px solid var(--gray-mid); }
+    .badge:last-child { border-bottom: none; }
+    .gate-cards { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .purpose-block, .gate-section, .tips-section,
+    .questions-section { padding: 20px 20px; }
+    .amber-callout { margin: 0 20px; }
+    .sequence-footer { padding: 20px 20px; margin: 28px 20px 0; }
+    .header-title { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <div class="eyebrow">MKT 472 · Module 11 · Chapter 11 Reading</div>
+    <h1 class="header-title">Study Focus Guide</h1>
+    <p class="header-subtitle">
+      <em>Portfolio Analysis and Strategic Market Planning</em> ·
+      Eight questions to answer while you read · Est. 70-80 min
+    </p>
+  </header>
+
+  <div class="badge-row">
+    <div class="badge">
+      <div class="badge-icon">📖</div>
+      <div>
+        <div class="badge-label">Chapter pages</div>
+        <div class="badge-value">pp. 378-399</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">⏱</div>
+      <div>
+        <div class="badge-label">Reading time</div>
+        <div class="badge-value">70-80 min</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">✏️</div>
+      <div>
+        <div class="badge-label">Focus questions</div>
+        <div class="badge-value">8 questions</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">🔓</div>
+      <div>
+        <div class="badge-label">Unlocks</div>
+        <div class="badge-value">Gate 1 - Slides</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="purpose-block">
+    <p>
+      This guide identifies exactly what to look for as you read Chapter 11.
+      <strong>Gate 1</strong> tests five topics that appear only in the chapter, not in the slides or lecture.
+      <strong>Gate 2</strong> tests three chapter-dependent topics that require both the reading and the slide deck to solve correctly.
+    </p>
+    <p>
+      Answer these questions in your own words while you read, not after.
+      The guide itself is not graded. Gate 1 and Gate 2 are.
+    </p>
+  </div>
+
+  <div class="gate-section">
+    <div class="section-label">Gate Specifications</div>
+    <div class="gate-cards">
+      <div class="gate-card gate-card--g1">
+        <div class="gate-card-header">
+          <span class="gate-card-title">Gate 1 - Basic Reading Check</span>
+          <span class="gate-badge">Chapter Only</span>
+        </div>
+        <div class="gate-card-body">
+          <div class="gate-spec"><span class="gate-spec-key">Questions</span><span class="gate-spec-val">5</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Threshold to pass</span><span class="gate-spec-val gate-spec-val--teal">70% (3.5 of 5)</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Attempts</span><span class="gate-spec-val">2</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Point value</span><span class="gate-spec-val">0 pts - access only</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Feedback</span><span class="gate-spec-val">Per-answer with page ref</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Unlocks</span><span class="gate-spec-val gate-spec-val--teal">Slide Deck Viewer</span></div>
+        </div>
+      </div>
+
+      <div class="gate-card gate-card--g2">
+        <div class="gate-card-header">
+          <span class="gate-card-title">Gate 2 - Applied Reading Check</span>
+          <span class="gate-badge">Chapter + Slides</span>
+        </div>
+        <div class="gate-card-body">
+          <div class="gate-spec"><span class="gate-spec-key">Questions</span><span class="gate-spec-val">8</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Threshold to pass</span><span class="gate-spec-val">None - graded as submitted</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Attempts</span><span class="gate-spec-val gate-spec-val--amber">1 - no retries</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Point value</span><span class="gate-spec-val gate-spec-val--teal">20 pts (10% of module)</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Feedback</span><span class="gate-spec-val">Correct / Incorrect only</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Unlocks</span><span class="gate-spec-val gate-spec-val--teal">Lecture Video</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-section">
+    <div class="section-label">Reading Strategy for Chapter 11</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">📍</div>
+        <div>
+          <div class="tip-title">Mark the chapter-only sources</div>
+          <div class="tip-body">Flag pages 378-399 and Figures 11-5, 11-14, and 11-16 before you start. Gate 1 draws from these chapter-only details that are not fully reproduced in slides.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">✍️</div>
+        <div>
+          <div class="tip-title">Write each formula in plain words</div>
+          <div class="tip-body">For SDI, MAI, and CPI, write what each term means and what decision it informs. If you can explain each formula, the numeric items become straightforward.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⚠️</div>
+        <div>
+          <div class="tip-title">Watch the efficiency paradox</div>
+          <div class="tip-body">Chapter 11 highlights that NMC can rise while ROS and ROI decline. Read the offensive-versus-defensive comparison slowly and capture the exact Year-3 values.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🔗</div>
+        <div>
+          <div class="tip-title">Connect Chapter to Grid Decisions</div>
+          <div class="tip-body">MAI and CPI calculations lead directly to grid placement and strategy choice. Build that sequence while reading so Gate 2 feels like confirmation, not first exposure.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="questions-section">
+    <div class="section-label">Eight Focus Questions - Answer These While You Read</div>
+
+    <div class="q-list">
+      <div class="q-block q-block--g1">
+        <div class="q-num">1</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 1 - Chapter Only</div>
+          <div class="q-topic">GE/McKinsey multi-factor model</div>
+          <div class="q-text">Who developed the multi-factor portfolio matrix, and what specific limitation of single-factor analysis does it address? Name both organizations and state the limitation in one sentence.</div>
+          <div class="q-meta"><span class="q-loc">Chapter 11 - p. 385</span></div>
+          <div class="q-hint">The slides show structure but not the origin detail. Gate 1 often checks this distinction directly.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g1">
+        <div class="q-num">2</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 1 - Chapter Only</div>
+          <div class="q-topic">Share Development Index (SDI)</div>
+          <div class="q-text">Write out the SDI formula and define each component. Then interpret: what does an SDI of 32 mean strategically, versus an SDI of 90?</div>
+          <div class="formula-box">
+            <div class="formula-label">Formula</div>
+            <div class="formula-text">SDI = (<span class="fo-var">Market Share Index</span> ÷ <span class="fo-var">Share Potential Index</span>) × 100</div>
+          </div>
+          <div class="q-meta"><span class="q-loc">Chapter 11 - Fig. 11-5 · pp. 380-381</span></div>
+          <div class="q-hint">You need both the math and the interpretation: low SDI signals untapped potential, high SDI signals limited remaining upside.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g1">
+        <div class="q-num">3</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 1 - Chapter Only</div>
+          <div class="q-topic">Relative market share vs. SDI</div>
+          <div class="q-text">How does relative market share differ from a company's absolute market share? How is relative market share calculated? How does it differ from SDI as a measure of competitive position?</div>
+          <div class="q-meta"><span class="q-loc">Chapter 11 - pp. 378-379</span></div>
+          <div class="q-hint">RMS compares the firm against rivals. SDI compares captured share against potential share. Keep those purposes separate.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g1">
+        <div class="q-num">4</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 1 - Chapter Only</div>
+          <div class="q-topic">Offensive vs. defensive trade-off</div>
+          <div class="q-text">In Figure 11-14, the offensive plan produces higher Year-3 NMC than the defensive plan but lower ROS and ROI. Record the Year-3 NMC, ROS, and ROI values for both plans, then explain in one sentence why NMC rises while ROS and ROI fall.</div>
+          <div class="q-meta"><span class="q-loc">Chapter 11 - Fig. 11-14 · p. 393</span></div>
+          <div class="q-hint">This is the central paradox of the chapter. Gate 1 expects exact values and the ratio logic behind them.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g1">
+        <div class="q-num">5</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 1 - Chapter Only</div>
+          <div class="q-topic">Portfolio diversification levels and variance</div>
+          <div class="q-text">Chapter 11 describes two levels of portfolio diversification. What are they? What specific variance data does Figure 11-16 use to demonstrate stability benefits of diversification?</div>
+          <div class="q-meta"><span class="q-loc">Chapter 11 - Fig. 11-16 · pp. 395-397</span></div>
+          <div class="q-hint">Capture the numerical evidence (individual variance values and combined portfolio variance) because Gate 1 variants use those numbers.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g2">
+        <div class="q-num">6</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 2 - Chapter + Slides</div>
+          <div class="q-topic">MAI calculation - 5-step method</div>
+          <div class="q-text">Using Figure 11-10, work through all three dimensions of the MAI calculation from scratch. Verify: Market Forces dimension score = 62, Competitive Environment = 44, Market Access = 84, overall MAI = 61.</div>
+          <div class="formula-box">
+            <div class="formula-label">Formulas</div>
+            <div class="formula-text">Metric Score = <span class="fo-var">Relative Importance</span> × <span class="fo-var">Rating</span><br>MAI = Σ (<span class="fo-var">Dimension Weight</span> × <span class="fo-var">Dimension Score</span>)</div>
+          </div>
+          <div class="q-meta"><span class="q-loc">Chapter 11 - Figs. 11-9 and 11-10 · p. 387 · Slides S13-S14</span></div>
+          <div class="q-hint">Most common error: applying dimension weight to each metric before calculating dimension score.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g2">
+        <div class="q-num">7</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 2 - Chapter + Slides</div>
+          <div class="q-topic">CPI calculation and rating-scale warning</div>
+          <div class="q-text">Using Figure 11-12, work through the CPI calculation. Before starting, note how CPI's rating scale differs from MAI's. Verify: Differentiation = 74, Cost Advantage = 46, Marketing Advantage = 34, CPI = 55.</div>
+          <div class="formula-box">
+            <div class="formula-label">Formula</div>
+            <div class="formula-text">CPI = Σ (<span class="fo-var">Dimension Weight</span> × <span class="fo-var">Dimension Score</span>)</div>
+          </div>
+          <div class="q-meta"><span class="q-loc">Chapter 11 - Figs. 11-11 and 11-12 · pp. 388-389 · Slides S16-S17</span></div>
+          <div class="q-hint">CPI scale is competitor-relative (behind vs. ahead), not attractiveness scale. Mixing scales is the most frequent Gate 2 miss.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g2">
+        <div class="q-num">8</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 2 - Chapter + Slides</div>
+          <div class="q-topic">Grid placement and zone thresholds</div>
+          <div class="q-text">Using Figure 11-13, identify which cell a product with MAI = 61 and CPI = 55 lands in and name strategies for that cell. Then use Figure 11-18 to state numerical thresholds that define Low, Medium, and High zones on both axes.</div>
+          <div class="q-meta"><span class="q-loc">Chapter 11 - Fig. 11-13 (p. 390) and Fig. 11-18 (p. 399) · Slides S18-S19</span></div>
+          <div class="q-hint">Thresholds are critical for borderline cases: Low 0-33, Medium 34-67, High 68-100 on both axes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="amber-callout">
+    <div class="amber-callout-header">
+      <span class="amber-callout-icon">🎯</span>
+      <span class="amber-callout-title">Highest-Probability Gate 1 Targets</span>
+    </div>
+    <div class="amber-callout-body">
+      If you are short on time, prioritize these three areas - they appear across Gate 1 variants and cannot be answered from slides alone:
+      <ul class="amber-callout-list">
+        <li><strong>Foundational definitions (Q1 and Q3):</strong> GE/McKinsey origin detail and RMS versus SDI distinction.</li>
+        <li><strong>Core formulas and interpretation (Q2):</strong> SDI construction plus strategic meaning at low and high values.</li>
+        <li><strong>Numeric chapter evidence (Q4 and Q5):</strong> exact offensive/defensive metric values and diversification variance figures.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sequence-footer">
+    <div class="sf-label">What comes next</div>
+    <div class="sf-steps">
+      <div class="sf-step">
+        <div class="sf-step-num">1</div>
+        <div class="sf-step-text"><strong>Complete Chapter 11 reading</strong> - work through Questions 1-5 as you go</div>
+      </div>
+      <div class="sf-step">
+        <div class="sf-step-num">2</div>
+        <div class="sf-step-text"><strong>Gate 1: Basic Reading Check</strong> <span class="arrow">→</span> 5 questions, chapter only, 70% to unlock slides · 2 attempts · 0 points</div>
+      </div>
+      <div class="sf-step">
+        <div class="sf-step-num">3</div>
+        <div class="sf-step-text"><strong>Slide Deck Viewer</strong> <span class="arrow">→</span> unlocked by Gate 1 · return to Questions 6-8 after viewing</div>
+      </div>
+      <div class="sf-step">
+        <div class="sf-step-num">4</div>
+        <div class="sf-step-text"><strong>Gate 2: Applied Reading Check</strong> <span class="arrow">→</span> 8 questions, chapter + slides, 1 attempt · 20 points</div>
+      </div>
+      <div class="sf-step">
+        <div class="sf-step-num">5</div>
+        <div class="sf-step-text"><strong>Lecture Video</strong> <span class="arrow">→</span> unlocked by Gate 2</div>
+      </div>
+      <div class="sf-step">
+        <div class="sf-step-num">6</div>
+        <div class="sf-step-text"><strong>Apps, discussion, and case</strong> <span class="arrow">→</span> apply MAI/CPI and strategy trade-off logic in graded work</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

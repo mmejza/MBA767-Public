@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>M03 App 1 - Market Potential Estimator</title>
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell" aria-label="Market Potential Estimator">
+		<header class="app-header">
+			<p class="module-id">MKT 472 · Module 3 · App 1</p>
+			<h1>Market Potential Estimator</h1>
+			<p class="subtitle">Estimate market potential and compare outcomes across market definitions.</p>
+		</header>
+
+		<section class="info-card" data-focus-hide aria-labelledby="learning-goal-title">
+			<h2 id="learning-goal-title">Learning Goal</h2>
+			<p>
+				Use market potential inputs to see how definition choices affect potential size, measured demand,
+				and MDI interpretation. Identify how the same category can look very different under narrow versus broad scope.
+			</p>
+		</section>
+
+		<section class="info-card" data-focus-hide aria-labelledby="quiz-instructions-title">
+			<h2 id="quiz-instructions-title">Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide aria-label="Required for Quiz">
+			<p class="required-label">Required for Quiz</p>
+			<p>
+				The Canvas quiz question determines which preset, scenario, or modifications to use. If a question
+				does not specify otherwise, begin with the default preset shown in this app.
+				Default preset: Narrow Definition.
+			</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Choose a preset, then review which inputs are available for that scenario.</li>
+				<li>Enter or adjust input values and use the growth slider as needed.</li>
+				<li>Read the output cards for market potential, MDI, and share-point value.</li>
+				<li>Use the projection table to inspect Year 1 through Year 3 demand changes.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp" aria-label="Interactive App">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" type="button" class="focus-btn" aria-pressed="false">Focus Mode</button>
+			</div>
+
+			<p class="quiz-workflow-banner" aria-label="Quiz workflow">
+				Quiz Workflow: Read Question → Use App → Submit Answer
+			</p>
+
+		<section class="preset-section" aria-label="Preset Scenarios">
+			<div class="preset-buttons">
+				<button type="button" class="preset-btn active" data-preset="narrow">Narrow Definition</button>
+				<button type="button" class="preset-btn" data-preset="broad">Broad Definition</button>
+				<button type="button" class="preset-btn" data-preset="custom">Custom</button>
+			</div>
+			<p id="presetInfo" class="preset-info"></p>
+		</section>
+
+		<section class="content-grid">
+			<section class="panel inputs-panel" aria-label="Inputs">
+				<h2>Inputs</h2>
+				<div class="input-grid">
+					<label for="maxConsumingUnits">Max Consuming Units (M people)</label>
+					<input id="maxConsumingUnits" type="number" />
+
+					<label for="buyingCeilingPct">Buying Ceiling (%)</label>
+					<input id="buyingCeilingPct" type="number" />
+
+					<label for="annualPurchaseRate">Annual Purchase Rate (units/year)</label>
+					<input id="annualPurchaseRate" type="number" />
+
+					<label for="quantityPerPurchase">Quantity per Purchase</label>
+					<input id="quantityPerPurchase" type="number" />
+
+					<label for="avgPrice">Average Price ($)</label>
+					<input id="avgPrice" type="number" />
+
+					<label for="currentDemandDollars">Current Demand ($)</label>
+					<input id="currentDemandDollars" type="number" />
+				</div>
+
+				<div class="growth-control">
+					<div class="growth-head">
+						<label for="growthRate">3-Year Growth Rate</label>
+						<span id="growthRateValue">0%</span>
+					</div>
+					<input id="growthRate" type="range" min="0" max="30" step="1" value="0" />
+				</div>
+			</section>
+		</section>
+		</section>
+
+		<section class="panel outputs-panel" aria-label="Results Dashboard">
+				<h2>Outputs</h2>
+
+				<div class="primary-metrics">
+					<article class="metric-card">
+						<h3>Market Potential (Units)</h3>
+						<p id="potentialUnitsPrimary" class="metric-primary"></p>
+						<p id="potentialUnitsSub" class="metric-sub"></p>
+					</article>
+					<article class="metric-card">
+						<h3>Market Potential (Dollars)</h3>
+						<p id="potentialDollarsPrimary" class="metric-primary"></p>
+						<p id="potentialDollarsSub" class="metric-sub"></p>
+					</article>
+				</div>
+
+				<div class="mdi-share-grid">
+					<article class="mdi-box" aria-live="polite">
+						<h3>Market Development Index (MDI)</h3>
+						<p id="mdiValue" class="mdi-value">—</p>
+						<p class="mdi-note">Record this MDI for App 3.</p>
+					</article>
+
+					<article id="sharePointCallout" class="share-callout" aria-live="polite">
+						<h3>Value of 1 Share Point</h3>
+						<p id="sharePointValue" class="share-value">—</p>
+						<p class="share-note">1% of current demand dollars</p>
+					</article>
+				</div>
+
+				<article class="projection-panel" aria-label="3 Year Projection">
+					<h3>3-Year Demand Projection (Dollars)</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>Year</th>
+								<th>Projected Demand</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Year 1</td>
+								<td id="projectionY1"></td>
+							</tr>
+							<tr>
+								<td>Year 2</td>
+								<td id="projectionY2"></td>
+							</tr>
+							<tr>
+								<td>Year 3</td>
+								<td id="projectionY3"></td>
+							</tr>
+						</tbody>
+					</table>
+				</article>
+			</section>
+
+		<footer class="app-footer">
+			<p>Record your MDI — you will need it in App 3.</p>
+			<button id="resetBtn" type="button">Reset to Narrow Preset</button>
+		</footer>
+
+		<p class="canvas-reminder" aria-label="Canvas submission reminder">
+			Submit final answers through the Canvas quiz questions below the app.
+		</p>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 07 Overview | MKT 472</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f1923;
+  --ink-mid: #2d3f52;
+  --ink-soft: #5a6f82;
+  --rule: #d4dce4;
+  --surface: #f7f9fb;
+  --white: #ffffff;
+  --teal: #0a7c6e;
+  --teal-lt: #e0f4f1;
+  --teal-mid: #c2ece7;
+  --gold: #c9860a;
+  --gold-lt: #fdf3e0;
+  --gold-mid: #f9dfa0;
+  --red: #b92b27;
+  --red-lt: #fdecea;
+  --blue: #1a56a0;
+  --blue-lt: #e6effa;
+  --blue-mid: #c3d9f5;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+  --mono: 'DM Mono', 'Courier New', monospace;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+  --shadow-sm: 0 1px 3px rgba(15,25,35,.07), 0 1px 2px rgba(15,25,35,.05);
+  --shadow-md: 0 4px 12px rgba(15,25,35,.09), 0 2px 4px rgba(15,25,35,.06);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--surface); }
+body { font-family: var(--sans); color: var(--ink); background: var(--surface); line-height: 1.6; padding-bottom: 80px; }
+img { max-width: 100%; display: block; }
+a { color: var(--teal); }
+p { margin-bottom: 12px; font-size: .92rem; color: var(--ink-mid); line-height: 1.65; }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); font-weight: 600; }
+.page-header { background: var(--ink); color: var(--white); padding: 48px 40px 40px; position: relative; overflow: hidden; }
+.page-header::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-55deg, transparent, transparent 28px, rgba(255,255,255,.022) 28px, rgba(255,255,255,.022) 29px); pointer-events: none; }
+.page-header::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--teal); }
+.container { max-width: 880px; margin: 0 auto; padding: 0 32px; }
+.header-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 20px; }
+.badge { display: inline-flex; align-items: center; font-family: var(--mono); font-size: .69rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: 100px; background: rgba(255,255,255,.1); color: rgba(255,255,255,.8); }
+.badge-teal { background: rgba(10,124,110,.3); color: #7de8dc; }
+.badge-gold { background: rgba(201,134,10,.3); color: #f9d87a; }
+.header-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.85rem); line-height: 1.12; letter-spacing: -.01em; color: var(--white); max-width: 700px; margin-bottom: 8px; }
+.header-sub { font-size: .95rem; font-weight: 300; color: rgba(255,255,255,.58); max-width: 680px; line-height: 1.6; margin-bottom: 30px; }
+.header-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+.section { margin-top: 48px; }
+.section-label { font-family: var(--mono); font-size: .7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 14px; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--rule) 20%, var(--rule) 80%, transparent); margin: 44px 0; }
+.central-question { background: var(--white); border: 1px solid var(--rule); border-left: 4px solid var(--teal); border-radius: 0 var(--r-lg) var(--r-lg) 0; padding: 28px 32px; box-shadow: var(--shadow-md); position: relative; }
+.central-question .cq-label { font-family: var(--mono); font-size: .66rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; display: block; }
+.central-question .cq-text { font-family: var(--serif); font-size: 1.45rem; line-height: 1.35; color: var(--ink); }
+.central-question .cq-follow { margin-top: 14px; font-size: .91rem; color: var(--ink-mid); line-height: 1.6; }
+.callout { border-radius: var(--r-md); padding: 14px 18px; margin: 16px 0; font-size: .88rem; line-height: 1.65; display: flex; gap: 12px; align-items: flex-start; }
+.callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+.callout.info { background: var(--blue-lt); border: 1px solid var(--blue-mid); color: var(--blue); }
+.callout.key  { background: var(--teal-lt); border: 1px solid var(--teal-mid); color: #005446; }
+.callout.warn { background: var(--gold-lt); border: 1px solid var(--gold-mid); color: #7a4e00; }
+.callout .callout-label { display: inline-block; font-family: var(--mono); font-size: .66rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 5px; }
+.params-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); margin-top: 20px; }
+@media (max-width: 540px) { .params-grid { grid-template-columns: 1fr; } }
+.param-cell { background: var(--white); padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start; }
+.param-cell .p-label { font-family: var(--mono); font-size: .67rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); flex-shrink: 0; min-width: 130px; margin-top: 2px; }
+.param-cell .p-val { font-size: .9rem; color: var(--ink-mid); line-height: 1.5; }
+.param-cell .p-val strong { color: var(--ink); font-weight: 600; }
+.lo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 4px 0; }
+@media (max-width: 620px) { .lo-grid { grid-template-columns: 1fr; } }
+.lo-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: flex; gap: 10px; }
+.lo-badge { flex-shrink: 0; width: 32px; height: 32px; background: var(--teal); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; }
+.lo-content { flex: 1; }
+.lo-bloom { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); margin-bottom: 3px; }
+.lo-text { font-size: 13px; line-height: 1.5; color: var(--ink-mid); }
+.gate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 4px 0; }
+@media (max-width: 580px) { .gate-grid { grid-template-columns: 1fr; } }
+.gate-card { border-radius: 6px; padding: 16px; }
+.gate-card.gate1 { background: #f0faf8; border: 1px solid var(--teal-mid); border-top: 3px solid var(--teal); }
+.gate-card.gate2 { background: #f5f3ff; border: 1px solid #c5b8f0; border-top: 3px solid #7c5ccc; }
+.gate-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+.gate1 .gate-label { color: var(--teal); }
+.gate2 .gate-label { color: #5a3ea0; }
+.gate-name { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.gate-specs { list-style: none; }
+.gate-specs li { font-size: 12.5px; color: var(--ink-soft); padding: 4px 0; display: flex; justify-content: space-between; border-bottom: 1px solid var(--rule); }
+.gate-specs li:last-child { border-bottom: none; }
+.gate-specs li span:last-child { font-weight: 600; color: var(--ink-mid); }
+.exclusive-list { list-style: none; margin: 4px 0; }
+.exclusive-list li { display: flex; gap: 10px; padding: 10px 12px; border-radius: 5px; background: var(--surface); margin-bottom: 6px; border: 1px solid var(--rule); font-size: 13.5px; align-items: flex-start; }
+.excl-num { flex-shrink: 0; width: 22px; height: 22px; background: var(--ink); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--gold); margin-top: 1px; }
+.excl-body { flex: 1; }
+.excl-title { font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.excl-ref { font-size: 11.5px; color: var(--ink-soft); }
+.trap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+@media (max-width: 620px) { .trap-grid { grid-template-columns: 1fr; } }
+.trap-card { border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow-sm); }
+.trap-card.warn { background: var(--gold-lt); border: 1px solid var(--gold-mid); }
+.trap-card.risk { background: var(--red-lt); border: 1px solid rgba(185,43,39,.2); }
+.trap-card .trap-title { font-size: .95rem; font-weight: 700; color: var(--ink); margin-bottom: 7px; }
+.trap-card p { font-size: .86rem; margin-bottom: 8px; }
+.sequence-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); margin-top: 20px; font-size: .85rem; }
+.sequence-table th { background: var(--ink-mid); color: rgba(255,255,255,.8); font-family: var(--mono); font-size: .64rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 11px 16px; text-align: left; }
+.sequence-table td { padding: 11px 16px; border-bottom: 1px solid var(--rule); vertical-align: top; line-height: 1.5; background: var(--white); color: var(--ink-mid); }
+.sequence-table tr:last-child td { border-bottom: none; }
+.sequence-table tr:nth-child(even) td { background: var(--surface); }
+.seq-num { font-family: var(--mono); font-size: .78rem; font-weight: 500; color: var(--white); background: var(--ink); width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+.seq-num.gate-item { background: var(--gold); color: var(--ink); }
+.seq-num.locked { background: var(--ink-soft); }
+.seq-time { font-family: var(--mono); font-size: .78rem; color: var(--teal); white-space: nowrap; }
+.seq-item-name { font-weight: 600; color: var(--ink); display: block; margin-bottom: 2px; }
+.seq-item-note { font-size: .8rem; color: var(--ink-soft); line-height: 1.45; }
+.seq-pts { font-family: var(--mono); font-size: .75rem; font-weight: 500; color: var(--gold); white-space: nowrap; }
+.seq-pts.zero { color: var(--ink-soft); }
+.grade-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 4px 0; }
+.grade-table th { background: var(--ink); color: #fff; padding: 9px 12px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; }
+.grade-table td { padding: 9px 12px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+.grade-table tr:nth-child(even) td { background: var(--surface); }
+.grade-table tr.total-row td { background: var(--teal-lt); font-weight: 700; color: var(--ink); border-top: 2px solid var(--teal); }
+.pts-badge { display: inline-block; background: var(--teal); color: #fff; border-radius: 4px; padding: 1px 8px; font-size: 12px; font-weight: 700; min-width: 36px; text-align: center; }
+.pts-badge.zero { background: var(--ink-soft); }
+.pts-badge.large { background: var(--ink); }
+.tips-box { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 16px 18px; margin: 6px 0; }
+.tips-box ul { padding-left: 18px; margin: 0; }
+.tips-box li { font-size: 13.5px; padding: 3px 0; line-height: 1.55; }
+.tips-box li strong { color: var(--ink); }
+.pacing-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); margin-top: 20px; font-size: .85rem; }
+.pacing-table th { background: var(--ink-mid); color: rgba(255,255,255,.8); font-family: var(--mono); font-size: .64rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 11px 16px; text-align: left; }
+.pacing-table td { padding: 11px 16px; border-bottom: 1px solid var(--rule); vertical-align: top; line-height: 1.5; background: var(--white); color: var(--ink-mid); }
+.pacing-table tr:last-child td { border-bottom: none; }
+.pacing-table tr:nth-child(even) td { background: var(--surface); }
+.page-footer { margin-top: 40px; padding: 16px 36px; background: var(--ink); font-size: 11.5px; color: #6a8a9a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.page-footer span { color: var(--teal); font-weight: 600; }
+@media (max-width: 720px) { .page-header, .page-footer, .container { padding-left: 18px; padding-right: 18px; } .param-cell, .gate-card, .central-question { padding-left: 18px; padding-right: 18px; } }
+@media (max-width: 620px) { .header-title { font-size: 2rem; } .central-question .cq-text { font-size: 1.2rem; } }
+</style>
+</head>
+<body>
+
+<!-- 1. Header -->
+<header class="page-header">
+  <div class="container">
+    <div class="header-eyebrow">
+      <span class="badge">MKT 472</span>
+      <span class="badge">Module 07</span>
+      <span class="badge badge-gold">Chapter 7</span>
+      <span class="badge badge-teal">4.2&#8211;5.5 hours total</span>
+    </div>
+    <h1 class="header-title">Product Positioning, Branding, and Product Line Strategies</h1>
+    <p class="header-sub">A stronger product does not automatically produce a stronger brand. This module explains why &#8212; and what to do about it.</p>
+    <div class="header-meta">
+      <span class="badge">Part III &#183; Marketing Mix Strategies</span>
+      <span class="badge">195 points</span>
+      <span class="badge">Two-Gate Accountability</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- 2. Central Question -->
+  <section class="section">
+    <span class="section-label">Central Question</span>
+    <div class="central-question">
+      <span class="cq-label">What this module asks you to figure out</span>
+      <div class="cq-text">Why do some companies with genuinely superior products still lose market share &#8212; and what does brand equity have to do with it?</div>
+      <p class="cq-follow">This module builds the analytical toolkit for product positioning and brand management: the Customer Value Hierarchy, Points of Parity and Differentiation, the Brand Assets and Liabilities Scorecards, the Brand Equity calculation, and the product line breadth&#8209;vs.&#8209;ROA tradeoff from Figure&nbsp;7-24. Each tool is straightforward on its own. The challenge is applying them together to reach a strategic conclusion that the numbers actually support.</p>
+      <p class="cq-follow">The central intellectual challenge is the brand equity paradox: a company can invest heavily in brand assets &#8212; real quality improvements, real repositioning effort, real marketing spend &#8212; and still watch brand equity decline if liabilities are accumulating faster than assets are being built. Samsung&#8217;s 1997&#8211;2005 repositioning ($22.6B in sales and a &#8722;$800M loss in 1997; $85.4B and +$8B by 2005) is the chapter&#8217;s proof case. That data is chapter-exclusive and Gate&nbsp;1&#8209;tested.</p>
+      <p class="cq-follow">The case company, Apex Athletic, presents a brand equity position that appears healthy at first glance &#8212; and reveals itself as fragile under the liability spike scenario. That is the analytical trap this module is designed to help you avoid.</p>
+    </div>
+    <div class="callout warn" style="margin-top:20px;">
+      <span class="callout-icon">!</span>
+      <div>
+        <div class="callout-label">Analytical framing</div>
+        <p>Brand Equity = Brand Assets Score &#8722; Brand Liabilities Score. Positive equity does not mean safe equity. A brand with a Customer Dissatisfaction liability at Above Average (75) is one event away from a materially different position. The case forces you to calculate exactly how different.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 3. Module at a Glance -->
+  <section class="section">
+    <span class="section-label">Module at a Glance</span>
+    <div class="params-grid">
+      <div class="param-cell">
+        <span class="p-label">Textbook</span>
+        <span class="p-val"><strong>Chapter 7</strong> &#8212; Product Positioning, Branding, and Product Line Strategies</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Estimated Time</span>
+        <span class="p-val"><strong>4.2&#8211;5.5 hours</strong> across all activities</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Lecture Video</span>
+        <span class="p-val"><strong>~30 minutes</strong> &#8212; &#8220;Positioning as a Profit Decision&#8221; &#183; Segment&nbsp;1 (~12&nbsp;min) + Segment&nbsp;2 (~18&nbsp;min)</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Interactive Apps</span>
+        <span class="p-val"><strong>3 apps</strong> with worksheets (55&#8211;75&nbsp;min combined)</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Case Analysis</span>
+        <span class="p-val"><strong>Apex Athletic</strong> &#8212; 55&#8211;65&nbsp;min &#183; Brand Equity, fighter brand evaluation, product line strategy</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Prerequisites</span>
+        <span class="p-val">M05 positioning statement content assumed known &#183; M01&#8211;M06 or instructor waiver</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Pacing</span>
+        <span class="p-val">Plan for a <strong>5-day window</strong> at <strong>90&#8211;120 minutes per day</strong></span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Total Points</span>
+        <span class="p-val"><strong>195 pts</strong> &#8212; Gate&nbsp;2 (20) &#183; Apps (30) &#183; Discussion (20) &#183; Case (125)</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 4. Before You Begin / Study Tips -->
+  <section class="section">
+    <span class="section-label">Before You Begin / Study Tips</span>
+    <div class="tips-box">
+      <ul>
+        <li><strong>Read Chapter 7 actively.</strong> The slide deck deliberately leaves out five topics that Gate&nbsp;1 tests &#8212; including the Samsung financial data, the Brand Assets Scorecard structure, the Figure&nbsp;7-24 ROA table, the Loctite/Quick Metal repositioning case, and the bundling research findings. Find all five in the chapter before taking Gate&nbsp;1.</li>
+        <li><strong>Use the slide deck as synthesis, not replacement.</strong> Slides cover the Customer Value Hierarchy, brand growth strategies matrix, and brand laddering framework in full. The chapter covers the scorecards, Samsung, Loctite, and Fig&nbsp;7-24. You need both for Gate&nbsp;2.</li>
+        <li><strong>Complete App&nbsp;2 before the case.</strong> The Brand Equity Scorecard Calculator uses the same scorecard structure as Case Part&nbsp;1. Run the Arthur Andersen preset and the spike scenario in full before opening the case &#8212; you will recognize the Apex Athletic numbers immediately.</li>
+        <li><strong>Post the discussion before starting the case.</strong> The Brand Manager vs. CFO debate seeds your thinking for Case Part&nbsp;4. The discussion is due on Day&nbsp;3 (Jul&nbsp;1) &#8212; after the apps, not before. Your discussion argument is the draft of your case recommendation.</li>
+        <li><strong>Show your calculation steps.</strong> The case rubric awards partial credit only when intermediate steps are visible. For every scorecard value, show the formula, the input, and the weighted score &#8212; not just the final Brand Equity number.</li>
+      </ul>
+    </div>
+    <div class="callout key">
+      <span class="callout-icon">i</span>
+      <div>
+        <div class="callout-label">Prerequisite reminder</div>
+        <p>Gate&nbsp;1 is chapter-only. Gate&nbsp;2 requires both the chapter and the slide deck. Slides&nbsp;9&#8211;14 cover positioning statement content from M05 &#8212; that material is flagged as review and not re-tested in Gate&nbsp;1. Focus your Gate&nbsp;1 preparation on the five chapter-exclusive topics listed below.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 5. Learning Objectives -->
+  <section class="section">
+    <span class="section-label">Learning Objectives</span>
+    <p>Six objectives mapped to Bloom&#8217;s Taxonomy. All six are testable and appear in gate questions, app worksheets, or the case analysis.</p>
+    <div class="lo-grid">
+      <div class="lo-card">
+        <div class="lo-badge">LO1</div>
+        <div class="lo-content">
+          <div class="lo-bloom">Analysis</div>
+          <div class="lo-text">Trace the causal chain from weak product positioning through margin erosion, share loss, and declining brand equity; identify where differentiation investment interrupts that chain.</div>
+        </div>
+      </div>
+      <div class="lo-card">
+        <div class="lo-badge">LO2</div>
+        <div class="lo-content">
+          <div class="lo-bloom">Application</div>
+          <div class="lo-text">Apply the Customer Value Hierarchy to classify product attributes as Core Benefit, Expected, Augmented, or Potential; distinguish Points of Parity from Points of Differentiation for a given competitive set.</div>
+        </div>
+      </div>
+      <div class="lo-card">
+        <div class="lo-badge">LO3</div>
+        <div class="lo-content">
+          <div class="lo-bloom">Application</div>
+          <div class="lo-text">Calculate a Brand Assets Score and Brand Liabilities Score using the weighted scorecard (20% per dimension, 0&#8211;100 scale); compute Brand Equity and interpret the strategic implication of the assets-to-liabilities ratio.</div>
+        </div>
+      </div>
+      <div class="lo-card">
+        <div class="lo-badge">LO4</div>
+        <div class="lo-content">
+          <div class="lo-bloom">Analysis</div>
+          <div class="lo-text">Classify brand growth strategies (line extension, brand extension, fighter brand, new brand) given a scenario; evaluate the conditions under which each strategy builds versus erodes brand equity.</div>
+        </div>
+      </div>
+      <div class="lo-card">
+        <div class="lo-badge">LO5</div>
+        <div class="lo-content">
+          <div class="lo-bloom">Evaluation</div>
+          <div class="lo-text">Assess a product line breadth decision by applying the ROA-by-lifecycle-stage data from Figure&nbsp;7-24; identify when broad lines outperform narrow lines and when the advantage reverses at the Mature stage.</div>
+        </div>
+      </div>
+      <div class="lo-card">
+        <div class="lo-badge">LO6</div>
+        <div class="lo-content">
+          <div class="lo-bloom">Synthesis</div>
+          <div class="lo-text">Construct a repositioning recommendation that integrates differentiation source, brand encoding strategy, product line implications, and financial justification; ground the recommendation in case-specific data, not generic marketing language.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 6. Two-Gate Model -->
+  <section class="section">
+    <span class="section-label">Two-Gate Model</span>
+    <p>Every module uses a two-gate reading accountability structure. Gate&nbsp;1 certifies you read before viewing slides. Gate&nbsp;2 certifies you synthesized reading with slides before watching the lecture. You cannot game both gates &#8212; Gate&nbsp;2 requires both sources.</p>
+    <div class="gate-grid">
+      <div class="gate-card gate1">
+        <div class="gate-label">Gate 1</div>
+        <div class="gate-name">Basic Reading Check</div>
+        <ul class="gate-specs">
+          <li><span>Unlocks</span><span>Slide Deck Viewer</span></li>
+          <li><span>Questions</span><span>5 (chapter-only)</span></li>
+          <li><span>Threshold</span><span>80% to proceed</span></li>
+          <li><span>Attempts</span><span>2</span></li>
+          <li><span>Feedback</span><span>Per-answer + page ref</span></li>
+          <li><span>Points</span><span>0 (access control only)</span></li>
+        </ul>
+      </div>
+      <div class="gate-card gate2">
+        <div class="gate-label">Gate 2</div>
+        <div class="gate-name">Applied Reading Check</div>
+        <ul class="gate-specs">
+          <li><span>Unlocks</span><span>Lecture Video</span></li>
+          <li><span>Questions</span><span>8 (chapter + slides)</span></li>
+          <li><span>Threshold</span><span>Graded as submitted</span></li>
+          <li><span>Attempts</span><span>1</span></li>
+          <li><span>Feedback</span><span>Correct/Incorrect only</span></li>
+          <li><span>Points</span><span>20 pts &#183; 10% of module</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout info" style="margin-top:16px;">
+      <span class="callout-icon">i</span>
+      <div>
+        <div class="callout-label">Why two gates?</div>
+        <p>Chapter&nbsp;7 has a significant split between what slides cover and what the chapter covers exclusively. Gate&nbsp;1 tests five chapter-only topics &#8212; including the Samsung financial data and the Figure&nbsp;7-24 ROA table &#8212; that cannot be answered from slides alone. Gate&nbsp;2 requires both sources because the Brand Equity scorecard calculation draws from the chapter while the brand growth strategy classification draws from the slides.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 7. Chapter-Exclusive Content -->
+  <section class="section">
+    <span class="section-label">Chapter-Exclusive Content</span>
+    <p>Gate&nbsp;1 tests these five topics. They do not appear on the slides. You must find them in Chapter&nbsp;7 before taking Gate&nbsp;1.</p>
+    <ul class="exclusive-list">
+      <li>
+        <div class="excl-num">1</div>
+        <div class="excl-body">
+          <div class="excl-title">Samsung Repositioning Financials</div>
+          <div class="excl-ref">pp.&nbsp;233&#8211;234, Fig&nbsp;7-5 &#8212; 1997: $22.6B sales, &#8722;$800M profit (&#8722;3.5%). 2001: $46.4B, +$3.8B (8.2%). 2005: $85.4B, +$8B (9.4%). The chapter explains what had to change simultaneously for the repositioning to succeed. The slides show the repositioning framework but not these specific numbers.</div>
+        </div>
+      </li>
+      <li>
+        <div class="excl-num">2</div>
+        <div class="excl-body">
+          <div class="excl-title">Brand Assets Scorecard &#8212; Five Dimensions and Scoring Scale</div>
+          <div class="excl-ref">pp.&nbsp;252&#8211;253, Fig&nbsp;7-21 &#8212; Brand Awareness, Emotional Connectedness, Brand Loyalty, Product Line Extensions, Price Premium. Each carries 20% weight. Overall scale: 0&#8211;100. An average brand scores 50. The slide deck does not present the scorecard or its dimension structure.</div>
+        </div>
+      </li>
+      <li>
+        <div class="excl-num">3</div>
+        <div class="excl-body">
+          <div class="excl-title">Product Line Breadth vs. ROA by Lifecycle Stage (Fig&nbsp;7-24)</div>
+          <div class="excl-ref">p.&nbsp;256, Fig&nbsp;7-24 &#8212; Emerging: Narrow 11%, Average 16%, Broad 27%. Growing: 13%, 18%, 29%. Mature: 23%, 18%, 23%. The counterintuitive result &#8212; at Maturity, narrow and broad lines both produce 23% ROA while average lines underperform at 18% &#8212; is chapter-exclusive and Gate&nbsp;1&#8209;tested.</div>
+        </div>
+      </li>
+      <li>
+        <div class="excl-num">4</div>
+        <div class="excl-body">
+          <div class="excl-title">Loctite / Quick Metal Repositioning Case</div>
+          <div class="excl-ref">pp.&nbsp;231&#8211;232, Fig&nbsp;7-3 &#8212; RC-601 failed targeting production engineers ($9.95, technical data ads). Repositioned as Quick Metal targeting machine maintenance workers ($19.95, pictorial ads, Silver Box packaging, &#8220;Keep the Machines Running&#8221;). Full six-row before/after table. Gate&nbsp;1 tests which element had the highest repositioning leverage and why the price increased when targeting a lower-level employee.</div>
+        </div>
+      </li>
+      <li>
+        <div class="excl-num">5</div>
+        <div class="excl-body">
+          <div class="excl-title">Bundling Strategy Research Findings</div>
+          <div class="excl-ref">pp.&nbsp;260&#8211;261 &#8212; Pure bundling: products sold only as a bundle at a total price below the sum of parts. Mixed bundling: items available separately at a sale price or bundled at additional savings. The chapter cites research evidence that mixed bundling produces higher perceived value <em>and</em> higher profitability than pure bundling. Neither definition nor the research finding appears on the slides.</div>
+        </div>
+      </li>
+    </ul>
+    <div class="callout key" style="margin-top:16px;">
+      <span class="callout-icon">i</span>
+      <div>
+        <div class="callout-label">Read these sections before Gate 1</div>
+        <p>Write down the Samsung figures, the nine ROA values from Fig&nbsp;7-24, and the Loctite before/after table as you read. Gate&nbsp;1 tests whether you know the specific numbers &#8212; not just whether you recognize the concepts.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 8. Two Traps to Watch For -->
+  <section class="section">
+    <span class="section-label">Two Traps to Watch For</span>
+    <p>This module contains two specific strategic errors that students make consistently. Both appear in the lecture video and the apps. Know them before you start the case.</p>
+    <div class="trap-grid">
+      <article class="trap-card warn">
+        <div class="trap-title">Trap 1 &#8212; Treating Positive Brand Equity as Safe Brand Equity</div>
+        <p>Apex Athletic&#8217;s Brand Equity is +30. That is positive. Most students stop there and treat the brand as secure. The trap is that +30 with Customer Dissatisfaction already at Above Average (75) is one event away from a materially lower equity position. When Customer Dissatisfaction spikes to Very High (100), equity drops from +30 to +25 &#8212; and further simultaneous liability exposure pushes it lower still.</p>
+        <p>The CFO sees +30 and concludes the brand needs no defense. The Brand Manager sees the liability trend and concludes the opposite. Both are looking at the same scorecard. One is reading it more carefully.</p>
+        <p><strong>Where to find it:</strong> Lecture Segment&nbsp;1 (the brand liabilities trap), App&nbsp;2 Tab&nbsp;C spike simulator, and Case Part&nbsp;1 vulnerability analysis.</p>
+      </article>
+      <article class="trap-card risk">
+        <div class="trap-title">Trap 2 &#8212; Assuming Product Line Reduction Improves ROA at the Mature Stage</div>
+        <p>When a manager wants to &#8220;streamline&#8221; a mature, broad product line, the instinct is that cutting underperforming lines will improve ROA. Figure&nbsp;7-24 shows the opposite: at the Mature stage, broad and narrow lines both produce 23% ROA. Reducing from Broad to Average produces only 18% &#8212; a five percentage-point decline that translates to a $24M annual profit reduction on $480M in revenue.</p>
+        <p>Students who recommend the line reduction without running the Fig&nbsp;7-24 numbers lose points on Case Part&nbsp;3 regardless of how well they articulate a rationale.</p>
+        <p><strong>Where to find it:</strong> Chapter&nbsp;7 p.&nbsp;256 Fig&nbsp;7-24, App&nbsp;3 Tab&nbsp;A (Apex Athletic preset), and Case Part&nbsp;3.</p>
+      </article>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 9. Module Sequence -->
+  <section class="section">
+    <span class="section-label">Module Sequence</span>
+    <p>Complete each item before the next unlocks. Estimated total: 4.2&#8211;5.5 hours.</p>
+    <table class="sequence-table" aria-label="Module sequence table">
+      <thead>
+        <tr>
+          <th style="width:36px;">#</th>
+          <th>Item</th>
+          <th style="width:92px;">Time</th>
+          <th style="width:100px;">Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="seq-num">1</span></td>
+          <td>
+            <span class="seq-item-name">Module Overview &amp; Orientation (this page)</span>
+            <span class="seq-item-note">Unlocks Chapter 7 Reading.</span>
+          </td>
+          <td class="seq-time">5 min</td>
+          <td class="seq-pts zero">&#8212;</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">2</span></td>
+          <td>
+            <span class="seq-item-name">Chapter 7 Reading + Study Focus Guide</span>
+            <span class="seq-item-note">Obtain Chapter 7 from your textbook. Complete the Study Focus Guide page as you read. Unlocks Gate 1.</span>
+          </td>
+          <td class="seq-time">75&#8211;85 min</td>
+          <td class="seq-pts zero">&#8212;</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num gate-item">3</span></td>
+          <td>
+            <span class="seq-item-name">Gate 1: Basic Reading Check</span>
+            <span class="seq-item-note">5 questions &#183; chapter-only &#183; 80% to pass &#183; 2 attempts &#183; per-answer feedback with page reference. Unlocks Slide Deck.</span>
+          </td>
+          <td class="seq-time">10&#8211;12 min</td>
+          <td class="seq-pts zero">0 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">4</span></td>
+          <td>
+            <span class="seq-item-name">Slide Deck Viewer</span>
+            <span class="seq-item-note">39 slides with LO tags and chapter connection notes. Includes updated brand name taxonomy (Slide 38) and &#8220;What Chapter 7 Covers Beyond This Deck&#8221; orientation slide. Unlocks Gate 2.</span>
+          </td>
+          <td class="seq-time">15&#8211;20 min</td>
+          <td class="seq-pts zero">&#8212;</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num gate-item">5</span></td>
+          <td>
+            <span class="seq-item-name">Gate 2: Applied Reading Check</span>
+            <span class="seq-item-note">8 questions &#183; chapter + slides synthesis &#183; 1 attempt &#183; correct/incorrect feedback. Includes Brand Assets Score calculation (numeric) and brand growth strategy classification. Unlocks Lecture Video.</span>
+          </td>
+          <td class="seq-time">20&#8211;23 min</td>
+          <td class="seq-pts">20 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">6</span></td>
+          <td>
+            <span class="seq-item-name">Lecture Video: &#8220;Positioning as a Profit Decision&#8221;</span>
+            <span class="seq-item-note">Segment 1 (~12 min): the differentiation paradox and Samsung data &#8212; no slides. Segment 2 (~18 min): Brand Equity scorecard walkthrough using Meridian Outdoor Co. (not Apex). Unlocks Apps.</span>
+          </td>
+          <td class="seq-time">~30 min</td>
+          <td class="seq-pts zero">—</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">7</span></td>
+          <td>
+            <span class="seq-item-name">App 1: Positioning Mapper + Worksheet</span>
+            <span class="seq-item-note">Tab A: Customer Value Hierarchy Classifier (Electric Vehicle preset used in Wq1). Tab B: POPs/PODs Analyzer with Venn output. Unlocks App 2.</span>
+          </td>
+          <td class="seq-time">20&#8211;25 min</td>
+          <td class="seq-pts">10 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">8</span></td>
+          <td>
+            <span class="seq-item-name">App 2: Brand Equity Scorecard Calculator + Worksheet</span>
+            <span class="seq-item-note">Tab A: Brand Assets (5 sliders). Tab B: Brand Liabilities (5 sliders). Tab C: Brand Equity with spike simulator. Arthur Andersen Pre-Enron preset used in Wq1. Unlocks App 3.</span>
+          </td>
+          <td class="seq-time">15&#8211;20 min</td>
+          <td class="seq-pts">10 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">9</span></td>
+          <td>
+            <span class="seq-item-name">App 3: Product Line Strategy Analyzer + Worksheet</span>
+            <span class="seq-item-note">Tab A: ROA Simulator with Fig 7-24 data (Apex Athletic preset pre-fills $480M revenue for Wq1). Tab B: Brand Growth Strategy Classifier with fighter brand warning. Unlocks Discussion.</span>
+          </td>
+          <td class="seq-time">20&#8211;25 min</td>
+          <td class="seq-pts">10 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">10</span></td>
+          <td>
+            <span class="seq-item-name">Discussion: The Brand Manager vs. the CFO</span>
+            <span class="seq-item-note">Due Day&nbsp;3 (Jul&nbsp;1, 11:59pm). Unlocks Case. Part&nbsp;1: position, 150&#8211;200 words. Part&nbsp;2: devil&#8217;s advocate, 100&#8211;150 words.</span>
+          </td>
+          <td class="seq-time">20&#8211;25 min</td>
+          <td class="seq-pts">20 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num locked">11</span></td>
+          <td>
+            <span class="seq-item-name">Case Draft &#8212; Parts 1&#8211;3</span>
+            <span class="seq-item-note">Day&nbsp;5 &#8212; advisory only. Complete the quantitative sections before Day&nbsp;6. No submission required; use this time to check calculations before the final submission.</span>
+          </td>
+          <td class="seq-time">60&#8211;70 min</td>
+          <td class="seq-pts zero">0 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">12</span></td>
+          <td>
+            <span class="seq-item-name">Case Analysis &#8212; Final Submission: Apex Athletic</span>
+            <span class="seq-item-note">Due Day&nbsp;5 (Jul&nbsp;3, 11:59pm). 4 parts: Brand Equity Analysis &#183; Fighter Brand Evaluation &#183; Product Line Strategy &#183; Strategic Recommendation. 300&#8211;500 words + calculations. Individual submission.</span>
+          </td>
+          <td class="seq-time">30&#8211;40 min</td>
+          <td class="seq-pts">125 pts</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 10. Grading Summary -->
+  <section class="section">
+    <span class="section-label">Grading Summary</span>
+    <table class="grade-table" aria-label="Grading summary table">
+      <thead>
+        <tr>
+          <th>Assessment</th>
+          <th>Points</th>
+          <th>% of Module</th>
+          <th>Grading</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gate 1: Basic Reading Check</td>
+          <td><span class="pts-badge zero">0</span></td>
+          <td>Access control only</td>
+          <td>Auto &#183; 80% threshold</td>
+        </tr>
+        <tr>
+          <td>Gate 2: Applied Reading Check</td>
+          <td><span class="pts-badge">20</span></td>
+          <td>10%</td>
+          <td>Auto-graded</td>
+        </tr>
+        <tr>
+          <td>App Worksheets (3 &#215; 10 pts)</td>
+          <td><span class="pts-badge">30</span></td>
+          <td>15%</td>
+          <td>Auto-graded</td>
+        </tr>
+        <tr>
+          <td>Discussion: The Brand Manager vs. the CFO</td>
+          <td><span class="pts-badge">20</span></td>
+          <td>10%</td>
+          <td>Rubric</td>
+        </tr>
+        <tr>
+          <td>Case Analysis: Apex Athletic</td>
+          <td><span class="pts-badge large">125</span></td>
+          <td>64%</td>
+          <td>Rubric</td>
+        </tr>
+        <tr class="total-row">
+          <td>Total</td>
+          <td><span class="pts-badge large">195</span></td>
+          <td>100%</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 11. Pacing in the Summer Session -->
+  <section class="section">
+    <span class="section-label">Pacing in the Summer Session</span>
+    <p>This module opens Jun&nbsp;29 and runs for 5 days. Discussion is due Jul&nbsp;1 at 11:59pm. Gates are due Jul&nbsp;2 at 11:59pm. Case is due Jul&nbsp;3 at 11:59pm.</p>
+    <table class="pacing-table" aria-label="Pacing in the summer session table">
+      <thead>
+        <tr>
+          <th style="width:90px;">Day</th>
+          <th>Suggested Work</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Day 1</td>
+          <td>Read Chapter&nbsp;7 with the Study Focus Guide (75&#8211;85&nbsp;min). Complete Gate&nbsp;1. View the Slide Deck (15&#8211;20&nbsp;min). Complete Gate&nbsp;2. ~120&nbsp;min total.</td>
+        </tr>
+        <tr>
+          <td>Day 2</td>
+          <td>Watch the lecture video &#8212; both segments (~30&nbsp;min). Complete Apps&nbsp;1, 2, and 3 with worksheets (~60&nbsp;min). ~90&nbsp;min total.</td>
+        </tr>
+        <tr>
+          <td>Day 3</td>
+          <td>Post your discussion (20&#8211;25&nbsp;min). <strong>Due Jul&nbsp;1 at 11:59pm.</strong></td>
+        </tr>
+        <tr>
+          <td>Day 4</td>
+          <td>Complete case draft &#8212; Parts&nbsp;1&#8211;3, quantitative work (60&#8211;70&nbsp;min). Advisory only; no submission required.</td>
+        </tr>
+        <tr>
+          <td>Day 5</td>
+          <td>Write the strategic recommendation and submit the final case analysis (30&#8211;40&nbsp;min). <strong>Due Jul&nbsp;3 at 11:59pm.</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout info" style="margin-top:16px;">
+      <span class="callout-icon">i</span>
+      <div>
+        <div class="callout-label">Pacing reminder</div>
+        <p>The discussion is due on Day&nbsp;3 &#8212; after the apps, not before. The calculations you run in Apps&nbsp;1&#8211;3 are the evidence base for your argument. Do not post your discussion before completing the apps. The case splits across Days&nbsp;4 and 5: use Day&nbsp;4 for the quantitative work and Day&nbsp;5 for the strategic recommendation.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 12. Footer (section) -->
+  <section class="section">
+    <span class="section-label">Footer</span>
+    <div class="page-footer">
+      <span>MKT 472 &#183; Module 07 &#183; Chapter 7</span>
+      <span>Product Positioning, Branding, and Product Line Strategies &#183; Part III: Marketing Mix Strategies</span>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

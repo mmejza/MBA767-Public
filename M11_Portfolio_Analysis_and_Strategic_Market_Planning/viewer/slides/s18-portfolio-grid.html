@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M11 · S18 · Portfolio Grid</title>
+<link rel="stylesheet" href="../slides.css">
+</head>
+<body>
+<div class="slide">
+
+  <div class="slide-header">
+    <div class="slide-title">GE/McKinsey Portfolio Grid — Strategy Selection</div>
+    <div class="slide-meta">
+      <span class="lo-tag">LO 5</span>
+      <span class="pattern-tag">Portfolio / Matrix</span>
+      <span class="slide-num">18 / 21</span>
+    </div>
+  </div>
+
+  <div class="slide-body">
+
+    <!-- Axis labels -->
+    <div style="display:flex;gap:8px;flex:1;">
+
+      <!-- Y-axis label -->
+      <div style="display:flex;align-items:center;justify-content:center;width:18px;flex-shrink:0;">
+        <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-sec);letter-spacing:0.1em;text-transform:uppercase;writing-mode:vertical-rl;transform:rotate(180deg);">Market Attractiveness (MAI)</span>
+      </div>
+
+      <!-- Grid + X-axis -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+
+        <!-- X-axis labels -->
+        <div style="display:grid;grid-template-columns:52px repeat(3,1fr);gap:3px;margin-bottom:0;">
+          <div></div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:center;letter-spacing:0.06em;text-transform:uppercase;">Low CPI<br>0–33</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:center;letter-spacing:0.06em;text-transform:uppercase;">Medium CPI<br>34–67</div>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:center;letter-spacing:0.06em;text-transform:uppercase;">High CPI<br>68–100</div>
+        </div>
+
+        <!-- Grid rows -->
+        <div style="display:grid;grid-template-columns:52px repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3px;flex:1;">
+
+          <!-- Row: High MAI 68-100 -->
+          <div style="display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:right;line-height:1.3;">High<br>68–100</div>
+          <div class="pg-cell offensive">
+            <div class="pg-strategy">New Market Entry</div>
+            <div class="pg-strategy">Improve Position</div>
+          </div>
+          <div class="pg-cell offensive">
+            <div class="pg-strategy">Invest to Grow</div>
+            <div class="pg-strategy">Improve Position</div>
+          </div>
+          <div class="pg-cell offensive" style="border-color:var(--teal);background:rgba(26,179,166,0.1);">
+            <div class="pg-strategy">Invest to Grow</div>
+            <div class="pg-strategy">Protect Position</div>
+          </div>
+
+          <!-- Row: Medium MAI 34-67 -->
+          <div style="display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:right;line-height:1.3;">Medium<br>34–67</div>
+          <div class="pg-cell neutral">
+            <div class="pg-strategy">Improve Position</div>
+            <div class="pg-strategy">Optimize Position</div>
+          </div>
+          <div class="pg-cell neutral" style="border-color:var(--accent);background:rgba(232,160,32,0.1);">
+            <div class="pg-strategy">Improve Position</div>
+            <div class="pg-strategy">Optimize Position</div>
+          </div>
+          <div class="pg-cell neutral">
+            <div class="pg-strategy">Protect Position</div>
+            <div class="pg-strategy">Optimize Position</div>
+          </div>
+
+          <!-- Row: Low MAI 0-33 -->
+          <div style="display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:right;line-height:1.3;">Low<br>0–33</div>
+          <div class="pg-cell defensive">
+            <div class="pg-strategy" style="color:var(--red);">Monetize</div>
+            <div class="pg-strategy" style="color:var(--red);">Harvest / Divest</div>
+          </div>
+          <div class="pg-cell defensive">
+            <div class="pg-strategy" style="color:var(--red);">Monetize</div>
+            <div class="pg-strategy" style="color:var(--red);">Harvest / Divest</div>
+          </div>
+          <div class="pg-cell defensive">
+            <div class="pg-strategy">Optimize Position</div>
+            <div class="pg-strategy" style="color:var(--red);">Monetize / Harvest</div>
+          </div>
+
+        </div>
+
+        <!-- X-axis title -->
+        <div style="text-align:center;font-family:var(--font-mono);font-size:9px;color:var(--text-sec);letter-spacing:0.1em;text-transform:uppercase;">Competitive Position (CPI) →</div>
+
+      </div>
+
+      <!-- Legend -->
+      <div style="width:120px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;justify-content:center;">
+        <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-sec);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px;">Legend</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="width:12px;height:12px;border:1px solid var(--teal);background:rgba(26,179,166,0.1);border-radius:2px;flex-shrink:0;"></div>
+          <span style="font-size:10px;color:var(--teal);">Offensive</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="width:12px;height:12px;border:1px solid var(--accent-dim);background:rgba(232,160,32,0.06);border-radius:2px;flex-shrink:0;"></div>
+          <span style="font-size:10px;color:var(--accent);">Judgment zone</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="width:12px;height:12px;border:1px solid var(--rule);background:var(--navy-mid);border-radius:2px;flex-shrink:0;"></div>
+          <span style="font-size:10px;color:var(--text-sec);">Defensive</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="rule-line" style="margin-top:6px;">
+      Thresholds: Low = 0–33 · Medium = 34–67 · High = 68–100 (both axes) &nbsp;|&nbsp;
+      Offensive strategies = top-right zone · Defensive = bottom-left zone ·
+      Center cells = judgment call based on life-cycle stage and competitive trend
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

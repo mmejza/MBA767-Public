@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>M08 App 3 - Break-Even Pricing Calculator</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell">
+		<header class="app-top-header">
+			<p class="module-label">MKT 472 · Module 8 · App 3</p>
+			<h1>Break-Even Pricing Calculator</h1>
+			<p>Calculate required break-even volume change, compare against elasticity-based expected volume change, and evaluate strategy viability.</p>
+		</header>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Evaluate whether price-change strategies can maintain or improve gross profit under realistic volume responses. Compare required break-even volume change with elasticity-based expected change. Interpret strategy viability using both contribution logic and demand response.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Price Cut Scenario.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Load a scenario preset or enter pricing, cost, and volume inputs manually.</li>
+				<li>Use Tab A to calculate break-even volume change requirements.</li>
+				<li>Use Tab B to estimate expected volume change from elasticity and classify demand response.</li>
+				<li>Compare required versus expected volume change in the final comparison panel and gauge.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+			<div class="app-grid">
+		<header class="app-header">
+			<h1>Break-Even Pricing Calculator</h1>
+			<p>Calculate required break-even volume change, compare against elasticity-based expected volume change, and evaluate strategy viability.</p>
+
+			<div class="preset-row" role="group" aria-label="Scenario presets">
+				<button type="button" data-preset="cut">Price Cut Scenario</button>
+				<button type="button" data-preset="inc_inelastic">Price Increase - Inelastic</button>
+				<button type="button" data-preset="inc_elastic">Price Increase - Elastic</button>
+				<button type="button" data-preset="implausible">Implausible Share</button>
+				<button type="button" id="reset-btn" class="secondary">Reset</button>
+			</div>
+			<p class="active-scenario">Active Scenario: <strong id="active-scenario">Price Cut Scenario</strong></p>
+		</header>
+
+		<section class="tabs-wrap">
+			<div class="tabs" role="tablist" aria-label="Pricing analysis tabs">
+				<button type="button" role="tab" id="tab-a-btn" class="tab-btn active" aria-selected="true" aria-controls="tab-a-panel">Break-Even % Calculator</button>
+				<button type="button" role="tab" id="tab-b-btn" class="tab-btn" aria-selected="false" aria-controls="tab-b-panel">Elasticity Check</button>
+			</div>
+
+			<section id="tab-a-panel" class="tab-panel active" role="tabpanel" aria-labelledby="tab-a-btn">
+				<h2>Tab A - Break-Even % Calculator</h2>
+				<div class="grid-2">
+					<label for="current-price">Current Price</label>
+					<input id="current-price" type="number" min="0" step="0.01" value="100">
+
+					<label for="variable-cost">Variable Cost per Unit</label>
+					<input id="variable-cost" type="number" min="0" step="0.01" value="60">
+
+					<label for="current-volume">Current Unit Sales Volume</label>
+					<input id="current-volume" type="number" min="0" step="1" value="200000">
+
+					<label for="price-change-pct">Percent Price Change (%)</label>
+					<input id="price-change-pct" type="number" step="0.1" value="-10">
+
+					<label class="check-line" for="enable-vc-change">
+						<input id="enable-vc-change" type="checkbox">
+						Enable Variable Cost Change
+					</label>
+					<input id="vc-change-pct" type="number" step="0.1" value="0" disabled>
+
+					<label class="check-line" for="enable-fc-change">
+						<input id="enable-fc-change" type="checkbox">
+						Enable Fixed Cost Change
+					</label>
+					<input id="fc-change-amt" type="number" step="1" value="0" disabled>
+
+					<label for="market-demand">Optional Market Demand</label>
+					<input id="market-demand" type="number" min="0" step="1" placeholder="Leave blank if unknown">
+				</div>
+
+				<section class="result-card">
+					<h3>Break-Even Results</h3>
+					<dl id="tab-a-results" class="result-list"></dl>
+					<p id="be-interpretation" class="message"></p>
+					<p id="share-warning" class="warning" aria-live="polite"></p>
+					<p id="be-badge" class="badge neutral">NEEDS ELASTICITY CHECK</p>
+				</section>
+			</section>
+
+			<section id="tab-b-panel" class="tab-panel" role="tabpanel" aria-labelledby="tab-b-btn">
+				<h2>Tab B - Elasticity Check</h2>
+				<div class="grid-2">
+					<label for="elasticity">Price Elasticity Estimate</label>
+					<input id="elasticity" type="number" step="0.1" value="-1.5">
+
+					<label for="linked-price-change">Percent Price Change (%) (linked)</label>
+					<input id="linked-price-change" type="number" step="0.1" readonly>
+				</div>
+
+				<section class="result-card">
+					<h3>Elasticity Results</h3>
+					<dl id="tab-b-results" class="result-list"></dl>
+					<p id="elasticity-class" class="message"></p>
+					<p id="profit-direction" class="message"></p>
+					<p id="reality-check" class="message"></p>
+					<p id="elasticity-badge" class="badge neutral">ANALYSIS PENDING</p>
+				</section>
+			</section>
+		</section>
+
+		<section class="comparison-panel">
+			<h2>What volume do you need? vs. What volume will you get?</h2>
+			<dl id="comparison-results" class="result-list"></dl>
+			<p id="comparison-text" class="message"></p>
+			<p id="comparison-badge" class="badge neutral">COMPARE RESULTS</p>
+
+			<div class="gauge-wrap" aria-label="Break-even vs expected volume change gauge">
+				<div class="gauge-track" id="gauge-track">
+					<span id="target-marker" class="marker target" title="Required BE%"></span>
+					<span id="projected-marker" class="marker projected" title="Expected volume change"></span>
+				</div>
+				<div class="gauge-legend">
+					<span id="target-label">Target: 0.0%</span>
+					<span id="projected-label">Projected: 0.0%</span>
+				</div>
+			</div>
+		</section>
+			</div>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results / Dashboard</h2>
+			<p>Use break-even results, elasticity outputs, and comparison gap findings to complete Canvas quiz responses.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

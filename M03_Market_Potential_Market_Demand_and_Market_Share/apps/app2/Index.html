@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>M03 App 2 - Product Life-Cycle Stage Diagnostor</title>
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell" aria-label="PLC Diagnostor">
+		<header class="app-header">
+			<p class="module-id">MKT 472 · Module 3 · App 2</p>
+			<h1>Product Life-Cycle Stage Diagnostor</h1>
+			<p>
+				Diagnose PLC stage from observable indicators to interpret demand, GP, and NMC timing patterns.
+			</p>
+		</header>
+
+		<section class="info-card" data-focus-hide aria-labelledby="learning-goal-title">
+			<h2 id="learning-goal-title">Learning Goal</h2>
+			<p>
+				Use market indicators to identify the most likely PLC stage and evaluate confidence in the diagnosis.
+				Connect stage conditions to strategy guidance and timing differences between NMC and demand peaks.
+			</p>
+		</section>
+
+		<section class="info-card" data-focus-hide aria-labelledby="quiz-instructions-title">
+			<h2 id="quiz-instructions-title">Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide aria-label="Required for Quiz">
+			<p class="required-label">Required for Quiz</p>
+			<p>
+				The Canvas quiz question determines which preset, scenario, or modifications to use. If a question
+				does not specify otherwise, begin with the default preset shown in this app. Default preset: Introduction.
+			</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Choose a preset or adjust sliders and trend selectors to match the scenario.</li>
+				<li>Review diagnosed stage and confidence after each input change.</li>
+				<li>Use the strategy card and indicator summary table to check stage consistency.</li>
+				<li>Interpret the trajectory chart and optional GP overlay for timing relationships.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp" aria-label="Interactive App">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" type="button" class="focus-btn" aria-pressed="false">Focus Mode</button>
+			</div>
+
+			<p class="quiz-workflow-banner" aria-label="Quiz workflow">
+				Quiz Workflow: Read Question → Use App → Submit Answer
+			</p>
+
+		<section class="preset-section" aria-label="PLC Presets">
+			<div class="preset-buttons">
+				<button type="button" class="preset-btn active" data-preset="introduction">Introduction</button>
+				<button type="button" class="preset-btn" data-preset="earlyGrowth">Early Growth</button>
+				<button type="button" class="preset-btn" data-preset="lateGrowth">Late Growth</button>
+				<button type="button" class="preset-btn" data-preset="maturity">Maturity</button>
+				<button type="button" class="preset-btn" data-preset="decline">Decline</button>
+			</div>
+			<p id="presetInfo" class="preset-info"></p>
+		</section>
+
+			<section class="panel" aria-label="Diagnosis Inputs">
+				<h2>Diagnosis Inputs</h2>
+
+				<div class="field-row">
+					<label for="growthRatePct">Demand Growth Rate</label>
+					<div class="slider-wrap">
+						<input id="growthRatePct" type="range" min="-20" max="60" step="1" />
+						<span id="growthRatePctVal" class="value-tag"></span>
+					</div>
+				</div>
+
+				<div class="field-row">
+					<label for="competitors">Competitor Count</label>
+					<div class="slider-wrap">
+						<input id="competitors" type="range" min="1" max="50" step="1" />
+						<span id="competitorsVal" class="value-tag"></span>
+					</div>
+				</div>
+
+				<div class="field-row">
+					<label for="triersPct">Trier Percentage</label>
+					<div class="slider-wrap">
+						<input id="triersPct" type="range" min="0" max="100" step="1" />
+						<span id="triersPctVal" class="value-tag"></span>
+					</div>
+				</div>
+
+				<div class="field-row select-row">
+					<label for="grossMarginTrend">Gross Margin Trend</label>
+					<select id="grossMarginTrend">
+						<option>Rising</option>
+						<option>Stable</option>
+						<option>Declining</option>
+					</select>
+				</div>
+
+				<div class="field-row select-row">
+					<label for="marketingExpenseTrend">Marketing Expense Trend</label>
+					<select id="marketingExpenseTrend">
+						<option>Rising</option>
+						<option>Stable</option>
+						<option>Declining</option>
+					</select>
+				</div>
+
+				<div class="field-row select-row">
+					<label for="priceTrend">Price Trend</label>
+					<select id="priceTrend">
+						<option>Rising</option>
+						<option>Stable</option>
+						<option>Declining</option>
+						<option>Steep decline</option>
+					</select>
+				</div>
+			</section>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<section class="panel" aria-label="Diagnosis Output">
+				<h2>Diagnosed Stage</h2>
+
+				<div class="diagnosis-head">
+					<div id="stageBadge" class="stage-badge"></div>
+					<p id="diagnosisNote" class="diagnosis-note"></p>
+				</div>
+
+				<div class="confidence-block" aria-live="polite">
+					<div class="confidence-meta">
+						<span>Confidence</span>
+						<span id="confidenceText"></span>
+					</div>
+					<div class="confidence-track">
+						<div id="confidenceBar" class="confidence-fill"></div>
+					</div>
+				</div>
+
+				<article class="strategy-card" aria-label="Stage Strategy Card">
+					<h3 id="strategyStageTitle"></h3>
+					<ul id="strategyList"></ul>
+				</article>
+			</section>
+
+			<section class="panel" aria-label="Stage Indicator Summary">
+			<h2>Stage Indicator Summary</h2>
+			<table class="summary-table">
+				<thead>
+					<tr>
+						<th>Indicator</th>
+						<th>Current</th>
+						<th>Profile Target</th>
+						<th>Consistency</th>
+					</tr>
+				</thead>
+				<tbody id="summaryTableBody"></tbody>
+			</table>
+			</section>
+
+			<section class="panel" aria-label="NMC Trajectory Chart">
+			<div class="chart-header">
+				<h2>NMC Trajectory Chart</h2>
+				<label class="toggle-wrap" for="showGpOverlay">
+					<input id="showGpOverlay" type="checkbox" />
+					<span>Show GP Overlay</span>
+				</label>
+			</div>
+			<div id="trajectoryChart" class="chart-wrap"></div>
+			<p class="chart-note">
+				NMC peaks in Late Growth and Demand peaks in Maturity.
+			</p>
+			</section>
+
+			<footer class="app-footer">
+				<button id="resetBtn" type="button">Reset to Introduction</button>
+			</footer>
+		</section>
+
+		<p class="canvas-reminder" aria-label="Canvas submission reminder">
+			Submit final answers through the Canvas quiz questions below the app.
+		</p>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

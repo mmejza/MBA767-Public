@@ -1,0 +1,31 @@
+{
+  "title": "Market Potential, Market Demand, and Market Share",
+  "moduleLabel": "MKT 472 · Module 03 · Lecture Slides",
+  "slides": [
+    "slides/s01-title.html",
+    "slides/s02-learning-objectives.html",
+    "slides/s03-chapter-only-gate1.html",
+    "slides/s04-broad-vs-narrow-definition.html",
+    "slides/s05-definition-trap-diagnostic.html",
+    "slides/s06-definition-trap-reveal.html",
+    "slides/s07-definition-controls-strategy.html",
+    "slides/s08-market-potential-concept.html",
+    "slides/s09-chain-ratio-formula.html",
+    "slides/s10-market-development-forces.html",
+    "slides/s11-mdi-formula.html",
+    "slides/s12-market-potential-setup.html",
+    "slides/s13-market-potential-solution.html",
+    "slides/s14-mdi-worked-example.html",
+    "slides/s15-plc-stage-characteristics.html",
+    "slides/s16-mdi-plc-connection.html",
+    "slides/s17-plc-strategy-table.html",
+    "slides/s18-market-share-demand-relationship.html",
+    "slides/s19-volume-two-scenarios.html",
+    "slides/s20-volume-formula-worked-example.html",
+    "slides/s21-msi-performance-tree.html",
+    "slides/s22-msi-formula.html",
+    "slides/s23-msi-leakage-sdi-setup.html",
+    "slides/s24-sdi-priority-node.html",
+    "slides/s25-growth-opportunity-portfolio.html"
+  ]
+}

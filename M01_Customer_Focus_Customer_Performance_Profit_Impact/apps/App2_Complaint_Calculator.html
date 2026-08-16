@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App 2: Complaint-Resolution Calculator — MKT 472 M01</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700;800&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#0D9B87;--teal-dk:#0D7A6B;--teal-lt:#E5F5F3;--teal-bd:#C8E8E4;
+  --navy:#0F2027;--white:#FFFFFF;--off:#F7FDFC;
+  --amber:#E6A800;--amb-lt:#FFF8E6;--amb-bd:#F5D78A;
+  --red:#C0392B;--red-lt:#FEF5F5;--red-bd:#F5BFBF;
+  --pos:#0D7A6B;--neg:#C0392B;
+  --text:#1A2E2C;--muted:#7A9896;--border:#E0EEEC;--gray:#F2F4F3;
+}
+
+body{font-family:'Barlow',sans-serif;background:var(--gray);color:var(--text);font-size:16px;line-height:1.5;}
+
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:-999px;
+  background:#12222d;
+  color:#fff;
+  padding:.45rem .7rem;
+  border-radius:8px;
+  z-index:1000;
+}
+
+.skip-link:focus{
+  left:.7rem;
+  top:.7rem;
+}
+
+.page-shell{
+  max-width:1100px;
+  margin:0 auto;
+  display:grid;
+  gap:14px;
+  padding:0 0 12px;
+}
+
+.quiz-card,
+.required-callout,
+.how-to,
+.interactive-app,
+.results-dashboard,
+.canvas-reminder,
+.compact-header{
+  margin:0 16px;
+  border:.5px solid var(--border);
+  border-radius:8px;
+  background:var(--white);
+  padding:14px 16px;
+  box-shadow:0 6px 14px rgba(15,32,39,.06);
+}
+
+.compact-header h1{
+  margin:0;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(1.45rem,2vw,1.58rem);
+  font-weight:800;
+  line-height:1.1;
+  color:var(--navy);
+}
+
+.compact-header .module-tag{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:4px;
+  display:block;
+}
+
+.compact-header p{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:.92rem;
+}
+
+.quiz-card h2,
+.interactive-head h2,
+.results-dashboard h2,
+.how-to summary{
+  margin:0 0 6px;
+  font-size:1.2rem;
+  color:var(--teal-dk);
+  font-weight:600;
+}
+
+.quiz-card p,
+.required-callout p,
+.how-to li,
+.results-dashboard p{
+  margin:0;
+  font-size:.92rem;
+}
+
+.quiz-card ol,
+.how-to ol{
+  margin:0;
+  padding-left:1.2rem;
+  display:grid;
+  gap:.15rem;
+}
+
+.required-callout{
+  border-left:4px solid var(--amber);
+}
+
+.required-label{
+  margin:0 0 4px;
+  color:#8a651d;
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  font-weight:700;
+}
+
+.how-to summary{
+  cursor:pointer;
+  font-weight:700;
+}
+
+.how-to[open] summary{margin-bottom:8px;}
+
+.interactive-app{
+  display:grid;
+  gap:12px;
+  padding:14px 0 0;
+  overflow:hidden;
+}
+
+.interactive-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:0 16px;
+}
+
+.focus-btn{
+  border:1px solid var(--teal-bd);
+  border-radius:8px;
+  background:var(--white);
+  color:var(--teal-dk);
+  padding:7px 10px;
+  font-size:.84rem;
+  font-weight:600;
+  cursor:pointer;
+  font-family:'Barlow',sans-serif;
+}
+
+.quiz-workflow-banner{
+  margin:0 16px;
+  border:1px solid var(--teal-bd);
+  border-radius:10px;
+  background:var(--teal-lt);
+  color:var(--navy);
+  padding:10px 12px;
+  font-weight:700;
+  font-size:14px;
+}
+
+.results-dashboard p{color:var(--muted);}
+
+.canvas-reminder{
+  text-align:center;
+  font-size:.82rem;
+  color:var(--muted);
+  padding-top:8px;
+  padding-bottom:8px;
+}
+
+body.focus-mode [data-focus-hide]{display:none;}
+
+.app-header{background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--teal);}
+.app-header .module-tag{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:2px;}
+.app-header h1{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.02em;color:#fff;}
+.lo-badge{background:rgba(13,155,135,.2);border:.5px solid var(--teal);color:var(--teal);font-size:10px;font-weight:600;padding:3px 8px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em;}
+
+.main{display:grid;grid-template-columns:1fr 360px;gap:16px;padding:16px;max-width:1100px;margin:0 auto;}
+
+.left{display:flex;flex-direction:column;gap:12px;}
+.right{display:flex;flex-direction:column;gap:12px;}
+
+/* Cards */
+.card{background:var(--white);border:.5px solid var(--border);border-radius:8px;overflow:hidden;}
+.card-header{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;}
+.card-header.navy{background:var(--navy);}
+.card-header.teal{background:var(--teal-lt);border-bottom:.5px solid var(--teal-bd);}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.card-header.navy .card-title{color:var(--teal);}
+.card-header.teal .card-title{color:var(--teal-dk);}
+.card-body{padding:14px 16px;}
+
+/* Sliders */
+.input-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:8px 0;border-bottom:.5px solid var(--border);}
+.input-row:last-child{border-bottom:none;}
+.input-label{font-size:12px;font-weight:500;color:var(--text);}
+.input-sub{font-size:10px;color:var(--muted);margin-top:1px;}
+.input-controls{display:flex;align-items:center;gap:8px;min-width:180px;}
+.input-controls input[type=range]{flex:1;accent-color:var(--teal);cursor:pointer;}
+.input-val{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--text);min-width:52px;text-align:right;}
+.input-controls input[type=number]{
+  width:90px;border:.5px solid var(--border);border-radius:4px;
+  padding:4px 8px;font-family:'Barlow',sans-serif;font-size:12px;
+  color:var(--text);background:var(--off);text-align:right;
+}
+.input-controls input[type=number]:focus{border-color:var(--teal);outline:none;background:#fff;}
+
+/* Flow diagram */
+.flow-diagram{padding:16px;}
+.flow-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;}
+
+.flow-node{
+  border-radius:6px;padding:10px 12px;
+  border:.5px solid var(--border);
+  background:var(--white);
+  position:relative;
+  text-align:center;
+}
+.flow-node.root{
+  grid-column:1/-1;
+  background:var(--navy);border-color:var(--navy);
+}
+.flow-node .node-label{font-size:11px;font-weight:500;color:var(--muted);margin-bottom:2px;}
+.flow-node.root .node-label{color:rgba(255,255,255,.5);}
+.flow-node .node-val{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--text);line-height:1;}
+.flow-node.root .node-val{color:#fff;}
+.flow-node .node-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+.flow-node.root .node-sub{color:rgba(255,255,255,.4);}
+.flow-node.retained{border-color:var(--teal-bd);background:var(--teal-lt);}
+.flow-node.retained .node-val{color:var(--teal-dk);}
+.flow-node.retained .node-label{color:var(--teal);}
+.flow-node.lost{border-color:var(--red-bd);background:var(--red-lt);}
+.flow-node.lost .node-val{color:var(--red);}
+.flow-node.satisfied{border-color:var(--teal-bd);background:var(--off);}
+.flow-node.complain{border-color:var(--amb-bd);background:var(--amb-lt);}
+.flow-node.complain .node-val{color:#8A6000;}
+.flow-node.silent{border-color:var(--red-bd);background:var(--red-lt);}
+.flow-node.silent .node-val{color:var(--red);}
+
+.flow-section-label{
+  grid-column:1/-1;
+  font-size:10px;font-weight:600;color:var(--muted);
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:4px 0 2px;
+  border-top:.5px solid var(--border);
+  margin-top:4px;
+}
+
+.flow-arrow{
+  grid-column:1/-1;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:16px;padding:2px 0;
+}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.stat-card{background:var(--gray);border-radius:6px;padding:10px 12px;text-align:center;}
+.stat-label{font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:3px;}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;line-height:1;color:var(--teal-dk);}
+.stat-val.amber-v{color:#B87800;}
+.stat-val.red-v{color:var(--red);}
+.stat-val.navy-v{color:var(--navy);}
+
+/* Break-even */
+.breakeven-card{
+  background:var(--amb-lt);border:.5px solid var(--amb-bd);
+  border-radius:8px;padding:14px 16px;
+}
+.breakeven-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--amber);margin-bottom:10px;
+}
+.breakeven-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;}
+.breakeven-label{font-size:12px;color:#5C4200;}
+.breakeven-val{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:#8A6000;}
+.breakeven-verdict{
+  margin-top:10px;padding:8px 10px;border-radius:4px;
+  font-size:12px;line-height:1.5;font-weight:500;
+}
+.breakeven-verdict.justified{background:var(--teal-lt);color:var(--teal-dk);border:.5px solid var(--teal-bd);}
+.breakeven-verdict.not-justified{background:var(--red-lt);color:var(--red);border:.5px solid var(--red-bd);}
+
+/* Insight */
+.insight-box{border-radius:8px;padding:12px 14px;font-size:12px;line-height:1.55;border-left:3px solid transparent;}
+.insight-box.teal{background:var(--teal-lt);border-color:var(--teal);color:var(--teal-dk);}
+.insight-box.amber{background:var(--amb-lt);border-color:var(--amber);color:#5C4200;}
+.insight-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;font-family:'Barlow Condensed',sans-serif;}
+
+/* Chart */
+.chart-wrap{position:relative;height:180px;margin-top:8px;}
+
+
+button:focus,
+input:focus,
+summary:focus{
+  outline:2px solid #0D9B87;
+  outline-offset:1px;
+}
+
+@media(max-width:800px){
+  .compact-header,
+  .quiz-card,
+  .required-callout,
+  .how-to,
+  .interactive-app,
+  .results-dashboard,
+  .canvas-reminder{margin:0 10px;padding:12px;}
+  .interactive-head,
+  .quiz-workflow-banner{padding-left:12px;padding-right:12px;}
+  .main{grid-template-columns:1fr;}
+  .right{order:2;}
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+
+<div class="page-shell">
+
+<section class="compact-header">
+  <span class="module-tag">M01 · App 2 of 3</span>
+  <h1>Complaint-Resolution Economics Calculator</h1>
+  <p>Model how complaint behavior and retention rates affect retained customers, incremental profit, and the financial case for a complaint-resolution program.</p>
+</section>
+
+<section class="quiz-card" data-focus-hide>
+  <h2>Learning Goal</h2>
+  <p>Use the complaint-resolution model to evaluate the financial case for retaining dissatisfied customers. This app helps you quantify how complaint motivation, recovery retention, and program cost change ROI and reveal the module's counterintuitive trap: a complaint program can sound valuable and still fail the break-even test.</p>
+</section>
+
+<section class="quiz-card" data-focus-hide>
+  <h2>Worksheet Quiz Instructions</h2>
+  <ol>
+    <li>Read the Canvas quiz question first.</li>
+    <li>Follow the preset, scenario, or modifications specified in the question.</li>
+    <li>Use this app to perform the required calculations and analysis.</li>
+    <li>Enter your answers in the Canvas quiz.</li>
+    <li>Answers are submitted through Canvas, not through this app.</li>
+  </ol>
+</section>
+
+<section class="required-callout" data-focus-hide>
+  <p class="required-label">Required for Quiz</p>
+  <p>Question 1-A assigns you a full set of parameters specific to your section — total customers, dissatisfied %, motivated-to-complain %, all three retention rates, and annual profit. Enter all of them into the Model Inputs panel before answering any question; do not use the default values shown when this app first loads. Question 2 asks you to find a complaint rate the app does not display directly — use only the "Motivated to complain" slider and the break-even calculator's own verdict to find it.</p>
+</section>
+
+<details class="how-to" data-focus-hide>
+  <summary>How to Use This App</summary>
+  <ol>
+    <li>Adjust the customer base, dissatisfaction rate, complaint motivation rate, retention rates, profit, and program cost inputs.</li>
+    <li>Read the customer retention flow to see how customers move from satisfied, complaining, and silent-dissatisfied paths.</li>
+    <li>Use the retention results, incremental retained, and incremental profit cards to compare the current scenario against the 0% complaint baseline.</li>
+    <li>Check the retained-customer chart and break-even calculator to evaluate whether the current program cost is financially justified.</li>
+  </ol>
+</details>
+
+<section class="interactive-app" id="interactiveApp">
+  <div class="interactive-head">
+    <h2>Interactive App</h2>
+    <button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+  </div>
+  <p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+<div class="app-header">
+  <div>
+    <div class="module-tag">M01 · App 2 of 3</div>
+    <h1>Complaint-Resolution Economics Calculator</h1>
+  </div>
+  <span class="lo-badge">LO3</span>
+</div>
+
+<div class="main">
+
+  <!-- ── LEFT: Inputs + Flow ── -->
+  <div class="left">
+
+    <!-- Inputs -->
+    <div class="card">
+      <div class="card-header navy"><div class="card-title">Model inputs</div></div>
+      <div class="card-body">
+
+        <div class="input-row">
+          <div>
+            <div class="input-label">Total customers</div>
+            <div class="input-sub">Company's total customer base</div>
+          </div>
+          <div class="input-controls">
+            <input type="number" id="in-total" value="100000" min="1000" max="10000000" step="1000">
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div>
+            <div class="input-label">Dissatisfied customers</div>
+            <div class="input-sub">% of total base</div>
+          </div>
+          <div class="input-controls">
+            <input type="range" id="sl-dissatisfied" min="5" max="60" step="1" value="30">
+            <div class="input-val" id="vl-dissatisfied">30%</div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div>
+            <div class="input-label">Motivated to complain</div>
+            <div class="input-sub">% of dissatisfied who contact company</div>
+          </div>
+          <div class="input-controls">
+            <input type="range" id="sl-complain" min="0" max="50" step="1" value="10">
+            <div class="input-val" id="vl-complain">10%</div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div>
+            <div class="input-label">Retention — complainers</div>
+            <div class="input-sub">% retained after complaining &amp; resolution</div>
+          </div>
+          <div class="input-controls">
+            <input type="range" id="sl-ret-c" min="40" max="98" step="1" value="80">
+            <div class="input-val" id="vl-ret-c">80%</div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div>
+            <div class="input-label">Retention — silent dissatisfied</div>
+            <div class="input-sub">% retained without complaining</div>
+          </div>
+          <div class="input-controls">
+            <input type="range" id="sl-ret-s" min="0" max="50" step="1" value="17">
+            <div class="input-val" id="vl-ret-s">17%</div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div>
+            <div class="input-label">Retention — satisfied customers</div>
+            <div class="input-sub">% of satisfied customers retained (fixed)</div>
+          </div>
+          <div class="input-controls">
+            <input type="range" id="sl-ret-sat" min="60" max="99" step="1" value="90">
+            <div class="input-val" id="vl-ret-sat">90%</div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div>
+            <div class="input-label">Average annual customer profit</div>
+            <div class="input-sub">Profit per retained customer per year</div>
+          </div>
+          <div class="input-controls">
+            <input type="number" id="in-profit" value="250" min="1" max="10000" step="1">
+          </div>
+        </div>
+
+        <div class="input-row" style="border-bottom:none;">
+          <div>
+            <div class="input-label">Annual program cost</div>
+            <div class="input-sub">Total cost to run complaint-resolution program</div>
+          </div>
+          <div class="input-controls">
+            <input type="number" id="in-cost" value="0" min="0" max="10000000" step="1000">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Flow diagram -->
+    <div class="card">
+      <div class="card-header teal"><div class="card-title">Customer retention flow</div></div>
+      <div class="flow-diagram">
+        <div class="flow-grid">
+
+          <!-- Root -->
+          <div class="flow-node root">
+            <div class="node-label">Total customer base</div>
+            <div class="node-val" id="fn-total">100,000</div>
+            <div class="node-sub" id="fn-total-sub">100%</div>
+          </div>
+
+          <div class="flow-arrow">&#8595;</div>
+
+          <!-- Split: Satisfied / Dissatisfied -->
+          <div class="flow-node satisfied">
+            <div class="node-label">Satisfied</div>
+            <div class="node-val" id="fn-sat">70,000</div>
+            <div class="node-sub" id="fn-sat-sub">70% of base</div>
+          </div>
+          <div class="flow-node silent" style="background:var(--amb-lt);border-color:var(--amb-bd);">
+            <div class="node-label" style="color:#8A6000;">Dissatisfied</div>
+            <div class="node-val" id="fn-dis" style="color:#8A6000;">30,000</div>
+            <div class="node-sub" id="fn-dis-sub" style="color:#B87800;">30% of base</div>
+          </div>
+
+          <div class="flow-arrow">&#8595;</div>
+
+          <!-- Complain split -->
+          <div class="flow-node" style="background:var(--off);border-color:var(--teal-bd);">
+            <div class="node-label">Do complain</div>
+            <div class="node-val" id="fn-comp">3,000</div>
+            <div class="node-sub" id="fn-comp-sub">10% of dissatisfied</div>
+          </div>
+          <div class="flow-node" style="background:var(--red-lt);border-color:var(--red-bd);">
+            <div class="node-label">Stay silent</div>
+            <div class="node-val" id="fn-silent">27,000</div>
+            <div class="node-sub" id="fn-silent-sub">90% of dissatisfied</div>
+          </div>
+
+          <div class="flow-arrow">&#8595;</div>
+
+          <!-- Retained outcomes -->
+          <div class="flow-node retained">
+            <div class="node-label">Retained (sat.)</div>
+            <div class="node-val" id="fn-r-sat">63,000</div>
+            <div class="node-sub" id="fn-r-sat-sub">90% retention</div>
+          </div>
+          <div class="flow-node" style="background:var(--teal-lt);border-color:var(--teal-bd);">
+            <div class="node-label">Retained (comp.)</div>
+            <div class="node-val" id="fn-r-comp" style="color:var(--teal-dk);">2,400</div>
+            <div class="node-sub" id="fn-r-comp-sub" style="color:var(--teal);">80% retention</div>
+          </div>
+
+          <div class="flow-section-label">Silent dissatisfied split</div>
+
+          <div class="flow-node retained" style="opacity:.7;">
+            <div class="node-label">Retained (silent)</div>
+            <div class="node-val" id="fn-r-silent">4,590</div>
+            <div class="node-sub" id="fn-r-silent-sub">17% retention</div>
+          </div>
+          <div class="flow-node lost">
+            <div class="node-label">Lost (silent)</div>
+            <div class="node-val" id="fn-lost">22,410</div>
+            <div class="node-sub" id="fn-lost-sub">83% exit rate</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── RIGHT: Results ── -->
+  <div class="right">
+
+    <!-- Key numbers -->
+    <div class="card">
+      <div class="card-header navy"><div class="card-title">Retention results</div></div>
+      <div class="card-body">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total retained</div>
+            <div class="stat-val navy-v" id="stat-total-ret">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">% of base retained</div>
+            <div class="stat-val" id="stat-pct-ret">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Customers lost</div>
+            <div class="stat-val red-v" id="stat-lost">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total annual profit</div>
+            <div class="stat-val" id="stat-profit-total">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Incremental retained -->
+    <div class="card">
+      <div class="card-header teal"><div class="card-title">Complaint program impact</div></div>
+      <div class="card-body">
+        <div class="stats-grid" style="margin-bottom:10px;">
+          <div class="stat-card">
+            <div class="stat-label">Incremental retained</div>
+            <div class="stat-val" id="stat-inc-ret">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Incremental profit</div>
+            <div class="stat-val" id="stat-inc-profit">—</div>
+          </div>
+        </div>
+        <div class="insight-box teal" id="incremental-insight">
+          Adjust "motivated to complain" slider to see incremental impact vs. 0% complaint rate.
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="card">
+      <div class="card-header teal"><div class="card-title">Retained customers by segment</div></div>
+      <div class="card-body">
+        <div class="chart-wrap"><canvas id="retChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Break-even -->
+    <div class="breakeven-card">
+      <div class="breakeven-title">Break-even program cost calculator</div>
+      <div class="breakeven-row">
+        <div class="breakeven-label">Incremental customers retained by complaint program</div>
+        <div class="breakeven-val" id="be-customers">—</div>
+      </div>
+      <div class="breakeven-row">
+        <div class="breakeven-label">Value per incremental customer (annual profit)</div>
+        <div class="breakeven-val" id="be-value">—</div>
+      </div>
+      <div class="breakeven-row" style="border-top:.5px solid var(--amb-bd);padding-top:8px;margin-top:4px;">
+        <div class="breakeven-label" style="font-weight:600;">Maximum justifiable program cost</div>
+        <div class="breakeven-val" style="font-size:20px;" id="be-max">—</div>
+      </div>
+      <div class="breakeven-row">
+        <div class="breakeven-label">Your entered program cost</div>
+        <div class="breakeven-val" id="be-entered">$0</div>
+      </div>
+      <div class="breakeven-verdict" id="be-verdict"></div>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+<section class="results-dashboard" aria-label="Results Dashboard">
+  <h2>Results / Dashboard</h2>
+  <p>Use the retention flow, summary cards, incremental impact, chart, and break-even verdict to complete the Canvas quiz responses.</p>
+</section>
+
+<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+
+</div>
+
+<script>
+let retChart = null;
+
+function getInputs(){
+  return {
+    total:    parseInt(document.getElementById('in-total').value) || 100000,
+    disPct:   parseInt(document.getElementById('sl-dissatisfied').value) / 100,
+    compPct:  parseInt(document.getElementById('sl-complain').value) / 100,
+    retC:     parseInt(document.getElementById('sl-ret-c').value) / 100,
+    retS:     parseInt(document.getElementById('sl-ret-s').value) / 100,
+    retSat:   parseInt(document.getElementById('sl-ret-sat').value) / 100,
+    profit:   parseFloat(document.getElementById('in-profit').value) || 250,
+    cost:     parseFloat(document.getElementById('in-cost').value) || 0,
+  };
+}
+
+function calc(inp){
+  const satCount   = Math.round(inp.total * (1 - inp.disPct));
+  const disCount   = Math.round(inp.total * inp.disPct);
+  const compCount  = Math.round(disCount * inp.compPct);
+  const silentCount= disCount - compCount;
+
+  const retSatN    = Math.round(satCount * inp.retSat);
+  const retCompN   = Math.round(compCount * inp.retC);
+  const retSilentN = Math.round(silentCount * inp.retS);
+  const lostSilentN= silentCount - retSilentN;
+  const lostSatN   = satCount - retSatN;
+  const lostCompN  = compCount - retCompN;
+
+  const totalRetained = retSatN + retCompN + retSilentN;
+  const totalLost     = inp.total - totalRetained;
+  const totalProfit   = totalRetained * inp.profit;
+
+  // Baseline: 0% complain — all dissatisfied go to silent path
+  const baselineRetDis = Math.round(disCount * inp.retS);
+  const baselineRet    = retSatN + baselineRetDis;
+  const incremental    = totalRetained - baselineRet;
+  const incProfit      = incremental * inp.profit;
+  const maxCost        = incProfit;
+  const justified      = inp.cost > 0 && inp.cost <= maxCost;
+  const perCust        = incremental > 0 ? maxCost / incremental : 0;
+
+  return {
+    satCount,disCount,compCount,silentCount,
+    retSatN,retCompN,retSilentN,lostSilentN,lostSatN,lostCompN,
+    totalRetained,totalLost,totalProfit,
+    incremental,incProfit,maxCost,perCust,justified,
+  };
+}
+
+function fmtN(n){ return Math.round(n).toLocaleString(); }
+function fmtD(n){ return '$'+Math.round(n).toLocaleString(); }
+function fmtPct(n){ return (n*100).toFixed(1)+'%'; }
+
+function updateFlow(inp, r){
+  document.getElementById('fn-total').textContent   = fmtN(inp.total);
+  document.getElementById('fn-total-sub').textContent= '100%';
+  document.getElementById('fn-sat').textContent      = fmtN(r.satCount);
+  document.getElementById('fn-sat-sub').textContent  = fmtPct(1-inp.disPct)+' of base';
+  document.getElementById('fn-dis').textContent      = fmtN(r.disCount);
+  document.getElementById('fn-dis-sub').textContent  = fmtPct(inp.disPct)+' of base';
+  document.getElementById('fn-comp').textContent     = fmtN(r.compCount);
+  document.getElementById('fn-comp-sub').textContent = fmtPct(inp.compPct)+' of dissatisfied';
+  document.getElementById('fn-silent').textContent   = fmtN(r.silentCount);
+  document.getElementById('fn-silent-sub').textContent= fmtPct(1-inp.compPct)+' of dissatisfied';
+  document.getElementById('fn-r-sat').textContent    = fmtN(r.retSatN);
+  document.getElementById('fn-r-sat-sub').textContent= fmtPct(inp.retSat)+' retention';
+  document.getElementById('fn-r-comp').textContent   = fmtN(r.retCompN);
+  document.getElementById('fn-r-comp-sub').textContent= fmtPct(inp.retC)+' retention';
+  document.getElementById('fn-r-silent').textContent = fmtN(r.retSilentN);
+  document.getElementById('fn-r-silent-sub').textContent= fmtPct(inp.retS)+' retention';
+  document.getElementById('fn-lost').textContent     = fmtN(r.lostSilentN);
+  document.getElementById('fn-lost-sub').textContent = fmtPct(1-inp.retS)+' exit rate';
+}
+
+function updateStats(inp, r){
+  document.getElementById('stat-total-ret').textContent  = fmtN(r.totalRetained);
+  document.getElementById('stat-pct-ret').textContent    = fmtPct(r.totalRetained/inp.total);
+  document.getElementById('stat-lost').textContent       = fmtN(r.totalLost);
+  document.getElementById('stat-profit-total').textContent= fmtD(r.totalProfit);
+
+  document.getElementById('stat-inc-ret').textContent    = r.incremental > 0 ? '+'+fmtN(r.incremental) : fmtN(r.incremental);
+  document.getElementById('stat-inc-profit').textContent = r.incProfit > 0 ? '+'+fmtD(r.incProfit) : fmtD(r.incProfit);
+
+  const incEl = document.getElementById('stat-inc-ret');
+  incEl.className = 'stat-val '+(r.incremental > 0 ? '' : 'red-v');
+
+  // Insight
+  const ins = document.getElementById('incremental-insight');
+  if(inp.compPct === 0){
+    ins.className = 'insight-box amber';
+    ins.innerHTML = '<div class="insight-label">Baseline — no program</div>All dissatisfied customers are in the silent path. Retention rate: '+fmtPct(inp.retS)+'. Increase "motivated to complain" to see the program\'s impact.';
+  } else {
+    ins.className = 'insight-box teal';
+    ins.innerHTML = '<div class="insight-label">Program impact vs. 0% complaint rate</div>Motivating <strong>'+fmtPct(inp.compPct)+'</strong> of dissatisfied customers to complain retains <strong>'+fmtN(r.incremental)+' additional customers</strong> worth <strong>'+fmtD(r.incProfit)+'</strong> annually.';
+  }
+}
+
+function updateBreakeven(inp, r){
+  document.getElementById('be-customers').textContent = fmtN(r.incremental);
+  document.getElementById('be-value').textContent     = fmtD(inp.profit)+'/customer';
+  document.getElementById('be-max').textContent       = fmtD(r.maxCost);
+  document.getElementById('be-entered').textContent   = fmtD(inp.cost);
+
+  const verdict = document.getElementById('be-verdict');
+  if(inp.cost === 0){
+    verdict.className = 'breakeven-verdict justified';
+    verdict.textContent = 'Enter a program cost above to evaluate financial justification.';
+  } else if(r.incremental <= 0){
+    verdict.className = 'breakeven-verdict not-justified';
+    verdict.textContent = 'No incremental customers retained — program is not justified at any cost.';
+  } else if(r.justified){
+    const surplus = r.maxCost - inp.cost;
+    verdict.className = 'breakeven-verdict justified';
+    verdict.textContent = 'Program is financially justified. Incremental profit ($'+Math.round(r.incProfit).toLocaleString()+') exceeds program cost ($'+Math.round(inp.cost).toLocaleString()+') by $'+Math.round(surplus).toLocaleString()+'.';
+  } else {
+    const shortfall = inp.cost - r.maxCost;
+    verdict.className = 'breakeven-verdict not-justified';
+    verdict.textContent = 'Program is NOT justified. Program cost ($'+Math.round(inp.cost).toLocaleString()+') exceeds incremental profit ($'+Math.round(r.incProfit).toLocaleString()+') by $'+Math.round(shortfall).toLocaleString()+'. Reduce cost or increase complaint motivation rate.';
+  }
+}
+
+function buildChart(){
+  const ctx = document.getElementById('retChart').getContext('2d');
+  retChart = new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['Satisfied retained','Complainers retained','Silent retained','Lost (silent)'],
+      datasets:[{
+        data:[63000,2400,4590,22410],
+        backgroundColor:['#0D9B87','#1DC9B7','#7DCCBB','#E24B4A'],
+        borderRadius:3,borderSkipped:false
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+Math.round(c.raw).toLocaleString()+' customers'}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:9},color:'#7A9896',maxRotation:30}},
+        y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},color:'#7A9896',callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v}}
+      }
+    }
+  });
+}
+
+function updateChart(r){
+  if(!retChart) return;
+  retChart.data.datasets[0].data = [r.retSatN, r.retCompN, r.retSilentN, r.lostSilentN];
+  retChart.update('none');
+}
+
+function update(){
+  const inp = getInputs();
+  const r = calc(inp);
+  updateFlow(inp, r);
+  updateStats(inp, r);
+  updateBreakeven(inp, r);
+  updateChart(r);
+}
+
+function bindSlider(id, valId, suffix='%'){
+  const sl = document.getElementById(id);
+  const vl = document.getElementById(valId);
+  sl.addEventListener('input', ()=>{
+    vl.textContent = sl.value + suffix;
+    update();
+  });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  bindSlider('sl-dissatisfied','vl-dissatisfied');
+  bindSlider('sl-complain','vl-complain');
+  bindSlider('sl-ret-c','vl-ret-c');
+  bindSlider('sl-ret-s','vl-ret-s');
+  bindSlider('sl-ret-sat','vl-ret-sat');
+  ['in-total','in-profit','in-cost'].forEach(id=>{
+    document.getElementById(id).addEventListener('input',update);
+  });
+
+  const focusModeBtn = document.getElementById('focusModeBtn');
+  if(focusModeBtn){
+    focusModeBtn.addEventListener('click',()=>{
+      const enabled = document.body.classList.toggle('focus-mode');
+      focusModeBtn.textContent = enabled ? 'Exit Focus Mode' : 'Focus Mode';
+      focusModeBtn.setAttribute('aria-pressed', String(enabled));
+    });
+  }
+
+  buildChart();
+  update();
+});
+</script>
+</body>
+</html>

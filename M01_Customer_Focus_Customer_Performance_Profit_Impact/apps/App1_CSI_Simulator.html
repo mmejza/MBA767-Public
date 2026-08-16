@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App 1: CSI & Profit Simulator — MKT 472 M01</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700;800&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#0D9B87;--teal-dk:#0D7A6B;--teal-lt:#E5F5F3;--teal-bd:#C8E8E4;
+  --navy:#0F2027;--white:#FFFFFF;--off:#F7FDFC;
+  --amber:#E6A800;--amb-lt:#FFF8E6;--amb-bd:#F5D78A;
+  --red:#C0392B;--red-lt:#FEF5F5;--red-bd:#F5BFBF;
+  --pos:#0D7A6B;--neg:#C0392B;
+  --text:#1A2E2C;--muted:#7A9896;--border:#E0EEEC;--gray:#F2F4F3;
+}
+
+body{
+  font-family:'Barlow',sans-serif;
+  background:var(--gray);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.5;
+  padding:0;
+}
+
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:-999px;
+  background:#12222d;
+  color:#fff;
+  padding:.45rem .7rem;
+  border-radius:8px;
+  z-index:1000;
+}
+
+.skip-link:focus{
+  left:.7rem;
+  top:.7rem;
+}
+
+.page-shell{
+  max-width:1100px;
+  margin:0 auto;
+  display:grid;
+  gap:14px;
+  padding:0 0 12px;
+}
+
+.quiz-card,
+.required-callout,
+.how-to,
+.interactive-app,
+.results-dashboard,
+.canvas-reminder,
+.compact-header{
+  margin:0 16px;
+  border:.5px solid var(--border);
+  border-radius:8px;
+  background:var(--white);
+  padding:14px 16px;
+  box-shadow:0 6px 14px rgba(15,32,39,.06);
+}
+
+.compact-header h1{
+  margin:0;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(1.45rem,2vw,1.58rem);
+  font-weight:800;
+  line-height:1.1;
+  color:var(--navy);
+}
+
+.compact-header .module-tag{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:4px;
+  display:block;
+}
+
+.compact-header p{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:.92rem;
+}
+
+.quiz-card h2,
+.interactive-head h2,
+.results-dashboard h2,
+.how-to summary{
+  margin:0 0 6px;
+  font-size:1.2rem;
+  color:var(--teal-dk);
+  font-weight:600;
+}
+
+.quiz-card p,
+.required-callout p,
+.how-to li,
+.results-dashboard p{
+  margin:0;
+  font-size:.92rem;
+}
+
+.quiz-card ol,
+.how-to ol{
+  margin:0;
+  padding-left:1.2rem;
+  display:grid;
+  gap:.15rem;
+}
+
+.required-callout{
+  border-left:4px solid var(--amber);
+}
+
+.required-label{
+  margin:0 0 4px;
+  color:#8a651d;
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  font-weight:700;
+}
+
+.how-to summary{
+  cursor:pointer;
+  font-weight:700;
+}
+
+.how-to[open] summary{margin-bottom:8px;}
+
+.interactive-app{
+  display:grid;
+  gap:12px;
+  padding:14px 0 0;
+  overflow:hidden;
+}
+
+.interactive-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:0 16px;
+}
+
+.focus-btn{
+  border:1px solid var(--teal-bd);
+  border-radius:8px;
+  background:var(--white);
+  color:var(--teal-dk);
+  padding:7px 10px;
+  font-size:.84rem;
+  font-weight:600;
+  cursor:pointer;
+  font-family:'Barlow',sans-serif;
+}
+
+.quiz-workflow-banner{
+  margin:0 16px;
+  border:1px solid var(--teal-bd);
+  border-radius:10px;
+  background:var(--teal-lt);
+  color:var(--navy);
+  padding:10px 12px;
+  font-weight:700;
+  font-size:14px;
+}
+
+.results-dashboard p{color:var(--muted);}
+
+.canvas-reminder{
+  text-align:center;
+  font-size:.82rem;
+  color:var(--muted);
+  padding-top:8px;
+  padding-bottom:8px;
+}
+
+body.focus-mode [data-focus-hide]{display:none;}
+
+.app-header{
+  background:var(--navy);
+  color:#fff;
+  padding:12px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:3px solid var(--teal);
+}
+.app-header .module-tag{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:9px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--teal);margin-bottom:2px;
+}
+.app-header h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:16px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.02em;color:#fff;
+}
+.lo-badge{
+  background:rgba(13,155,135,.2);border:.5px solid var(--teal);
+  color:var(--teal);font-size:10px;font-weight:600;
+  padding:3px 8px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;
+  letter-spacing:.05em;
+}
+
+.main{
+  display:grid;
+  grid-template-columns:1fr 340px;
+  gap:16px;
+  padding:16px;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+/* ── Left column ── */
+.left{display:flex;flex-direction:column;gap:12px;}
+
+/* Preset buttons */
+.presets{
+  background:var(--white);
+  border:.5px solid var(--border);
+  border-radius:8px;
+  padding:14px 16px;
+}
+.presets-label{
+  font-size:11px;font-weight:600;color:var(--muted);
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;
+}
+.preset-row{display:flex;gap:8px;flex-wrap:wrap;}
+.preset-btn{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;
+  padding:6px 14px;border-radius:4px;cursor:pointer;
+  border:.5px solid var(--border);
+  background:var(--gray);color:var(--text);
+  transition:all .15s;
+}
+.preset-btn:hover{background:var(--teal-lt);border-color:var(--teal);color:var(--teal-dk);}
+.preset-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.preset-btn.trap{background:var(--amb-lt);border-color:var(--amb-bd);color:#8A6000;}
+.preset-btn.trap:hover,.preset-btn.trap.active{background:var(--amber);border-color:var(--amber);color:var(--navy);}
+
+/* Sliders */
+.sliders-card{
+  background:var(--white);
+  border:.5px solid var(--border);
+  border-radius:8px;
+  padding:14px 16px;
+}
+.sliders-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:12px;
+}
+.sliders-label{
+  font-size:11px;font-weight:600;color:var(--muted);
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.total-display{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:700;
+}
+.total-display.ok{color:var(--teal-dk);}
+.total-display.bad{color:var(--red);}
+
+.slider-row{
+  display:grid;
+  grid-template-columns:140px 1fr 44px;
+  align-items:center;
+  gap:10px;
+  padding:5px 0;
+  border-bottom:.5px solid var(--border);
+}
+.slider-row:last-child{border-bottom:none;}
+.tier-label{
+  font-size:12px;font-weight:500;color:var(--text);
+  display:flex;align-items:center;gap:6px;
+}
+.tier-dot{
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+}
+.slider-row input[type=range]{
+  width:100%;
+  accent-color:var(--teal);
+  cursor:pointer;
+}
+.pct-val{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:700;
+  color:var(--text);text-align:right;
+  min-width:36px;
+}
+
+/* Results table */
+.results-card{
+  background:var(--white);
+  border:.5px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+}
+.results-header{
+  padding:10px 16px;
+  background:var(--navy);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.results-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;color:var(--teal);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.locked-msg{
+  font-size:11px;color:rgba(255,255,255,.4);font-style:italic;
+}
+
+table.results-tbl{
+  width:100%;border-collapse:collapse;
+  font-size:12px;
+}
+table.results-tbl th{
+  background:var(--off);
+  padding:6px 8px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);border-bottom:.5px solid var(--border);
+  text-align:right;
+}
+table.results-tbl th:first-child{text-align:left;}
+table.results-tbl td{
+  padding:5px 8px;
+  border-bottom:.5px solid var(--border);
+  text-align:right;color:var(--text);
+  font-size:12px;
+}
+table.results-tbl td:first-child{
+  text-align:left;font-weight:500;
+}
+table.results-tbl tr:last-child td{
+  background:var(--teal-lt);
+  font-weight:600;color:var(--teal-dk);
+  border-top:1.5px solid var(--teal);
+  border-bottom:none;
+}
+.neg-val{color:var(--neg);font-weight:600;}
+.pos-val{color:var(--pos);font-weight:500;}
+
+/* ── Right column ── */
+.right{display:flex;flex-direction:column;gap:12px;}
+
+/* Summary stats */
+.stats-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+}
+.stat-card{
+  background:var(--white);
+  border:.5px solid var(--border);
+  border-radius:8px;
+  padding:12px 14px;
+  text-align:center;
+}
+.stat-label{
+  font-size:10px;font-weight:500;color:var(--muted);
+  letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px;
+}
+.stat-val{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:26px;font-weight:800;line-height:1;
+  color:var(--teal-dk);
+}
+.stat-val.amber-val{color:#B87800;}
+.stat-val.red-val{color:var(--red);}
+
+/* Chart */
+.chart-card{
+  background:var(--white);
+  border:.5px solid var(--border);
+  border-radius:8px;
+  padding:14px 16px;
+}
+.chart-label{
+  font-size:11px;font-weight:600;color:var(--muted);
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;
+}
+.chart-wrap{position:relative;height:200px;}
+
+/* Profitable counter */
+.profitable-card{
+  background:var(--white);
+  border:.5px solid var(--border);
+  border-radius:8px;
+  padding:12px 16px;
+  display:flex;align-items:center;gap:12px;
+}
+.profitable-icon{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:800;
+}
+.profitable-icon.good{background:var(--teal-lt);color:var(--teal-dk);}
+.profitable-icon.warn{background:var(--amb-lt);color:#B87800;}
+.profitable-icon.bad{background:var(--red-lt);color:var(--red);}
+.profitable-text p{font-size:12px;color:var(--muted);margin-top:2px;}
+.profitable-text strong{font-size:13px;font-weight:600;color:var(--text);}
+
+/* Insight box */
+.insight-box{
+  border-radius:8px;
+  padding:12px 14px;
+  font-size:12px;
+  line-height:1.55;
+  border-left:3px solid transparent;
+}
+.insight-box.teal{background:var(--teal-lt);border-color:var(--teal);color:var(--teal-dk);}
+.insight-box.amber{background:var(--amb-lt);border-color:var(--amber);color:#5C4200;}
+.insight-box.red{background:var(--red-lt);border-color:var(--red);color:#7A1A1A;}
+.insight-label{
+  font-size:9px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:5px;
+  font-family:'Barlow Condensed',sans-serif;
+}
+
+/* Worksheet */
+.worksheet-card{
+  background:var(--white);
+  border:.5px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+}
+.worksheet-header{
+  background:var(--navy);
+  padding:10px 16px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;
+  color:var(--teal);letter-spacing:.1em;text-transform:uppercase;
+}
+.worksheet-body{padding:14px 16px;}
+.q-block{margin-bottom:14px;}
+.q-block:last-child{margin-bottom:0;}
+.q-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--teal);color:#fff;
+  font-size:10px;font-weight:700;
+  flex-shrink:0;margin-right:8px;margin-bottom:6px;
+}
+.q-text{font-size:12px;color:var(--text);line-height:1.5;margin-bottom:8px;}
+.q-pts{
+  font-size:10px;color:var(--muted);font-style:italic;
+  float:right;
+}
+textarea{
+  width:100%;border:.5px solid var(--border);
+  border-radius:6px;padding:8px 10px;
+  font-family:'Barlow',sans-serif;font-size:12px;
+  color:var(--text);resize:vertical;min-height:70px;
+  background:var(--off);
+  outline:none;
+}
+textarea:focus{border-color:var(--teal);background:#fff;}
+.submit-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:12px;padding-top:12px;
+  border-top:.5px solid var(--border);
+}
+.submit-btn{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:7px 20px;border-radius:4px;cursor:pointer;
+  background:var(--teal);color:#fff;border:none;
+  transition:background .15s;
+}
+.submit-btn:hover{background:var(--teal-dk);}
+.submit-msg{font-size:11px;color:var(--muted);font-style:italic;}
+
+button:focus,
+input:focus,
+summary:focus,
+textarea:focus{
+  outline:2px solid #0D9B87;
+  outline-offset:1px;
+}
+
+@media(max-width:800px){
+  .compact-header,
+  .quiz-card,
+  .required-callout,
+  .how-to,
+  .interactive-app,
+  .results-dashboard,
+  .canvas-reminder{
+    margin:0 10px;
+    padding:12px;
+  }
+  .interactive-head,
+  .quiz-workflow-banner{
+    padding-left:12px;
+    padding-right:12px;
+  }
+  .main{grid-template-columns:1fr;}
+  .right{order:2;}
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+
+<div class="page-shell">
+
+<section class="compact-header">
+  <span class="module-tag">M01 · App 1 of 3</span>
+  <h1>CSI &amp; Profit Simulator</h1>
+  <p>Model how customer satisfaction distribution changes weighted-average CSI and average profit across satisfaction tiers.</p>
+</section>
+
+<section class="quiz-card" data-focus-hide>
+  <h2>Learning Goal</h2>
+  <p>Use the customer distribution and tier economics to calculate weighted-average CSI and interpret what the score reveals, and what it conceals, about firm performance. This app is designed to surface the module's central trap: removing dissatisfied customers does not automatically improve average profit.</p>
+</section>
+
+<section class="quiz-card" data-focus-hide>
+  <h2>Worksheet Quiz Instructions</h2>
+  <ol>
+    <li>Read the Canvas quiz question first.</li>
+    <li>Follow the preset, scenario, or modifications specified in the question.</li>
+    <li>Use this app to perform the required calculations and analysis.</li>
+    <li>Enter your answers in the Canvas quiz.</li>
+    <li>Answers are submitted through Canvas, not through this app.</li>
+  </ol>
+</section>
+
+<section class="required-callout" data-focus-hide>
+  <p class="required-label">Required for Quiz</p>
+  <p>Question 1-A assigns you a full 6-tier customer-satisfaction distribution specific to your section. Set all 6 sliders to your assigned distribution before answering any question; do not use the "Base Case" or "No Dissatisfied Customers" preset buttons. Question 2 asks you to find a percentage-point shift the app does not compute directly — use only the two named tier sliders and the dashboard's own profit and CSI reads to find it.</p>
+</section>
+
+<details class="how-to" data-focus-hide>
+  <summary>How to Use This App</summary>
+  <ol>
+    <li>Load a preset or adjust the customer distribution sliders until the total equals 100%.</li>
+    <li>Review the profitability-by-tier table and weighted-average row for CSI, revenue, margin, and profit effects.</li>
+    <li>Use the summary cards and profit chart to compare distribution changes visually.</li>
+    <li>Read the insight box to interpret the current distribution and identify the dissatisfied-customer trap.</li>
+  </ol>
+</details>
+
+<section class="interactive-app" id="interactiveApp">
+  <div class="interactive-head">
+    <h2>Interactive App</h2>
+    <button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+  </div>
+  <p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+<div class="app-header">
+  <div>
+    <div class="module-tag">M01 · App 1 of 3</div>
+    <h1>CSI &amp; Profit Simulator</h1>
+  </div>
+  <span class="lo-badge">LO2</span>
+</div>
+
+<div class="main">
+
+  <!-- ── LEFT COLUMN ── -->
+  <div class="left">
+
+    <!-- Presets -->
+    <div class="presets">
+      <div class="presets-label">Scenario presets</div>
+      <div class="preset-row">
+        <button class="preset-btn active" id="btn-base" onclick="loadPreset('base')">Base case</button>
+        <button class="preset-btn trap" id="btn-trap" onclick="loadPreset('trap')">No dissatisfied customers</button>
+        <button class="preset-btn" id="btn-reset" onclick="loadPreset('blank')">Reset to blank</button>
+      </div>
+    </div>
+
+    <!-- Sliders -->
+    <div class="sliders-card">
+      <div class="sliders-header">
+        <div class="sliders-label">Customer distribution</div>
+        <div class="total-display ok" id="total-display">Total: 100%</div>
+      </div>
+
+      <div id="slider-container"></div>
+    </div>
+
+    <!-- Results table -->
+    <div class="results-card">
+      <div class="results-header">
+        <div class="results-title">Profitability by satisfaction tier</div>
+        <div class="locked-msg" id="locked-msg"></div>
+      </div>
+      <table class="results-tbl">
+        <thead>
+          <tr>
+            <th>Satisfaction tier</th>
+            <th>%</th>
+            <th>CSI</th>
+            <th>Revenue</th>
+            <th>Gross %</th>
+            <th>Gross ($)</th>
+            <th>Ret. cost</th>
+            <th>Profit</th>
+          </tr>
+        </thead>
+        <tbody id="results-tbody"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ── RIGHT COLUMN ── -->
+  <div class="right">
+
+    <!-- Summary stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Avg CSI score</div>
+        <div class="stat-val" id="stat-csi">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg customer profit</div>
+        <div class="stat-val" id="stat-profit">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg revenue</div>
+        <div class="stat-val" id="stat-rev">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg gross margin</div>
+        <div class="stat-val" id="stat-margin">—</div>
+      </div>
+    </div>
+
+    <!-- Profitable counter -->
+    <div class="profitable-card" id="profitable-card">
+      <div class="profitable-icon good" id="profitable-icon">—</div>
+      <div class="profitable-text">
+        <strong id="profitable-strong">Adjust sliders to calculate</strong>
+        <p id="profitable-sub">Set distribution to 100% total</p>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-card">
+      <div class="chart-label">Customer profit by satisfaction tier</div>
+      <div class="chart-wrap">
+        <canvas id="profitChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Dynamic insight -->
+    <div id="insight-container"></div>
+
+  </div>
+</div>
+
+</section>
+
+<section class="results-dashboard" aria-label="Results Dashboard">
+  <h2>Results / Dashboard</h2>
+  <p>Use the weighted-average row, summary metrics, profit chart, and insight box to complete the Canvas quiz responses.</p>
+</section>
+
+<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+
+</div>
+
+<script>
+const TIERS = [
+  { key:'VS', label:'Very Satisfied',        csi:100, rev:1200, gp:0.60, rc:100, color:'#0D9B87' },
+  { key:'S',  label:'Satisfied',             csi:80,  rev:800,  gp:0.50, rc:100, color:'#1DC9B7' },
+  { key:'SS', label:'Somewhat Satisfied',    csi:60,  rev:300,  gp:0.40, rc:100, color:'#7DCCBB' },
+  { key:'SD', label:'Somewhat Dissatisfied', csi:40,  rev:80,   gp:0.40, rc:100, color:'#FAC775' },
+  { key:'D',  label:'Dissatisfied',          csi:20,  rev:60,   gp:0.40, rc:100, color:'#EF9F27' },
+  { key:'VD', label:'Very Dissatisfied',     csi:0,   rev:50,   gp:0.40, rc:100, color:'#E24B4A' },
+];
+
+const PRESETS = {
+  base:  { VS:25, S:35, SS:20, SD:15, D:3,  VD:2  },
+  trap:  { VS:10, S:35, SS:55, SD:0,  D:0,  VD:0  },
+  blank: { VS:0,  S:0,  SS:0,  SD:0,  D:0,  VD:0  },
+};
+
+let state = { VS:25, S:35, SS:20, SD:15, D:3, VD:2 };
+let chart = null;
+let activePreset = 'base';
+
+function fmt$(n){ return n < 0 ? '−$'+Math.abs(n).toFixed(0) : '$'+n.toFixed(0); }
+function fmtPct(n){ return n.toFixed(1)+'%'; }
+function total(){ return Object.values(state).reduce((a,b)=>a+b,0); }
+
+function calcTier(t){
+  const pct = state[t.key];
+  const gross = t.rev * t.gp;
+  const profit = gross - t.rc;
+  return { pct, csi: t.csi, rev: t.rev, gpPct: t.gp*100, gross, rc: t.rc, profit };
+}
+
+function calcWeighted(){
+  const tot = total();
+  if(tot === 0) return null;
+  let wCSI=0, wRev=0, wGP=0, wProfit=0;
+  TIERS.forEach(t => {
+    const d = calcTier(t);
+    const w = d.pct/100;
+    wCSI    += w * t.csi;
+    wRev    += w * t.rev;
+    wGP     += w * d.gpPct;
+    wProfit += w * d.profit;
+  });
+  return { csi:wCSI, rev:wRev, gp:wGP, profit:wProfit };
+}
+
+function buildSliders(){
+  const container = document.getElementById('slider-container');
+  container.innerHTML = '';
+  TIERS.forEach(t => {
+    const row = document.createElement('div');
+    row.className = 'slider-row';
+    row.innerHTML = `
+      <div class="tier-label">
+        <div class="tier-dot" style="background:${t.color}"></div>
+        ${t.label}
+      </div>
+      <input type="range" id="sl-${t.key}" min="0" max="100" step="1" value="${state[t.key]}">
+      <div class="pct-val" id="pv-${t.key}">${state[t.key]}%</div>`;
+    container.appendChild(row);
+    row.querySelector('input').addEventListener('input', e => {
+      state[t.key] = parseInt(e.target.value);
+      document.getElementById('pv-'+t.key).textContent = state[t.key]+'%';
+      activePreset = '';
+      updatePresetButtons();
+      update();
+    });
+  });
+}
+
+function updatePresetButtons(){
+  ['base','trap','blank'].forEach(p => {
+    const btn = document.getElementById('btn-'+p);
+    if(btn) btn.classList.toggle('active', activePreset === p);
+  });
+}
+
+function loadPreset(name){
+  const p = PRESETS[name];
+  Object.keys(p).forEach(k => {
+    state[k] = p[k];
+    const sl = document.getElementById('sl-'+k);
+    const pv = document.getElementById('pv-'+k);
+    if(sl) sl.value = p[k];
+    if(pv) pv.textContent = p[k]+'%';
+  });
+  activePreset = name;
+  updatePresetButtons();
+  update();
+}
+
+function buildChart(){
+  const ctx = document.getElementById('profitChart').getContext('2d');
+  chart = new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels: TIERS.map(t => t.label.replace('Somewhat ','S.')),
+      datasets:[{
+        label:'Profit per customer',
+        data: TIERS.map(t => calcTier(t).profit),
+        backgroundColor: TIERS.map(t => {
+          const p = calcTier(t).profit;
+          return p >= 0 ? t.color : '#E24B4A';
+        }),
+        borderRadius:3,
+        borderSkipped:false,
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            label: ctx => ' $'+ctx.raw.toFixed(0)+' profit'
+          }
+        }
+      },
+      scales:{
+        x:{
+          grid:{color:'rgba(0,0,0,.04)'},
+          ticks:{font:{size:10},color:'#7A9896'}
+        },
+        y:{
+          grid:{color:'rgba(0,0,0,.04)'},
+          ticks:{
+            font:{size:10},color:'#7A9896',
+            callback: v => '$'+v
+          }
+        }
+      }
+    }
+  });
+}
+
+function updateChart(wAvg){
+  if(!chart) return;
+  const profits = TIERS.map(t => calcTier(t).profit);
+  chart.data.datasets[0].data = profits;
+  chart.data.datasets[0].backgroundColor = profits.map((p,i) =>
+    p >= 0 ? TIERS[i].color : '#E24B4A');
+
+  if(wAvg !== null){
+    chart.options.plugins.annotation = undefined;
+    const avgLine = {
+      type:'line',
+      yMin: wAvg.profit,
+      yMax: wAvg.profit,
+      borderColor:'#0F2027',
+      borderWidth:2,
+      borderDash:[4,4],
+      label:{
+        display:true,
+        content:'Avg $'+wAvg.profit.toFixed(0),
+        position:'end',
+        backgroundColor:'#0F2027',
+        color:'#fff',
+        font:{size:10},
+        padding:{x:6,y:3}
+      }
+    };
+    if(!chart.options.plugins.annotation){
+      chart.options.plugins.annotation = {annotations:{avgLine}};
+    } else {
+      chart.options.plugins.annotation.annotations.avgLine = avgLine;
+    }
+  }
+  chart.update('none');
+}
+
+function update(){
+  const tot = total();
+  const totalEl = document.getElementById('total-display');
+  const lockedEl = document.getElementById('locked-msg');
+
+  totalEl.textContent = 'Total: '+tot+'%';
+  totalEl.className = 'total-display '+(tot===100?'ok':'bad');
+
+  if(tot !== 100){
+    lockedEl.textContent = 'Set total to 100% to calculate';
+    clearResults();
+    return;
+  }
+  lockedEl.textContent = '';
+
+  const wAvg = calcWeighted();
+
+  updateResultsTable(wAvg);
+  updateStats(wAvg);
+  updateProfitable(wAvg);
+  updateChart(wAvg);
+  updateInsight(wAvg);
+}
+
+function clearResults(){
+  document.getElementById('results-tbody').innerHTML = '';
+  ['stat-csi','stat-profit','stat-rev','stat-margin'].forEach(id => {
+    document.getElementById(id).textContent = '—';
+  });
+  document.getElementById('profitable-strong').textContent = 'Adjust sliders to calculate';
+  document.getElementById('profitable-sub').textContent = 'Set distribution to 100% total';
+  document.getElementById('insight-container').innerHTML = '';
+  if(chart){
+    chart.data.datasets[0].data = TIERS.map(()=>0);
+    chart.update('none');
+  }
+}
+
+function updateResultsTable(wAvg){
+  const tbody = document.getElementById('results-tbody');
+  tbody.innerHTML = '';
+
+  TIERS.forEach(t => {
+    const d = calcTier(t);
+    const tr = document.createElement('tr');
+    const profClass = d.profit < 0 ? 'neg-val' : (d.profit > 200 ? 'pos-val' : '');
+    tr.innerHTML = `
+      <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${t.color};margin-right:6px;vertical-align:middle;"></span>${t.label}</td>
+      <td>${d.pct}%</td>
+      <td>${d.csi}</td>
+      <td>$${d.rev.toLocaleString()}</td>
+      <td>${d.gpPct.toFixed(0)}%</td>
+      <td>$${d.gross.toFixed(0)}</td>
+      <td>$${d.rc}</td>
+      <td class="${profClass}">${fmt$(d.profit)}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  if(wAvg){
+    const tr = document.createElement('tr');
+    const profClass = wAvg.profit < 0 ? 'neg-val' : '';
+    tr.innerHTML = `
+      <td>Weighted average</td>
+      <td>100%</td>
+      <td>${wAvg.csi.toFixed(1)}</td>
+      <td>$${wAvg.rev.toFixed(0)}</td>
+      <td>${wAvg.gp.toFixed(1)}%</td>
+      <td>—</td>
+      <td>$100</td>
+      <td class="${profClass}">${fmt$(wAvg.profit)}</td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+function updateStats(wAvg){
+  if(!wAvg) return;
+  const csiEl = document.getElementById('stat-csi');
+  const profEl = document.getElementById('stat-profit');
+  const revEl = document.getElementById('stat-rev');
+  const marEl = document.getElementById('stat-margin');
+
+  csiEl.textContent = wAvg.csi.toFixed(1);
+  csiEl.className = 'stat-val';
+
+  profEl.textContent = fmt$(wAvg.profit);
+  profEl.className = 'stat-val '+(wAvg.profit < 0 ? 'red-val' : wAvg.profit > 300 ? '' : '');
+
+  revEl.textContent = '$'+wAvg.rev.toFixed(0);
+  revEl.className = 'stat-val';
+
+  marEl.textContent = wAvg.gp.toFixed(1)+'%';
+  marEl.className = 'stat-val';
+}
+
+function updateProfitable(wAvg){
+  const profCount = TIERS.filter(t => calcTier(t).profit >= 0 && state[t.key] > 0).length;
+  const profPct = TIERS.reduce((sum,t) => {
+    return calcTier(t).profit >= 0 ? sum + state[t.key] : sum;
+  }, 0);
+
+  const iconEl = document.getElementById('profitable-icon');
+  const strongEl = document.getElementById('profitable-strong');
+  const subEl = document.getElementById('profitable-sub');
+
+  strongEl.textContent = profPct+'% of customers are profitable';
+  subEl.textContent = profCount+' of 6 satisfaction tiers generate positive profit';
+
+  iconEl.textContent = profPct+'%';
+  if(profPct >= 80){
+    iconEl.className = 'profitable-icon good';
+  } else if(profPct >= 60){
+    iconEl.className = 'profitable-icon warn';
+  } else {
+    iconEl.className = 'profitable-icon bad';
+  }
+}
+
+function updateInsight(wAvg){
+  const container = document.getElementById('insight-container');
+  container.innerHTML = '';
+
+  if(!wAvg) return;
+
+  const baseProfit = 250;
+  const diff = wAvg.profit - baseProfit;
+  const pctDiff = ((diff / baseProfit) * 100).toFixed(0);
+  const isTrap = (state.SD === 0 && state.D === 0 && state.VD === 0 && state.SS > 30);
+  const isBase = (state.VS===25 && state.S===35 && state.SS===20 && state.SD===15 && state.D===3 && state.VD===2);
+
+  let box = document.createElement('div');
+
+  if(isBase){
+    box.className = 'insight-box teal';
+    box.innerHTML = `<div class="insight-label">Base case insight</div>
+      The average profit of $250 conceals that <strong>${100 - state.VS - state.S - state.SS}% of customers generate negative profit</strong>. Very Satisfied customers ($620 each) are doing most of the profit work — but they represent only ${state.VS}% of the base.`;
+  } else if(isTrap){
+    box.className = 'insight-box amber';
+    box.innerHTML = `<div class="insight-label">The cognitive trap</div>
+      Average profit is <strong>${fmt$(wAvg.profit)}</strong> — ${diff < 0 ? 'lower' : 'higher'} than the base case ($250). Removing dissatisfied customers shifted the distribution toward Somewhat Satisfied, not toward Very Satisfied. <strong>Averages hide what distributions reveal.</strong>`;
+  } else if(diff > 50){
+    box.className = 'insight-box teal';
+    box.innerHTML = `<div class="insight-label">Above base case</div>
+      Your distribution produces <strong>${fmt$(wAvg.profit)}</strong> average profit — $${Math.abs(diff).toFixed(0)} (${Math.abs(pctDiff)}%) ${diff > 0 ? 'above' : 'below'} the base case. The key driver: Very Satisfied customers at ${state.VS}% of your base.`;
+  } else if(diff < -20){
+    box.className = 'insight-box red';
+    box.innerHTML = `<div class="insight-label">Below base case</div>
+      Average profit has fallen to <strong>${fmt$(wAvg.profit)}</strong>. Check the distribution — shifting customers away from the Very Satisfied tier dramatically reduces average profit even if the CSI score looks acceptable.`;
+  } else {
+    box.className = 'insight-box teal';
+    box.innerHTML = `<div class="insight-label">Current result</div>
+      Average profit: <strong>${fmt$(wAvg.profit)}</strong> · CSI: <strong>${wAvg.csi.toFixed(1)}</strong>. Adjust the distribution to explore what drives profit. Try maximizing Very Satisfied percentage and observe the non-linear effect.`;
+  }
+  container.appendChild(box);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  buildSliders();
+  buildChart();
+
+  const focusModeBtn = document.getElementById('focusModeBtn');
+  if(focusModeBtn){
+    focusModeBtn.addEventListener('click', () => {
+      const enabled = document.body.classList.toggle('focus-mode');
+      focusModeBtn.textContent = enabled ? 'Exit Focus Mode' : 'Focus Mode';
+      focusModeBtn.setAttribute('aria-pressed', String(enabled));
+    });
+  }
+
+  const annotPlugin = {
+    id:'annotPlugin',
+    afterDraw(chart){
+      const wAvg = calcWeighted();
+      if(!wAvg || total()!==100) return;
+      const {ctx, scales:{y}} = chart;
+      const yPx = y.getPixelForValue(wAvg.profit);
+      const left = chart.chartArea.left;
+      const right = chart.chartArea.right;
+      ctx.save();
+      ctx.setLineDash([5,4]);
+      ctx.strokeStyle = '#0F2027';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(left, yPx);
+      ctx.lineTo(right, yPx);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#0F2027';
+      ctx.font = '500 10px Barlow, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText('avg $'+wAvg.profit.toFixed(0), right-4, yPx-4);
+      ctx.restore();
+    }
+  };
+  Chart.register(annotPlugin);
+
+  update();
+});
+</script>
+</body>
+</html>

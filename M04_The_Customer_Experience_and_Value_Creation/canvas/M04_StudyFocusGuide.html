@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MKT 472 · Module 04 · Study Focus Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ── DESIGN TOKENS ───────────────────────────────── */
+  :root {
+    --teal:      #0D9B87;
+    --teal-dk:   #0a7a6b;
+    --teal-lt:   #e6f7f5;
+    --teal-mid:  #b3e4de;
+    --navy:      #0F2027;
+    --navy-mid:  #1a3340;
+    --amber:     #E6A800;
+    --amber-lt:  #fff8e1;
+    --amber-dk:  #b37f00;
+    --gray-lt:   #F2F4F5;
+    --gray-mid:  #D0D5D8;
+    --gray-dk:   #6b7280;
+    --white:     #ffffff;
+    --text:      #1a2630;
+    --text-soft: #4a5568;
+
+    --font-head: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+    --font-body: 'Barlow', Arial, sans-serif;
+
+    --radius:    8px;
+    --radius-sm: 5px;
+    --shadow:    0 2px 8px rgba(15,32,39,0.10);
+    --shadow-md: 0 4px 16px rgba(15,32,39,0.13);
+  }
+
+  /* ── RESET ───────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    background: var(--gray-lt);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── PAGE WRAPPER ────────────────────────────────── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ══════════════════════════════════════════════════
+     1. PAGE HEADER
+  ══════════════════════════════════════════════════ */
+  .page-header {
+    background: var(--navy);
+    padding: 36px 40px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 6px;
+    background: var(--teal);
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 40px; right: 40px;
+    height: 1px;
+    background: rgba(13,155,135,0.35);
+  }
+  .eyebrow {
+    font-family: var(--font-head);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .header-subtitle {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--teal-mid);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* ══════════════════════════════════════════════════
+     2. BADGE ROW
+  ══════════════════════════════════════════════════ */
+  .badge-row {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .badge {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border-right: 1px solid var(--gray-mid);
+  }
+  .badge:last-child { border-right: none; }
+  .badge-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .badge-label {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--gray-dk);
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .badge-value {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  /* ══════════════════════════════════════════════════
+     3. PURPOSE BLOCK
+  ══════════════════════════════════════════════════ */
+  .purpose-block {
+    padding: 28px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+    border-left: 5px solid var(--teal);
+    background: var(--teal-lt);
+  }
+  .purpose-block p {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .purpose-block p:last-child { margin-bottom: 0; }
+  .purpose-block strong { color: var(--navy); font-weight: 600; }
+
+  /* ══════════════════════════════════════════════════
+     4. GATE OVERVIEW CARDS
+  ══════════════════════════════════════════════════ */
+  .gate-section {
+    padding: 32px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .section-label {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-dk);
+    margin-bottom: 16px;
+  }
+  .gate-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .gate-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .gate-card-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .gate-card--g1 .gate-card-header { background: var(--teal); }
+  .gate-card--g2 .gate-card-header { background: var(--navy); }
+  .gate-card-title {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .gate-badge {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .gate-card--g1 .gate-badge {
+    background: rgba(255,255,255,0.25);
+    color: var(--white);
+  }
+  .gate-card--g2 .gate-badge {
+    background: var(--teal);
+    color: var(--white);
+  }
+  .gate-card-body {
+    padding: 16px 20px;
+    background: var(--white);
+    border: 1px solid var(--gray-mid);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+  .gate-spec {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray-lt);
+    font-size: 13.5px;
+  }
+  .gate-spec:last-child { border-bottom: none; padding-bottom: 0; }
+  .gate-spec-key {
+    color: var(--gray-dk);
+    font-weight: 500;
+  }
+  .gate-spec-val {
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+    text-align: right;
+  }
+  .gate-spec-val--teal { color: var(--teal); }
+  .gate-spec-val--amber { color: var(--amber-dk); }
+
+  /* ══════════════════════════════════════════════════
+     5. READING STRATEGY TIPS
+  ══════════════════════════════════════════════════ */
+  .tips-section {
+    padding: 32px 40px;
+    background: var(--gray-lt);
+    border-bottom: 2px solid var(--gray-mid);
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .tip-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    border: 1px solid var(--gray-mid);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .tip-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .tip-title {
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .tip-body {
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.55;
+  }
+
+  /* ══════════════════════════════════════════════════
+     6. QUESTIONS
+  ══════════════════════════════════════════════════ */
+  .questions-section {
+    padding: 32px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .questions-section > .section-label { margin-bottom: 24px; }
+
+  .q-block {
+    margin-bottom: 22px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .q-block:last-child { margin-bottom: 0; }
+
+  /* Gate 1: teal left border */
+  .q-block--g1 { border-left: 5px solid var(--teal); }
+  /* Gate 2: navy left border */
+  .q-block--g2 { border-left: 5px solid var(--navy); }
+
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-lt);
+  }
+
+  .q-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .q-block--g1 .q-num { background: var(--teal); }
+  .q-block--g2 .q-num { background: var(--navy); }
+
+  .q-meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .q-topic {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+  .q-tag-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .q-tag {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .q-tag--g1 { background: var(--teal-lt); color: var(--teal-dk); }
+  .q-tag--g2 { background: #e8ecf0; color: var(--navy); }
+  .q-tag--warn {
+    background: #fff3cd;
+    color: var(--amber-dk);
+    font-size: 11px;
+  }
+
+  .q-loc {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-dk);
+    background: var(--gray-lt);
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .q-body {
+    padding: 18px 20px;
+    background: var(--white);
+  }
+  .q-text {
+    font-size: 14.5px;
+    line-height: 1.68;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .q-text ol {
+    padding-left: 20px;
+    margin-top: 8px;
+  }
+  .q-text ol li {
+    margin-bottom: 5px;
+  }
+
+  .q-hint {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 10px 14px;
+    background: var(--gray-lt);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--gray-dk);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .q-hint::before {
+    content: '→';
+    font-style: normal;
+    color: var(--teal);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ══════════════════════════════════════════════════
+     7. AMBER CALLOUT
+  ══════════════════════════════════════════════════ */
+  .callout-amber {
+    margin: 0 40px;
+    border-radius: var(--radius);
+    border: 2px solid var(--amber);
+    background: var(--amber-lt);
+    padding: 22px 26px;
+    margin-bottom: 0;
+  }
+  .callout-amber-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .callout-amber-icon {
+    font-size: 22px;
+  }
+  .callout-amber-title {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--amber-dk);
+  }
+  .callout-amber-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .callout-amber-body strong {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .callout-amber-list {
+    margin-top: 10px;
+    padding-left: 18px;
+  }
+  .callout-amber-list li {
+    margin-bottom: 6px;
+    font-size: 13.5px;
+    color: var(--text);
+  }
+  .callout-amber-list li strong {
+    color: var(--navy);
+  }
+
+  /* ══════════════════════════════════════════════════
+     8. SEQUENCE FOOTER
+  ══════════════════════════════════════════════════ */
+  .seq-footer {
+    padding: 28px 40px;
+    background: var(--navy);
+    margin-top: 28px;
+  }
+  .seq-label {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+  .seq-track {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .seq-item {
+    flex: 1;
+    min-width: 120px;
+    position: relative;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+  }
+  .seq-item--done {
+    background: rgba(13,155,135,0.12);
+    border: 1px solid rgba(13,155,135,0.3);
+  }
+  .seq-item--current {
+    background: var(--teal);
+    border: 1px solid var(--teal);
+  }
+  .seq-item--next {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .seq-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    color: rgba(255,255,255,0.3);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .seq-step-label {
+    font-family: var(--font-head);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .seq-item--done    .seq-step-label { color: var(--teal); }
+  .seq-item--current .seq-step-label { color: rgba(255,255,255,0.8); }
+  .seq-item--next    .seq-step-label { color: rgba(255,255,255,0.4); }
+  .seq-step-name {
+    font-family: var(--font-head);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .seq-item--done    .seq-step-name { color: rgba(255,255,255,0.7); }
+  .seq-item--current .seq-step-name { color: var(--white); }
+  .seq-item--next    .seq-step-name { color: rgba(255,255,255,0.5); }
+  .seq-item--next-hot .seq-step-name { color: rgba(255,255,255,0.85); }
+  .seq-item--next-hot {
+    background: rgba(230,168,0,0.15);
+    border: 1px solid rgba(230,168,0,0.4);
+  }
+  .seq-item--next-hot .seq-step-label { color: var(--amber); }
+
+  /* ── UTILITY ─────────────────────────────────────── */
+  .spacer-32 { height: 32px; }
+  .spacer-24 { height: 24px; }
+
+  /* ── CANVAS COMPATIBILITY ────────────────────────── */
+  @media (max-width: 600px) {
+    .page-header { padding: 24px 20px 20px; }
+    .badge-row { flex-direction: column; }
+    .badge { border-right: none; border-bottom: 1px solid var(--gray-mid); }
+    .gate-cards { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .purpose-block, .gate-section, .tips-section,
+    .questions-section { padding: 20px 20px; }
+    .callout-amber { margin: 0 20px; }
+    .seq-footer { padding: 20px 20px; }
+    .header-title { font-size: 26px; }
+    .seq-track { flex-direction: column; gap: 8px; }
+    .seq-arrow { transform: rotate(90deg); align-self: center; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ 1. PAGE HEADER ══════════════════════════════ -->
+  <header class="page-header">
+    <div class="eyebrow">MKT 472 &nbsp;·&nbsp; Module 04 &nbsp;·&nbsp; Chapter 4 Reading</div>
+    <h1 class="header-title">Study Focus Guide</h1>
+    <p class="header-subtitle">
+      <em>The Customer Experience and Value Creation</em> &nbsp;·&nbsp;
+      Eight questions to answer while you read &nbsp;·&nbsp; Est. 70–80 min
+    </p>
+  </header>
+
+  <!-- ══ 2. BADGE ROW ════════════════════════════════ -->
+  <div class="badge-row">
+    <div class="badge">
+      <div class="badge-icon">📖</div>
+      <div>
+        <div class="badge-label">Chapter pages</div>
+        <div class="badge-value">pp. 115–147</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">⏱</div>
+      <div>
+        <div class="badge-label">Reading time</div>
+        <div class="badge-value">70–80 min</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">✏️</div>
+      <div>
+        <div class="badge-label">Focus questions</div>
+        <div class="badge-value">8 questions</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">🔓</div>
+      <div>
+        <div class="badge-label">Unlocks</div>
+        <div class="badge-value">Gate 1 → Slides</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 3. PURPOSE BLOCK ════════════════════════════ -->
+  <div class="purpose-block">
+    <p>
+      This guide identifies exactly what to look for as you read Chapter 4.
+      <strong>Gate 1</strong> tests five topics that appear only in the chapter — not in the slides or lecture. 
+      <strong>Gate 2</strong> tests three calculation-based topics that require both the chapter reading and the slide deck. 
+      Both gates draw on the same content this guide points to.
+    </p>
+    <p>
+      Answer these questions in your own words as you read — not before, not after.
+      The questions are not graded. Gate 1 and Gate 2 are.
+    </p>
+  </div>
+
+  <!-- ══ 4. GATE OVERVIEW CARDS ══════════════════════ -->
+  <div class="gate-section">
+    <div class="section-label">Gate Specifications</div>
+    <div class="gate-cards">
+
+      <div class="gate-card gate-card--g1">
+        <div class="gate-card-header">
+          <span class="gate-card-title">Gate 1 — Basic Reading Check</span>
+          <span class="gate-badge">Chapter Only</span>
+        </div>
+        <div class="gate-card-body">
+          <div class="gate-spec">
+            <span class="gate-spec-key">Questions</span>
+            <span class="gate-spec-val">5</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Threshold to pass</span>
+            <span class="gate-spec-val gate-spec-val--teal">80% (4 of 5)</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Attempts</span>
+            <span class="gate-spec-val">2</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Point value</span>
+            <span class="gate-spec-val">0 pts — access only</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Feedback</span>
+            <span class="gate-spec-val">Per-answer with page ref</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Unlocks</span>
+            <span class="gate-spec-val gate-spec-val--teal">Slide Deck Viewer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="gate-card gate-card--g2">
+        <div class="gate-card-header">
+          <span class="gate-card-title">Gate 2 — Applied Reading Check</span>
+          <span class="gate-badge">Chapter + Slides</span>
+        </div>
+        <div class="gate-card-body">
+          <div class="gate-spec">
+            <span class="gate-spec-key">Questions</span>
+            <span class="gate-spec-val">8</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Threshold to pass</span>
+            <span class="gate-spec-val">None — graded as submitted</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Attempts</span>
+            <span class="gate-spec-val gate-spec-val--amber">1 — no retries</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Point value</span>
+            <span class="gate-spec-val gate-spec-val--teal">20 pts (10% of grade)</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Feedback</span>
+            <span class="gate-spec-val">Correct / Incorrect only</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Unlocks</span>
+            <span class="gate-spec-val gate-spec-val--teal">Lecture Video</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ 5. READING STRATEGY TIPS ════════════════════ -->
+  <div class="tips-section">
+    <div class="section-label">Reading Strategy for Chapter 4</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">🗂️</div>
+        <div>
+          <div class="tip-title">Build the company map</div>
+          <div class="tip-body">Chapter 4 uses a named company example for each lifecycle cost category. Create a two-column table as you read: cost category on the left, company name and what they did on the right. Gate 1 Q2 tests this mapping.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⚠️</div>
+        <div>
+          <div class="tip-title">Watch for the sign inversion</div>
+          <div class="tip-body">The Cost of Purchase Index uses the same method as the performance indexes — but the sign means the opposite. A positive relative advantage score on a cost component means your product costs <em>more</em>, not less. Mark this passage when you encounter it.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">📊</div>
+        <div>
+          <div class="tip-title">Work the figures yourself</div>
+          <div class="tip-body">Figures 4-20 through 4-24 show a complete perceived value calculation chain. Don't just read the results — cover the RA column and calculate each number yourself. Gate 2 Q5 and Q6 test this skill with different inputs.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🏷️</div>
+        <div>
+          <div class="tip-title">Memorize the five types</div>
+          <div class="tip-body">Brand personality has five named types with specific traits. Gate 1 Q5 gives you a brand scenario you have never seen and asks you to classify it. If you know the types and traits cold, classification becomes quick. Flashcards help here.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 6. QUESTIONS ════════════════════════════════ -->
+  <div class="questions-section">
+    <div class="section-label">Eight Focus Questions — Answer These While You Read</div>
+
+    <!-- Q1 -->
+    <div class="q-block q-block--g1">
+      <div class="q-header">
+        <div class="q-num">1</div>
+        <div class="q-meta">
+          <div class="q-topic">Total Customer Experience — Three-Stage Model</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g1">Gate 1 · Chapter Only</span>
+          </div>
+        </div>
+        <div class="q-loc">Fig 4-2 · pp. 116–117</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">
+          What are the three stages of the Total Customer Experience model, and what specific activities or interactions occur in each stage? Which stage does the chapter say most product-focused firms neglect — and what strategic opportunity does that neglected stage create for firms willing to invest in understanding it?
+        </div>
+        <div class="q-hint">
+          Record all three stage names and 2–3 activities per stage from Figure 4-2. Flag the neglected stage and the chapter's explanation of what happens there.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-block q-block--g1">
+      <div class="q-header">
+        <div class="q-num">2</div>
+        <div class="q-meta">
+          <div class="q-topic">Lifecycle Cost Categories — Six Types with Industry Examples</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g1">Gate 1 · Chapter Only</span>
+          </div>
+        </div>
+        <div class="q-loc">pp. 126–132 · Figs 4-11 to 4-15</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">
+          Chapter 4 identifies six lifecycle cost categories and uses a specific named company to illustrate each one. For each of the six categories, what is the category name, what does it include, and which company (and product) does the chapter use as its example?
+        </div>
+        <div class="q-hint">
+          Build a 3-column table: category name / what it includes / company example. Key names to look for: Sealed Air AirCap, Loctite Quick Metal, Kathon, American Hospital Supply, GE Capital. The sixth uses a packaging cost scenario.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-block q-block--g1">
+      <div class="q-header">
+        <div class="q-num">3</div>
+        <div class="q-meta">
+          <div class="q-topic">Weyerhaeuser Particleboard — Economic Value Discovery</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g1">Gate 1 · Chapter Only</span>
+          </div>
+        </div>
+        <div class="q-loc">pp. 118–119, 127</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">
+          How did Weyerhaeuser discover that its particleboard created economic value for furniture makers — even though it was priced higher than competitors? What specific method did Weyerhaeuser use to uncover the customer problem, what two production problems did it find, and which lifecycle cost category did each problem belong to?
+        </div>
+        <div class="q-hint">
+          Record the discovery method (it involved visiting customers, not surveying them), both production problems with their cost category labels, and how the new product addressed them while still being more expensive to purchase.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 — COUNTERINTUITIVE -->
+    <div class="q-block q-block--g1">
+      <div class="q-header">
+        <div class="q-num">4</div>
+        <div class="q-meta">
+          <div class="q-topic">The 8%/80% Perception Gap</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g1">Gate 1 · Chapter Only</span>
+            <span class="q-tag q-tag--warn">⚠️ Counterintuitive</span>
+          </div>
+        </div>
+        <div class="q-loc">p. 115</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">
+          Chapter 4 opens with a statistic about the gap between how companies assess their customer experience and how customers actually rate it. What are the two specific percentages? More importantly: does the chapter argue this gap is primarily an <em>execution failure</em> (companies are trying but not succeeding) or a <em>measurement failure</em> (companies don't even know what customers experience) — and what evidence does it give?
+        </div>
+        <div class="q-hint">
+          The answer is counterintuitive: most people assume execution failure, but the chapter argues measurement failure. Record both percentages and the chapter's diagnosis — this exact distinction is what Gate 1 tests.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-block q-block--g1">
+      <div class="q-header">
+        <div class="q-num">5</div>
+        <div class="q-meta">
+          <div class="q-topic">Brand Personality — Five Types and Defining Traits</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g1">Gate 1 · Chapter Only</span>
+          </div>
+        </div>
+        <div class="q-loc">Fig 4-27 · pp. 143–144</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">
+          What are the five brand personality types identified in Chapter 4? For each type, what are the defining personality traits, and which specific brand does the chapter associate with it? After you complete the list, try classifying one brand you know well that the chapter does not mention — which type fits it and which traits apply?
+        </div>
+        <div class="q-hint">
+          Record all five types with their full trait lists from Figure 4-27. Gate 1 Q5 presents a brand scenario (not one of the chapter's named examples) and asks you to classify it — practice classification now.
+        </div>
+      </div>
+    </div>
+
+    <!-- GATE 2 DIVIDER -->
+    <div style="margin: 28px 0 22px; display:flex; align-items:center; gap:12px;">
+      <div style="flex:1; height:1px; background:var(--gray-mid);"></div>
+      <div style="font-family:var(--font-head); font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--navy); padding:6px 14px; background:#e8ecf0; border-radius:20px;">Gate 2 · Chapter + Slides Synthesis</div>
+      <div style="flex:1; height:1px; background:var(--gray-mid);"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-block q-block--g2">
+      <div class="q-header">
+        <div class="q-num">6</div>
+        <div class="q-meta">
+          <div class="q-topic">Economic Value Formula and Indifference Price</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g2">Gate 2 · Chapter + Slides</span>
+          </div>
+        </div>
+        <div class="q-loc">Fig 4-10 · pp. 126–131</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">
+          Using Figure 4-10 (the telecommunications switch comparison), what are the total lifecycle costs of each switch, and what is the economic value? The company's switch costs $75 more to buy — yet the chapter says it creates positive economic value. At what price would a rational buyer be <em>exactly indifferent</em> between the two switches, and how does that ceiling price follow from the lifecycle cost data?
+        </div>
+        <div class="q-hint">
+          Calculate: Competitor LCC, Company LCC, Economic Value = Competitor LCC − Company LCC. Derive the indifference price yourself: it equals the Competitor LCC minus the Company's non-price costs. Gate 2 Q1 and Q2 use different numbers — this exercise builds the method.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 — COUNTERINTUITIVE -->
+    <div class="q-block q-block--g2">
+      <div class="q-header">
+        <div class="q-num">7</div>
+        <div class="q-meta">
+          <div class="q-topic">Cost of Purchase Index — Sign Inversion Logic</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g2">Gate 2 · Chapter + Slides</span>
+            <span class="q-tag q-tag--warn">⚠️ Counterintuitive</span>
+          </div>
+        </div>
+        <div class="q-loc">Fig 4-24 · pp. 139–141</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">
+          Figure 4-24 shows that the company's Purchase Price has a relative advantage score of <strong>+27</strong>. A common mistake is to read this as meaning the company is 27% better than competitors on price. Why is this wrong? What does a <em>positive</em> relative advantage score actually mean for a cost component — and how does the interpretation differ from the product performance index?
+        </div>
+        <div class="q-hint">
+          The answer is counterintuitive: in the Cost of Purchase Index, a higher rating means the product costs more — which is a competitive disadvantage. A positive RA score = the company charges MORE than competitors on that cost dimension. Record this rule precisely — Gate 2 Q6 and the case both test it.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-block q-block--g2">
+      <div class="q-header">
+        <div class="q-num">8</div>
+        <div class="q-meta">
+          <div class="q-topic">Conjoint CVI Calculation and Strategy Profit Comparison</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g2">Gate 2 · Chapter + Slides</span>
+          </div>
+        </div>
+        <div class="q-loc">Figs 4-29, 4-30 · pp. 144–147</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">
+          Using Figure 4-29 (preference values) and Figure 4-30 (the Silent Floor strategy comparison), calculate the Customer Value Index for Strategy A (40% labor savings, 10-year warranty, +40% price premium, no callbacks). Strategy A has a slightly lower CVI than Strategy B — yet the chapter says Strategy A is likely more profitable. What is the mechanism that explains how the strategy with the lower CVI generates more profit?
+        </div>
+        <div class="q-hint">
+          CVI = sum of preference values for each selected attribute level. The profit mechanism is in the price premium rows: compare +40% vs. +20% premiums. The CVI gap is entirely explained by the price attribute — B charges less, which buyers prefer, which also means less margin for the firm. Gate 2 Q8 uses different preference values and industry context.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /questions-section -->
+
+  <div class="spacer-32"></div>
+
+  <!-- ══ 7. AMBER CALLOUT ════════════════════════════ -->
+  <div class="callout-amber">
+    <div class="callout-amber-header">
+      <span class="callout-amber-icon">🎯</span>
+      <span class="callout-amber-title">Highest-Probability Gate 1 Targets</span>
+    </div>
+    <div class="callout-amber-body">
+      If you are short on time, prioritize these three areas — they appear on Gate 1 across all question variants and cannot be answered from the slides alone:
+      <ul class="callout-amber-list">
+        <li><strong>Company-to-category matching (Q2):</strong> Know which named company illustrates each of the six lifecycle cost categories. The scenario in Gate 1 will describe a cost situation; you match it to the category and the example.</li>
+        <li><strong>8%/80% gap interpretation (Q4):</strong> The chapter's argument — that this is a measurement failure, not an execution failure — is the exact construct Gate 1 tests. The distinction matters.</li>
+        <li><strong>Brand personality classification (Q5):</strong> Gate 1 will give you a brand you have not seen before and ask which of the five personality types it belongs to. Know the full trait list for all five types, not just the named examples.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="spacer-32"></div>
+
+  <!-- ══ 8. SEQUENCE FOOTER ══════════════════════════ -->
+  <div class="seq-footer">
+    <div class="seq-label">What comes next in this module</div>
+    <div class="seq-track">
+
+      <div class="seq-item seq-item--done">
+        <div class="seq-step-label">✓ Complete</div>
+        <div class="seq-step-name">Module Overview</div>
+      </div>
+
+      <div class="seq-arrow">›</div>
+
+      <div class="seq-item seq-item--current">
+        <div class="seq-step-label">You are here</div>
+        <div class="seq-step-name">Chapter 4 Reading + Study Guide</div>
+      </div>
+
+      <div class="seq-arrow">›</div>
+
+      <div class="seq-item seq-item--next-hot">
+        <div class="seq-step-label">Next → unlock slides</div>
+        <div class="seq-step-name">Gate 1 · 5 Qs · 80% to pass</div>
+      </div>
+
+      <div class="seq-arrow">›</div>
+
+      <div class="seq-item seq-item--next">
+        <div class="seq-step-label">Then</div>
+        <div class="seq-step-name">Slide Deck · 29 slides</div>
+      </div>
+
+      <div class="seq-arrow">›</div>
+
+      <div class="seq-item seq-item--next">
+        <div class="seq-step-label">Then · 20 pts</div>
+        <div class="seq-step-name">Gate 2 · 8 Qs · 1 attempt</div>
+      </div>
+
+      <div class="seq-arrow">›</div>
+
+      <div class="seq-item seq-item--next">
+        <div class="seq-step-label">Then</div>
+        <div class="seq-step-name">Lecture Video</div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>

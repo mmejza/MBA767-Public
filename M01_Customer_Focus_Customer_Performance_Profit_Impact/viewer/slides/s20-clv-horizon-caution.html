@@ -1,0 +1,85 @@
+<section class="slide-page" data-title="CLV Period-by-Period: A Caution on Finite Horizons" data-lo="LO6" data-notes="LO6 caution/extension slide. Illustrates why period-by-period and closed-form CLV estimates need not converge at a finite horizon. M=$40/mo, r=92%/mo, i=1%/mo, AC=$150. Period-by-period (5 periods): CF1=$40.00, CF2=$36.80, CF3=$33.86, CF4=$31.15, CF5=$28.66. PV1=$39.60, PV2=$36.08, PV3=$32.86, PV4=$29.93, PV5=$27.27. Sum of 5-year PV=$165.74. 5-period CLV=$165.74-$150.00=$15.74 (≈$16). Closed-form (infinite horizon): CLV=40×(0.92/(1.01-0.92))-150=40×10.222-150=$408.89-$150=$258.89. Gap=$258.89-$15.74=$243.15. Only 40% of the $408.89 total infinite-horizon PV is captured within 5 periods, because r/(1+i)=0.92/1.01=0.911 decays slowly. Contrast with Slide 19's credit-card example, where r/(1+i)=0.80/1.10=0.727 decays much faster and nearly all value is captured by year 5. Key teaching point: the two methods converge only once the truncated tail becomes economically negligible — with high monthly retention and a low monthly discount rate (typical of subscription businesses), that can take far more than 5 periods, so a short-horizon estimate should not be treated as equivalent to the closed-form estimate.">
+  <div class="le-accent"></div>
+  <div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;">
+      <span class="le-tag">LO6</span>
+      <span class="le-course">MKT 472 · Module 01</span>
+    </div>
+    <span class="le-pagenum">20 / 23</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">CLV Period-by-Period: <span>A Caution on Finite Horizons</span></div>
+    <div class="le-sub">Same formula, shorter horizon — a very different answer</div>
+  </div>
+  <div class="le-body" style="gap:8px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+      <div>
+        <div class="gate-source" style="font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Method 2 — Period-by-Period (5-Year Horizon)</div>
+        <table class="clean-table">
+          <thead>
+            <tr><th>Year</th><th>Expected Profit</th><th>PV Factor</th><th>PV</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>$40.00 (×1.0)</td>
+              <td>÷ 1.010</td>
+              <td style="font-weight:700;color:var(--teal-dk);">$39.60</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>$36.80 (×0.92)</td>
+              <td>÷ 1.020</td>
+              <td style="font-weight:700;color:var(--teal-dk);">$36.08</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>$33.86 (×0.8464)</td>
+              <td>÷ 1.030</td>
+              <td style="font-weight:700;color:var(--teal-dk);">$32.86</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>$31.15 (×0.7787)</td>
+              <td>÷ 1.041</td>
+              <td style="font-weight:700;color:var(--teal-dk);">$29.93</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>$28.66 (×0.7164)</td>
+              <td>÷ 1.051</td>
+              <td style="font-weight:700;color:var(--teal-dk);">$27.27</td>
+            </tr>
+            <tr>
+              <td colspan="3"><strong>Total PV (5 years only)</strong></td>
+              <td><strong>$165.74</strong></td>
+            </tr>
+            <tr>
+              <td colspan="3">Less: AC</td>
+              <td style="color:var(--red);">−$150.00</td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="3"><strong>5-Period CLV</strong></td>
+              <td><strong class="archetype-title" style="color:var(--teal-dk)">$15.74</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div class="gate-source" style="font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Method 1 — Formula (Infinite Horizon)</div>
+        <div style="background:var(--navy);border-radius:4px;padding:9px 11px;">
+          <div class="slide-copy" style="color:#e8f8f8;line-height:1.8">CLV = [M × (r ÷ (1 + i − r))] − AC<br>= [$40 × (0.92 ÷ (1.01 − 0.92))] − $150<br>= [$40 × (0.92 ÷ <strong style="color:var(--teal);">0.09</strong>)] − $150<br>= [$40 × 10.222] − $150<br>= $408.89 − $150<br>= <strong class="archetype-title" style="color:var(--teal)">$258.89 ✓</strong></div>
+        </div>
+        <div class="callout red">
+          <div class="callout-label">These Do Not Converge — And That's Expected</div>
+          <p>At 5 periods you've captured <strong>$165.74</strong> of the <strong>$408.89</strong> total infinite-horizon PV of profits — just <strong>40%</strong>. The closed-form estimate assumes the relationship continues indefinitely; the period-by-period estimate only reflects however many periods you choose to project. The two methods converge only once the untruncated "tail" becomes economically negligible — and with retention this high relative to the discount rate (r ÷ (1+i) = 0.911, vs. 0.727 on Slide 19), that tail stays large for many more periods than 5. Always state your horizon when reporting a period-by-period CLV estimate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="le-footer">
+    <div class="le-lo-pills"><span class="le-lo-pill">LO6</span></div>
+    <div><span class="le-ch-note">Ch. 1 · Compare to Slide 19 — decay speed depends on r ÷ (1+i)</span></div>
+  </div>
+</section>

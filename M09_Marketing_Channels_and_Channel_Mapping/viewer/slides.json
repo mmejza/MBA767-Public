@@ -1,0 +1,27 @@
+{
+  "module": "M09",
+  "title": "Marketing Channels and Channel Mapping",
+  "chapter": 9,
+  "total": 19,
+  "slides": [
+    { "id": "s01", "file": "slides/s01-title.html",           "title": "Module Launch",                          "pattern": 1,  "lo": null },
+    { "id": "s02", "file": "slides/s02-objectives.html",      "title": "Learning Objectives",                    "pattern": 2,  "lo": "all" },
+    { "id": "s03", "file": "slides/s03-chapter-only.html",    "title": "What Chapter 9 Covers Beyond This Deck", "pattern": 3,  "lo": null },
+    { "id": "s04", "file": "slides/s04-channel-def.html",     "title": "Marketing Channels",                     "pattern": 4,  "lo": "LO4" },
+    { "id": "s05", "file": "slides/s05-three-functions.html", "title": "Why Channels Exist: Three Functions",    "pattern": 14, "lo": "LO4" },
+    { "id": "s06", "file": "slides/s06-contactual-prob.html", "title": "Contactual Efficiency — The Problem",   "pattern": 6,  "lo": "LO4" },
+    { "id": "s07", "file": "slides/s07-contactual-rev.html",  "title": "Contactual Efficiency — The Math",      "pattern": 7,  "lo": "LO4" },
+    { "id": "s08", "file": "slides/s08-channel-map.html",     "title": "Channel Map: Electronic Components",    "pattern": 6,  "lo": "LO1" },
+    { "id": "s09", "file": "slides/s09-pocket-price-def.html","title": "Pocket Price: What You Actually Receive","pattern": 4,  "lo": "LO1" },
+    { "id": "s10", "file": "slides/s10-waterfall-setup.html", "title": "Pocket Price Waterfall — Setup",        "pattern": 9,  "lo": "LO1" },
+    { "id": "s11", "file": "slides/s11-waterfall-sol.html",   "title": "Pocket Price Waterfall — Solution",     "pattern": 10, "lo": "LO1" },
+    { "id": "s12", "file": "slides/s12-channel-systems.html", "title": "Direct vs. Indirect vs. Mixed",         "pattern": 5,  "lo": "LO4" },
+    { "id": "s13", "file": "slides/s13-b2c-channels.html",    "title": "Channel Types: B2C",                    "pattern": 14, "lo": "LO4" },
+    { "id": "s14", "file": "slides/s14-b2b-channels.html",    "title": "Channel Types: B2B",                    "pattern": 14, "lo": "LO4" },
+    { "id": "s15", "file": "slides/s15-roi-trap.html",        "title": "The ROI Paradox — Setup",               "pattern": 13, "lo": "LO2" },
+    { "id": "s16", "file": "slides/s16-roi-reveal.html",      "title": "The ROI Paradox — Reveal",              "pattern": 7,  "lo": "LO2" },
+    { "id": "s17", "file": "slides/s17-mix-shift.html",       "title": "Channel Mix Shift — Practice",          "pattern": 12, "lo": "LO3" },
+    { "id": "s18", "file": "slides/s18-breakeven.html",       "title": "Break-Even Market Share",               "pattern": 8,  "lo": "LO3" },
+    { "id": "s19", "file": "slides/s19-salesforce.html",      "title": "Sales Force Sizing",                    "pattern": 8,  "lo": "LO4" }
+  ]
+}

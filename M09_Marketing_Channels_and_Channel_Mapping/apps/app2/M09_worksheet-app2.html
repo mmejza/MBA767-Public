@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App 2 Worksheet · M09 · MKT 472</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,500&family=Overpass+Mono:wght@400;500;600&family=Overpass:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink:        #111318;
+  --navy:       #0f2340;
+  --blue:       #1d5fa8;
+  --blue-lt:    #d6e8f7;
+  --teal:       #0d6b6b;
+  --teal-lt:    #e0f2f2;
+  --green:      #1a6b3a;
+  --green-lt:   #eaf5ee;
+  --amber:      #b86b00;
+  --amber-lt:   #fdf3e0;
+  --red:        #b83a1a;
+  --red-lt:     #fdf0ec;
+  --cream:      #faf9f6;
+  --ruled:      #ededea;
+  --mid:        #8a8680;
+  --text:       #1c1a17;
+  --text-soft:  #4a4640;
+  --rule:       #dddad4;
+  --white:      #ffffff;
+}
+
+body {
+  font-family: 'Overpass', sans-serif;
+  font-weight: 300;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 14.5px;
+}
+
+/* ── Header ── */
+.page-header {
+  background: var(--white);
+  border-bottom: 2px solid var(--ink);
+  padding: 28px 48px 24px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: end;
+}
+
+.app-tag {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.page-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(20px, 3.5vw, 32px);
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.page-title em {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.page-sub {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--mid);
+  letter-spacing: 0.02em;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.badge {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.badge-pts  { background: var(--navy); color: #fff; }
+.badge-auto { background: var(--green-lt); color: var(--green); border: 1px solid rgba(26,107,58,0.2); }
+
+/* ── Main ── */
+.main {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 40px 48px 80px;
+}
+
+/* ── Instruction ── */
+.instructions {
+  background: var(--green-lt);
+  border-left: 3px solid var(--green);
+  border-radius: 0 3px 3px 0;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.inst-flag {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  flex-shrink: 0;
+  margin-top: 2px;
+  padding: 2px 6px;
+  background: rgba(26,107,58,0.12);
+  border-radius: 1px;
+}
+
+.inst-body {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+.inst-body strong { color: var(--text); font-weight: 600; }
+
+/* ── Prerequisite notice ── */
+.prereq-notice {
+  background: var(--amber-lt);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 3px 3px 0;
+  padding: 12px 18px;
+  margin-bottom: 28px;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--text-soft);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.prereq-notice .flag {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.prereq-notice strong { font-weight: 600; color: var(--text); }
+
+/* ── Strategy reference table ── */
+.strategy-ref {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 36px;
+}
+
+.strategy-ref-header {
+  background: var(--ink);
+  padding: 10px 16px;
+  font-family: 'Overpass Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 600;
+}
+
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--rule);
+}
+
+.strat-col {
+  padding: 14px 16px;
+  border-right: 1px solid var(--rule);
+}
+
+.strat-col:last-child { border-right: none; }
+
+.strat-name {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding: 3px 8px;
+  border-radius: 1px;
+  display: inline-block;
+}
+
+.strat-name.indirect { background: var(--blue-lt); color: var(--blue); }
+.strat-name.mixed    { background: var(--amber-lt); color: var(--amber); }
+.strat-name.direct   { background: rgba(15,35,64,0.08); color: var(--navy); }
+
+.strat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  margin-bottom: 3px;
+  gap: 8px;
+}
+
+.strat-key { color: var(--mid); font-weight: 300; }
+.strat-val { font-family: 'Overpass Mono', monospace; font-size: 11px; font-weight: 600; color: var(--text); }
+
+/* ── Question block ── */
+.q-block {
+  margin-bottom: 32px;
+}
+
+.q-header {
+  display: flex;
+  align-items: stretch;
+}
+
+.q-num {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--white);
+  background: var(--navy);
+  width: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 12px 0;
+  letter-spacing: -0.02em;
+}
+
+.q-meta {
+  flex: 1;
+  background: var(--navy);
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.q-pts-tag {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+.q-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.3;
+}
+
+.q-strategy-tag {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 1px;
+  text-transform: uppercase;
+  align-self: center;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.q-strategy-tag.indirect { background: var(--blue-lt); color: var(--blue); border: 1px solid rgba(29,95,168,0.2); }
+.q-strategy-tag.direct   { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.15); }
+
+.q-body {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-top: none;
+  padding: 20px 22px;
+}
+
+.q-stem {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.q-stem strong { font-weight: 600; }
+.q-stem .mono-ref {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: var(--green-lt);
+  color: var(--green);
+  padding: 1px 6px;
+  border-radius: 1px;
+}
+
+/* ── Steps ── */
+.step-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.step-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.step-dot {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Overpass Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--mid);
+  margin-top: 1px;
+}
+
+.step-list li strong { color: var(--text); font-weight: 500; }
+
+/* ── Data fields ── */
+.data-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.data-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  border-bottom: 1px solid var(--rule);
+}
+
+.data-row:last-child { border-bottom: none; }
+
+.data-row.header .field-label,
+.data-row.header .field-val {
+  background: var(--ink);
+  color: rgba(255,255,255,0.75);
+  font-family: 'Overpass Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.field-label {
+  padding: 9px 14px;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--text-soft);
+  background: var(--cream);
+  border-right: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+}
+
+.field-val {
+  padding: 9px 14px;
+  font-family: 'Overpass Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+}
+
+.field-val.blank { color: var(--rule); letter-spacing: 0.2em; font-weight: 400; }
+.field-val.given { color: var(--navy); }
+
+/* ── Comparison strip ── */
+.comparison-strip {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  margin: 14px 0;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.cs-col {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cs-col.indirect { background: var(--blue-lt); }
+.cs-col.direct   { background: rgba(15,35,64,0.04); }
+
+.cs-label {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+.cs-col.indirect .cs-label { color: var(--blue); }
+.cs-col.direct   .cs-label { color: var(--navy); }
+
+.cs-metric {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 300;
+  gap: 8px;
+}
+
+.cs-metric .cm-key { color: var(--text-soft); }
+.cs-metric .cm-val {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--mid);
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--rule);
+  min-width: 80px;
+  text-align: right;
+}
+
+.cs-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  padding: 0 14px;
+}
+
+.cs-vs-text {
+  font-family: 'Fraunces', serif;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* ── Answer capture ── */
+.answer-capture {
+  background: var(--white);
+  border: 1.5px solid var(--rule);
+  border-radius: 2px;
+  padding: 12px 16px;
+  margin: 14px 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.ac-label {
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--text-soft);
+  line-height: 1.4;
+}
+
+.ac-label strong { font-weight: 600; color: var(--text); }
+
+.ac-value {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mid);
+  letter-spacing: 0.1em;
+  min-width: 140px;
+  text-align: right;
+  border-bottom: 1.5px solid var(--rule);
+  padding-bottom: 3px;
+}
+
+/* ── Formula ── */
+.formula-ref {
+  background: var(--ink);
+  border-radius: 2px;
+  padding: 10px 16px;
+  margin: 12px 0;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.fr-item { display: flex; flex-direction: column; gap: 2px; }
+
+.fr-label {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+
+.fr-val {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #c8d8e8;
+  letter-spacing: 0.02em;
+}
+
+/* ── Response area ── */
+.response-area {
+  border: 1.5px dashed var(--rule);
+  border-radius: 2px;
+  background: var(--cream);
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.response-area::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    transparent 0px, transparent 27px,
+    var(--ruled) 27px, var(--ruled) 28px
+  );
+  background-position: 0 28px;
+  pointer-events: none;
+}
+
+.response-area-label {
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  font-family: 'Overpass Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--rule);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+/* ── Point bar ── */
+.pt-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+
+.pt-bar-label {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid);
+  font-weight: 600;
+}
+
+.pt-seg { height: 6px; border-radius: 3px; flex-shrink: 0; }
+.pt-seg.calc { background: var(--blue); }
+.pt-seg.expl { background: var(--green); }
+
+.pt-legend {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-soft);
+}
+
+.pt-legend-item { display: flex; align-items: center; gap: 5px; }
+.pt-legend-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Divider ── */
+.q-divider {
+  height: 1px;
+  background: var(--rule);
+  margin: 36px 0;
+}
+
+/* ── Bridge note ── */
+.bridge-note {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--navy);
+  border-radius: 0 3px 3px 0;
+  padding: 14px 20px;
+  margin-top: 36px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.bridge-note strong { color: var(--text); font-weight: 600; }
+
+/* ── Footer ── */
+.page-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-note {
+  font-size: 11.5px;
+  font-weight: 300;
+  color: var(--mid);
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+.footer-tag {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-align: right;
+}
+
+/* ── Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade  { animation: fadeIn 0.4s ease both; }
+.d1   { animation-delay: 0.06s; }
+.d2   { animation-delay: 0.14s; }
+.d3   { animation-delay: 0.22s; }
+
+@media (max-width: 620px) {
+  .page-header { grid-template-columns: 1fr; padding: 24px; }
+  .main { padding: 28px 24px 60px; }
+  .header-right { align-items: flex-start; }
+  .strategy-grid { grid-template-columns: 1fr; }
+  .comparison-strip { grid-template-columns: 1fr; }
+  .cs-vs { padding: 10px; writing-mode: horizontal-tb; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────────────────────────────────── -->
+<header class="page-header">
+  <div class="header-left">
+    <span class="app-tag">MKT 472 · Module 09 · App 2 Worksheet</span>
+    <h1 class="page-title">Channel Strategy<br><em>Comparator</em></h1>
+    <p class="page-sub">Complete while App 2 is open · Submit in Canvas · 10 pts total</p>
+  </div>
+  <div class="header-right">
+    <span class="badge badge-pts">10 pts</span>
+    <span class="badge badge-auto">Auto-graded</span>
+  </div>
+</header>
+
+<!-- ── MAIN ───────────────────────────────────────────────────────────────── -->
+<main class="main">
+
+  <!-- Instructions -->
+  <div class="instructions fade d1">
+    <span class="inst-flag">How to use</span>
+    <div class="inst-body">
+      Open <strong>App 2: Channel Strategy Comparator</strong> alongside this worksheet.
+      Use the strategy dropdown and share slider to explore the scenarios each question describes.
+      Record the app outputs in the data fields, then write your explanation in the response area.
+      <strong>Submit your typed answers in Canvas.</strong>
+    </div>
+  </div>
+
+  <!-- Prerequisite notice -->
+  <div class="prereq-notice fade d1">
+    <span class="flag">Prereq</span>
+    <span><strong>Complete App 1 Worksheet before this worksheet.</strong>
+    App 2 builds directly on the ROI paradox you discovered in App 1.
+    The Indirect vs. Direct comparison here extends that logic from per-transaction analysis to market-share analysis.</span>
+  </div>
+
+  <!-- Strategy reference -->
+  <div class="strategy-ref fade d1">
+    <div class="strategy-ref-header">App 2 strategy presets — fixed economics (Ch. 9 Fig. 9-24)</div>
+    <div class="strategy-grid">
+      <div class="strat-col">
+        <span class="strat-name indirect">Indirect</span>
+        <div class="strat-row"><span class="strat-key">Pocket price</span><span class="strat-val">$673</span></div>
+        <div class="strat-row"><span class="strat-key">COGS</span><span class="strat-val">$500</span></div>
+        <div class="strat-row"><span class="strat-key">Margin/unit</span><span class="strat-val">$173</span></div>
+        <div class="strat-row"><span class="strat-key">M&amp;S expense</span><span class="strat-val">$7,840,000</span></div>
+      </div>
+      <div class="strat-col">
+        <span class="strat-name mixed">Mixed</span>
+        <div class="strat-row"><span class="strat-key">Pocket price</span><span class="strat-val">$2,352</span></div>
+        <div class="strat-row"><span class="strat-key">COGS</span><span class="strat-val">$1,500</span></div>
+        <div class="strat-row"><span class="strat-key">Margin/unit</span><span class="strat-val">$852</span></div>
+        <div class="strat-row"><span class="strat-key">M&amp;S expense</span><span class="strat-val">$4,680,000</span></div>
+      </div>
+      <div class="strat-col">
+        <span class="strat-name direct">Direct</span>
+        <div class="strat-row"><span class="strat-key">Pocket price</span><span class="strat-val">$950</span></div>
+        <div class="strat-row"><span class="strat-key">COGS</span><span class="strat-val">$650</span></div>
+        <div class="strat-row"><span class="strat-key">Margin/unit</span><span class="strat-val">$300</span></div>
+        <div class="strat-row"><span class="strat-key">M&amp;S expense</span><span class="strat-val">$30,000,000</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── QUESTION 1 ── -->
+  <div class="q-block fade d2">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-meta">
+        <span class="q-pts-tag">5 pts · auto-graded</span>
+        <span class="q-title">NMC vs. ROI — Switching from Indirect to Direct at 20% Share</span>
+      </div>
+      <span class="q-strategy-tag indirect">Indirect → Direct</span>
+    </div>
+    <div class="q-body">
+      <p class="q-stem">
+        Set the app to <span class="mono-ref">Indirect</span> strategy,
+        <strong>20% current market share</strong>, <strong>1,000,000 units</strong> market demand.
+        Record NMC, Marketing ROI, and Marketing ROS. Then switch to <span class="mono-ref">Direct</span>
+        strategy at the same share. Record all three metrics again.
+      </p>
+      <p class="q-stem">
+        Report all six numbers. Then answer in <strong>2–3 sentences:</strong> when switching from
+        indirect to direct at 20% share, does NMC increase or decrease? Does Marketing ROI increase
+        or decrease? Explain why the two metrics move in <strong>different directions</strong>.
+      </p>
+
+      <div class="comparison-strip">
+        <div class="cs-col indirect">
+          <span class="cs-label">Indirect — 20% share</span>
+          <div class="cs-metric"><span class="cm-key">NMC ($)</span><span class="cm-val">___________</span></div>
+          <div class="cs-metric"><span class="cm-key">Marketing ROI</span><span class="cm-val">___________%</span></div>
+          <div class="cs-metric"><span class="cm-key">Marketing ROS</span><span class="cm-val">___________%</span></div>
+        </div>
+        <div class="cs-vs"><span class="cs-vs-text">switch</span></div>
+        <div class="cs-col direct">
+          <span class="cs-label">Direct — 20% share</span>
+          <div class="cs-metric"><span class="cm-key">NMC ($)</span><span class="cm-val">___________</span></div>
+          <div class="cs-metric"><span class="cm-key">Marketing ROI</span><span class="cm-val">___________%</span></div>
+          <div class="cs-metric"><span class="cm-key">Marketing ROS</span><span class="cm-val">___________%</span></div>
+        </div>
+      </div>
+
+      <div class="data-fields">
+        <div class="data-row header">
+          <div class="field-label">Direction of change — check one</div>
+          <div class="field-val">Your answer</div>
+        </div>
+        <div class="data-row">
+          <div class="field-label">When switching to Direct at 20% share: NMC…</div>
+          <div class="field-val blank">↑ increases / ↓ decreases</div>
+        </div>
+        <div class="data-row">
+          <div class="field-label">When switching to Direct at 20% share: Marketing ROI…</div>
+          <div class="field-val blank">↑ increases / ↓ decreases</div>
+        </div>
+      </div>
+
+      <div class="formula-ref">
+        <div class="fr-item">
+          <span class="fr-label">NMC</span>
+          <span class="fr-val">(PP − COGS) × Volume − M&amp;S Expense ($)</span>
+        </div>
+        <div class="fr-item">
+          <span class="fr-label">Marketing ROI</span>
+          <span class="fr-val">NMC ÷ M&amp;S Expense ($)</span>
+        </div>
+      </div>
+
+      <p class="q-stem" style="margin-bottom:10px;"><strong>Explanation (2–3 sentences):</strong></p>
+      <div class="response-area" style="min-height:120px;">
+        <div class="response-area-label">Your response here</div>
+      </div>
+
+      <div class="pt-bar">
+        <span class="pt-bar-label">Points</span>
+        <div class="pt-seg calc" style="width:60px;"></div>
+        <div class="pt-seg expl" style="width:80px;"></div>
+        <div class="pt-legend">
+          <span class="pt-legend-item"><span class="pt-legend-dot" style="background:var(--blue);"></span>2 pts — all 6 metrics correct (NMC ↑, ROI ↓ identified)</span>
+          <span class="pt-legend-item"><span class="pt-legend-dot" style="background:var(--green);"></span>3 pts — explanation cites M&amp;S expense as mechanism</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-divider"></div>
+
+  <!-- ── QUESTION 2 ── -->
+  <div class="q-block fade d3">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-meta">
+        <span class="q-pts-tag">5 pts · auto-graded</span>
+        <span class="q-title">Break-Even Market Share — Direct Channel Risk Threshold</span>
+      </div>
+      <span class="q-strategy-tag direct">Direct</span>
+    </div>
+    <div class="q-body">
+      <p class="q-stem">
+        Using the <span class="mono-ref">Direct</span> channel strategy at <strong>1,000,000 units market demand</strong>:
+        locate the break-even market share output in the app (or move the share slider until NMC reaches zero).
+        Report the break-even share percentage.
+      </p>
+
+      <ul class="step-list">
+        <li><span class="step-dot">1</span><div>Select <strong>Direct</strong> strategy. Set market demand to <strong>1,000,000</strong> units.</div></li>
+        <li><span class="step-dot">2</span><div>Read the <strong>break-even market share</strong> output from the app panel (or find it via slider).</div></li>
+        <li><span class="step-dot">3</span><div>Read the <strong>margin of safety</strong> — the gap between current share (20%) and break-even share.</div></li>
+        <li><span class="step-dot">4</span><div>In 3–4 sentences, explain what break-even share tells a manager deciding whether to switch from indirect to direct. What would need to be true about market share for the switch to be financially safe?</div></li>
+      </ul>
+
+      <div class="data-fields">
+        <div class="data-row header">
+          <div class="field-label">Metric — record from app output</div>
+          <div class="field-val">Your value</div>
+        </div>
+        <div class="data-row">
+          <div class="field-label">Direct channel — Break-even market share (%)</div>
+          <div class="field-val blank">__________%</div>
+        </div>
+        <div class="data-row">
+          <div class="field-label">Current market share (given)</div>
+          <div class="field-val given">20.0%</div>
+        </div>
+        <div class="data-row">
+          <div class="field-label">Margin of safety (current share − break-even share)</div>
+          <div class="field-val blank">__________ pts</div>
+        </div>
+        <div class="data-row">
+          <div class="field-label">Indirect channel — Break-even market share (for comparison)</div>
+          <div class="field-val blank">__________%</div>
+        </div>
+      </div>
+
+      <div class="answer-capture">
+        <div class="ac-label"><strong>Direct channel break-even share:</strong> the market share at which Direct NMC = $0</div>
+        <div class="ac-value">__________%</div>
+      </div>
+
+      <div class="formula-ref">
+        <div class="fr-item">
+          <span class="fr-label">BE market share formula</span>
+          <span class="fr-val">[M&amp;S Expense ÷ (PP − COGS)] ÷ Market Demand × 100</span>
+        </div>
+        <div class="fr-item">
+          <span class="fr-label">Direct BE check</span>
+          <span class="fr-val">$30,000,000 ÷ $300 ÷ 1,000,000 × 100 = ?%</span>
+        </div>
+      </div>
+
+      <p class="q-stem" style="margin-bottom:10px;"><strong>Strategic interpretation (3–4 sentences):</strong></p>
+      <div class="response-area" style="min-height:134px;">
+        <div class="response-area-label">Your response here</div>
+      </div>
+
+      <div class="pt-bar">
+        <span class="pt-bar-label">Points</span>
+        <div class="pt-seg calc" style="width:60px;"></div>
+        <div class="pt-seg expl" style="width:80px;"></div>
+        <div class="pt-legend">
+          <span class="pt-legend-item"><span class="pt-legend-dot" style="background:var(--blue);"></span>2 pts — correct BE share + margin of safety (±0.5%)</span>
+          <span class="pt-legend-item"><span class="pt-legend-dot" style="background:var(--green);"></span>3 pts — interpretation: BE share as risk threshold tied to current share</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bridge to case -->
+  <div class="bridge-note fade d3">
+    <strong>Bridge to case analysis:</strong> The NovaTech Distribution case uses a different company,
+    different channel economics, and a specific proposed mix shift. The method you practiced here —
+    comparing NMC and ROI across strategies, then computing break-even share to evaluate the switch risk —
+    is exactly what Parts 2 and 3 of the case require. NovaTech's numbers are original and do not match
+    the app presets. Use the method, not the numbers.
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer fade d3">
+    <p class="footer-note">
+      Both app worksheets are complete. Proceed to the Discussion prompt,
+      then the NovaTech Distribution Case Analysis.
+    </p>
+    <div class="footer-tag">MKT 472 · M09<br>App 2 Worksheet · 10 pts</div>
+  </div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M11 · S13 · MAI Setup</title>
+<link rel="stylesheet" href="../slides.css">
+</head>
+<body>
+<div class="slide">
+
+  <div class="slide-header">
+    <div class="slide-title">Market Attractiveness Index — Attempt Before Advancing</div>
+    <div class="slide-meta">
+      <span class="lo-tag">LO 3</span>
+      <span class="pattern-tag">Worked Example — Setup</span>
+      <span class="slide-num">13 / 21</span>
+    </div>
+  </div>
+
+  <div class="slide-body">
+
+    <div class="practice-header" style="margin-bottom:8px;">
+      <span class="attempt-badge">Attempt first</span>
+      <span class="practice-question">
+        Using the inputs below (Chapter 11, Fig. 11-10), calculate:
+        Q1 each metric's attractiveness score &nbsp;·&nbsp;
+        Q2 each dimension score &nbsp;·&nbsp;
+        Q3 the overall MAI
+      </span>
+    </div>
+
+    <table style="font-size:11.5px;">
+      <thead>
+        <tr>
+          <th>Dimension &amp; Metric</th>
+          <th class="center">Dim. Weight</th>
+          <th class="center">Metric Rel. Importance</th>
+          <th class="center">Attractiveness Rating</th>
+          <th class="center">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="section-head">
+          <td colspan="5">Market Forces</td>
+        </tr>
+        <tr>
+          <td style="padding-left:20px;">Market Size</td>
+          <td class="center mono">30%</td>
+          <td class="center mono">40%</td>
+          <td class="center mono">80</td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr>
+          <td style="padding-left:20px;">Growth Rate</td>
+          <td class="center mono">30%</td>
+          <td class="center mono">30%</td>
+          <td class="center mono">60</td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr>
+          <td style="padding-left:20px;">Buyer Power</td>
+          <td class="center mono">30%</td>
+          <td class="center mono">30%</td>
+          <td class="center mono">40</td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr style="background:rgba(42,64,96,0.3);">
+          <td style="padding-left:20px;font-weight:500;">Dimension Score →</td>
+          <td colspan="3"></td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr class="section-head">
+          <td colspan="5">Competitive Environment</td>
+        </tr>
+        <tr>
+          <td style="padding-left:20px;">Price Rivalry</td>
+          <td class="center mono">40%</td>
+          <td class="center mono">50%</td>
+          <td class="center mono">40</td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr>
+          <td style="padding-left:20px;">Ease of Entry</td>
+          <td class="center mono">40%</td>
+          <td class="center mono">30%</td>
+          <td class="center mono">40</td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr>
+          <td style="padding-left:20px;"># of Competitors</td>
+          <td class="center mono">40%</td>
+          <td class="center mono">20%</td>
+          <td class="center mono">60</td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr style="background:rgba(42,64,96,0.3);">
+          <td style="padding-left:20px;font-weight:500;">Dimension Score →</td>
+          <td colspan="3"></td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr class="section-head">
+          <td colspan="5">Market Access</td>
+        </tr>
+        <tr>
+          <td style="padding-left:20px;">Customer Familiarity</td>
+          <td class="center mono">30%</td>
+          <td class="center mono">40%</td>
+          <td class="center mono">80</td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr>
+          <td style="padding-left:20px;">Channel Access</td>
+          <td class="center mono">30%</td>
+          <td class="center mono">40%</td>
+          <td class="center mono">100</td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr>
+          <td style="padding-left:20px;">Sales Requirements</td>
+          <td class="center mono">30%</td>
+          <td class="center mono">20%</td>
+          <td class="center mono">60</td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+        <tr style="background:rgba(42,64,96,0.3);">
+          <td style="padding-left:20px;font-weight:500;">Dimension Score →</td>
+          <td colspan="3"></td>
+          <td class="center" style="color:var(--text-dim);font-style:italic;">?</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="display:flex;gap:12px;align-items:center;margin-top:4px;">
+      <div class="col-panel" style="flex:1;padding:8px 12px;">
+        <div class="panel-title">Formula</div>
+        <div class="calc-line">MAI = <span class="op">Σ</span> <span class="val">(Dimension Weight × Dimension Score)</span></div>
+        <div class="calc-line" style="font-size:10px;color:var(--text-sec);margin-top:3px;">Each metric score = Rel. Importance × Attractiveness Rating</div>
+      </div>
+      <div class="working-space" style="flex:1;">
+        <span>Your working space</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

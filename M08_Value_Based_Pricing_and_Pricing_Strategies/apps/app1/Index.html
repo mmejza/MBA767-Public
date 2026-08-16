@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>M08 App 1 - Value-in-Use / Economic Value Calculator</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell">
+		<header class="app-header">
+			<p class="module-label">MKT 472 · Module 8 · App 1</p>
+			<h1>Value-in-Use / Economic Value Calculator</h1>
+			<p class="intro">Compare purchase price vs. total cost of ownership and test whether a firm premium is economically justified.</p>
+		</header>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Evaluate whether a higher purchase price is justified by total ownership savings over time. Compare annual and discounted economic value across firm and competitor offers. Interpret price premium decisions using EV-based metrics instead of price alone.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Base Case.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Load a preset or enter competitor and firm costs for each ownership component.</li>
+				<li>Set product life, discount rate, and annual volume to match the quiz scenario.</li>
+				<li>Review the ownership table and summary metrics, including NPV of savings.</li>
+				<li>Use the verdict and cost chart to judge whether the firm premium is justified.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+			<div class="app-grid">
+		<section class="col inputs-col">
+			<h1>Value-in-Use / Economic Value Calculator</h1>
+			<p class="intro">Compare purchase price vs. total cost of ownership and test whether a firm premium is economically justified.</p>
+
+			<div class="preset-row">
+				<button type="button" data-preset="base">Base Case</button>
+				<button type="button" data-preset="medical">Medical Devices</button>
+				<button type="button" data-preset="unjustified">Unjustified Premium</button>
+				<button type="button" id="reset-btn" class="secondary">Reset</button>
+			</div>
+
+			<form id="inputs-form" novalidate>
+				<fieldset>
+					<legend>Purchase Price</legend>
+					<label for="comp-price">Competitor Purchase Price</label>
+					<input id="comp-price" type="number" step="any" min="0">
+					<label for="firm-price">Firm Purchase Price</label>
+					<input id="firm-price" type="number" step="any" min="0">
+				</fieldset>
+
+				<fieldset>
+					<legend>Shipping Cost</legend>
+					<label for="comp-shipping">Competitor Shipping</label>
+					<input id="comp-shipping" type="number" step="any" min="0">
+					<label for="firm-shipping">Firm Shipping</label>
+					<input id="firm-shipping" type="number" step="any" min="0">
+				</fieldset>
+
+				<fieldset>
+					<legend>Handling Cost</legend>
+					<label for="comp-handling">Competitor Handling</label>
+					<input id="comp-handling" type="number" step="any" min="0">
+					<label for="firm-handling">Firm Handling</label>
+					<input id="firm-handling" type="number" step="any" min="0">
+				</fieldset>
+
+				<fieldset>
+					<legend>Inventory Cost</legend>
+					<label for="comp-inventory">Competitor Inventory</label>
+					<input id="comp-inventory" type="number" step="any" min="0">
+					<label for="firm-inventory">Firm Inventory</label>
+					<input id="firm-inventory" type="number" step="any" min="0">
+				</fieldset>
+
+				<fieldset>
+					<legend>Usage Cost</legend>
+					<label for="comp-usage">Competitor Usage</label>
+					<input id="comp-usage" type="number" step="any" min="0">
+					<label for="firm-usage">Firm Usage</label>
+					<input id="firm-usage" type="number" step="any" min="0">
+				</fieldset>
+
+				<fieldset>
+					<legend>Quality Control Cost</legend>
+					<label for="comp-qc">Competitor Quality Control</label>
+					<input id="comp-qc" type="number" step="any" min="0">
+					<label for="firm-qc">Firm Quality Control</label>
+					<input id="firm-qc" type="number" step="any" min="0">
+				</fieldset>
+
+				<fieldset>
+					<legend>Waste / Disposal Cost</legend>
+					<label for="comp-waste">Competitor Waste / Disposal</label>
+					<input id="comp-waste" type="number" step="any" min="0">
+					<label for="firm-waste">Firm Waste / Disposal</label>
+					<input id="firm-waste" type="number" step="any" min="0">
+				</fieldset>
+
+				<fieldset>
+					<legend>Economic Horizon</legend>
+					<label for="product-life">Product Life (years)</label>
+					<input id="product-life" type="number" step="1" min="1">
+					<label for="discount-rate">Discount Rate (%)</label>
+					<input id="discount-rate" type="number" step="any" min="0">
+					<label for="annual-volume">Annual Usage Volume (units)</label>
+					<input id="annual-volume" type="number" step="1" min="0">
+				</fieldset>
+			</form>
+			<p id="form-message" class="message" role="status" aria-live="polite"></p>
+		</section>
+
+		<section class="col outputs-col">
+			<h2>Ownership Cost Comparison</h2>
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr>
+							<th>Cost Component</th>
+							<th>Competitor</th>
+							<th>Firm</th>
+							<th>Savings (Firm Advantage)</th>
+						</tr>
+					</thead>
+					<tbody id="cost-table-body"></tbody>
+				</table>
+			</div>
+
+			<section class="metrics">
+				<h2>Summary Metrics</h2>
+				<dl id="metrics-list"></dl>
+			</section>
+
+			<section class="verdict" aria-live="polite">
+				<h2>EV Price Premium Verdict</h2>
+				<p id="verdict-badge" class="badge">JUSTIFIED</p>
+				<p id="verdict-text"></p>
+			</section>
+		</section>
+
+		<section class="col chart-col">
+			<h2>Total Cost of Ownership Comparison</h2>
+			<p class="chart-note">Horizontal stacked bars by cost component. Benchmark by total bar length.</p>
+			<div id="tco-chart" class="stack-chart" role="img" aria-label="Horizontal stacked total cost of ownership comparison for competitor and firm."></div>
+			<div id="chart-legend" class="legend"></div>
+		</section>
+			</div>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results / Dashboard</h2>
+			<p>Use ownership totals, EV metrics, and price-premium verdict outputs to complete Canvas quiz responses.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

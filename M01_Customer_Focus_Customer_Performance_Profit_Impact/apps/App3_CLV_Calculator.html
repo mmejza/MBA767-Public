@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App 3: CLV Calculator — MKT 472 M01</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700;800&family=Barlow+Mono:wght@400;500&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#0D9B87;--teal-dk:#0D7A6B;--teal-lt:#E5F5F3;--teal-bd:#C8E8E4;
+  --navy:#0F2027;--white:#FFFFFF;--off:#F7FDFC;
+  --amber:#E6A800;--amb-lt:#FFF8E6;--amb-bd:#F5D78A;
+  --red:#C0392B;--red-lt:#FEF5F5;--red-bd:#F5BFBF;
+  --pos:#0D7A6B;--neg:#C0392B;
+  --text:#1A2E2C;--muted:#7A9896;--border:#E0EEEC;--gray:#F2F4F3;
+}
+
+body{font-family:'Barlow',sans-serif;background:var(--gray);color:var(--text);font-size:16px;line-height:1.5;}
+
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:-999px;
+  background:#12222d;
+  color:#fff;
+  padding:.45rem .7rem;
+  border-radius:8px;
+  z-index:1000;
+}
+
+.skip-link:focus{
+  left:.7rem;
+  top:.7rem;
+}
+
+.page-shell{
+  max-width:1100px;
+  margin:0 auto;
+  display:grid;
+  gap:14px;
+  padding:0 0 12px;
+}
+
+.quiz-card,
+.required-callout,
+.how-to,
+.interactive-app,
+.results-dashboard,
+.canvas-reminder,
+.compact-header{
+  margin:0 16px;
+  border:.5px solid var(--border);
+  border-radius:8px;
+  background:var(--white);
+  padding:14px 16px;
+  box-shadow:0 6px 14px rgba(15,32,39,.06);
+}
+
+.compact-header h1{
+  margin:0;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(1.45rem,2vw,1.58rem);
+  font-weight:800;
+  line-height:1.1;
+  color:var(--navy);
+}
+
+.compact-header .module-tag{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:4px;
+  display:block;
+}
+
+.compact-header p{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:.92rem;
+}
+
+.quiz-card h2,
+.interactive-head h2,
+.results-dashboard h2,
+.how-to summary{
+  margin:0 0 6px;
+  font-size:1.2rem;
+  color:var(--teal-dk);
+  font-weight:600;
+}
+
+.quiz-card p,
+.required-callout p,
+.how-to li,
+.results-dashboard p{
+  margin:0;
+  font-size:.92rem;
+}
+
+.quiz-card ol,
+.how-to ol{
+  margin:0;
+  padding-left:1.2rem;
+  display:grid;
+  gap:.15rem;
+}
+
+.required-callout{
+  border-left:4px solid var(--amber);
+}
+
+.required-label{
+  margin:0 0 4px;
+  color:#8a651d;
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  font-weight:700;
+}
+
+.how-to summary{
+  cursor:pointer;
+  font-weight:700;
+}
+
+.how-to[open] summary{margin-bottom:8px;}
+
+.interactive-app{
+  display:grid;
+  gap:12px;
+  padding:14px 0 0;
+  overflow:hidden;
+}
+
+.interactive-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:0 16px;
+}
+
+.focus-btn{
+  border:1px solid var(--teal-bd);
+  border-radius:8px;
+  background:var(--white);
+  color:var(--teal-dk);
+  padding:7px 10px;
+  font-size:.84rem;
+  font-weight:600;
+  cursor:pointer;
+  font-family:'Barlow',sans-serif;
+}
+
+.quiz-workflow-banner{
+  margin:0 16px;
+  border:1px solid var(--teal-bd);
+  border-radius:10px;
+  background:var(--teal-lt);
+  color:var(--navy);
+  padding:10px 12px;
+  font-weight:700;
+  font-size:14px;
+}
+
+.results-dashboard p{color:var(--muted);}
+
+.canvas-reminder{
+  text-align:center;
+  font-size:.82rem;
+  color:var(--muted);
+  padding-top:8px;
+  padding-bottom:8px;
+}
+
+body.focus-mode [data-focus-hide]{display:none;}
+
+.app-header{background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--teal);}
+.app-header .module-tag{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:2px;}
+.app-header h1{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.02em;color:#fff;}
+.lo-badge{background:rgba(13,155,135,.2);border:.5px solid var(--teal);color:var(--teal);font-size:10px;font-weight:600;padding:3px 8px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em;}
+
+/* Tab bar */
+.tab-bar{display:flex;flex-wrap:wrap;background:var(--white);border-bottom:.5px solid var(--border);padding:0 16px;}
+.tab-btn{
+  font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:11px 18px;cursor:pointer;border:none;background:none;
+  color:var(--muted);border-bottom:3px solid transparent;
+  transition:all .15s;margin-bottom:-1px;
+}
+.tab-btn.active{color:var(--teal-dk);border-bottom-color:var(--teal);}
+.tab-btn:hover:not(.active){color:var(--text);}
+
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+
+/* Layout */
+.pane-grid{display:grid;grid-template-columns:1fr 340px;gap:16px;padding:16px;max-width:1100px;margin:0 auto;}
+.pane-left{display:flex;flex-direction:column;gap:12px;}
+.pane-right{display:flex;flex-direction:column;gap:12px;}
+
+/* Cards */
+.card{background:var(--white);border:.5px solid var(--border);border-radius:8px;overflow:hidden;}
+.card-hdr{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;}
+.card-hdr.navy{background:var(--navy);}
+.card-hdr.teal{background:var(--teal-lt);border-bottom:.5px solid var(--teal-bd);}
+.card-hdr.amber{background:var(--amb-lt);border-bottom:.5px solid var(--amb-bd);}
+.card-ttl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.card-hdr.navy .card-ttl{color:var(--teal);}
+.card-hdr.teal .card-ttl{color:var(--teal-dk);}
+.card-hdr.amber .card-ttl{color:#8A6000;}
+.card-body{padding:14px 16px;}
+
+/* Input rows */
+.irow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:7px 0;border-bottom:.5px solid var(--border);}
+.irow:last-child{border-bottom:none;}
+.ilabel{font-size:12px;font-weight:500;color:var(--text);}
+.isub{font-size:10px;color:var(--muted);margin-top:1px;}
+.ictl{display:flex;align-items:center;gap:8px;min-width:200px;justify-content:flex-end;}
+.ictl input[type=range]{flex:1;accent-color:var(--teal);cursor:pointer;}
+.ival{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--text);min-width:54px;text-align:right;}
+.ictl input[type=number]{
+  width:100px;border:.5px solid var(--border);border-radius:4px;
+  padding:4px 8px;font-family:'Barlow',sans-serif;font-size:12px;
+  color:var(--text);background:var(--off);text-align:right;
+}
+.ictl input[type=number]:focus{border-color:var(--teal);outline:none;background:#fff;}
+
+/* Formula display */
+.formula-box{
+  background:var(--off);border:.5px solid var(--teal-bd);
+  border-radius:6px;padding:12px 16px;margin-bottom:12px;
+  font-family:'Barlow Mono',monospace;font-size:13px;
+  color:var(--navy);line-height:1.7;
+}
+.formula-box .formula-label{
+  font-family:'Barlow Condensed',sans-serif;font-size:9px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:6px;
+}
+.f-highlight{color:var(--teal-dk);font-weight:500;}
+.f-result{color:var(--teal);font-weight:700;font-size:15px;}
+.f-neg{color:var(--red);font-weight:700;font-size:15px;}
+
+/* CLV result */
+.clv-result{
+  border-radius:8px;padding:16px;text-align:center;
+  border:.5px solid var(--border);
+}
+.clv-result.pos{background:var(--teal-lt);border-color:var(--teal-bd);}
+.clv-result.neg{background:var(--red-lt);border-color:var(--red-bd);}
+.clv-result.zero{background:var(--gray);}
+.clv-label{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px;}
+.clv-value{font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:800;line-height:1;}
+.clv-result.pos .clv-value{color:var(--teal-dk);}
+.clv-result.neg .clv-value{color:var(--red);}
+.clv-result.zero .clv-value{color:var(--text);}
+.clv-sub{font-size:11px;color:var(--muted);margin-top:6px;}
+
+/* Stat cards */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.stat-card{background:var(--gray);border-radius:6px;padding:10px 12px;text-align:center;}
+.stat-label{font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:3px;}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;line-height:1;color:var(--teal-dk);}
+.stat-val.neg-v{color:var(--red);}
+.stat-val.amber-v{color:#B87800;}
+
+/* Sensitivity table */
+.sens-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.sens-tbl th{background:var(--navy);color:#fff;padding:5px 8px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:right;}
+.sens-tbl th:first-child{text-align:left;}
+.sens-tbl td{padding:4px 8px;border-bottom:.5px solid var(--border);text-align:right;font-size:11px;}
+.sens-tbl td:first-child{text-align:left;font-weight:500;}
+.sens-tbl tr.current-row td{background:var(--teal-lt);font-weight:600;color:var(--teal-dk);}
+.sens-tbl .neg-cell{color:var(--red);}
+.sens-tbl .pos-cell{color:var(--pos);}
+
+/* Tab B: Period table */
+.period-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px;}
+.period-input-cell{display:flex;flex-direction:column;gap:3px;}
+.period-label{font-size:10px;font-weight:600;color:var(--muted);text-align:center;letter-spacing:.04em;text-transform:uppercase;}
+.period-input-cell input{
+  width:100%;border:.5px solid var(--border);border-radius:4px;
+  padding:5px 6px;font-family:'Barlow',sans-serif;font-size:12px;
+  color:var(--text);background:var(--off);text-align:center;
+}
+.period-input-cell input:focus{border-color:var(--teal);outline:none;background:#fff;}
+
+/* PV results table */
+.pv-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.pv-tbl th{background:var(--navy);color:#fff;padding:5px 8px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:right;}
+.pv-tbl th:first-child{text-align:center;}
+.pv-tbl td{padding:4px 8px;border-bottom:.5px solid var(--border);text-align:right;font-size:11px;font-family:'Barlow Mono',monospace;}
+.pv-tbl td:first-child{text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--navy);}
+.pv-tbl tr.total-row td{background:var(--teal-lt);font-weight:700;color:var(--teal-dk);border-top:1.5px solid var(--teal);font-size:12px;}
+.pv-tbl .neg-cell{color:var(--red);}
+.pv-tbl .pos-cell{color:var(--pos);}
+.pv-tbl td.ac-row{color:var(--red);}
+
+/* Comparison panel */
+.compare-panel{
+  background:var(--off);border:.5px solid var(--teal-bd);
+  border-radius:8px;padding:14px;
+}
+.compare-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-dk);margin-bottom:10px;}
+.compare-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:.5px solid var(--border);}
+.compare-row:last-child{border-bottom:none;}
+.compare-label{font-size:12px;color:var(--text);}
+.compare-val{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;}
+.compare-diff{
+  margin-top:10px;padding:8px 10px;border-radius:4px;
+  font-size:12px;line-height:1.5;
+  background:var(--teal-lt);color:var(--teal-dk);border:.5px solid var(--teal-bd);
+}
+
+/* Chart */
+.chart-wrap{position:relative;height:180px;margin-top:8px;}
+
+/* Insight */
+.insight-box{border-radius:8px;padding:12px 14px;font-size:12px;line-height:1.55;border-left:3px solid transparent;}
+.insight-box.teal{background:var(--teal-lt);border-color:var(--teal);color:var(--teal-dk);}
+.insight-box.amber{background:var(--amb-lt);border-color:var(--amber);color:#5C4200;}
+.insight-box.red{background:var(--red-lt);border-color:var(--red);color:#7A1A1A;}
+.insight-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;font-family:'Barlow Condensed',sans-serif;}
+
+
+button:focus,
+input:focus,
+summary:focus{
+  outline:2px solid #0D9B87;
+  outline-offset:1px;
+}
+
+@media(max-width:800px){
+  .compact-header,
+  .quiz-card,
+  .required-callout,
+  .how-to,
+  .interactive-app,
+  .results-dashboard,
+  .canvas-reminder{margin:0 10px;padding:12px;}
+  .interactive-head,
+  .quiz-workflow-banner{padding-left:12px;padding-right:12px;}
+  .pane-grid{grid-template-columns:1fr;}
+  .pane-right{order:2;}
+  .period-grid{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+
+<div class="page-shell">
+
+<section class="compact-header">
+  <span class="module-tag">M01 · App 3 of 3</span>
+  <h1>Customer Lifetime Value Calculator</h1>
+  <p>Calculate customer lifetime value with both the closed-form formula and the period-by-period present value method, then compare how each method values the same customer economics.</p>
+</section>
+
+<section class="quiz-card" data-focus-hide>
+  <h2>Learning Goal</h2>
+  <p>Use this app to compute customer life expectancy and CLV, interpret CLV as the maximum justifiable acquisition cost, and compare the formula method with a period-by-period PV model. The key takeaway is not just the number itself, but what changes when cash flows are assumed constant versus projected unevenly over time.</p>
+</section>
+
+<section class="quiz-card" data-focus-hide>
+  <h2>Worksheet Quiz Instructions</h2>
+  <ol>
+    <li>Read the Canvas quiz question first.</li>
+    <li>Follow the preset, scenario, or modifications specified in the question.</li>
+    <li>Use this app to perform the required calculations and analysis.</li>
+    <li>Enter your answers in the Canvas quiz.</li>
+    <li>Answers are submitted through Canvas, not through this app.</li>
+  </ol>
+</section>
+
+<section class="required-callout" data-focus-hide>
+  <p class="required-label">Required for Quiz</p>
+  <p>Question 1-A assigns you a full Tab A parameter set specific to your section — price, variable cost, retention rate, interest rate, and acquisition cost. Enter all five into Tab A before answering any Question 1 item; do not use the tab's default values. Question 1-C asks you to find a retention rate the app does not compute directly — use only the retention slider and the CLV result card to find it. Question 2 assigns you a 5-period cash-flow projection to enter into Tab B, using the same acquisition cost and interest rate as your Tab A scenario.</p>
+</section>
+
+<details class="how-to" data-focus-hide>
+  <summary>How to Use This App</summary>
+  <ol>
+    <li>Use Tab A to enter price, variable cost, retention, discount rate, and acquisition cost, then read the substituted formula, CLV result, derived values, sensitivity table, and chart.</li>
+    <li>Use the retention sensitivity table and chart to see how CLV changes as customer life expectancy changes with retention.</li>
+    <li>Switch to Tab B to enter acquisition cost, discount rate, number of periods, and projected per-period profits for the period-by-period PV method.</li>
+    <li>Compare the PV table, cash-flow chart, and method-comparison panel to understand why the two CLV methods may converge or diverge.</li>
+  </ol>
+</details>
+
+<section class="interactive-app" id="interactiveApp">
+  <div class="interactive-head">
+    <h2>Interactive App</h2>
+    <button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+  </div>
+  <p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+<div class="app-header">
+  <div>
+    <div class="module-tag">M01 · App 3 of 3</div>
+    <h1>Customer Lifetime Value Calculator</h1>
+  </div>
+  <span class="lo-badge">LO5 · LO6</span>
+</div>
+
+<!-- Tab bar -->
+<div class="tab-bar">
+  <button class="tab-btn active" id="tab-a-btn" onclick="switchTab('a')">Tab A — Formula method</button>
+  <button class="tab-btn" id="tab-b-btn" onclick="switchTab('b')">Tab B — Period-by-period PV</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB A — FORMULA METHOD
+══════════════════════════════════════════ -->
+<div class="tab-pane active" id="tab-a">
+<div class="pane-grid">
+
+  <div class="pane-left">
+
+    <!-- Inputs -->
+    <div class="card">
+      <div class="card-hdr navy"><div class="card-ttl">Formula inputs</div></div>
+      <div class="card-body">
+
+        <div class="irow">
+          <div><div class="ilabel">Price per period</div><div class="isub">Revenue per customer per period</div></div>
+          <div class="ictl"><input type="number" id="a-price" value="55" min="1" max="10000" step="1"></div>
+        </div>
+        <div class="irow">
+          <div><div class="ilabel">Variable cost per period</div><div class="isub">Cost to serve one customer per period</div></div>
+          <div class="ictl"><input type="number" id="a-vc" value="6" min="0" max="10000" step="1"></div>
+        </div>
+        <div class="irow">
+          <div><div class="ilabel">Retention rate (r)</div><div class="isub">% of customers retained each period</div></div>
+          <div class="ictl">
+            <input type="range" id="a-ret" min="50" max="98" step="1" value="82">
+            <div class="ival" id="a-ret-v">82%</div>
+          </div>
+        </div>
+        <div class="irow">
+          <div><div class="ilabel">Interest / discount rate (i)</div><div class="isub">Cost of capital or desired return rate</div></div>
+          <div class="ictl">
+            <input type="range" id="a-int" min="1" max="30" step="1" value="12">
+            <div class="ival" id="a-int-v">1.2%</div>
+          </div>
+        </div>
+        <div class="irow" style="border-bottom:none;">
+          <div><div class="ilabel">Acquisition cost (AC)</div><div class="isub">Cost to acquire one new customer</div></div>
+          <div class="ictl"><input type="number" id="a-ac" value="420" min="0" max="100000" step="1"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Formula display -->
+    <div class="card">
+      <div class="card-hdr teal"><div class="card-ttl">Formula with your numbers</div></div>
+      <div class="card-body">
+        <div class="formula-box">
+          <div class="formula-label">CLV formula — symbolic</div>
+          CLV = <span class="f-highlight">(M × r) / (1 + i − r)</span> − AC
+        </div>
+        <div class="formula-box" id="a-formula-substituted">
+          <div class="formula-label">CLV formula — your values substituted</div>
+          <span id="a-formula-text">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sensitivity table -->
+    <div class="card">
+      <div class="card-hdr teal"><div class="card-ttl">Sensitivity — CLV across retention rates</div></div>
+      <div class="card-body" style="padding:0;">
+        <table class="sens-tbl">
+          <thead>
+            <tr>
+              <th>Retention rate</th>
+              <th>Customer life (N)</th>
+              <th>CLV (formula)</th>
+              <th>vs. current</th>
+            </tr>
+          </thead>
+          <tbody id="a-sens-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pane-right">
+
+    <!-- CLV result -->
+    <div class="clv-result zero" id="a-clv-result">
+      <div class="clv-label">Customer Lifetime Value</div>
+      <div class="clv-value" id="a-clv-val">—</div>
+      <div class="clv-sub" id="a-clv-sub">Enter inputs to calculate</div>
+    </div>
+
+    <!-- Key derivations -->
+    <div class="card">
+      <div class="card-hdr teal"><div class="card-ttl">Derived values</div></div>
+      <div class="card-body">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Contribution (M)</div>
+            <div class="stat-val" id="a-stat-m">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Customer life (N)</div>
+            <div class="stat-val" id="a-stat-n">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">PV of profit stream</div>
+            <div class="stat-val" id="a-stat-pv">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Max justifiable AC</div>
+            <div class="stat-val amber-v" id="a-stat-mac">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insight -->
+    <div id="a-insight"></div>
+
+    <!-- Chart: CLV sensitivity -->
+    <div class="card">
+      <div class="card-hdr teal"><div class="card-ttl">CLV vs. retention rate</div></div>
+      <div class="card-body">
+        <div class="chart-wrap"><canvas id="a-chart"></canvas></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB B — PERIOD-BY-PERIOD PV
+══════════════════════════════════════════ -->
+<div class="tab-pane" id="tab-b">
+<div class="pane-grid">
+
+  <div class="pane-left">
+
+    <!-- Inputs -->
+    <div class="card">
+      <div class="card-hdr navy"><div class="card-ttl">Period-by-period inputs</div></div>
+      <div class="card-body">
+
+        <div class="irow">
+          <div><div class="ilabel">Acquisition cost (AC)</div><div class="isub">Paid at period 0 — enters as negative cash flow</div></div>
+          <div class="ictl"><input type="number" id="b-ac" value="420" min="0" max="100000" step="1"></div>
+        </div>
+        <div class="irow">
+          <div><div class="ilabel">Interest / discount rate</div><div class="isub">Per period (match to period definition)</div></div>
+          <div class="ictl">
+            <input type="range" id="b-int" min="1" max="30" step="1" value="12">
+            <div class="ival" id="b-int-v">1.2%</div>
+          </div>
+        </div>
+        <div class="irow" style="border-bottom:none;">
+          <div><div class="ilabel">Number of periods</div><div class="isub">How many periods to project (2–10)</div></div>
+          <div class="ictl">
+            <input type="range" id="b-periods" min="2" max="10" step="1" value="5">
+            <div class="ival" id="b-periods-v">5</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Cash flow inputs -->
+    <div class="card">
+      <div class="card-hdr teal"><div class="card-ttl">Projected profit per period</div></div>
+      <div class="card-body">
+        <div class="period-grid" id="b-period-inputs"></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;font-style:italic;">Enter profit per customer for each period. Period 0 (acquisition cost) is handled automatically.</div>
+      </div>
+    </div>
+
+    <!-- PV table -->
+    <div class="card">
+      <div class="card-hdr teal"><div class="card-ttl">Present value table</div></div>
+      <div class="card-body" style="padding:0;">
+        <table class="pv-tbl">
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Cash flow</th>
+              <th>PV of $1</th>
+              <th>PV of cash flow</th>
+              <th>Cumulative CLV</th>
+            </tr>
+          </thead>
+          <tbody id="b-pv-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pane-right">
+
+    <!-- CLV result -->
+    <div class="clv-result zero" id="b-clv-result">
+      <div class="clv-label">CLV — Period-by-period method</div>
+      <div class="clv-value" id="b-clv-val">—</div>
+      <div class="clv-sub" id="b-clv-sub">Enter period cash flows to calculate</div>
+    </div>
+
+    <!-- Chart -->
+    <div class="card">
+      <div class="card-hdr teal"><div class="card-ttl">Cash flows vs. present values</div></div>
+      <div class="card-body">
+        <div class="chart-wrap"><canvas id="b-chart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Comparison panel (shows if Tab A also completed) -->
+    <div class="compare-panel" id="b-compare">
+      <div class="compare-title">Method comparison</div>
+      <div class="compare-row">
+        <div class="compare-label">Tab A — Formula method</div>
+        <div class="compare-val" id="cmp-a" style="color:var(--teal-dk);">—</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">Tab B — Period-by-period PV</div>
+        <div class="compare-val" id="cmp-b" style="color:var(--navy);">—</div>
+      </div>
+      <div class="compare-row" style="border-bottom:none;">
+        <div class="compare-label">Difference (B − A)</div>
+        <div class="compare-val" id="cmp-diff" style="color:var(--muted);">—</div>
+      </div>
+      <div class="compare-diff" id="cmp-note">Complete Tab A first to see the method comparison.</div>
+    </div>
+
+    <!-- Insight -->
+    <div id="b-insight"></div>
+
+  </div>
+</div>
+</div>
+
+</section>
+
+<section class="results-dashboard" aria-label="Results Dashboard">
+  <h2>Results / Dashboard</h2>
+  <p>Use the CLV outputs, substituted formula, sensitivity table, PV table, charts, and method-comparison panel to complete the Canvas quiz responses.</p>
+</section>
+
+<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+
+</div>
+
+<script>
+let aChart = null;
+let bChart = null;
+let aClvResult = null;
+
+function fmtD(n,dec=0){ 
+  const abs = Math.abs(n);
+  const str = abs.toFixed(dec);
+  return (n<0?'−$':'$')+parseFloat(str).toLocaleString(undefined,{minimumFractionDigits:dec,maximumFractionDigits:dec});
+}
+function fmtPct(n,dec=1){ return n.toFixed(dec)+'%'; }
+function fmtN(n,dec=2){ return n.toFixed(dec); }
+
+function switchTab(t){
+  document.getElementById('tab-a').classList.toggle('active', t==='a');
+  document.getElementById('tab-b').classList.toggle('active', t==='b');
+  document.getElementById('tab-a-btn').classList.toggle('active', t==='a');
+  document.getElementById('tab-b-btn').classList.toggle('active', t==='b');
+  if(t==='b') updateB();
+}
+
+/* ══ TAB A ══════════════════════════════════════════════ */
+function getA(){
+  const price = parseFloat(document.getElementById('a-price').value)||55;
+  const vc    = parseFloat(document.getElementById('a-vc').value)||6;
+  const ret   = parseInt(document.getElementById('a-ret').value)/100;
+  const intR  = parseInt(document.getElementById('a-int').value)/1000;
+  const ac    = parseFloat(document.getElementById('a-ac').value)||420;
+  const M     = price - vc;
+  const N     = 1/(1-ret);
+  const pvStream = (M * ret) / (1 + intR - ret);
+  const clv   = pvStream - ac;
+  const maxAC = pvStream;
+  return {price,vc,ret,intR,ac,M,N,pvStream,clv,maxAC};
+}
+
+function calcCLV(M,ret,intR,ac){
+  const pvStream = (M * ret) / (1 + intR - ret);
+  return pvStream - ac;
+}
+
+function updateA(){
+  const d = getA();
+  aClvResult = d.clv;
+
+  document.getElementById('a-ret-v').textContent = (d.ret*100).toFixed(0)+'%';
+  document.getElementById('a-int-v').textContent = (d.intR*100).toFixed(1)+'%';
+
+  const formulaEl = document.getElementById('a-formula-text');
+  const sign = d.clv < 0 ? '−' : '';
+  const clvClass = d.clv < 0 ? 'f-neg' : 'f-result';
+  formulaEl.innerHTML = 
+    `CLV = (<span class="f-highlight">${fmtD(d.M)} × ${(d.ret*100).toFixed(0)}%</span>) / (1 + ${(d.intR*100).toFixed(1)}% − ${(d.ret*100).toFixed(0)}%) − ${fmtD(d.ac)}<br>` +
+    `&nbsp;&nbsp;&nbsp;&nbsp;= <span class="f-highlight">${fmtD(d.M*d.ret,2)}</span> / <span class="f-highlight">${(1+d.intR-d.ret).toFixed(4)}</span> − ${fmtD(d.ac)}<br>` +
+    `&nbsp;&nbsp;&nbsp;&nbsp;= <span class="f-highlight">${fmtD(d.pvStream,2)}</span> − ${fmtD(d.ac)}<br>` +
+    `&nbsp;&nbsp;&nbsp;&nbsp;= <span class="${clvClass}">${fmtD(d.clv,2)}</span>`;
+
+  const resultEl = document.getElementById('a-clv-result');
+  const valEl    = document.getElementById('a-clv-val');
+  const subEl    = document.getElementById('a-clv-sub');
+  resultEl.className = 'clv-result '+(d.clv>0?'pos':d.clv<0?'neg':'zero');
+  valEl.textContent  = fmtD(d.clv,2);
+  subEl.textContent  = d.clv>0 ? 'Positive — acquisition justified up to '+fmtD(d.maxAC,2) :
+                       d.clv<0 ? 'Negative — acquisition cost exceeds lifetime profit' :
+                       'CLV = $0 — at break-even';
+
+  document.getElementById('a-stat-m').textContent   = fmtD(d.M,2);
+  document.getElementById('a-stat-n').textContent   = fmtN(d.N,2)+' periods';
+  document.getElementById('a-stat-pv').textContent  = fmtD(d.pvStream,2);
+  document.getElementById('a-stat-mac').textContent = fmtD(d.maxAC,2);
+
+  updateSensTable(d);
+  updateAChart(d);
+  updateAInsight(d);
+  updateCompare();
+}
+
+function updateSensTable(d){
+  const tbody = document.getElementById('a-sens-tbody');
+  tbody.innerHTML = '';
+  const currentR = d.ret;
+  const retLevels = [];
+  const base = Math.round(currentR*100);
+  for(let r = Math.max(50, base-20); r <= Math.min(98, base+20); r+=5){
+    retLevels.push(r/100);
+  }
+  if(!retLevels.includes(currentR)) retLevels.push(currentR);
+  retLevels.sort((a,b)=>a-b);
+
+  retLevels.forEach(r => {
+    const clv = calcCLV(d.M, r, d.intR, d.ac);
+    const N   = 1/(1-r);
+    const diff = clv - d.clv;
+    const isCurrent = Math.abs(r - currentR) < 0.001;
+    const tr = document.createElement('tr');
+    if(isCurrent) tr.className = 'current-row';
+    const clvClass = clv<0?'neg-cell':'pos-cell';
+    const diffClass = diff>0?'pos-cell':diff<0?'neg-cell':'';
+    tr.innerHTML = `
+      <td>${(r*100).toFixed(0)}%${isCurrent?' ◀':''}</td>
+      <td>${fmtN(N,2)}</td>
+      <td class="${clvClass}">${fmtD(clv,2)}</td>
+      <td class="${diffClass}">${diff===0?'—':(diff>0?'+':'')+fmtD(diff,2)}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function updateAChart(d){
+  const retLevels = [];
+  for(let r=50; r<=98; r+=2) retLevels.push(r/100);
+  const clvs = retLevels.map(r => calcCLV(d.M,r,d.intR,d.ac));
+
+  if(!aChart){
+    const ctx = document.getElementById('a-chart').getContext('2d');
+    aChart = new Chart(ctx,{
+      type:'line',
+      data:{
+        labels: retLevels.map(r=>(r*100).toFixed(0)+'%'),
+        datasets:[{
+          label:'CLV',
+          data: clvs,
+          borderColor:'#0D9B87',
+          borderWidth:2,
+          pointRadius:0,
+          tension:0.4,
+          fill:false,
+        },{
+          label:'Current r',
+          data: retLevels.map(r=>Math.abs(r-d.ret)<0.011?calcCLV(d.M,r,d.intR,d.ac):null),
+          borderColor:'#E6A800',
+          backgroundColor:'#E6A800',
+          pointRadius:6,
+          pointHoverRadius:8,
+          showLine:false,
+        }]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' CLV: '+fmtD(c.raw,2)}}},
+        scales:{
+          x:{grid:{display:false},ticks:{font:{size:9},color:'#7A9896',maxTicksLimit:8}},
+          y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},color:'#7A9896',callback:v=>fmtD(v,0)}}
+        }
+      }
+    });
+  } else {
+    aChart.data.datasets[0].data = clvs;
+    aChart.data.datasets[1].data = retLevels.map(r=>Math.abs(r-d.ret)<0.011?calcCLV(d.M,r,d.intR,d.ac):null);
+    aChart.update('none');
+  }
+}
+
+function updateAInsight(d){
+  const el = document.getElementById('a-insight');
+  let box;
+  if(d.clv > 0){
+    box = `<div class="insight-box teal"><div class="insight-label">Positive CLV</div>
+      Lifetime profit (${fmtD(d.pvStream,2)}) exceeds acquisition cost (${fmtD(d.ac,2)}) by <strong>${fmtD(d.clv,2)}</strong>. 
+      Maximum justifiable acquisition cost: <strong>${fmtD(d.maxAC,2)}</strong> — spending above this makes CLV negative.</div>`;
+  } else if(d.clv < 0){
+    box = `<div class="insight-box red"><div class="insight-label">Negative CLV</div>
+      Acquisition cost (${fmtD(d.ac,2)}) exceeds the present value of lifetime profit (${fmtD(d.pvStream,2)}). 
+      This company destroys value on every new customer acquired. 
+      Try increasing retention rate or reducing acquisition cost in the sensitivity table.</div>`;
+  } else {
+    box = `<div class="insight-box amber"><div class="insight-label">Break-even</div>
+      CLV equals exactly $0 — acquisition cost equals lifetime profit. 
+      Any improvement in retention rate or reduction in acquisition cost produces a positive CLV.</div>`;
+  }
+  el.innerHTML = box;
+}
+
+/* ══ TAB B ══════════════════════════════════════════════ */
+function getB(){
+  const ac      = parseFloat(document.getElementById('b-ac').value)||420;
+  const intR    = parseInt(document.getElementById('b-int').value)/1000;
+  const periods = parseInt(document.getElementById('b-periods').value)||5;
+  const cashflows = [];
+  for(let p=1; p<=periods; p++){
+    const el = document.getElementById('b-cf-'+p);
+    cashflows.push(el ? (parseFloat(el.value)||0) : 0);
+  }
+  return {ac,intR,periods,cashflows};
+}
+
+function buildPeriodInputs(){
+  const inp = getB();
+  const grid = document.getElementById('b-period-inputs');
+  const defaults = [38,44,51,58,65,72,80,88,96,105];
+  grid.innerHTML = '';
+  for(let p=1; p<=inp.periods; p++){
+    const cell = document.createElement('div');
+    cell.className = 'period-input-cell';
+    cell.innerHTML = `
+      <div class="period-label">Period ${p}</div>
+      <input type="number" id="b-cf-${p}" value="${defaults[p-1]||0}" min="-10000" max="100000" step="1">`;
+    grid.appendChild(cell);
+    cell.querySelector('input').addEventListener('input', updateB);
+  }
+}
+
+function updateB(){
+  const d = getB();
+  document.getElementById('b-int-v').textContent    = (d.intR*100).toFixed(1)+'%';
+  document.getElementById('b-periods-v').textContent = d.periods;
+
+  buildPeriodInputs();
+
+  const rows = [];
+  let cumCLV = -d.ac;
+
+  // Period 0: acquisition cost
+  rows.push({period:0, cf:-d.ac, pvFactor:1.0, pvCF:-d.ac, cum:-d.ac, isAC:true});
+
+  for(let p=1; p<=d.periods; p++){
+    const cf = d.cashflows[p-1]||0;
+    const pvFactor = 1/Math.pow(1+d.intR, p);
+    const pvCF = cf * pvFactor;
+    cumCLV += pvCF;
+    rows.push({period:p, cf, pvFactor, pvCF, cum:cumCLV, isAC:false});
+  }
+
+  const finalCLV = cumCLV;
+
+  updatePVTable(rows, finalCLV);
+  updateBChart(rows);
+  updateBCLVDisplay(finalCLV, d);
+  updateBInsight(finalCLV, d);
+  updateCompare();
+}
+
+function updatePVTable(rows, finalCLV){
+  const tbody = document.getElementById('b-pv-tbody');
+  tbody.innerHTML = '';
+  rows.forEach(r => {
+    const isTotal = r === rows[rows.length-1] && rows.length > 2;
+    const tr = document.createElement('tr');
+    const cfClass = r.cf<0?'neg-cell':'pos-cell';
+    const pvClass  = r.pvCF<0?'neg-cell':'pos-cell';
+    const cumClass = r.cum<0?'neg-cell':'pos-cell';
+    tr.innerHTML = `
+      <td>${r.period===0?'0 (AC)':r.period}</td>
+      <td class="${cfClass}${r.isAC?' ac-row':''}">${fmtD(r.cf,2)}</td>
+      <td>${r.pvFactor.toFixed(3)}</td>
+      <td class="${pvClass}">${fmtD(r.pvCF,2)}</td>
+      <td class="${cumClass}">${fmtD(r.cum,2)}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  const totalTr = document.createElement('tr');
+  totalTr.className = 'total-row';
+  totalTr.innerHTML = `
+    <td>CLV</td>
+    <td>—</td>
+    <td>—</td>
+    <td>—</td>
+    <td class="${finalCLV<0?'neg-cell':'pos-cell'}">${fmtD(finalCLV,2)}</td>`;
+  tbody.appendChild(totalTr);
+}
+
+function updateBCLVDisplay(clv, d){
+  const resultEl = document.getElementById('b-clv-result');
+  const valEl    = document.getElementById('b-clv-val');
+  const subEl    = document.getElementById('b-clv-sub');
+  resultEl.className = 'clv-result '+(clv>0?'pos':clv<0?'neg':'zero');
+  valEl.textContent  = fmtD(clv,2);
+  subEl.textContent  = clv>0 ? 'Positive — growing profit stream recovers acquisition cost' :
+                       clv<0 ? 'Negative — projected profits insufficient to recover acquisition cost' :
+                       'Break-even — exactly recovers acquisition cost';
+}
+
+function updateBChart(rows){
+  const labels = rows.map(r=>r.period===0?'AC':r.period+'');
+  const cfs    = rows.map(r=>r.cf);
+  const pvs    = rows.map(r=>r.pvCF);
+
+  if(!bChart){
+    const ctx = document.getElementById('b-chart').getContext('2d');
+    bChart = new Chart(ctx,{
+      type:'bar',
+      data:{
+        labels,
+        datasets:[
+          {label:'Cash flow',data:cfs,backgroundColor:'rgba(13,155,135,.25)',borderColor:'#0D9B87',borderWidth:1.5,borderRadius:3},
+          {label:'Present value',data:pvs,backgroundColor:'rgba(13,122,107,.6)',borderColor:'#0D7A6B',borderWidth:1.5,borderRadius:3},
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{
+          legend:{display:true,position:'top',labels:{font:{size:10},boxWidth:12,padding:10}},
+          tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtD(c.raw,2)}}
+        },
+        scales:{
+          x:{grid:{display:false},ticks:{font:{size:10},color:'#7A9896'}},
+          y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10},color:'#7A9896',callback:v=>fmtD(v,0)}}
+        }
+      }
+    });
+  } else {
+    bChart.data.labels = labels;
+    bChart.data.datasets[0].data = cfs;
+    bChart.data.datasets[1].data = pvs;
+    bChart.update('none');
+  }
+}
+
+function updateBInsight(clv, d){
+  const el = document.getElementById('b-insight');
+  const aClv = aClvResult;
+  let txt;
+  if(aClv !== null){
+    const diff = clv - aClv;
+    const sign = diff >= 0 ? '+' : '';
+    txt = `<div class="insight-box teal"><div class="insight-label">Method comparison</div>
+      Tab B CLV (${fmtD(clv,2)}) vs. Tab A formula method (${fmtD(aClv,2)}) — difference: <strong>${sign}${fmtD(diff,2)}</strong>. 
+      ${Math.abs(diff) < 5 ? 'The two methods produce very similar results — the profit stream is relatively stable across periods.' :
+        diff > 0 ? 'Tab B produces a higher estimate because the growing profit stream accelerates value creation in later periods — something the formula method cannot capture.' :
+        'Tab B produces a lower estimate because the profit stream in early periods is below the constant margin assumed by the formula.'}</div>`;
+  } else {
+    txt = `<div class="insight-box amber"><div class="insight-label">Tab B result</div>
+      Period-by-period CLV: <strong>${fmtD(clv,2)}</strong>. 
+      ${clv<0?'Acquisition cost has not been recovered within the projected periods.':'The present value of projected profits exceeds acquisition cost.'}
+      Complete Tab A to compare methods.</div>`;
+  }
+  el.innerHTML = txt;
+}
+
+function updateCompare(){
+  const aEl   = document.getElementById('cmp-a');
+  const bEl   = document.getElementById('cmp-b');
+  const diffEl= document.getElementById('cmp-diff');
+  const noteEl= document.getElementById('cmp-note');
+
+  const bClv = (() => {
+    const d = getB();
+    let cum = -d.ac;
+    for(let p=1; p<=d.periods; p++){
+      const cf = d.cashflows[p-1]||0;
+      cum += cf / Math.pow(1+d.intR, p);
+    }
+    return cum;
+  })();
+
+  if(aClvResult !== null){
+    const diff = bClv - aClvResult;
+    aEl.textContent   = fmtD(aClvResult,2);
+    aEl.style.color   = aClvResult>=0?'#0D7A6B':'#C0392B';
+    bEl.textContent   = fmtD(bClv,2);
+    bEl.style.color   = bClv>=0?'#0F2027':'#C0392B';
+    diffEl.textContent= (diff>=0?'+':'')+fmtD(diff,2);
+    diffEl.style.color= diff>=0?'#0D7A6B':'#C0392B';
+    noteEl.textContent= Math.abs(diff) < 2 ? 'The two methods produce nearly identical results — profit stream is stable.' :
+      diff > 0 ? 'Tab B > Tab A: your projected profit grows over time, which the formula method cannot capture with a constant M.' :
+      'Tab B < Tab A: early-period profits are below the constant margin assumed by the formula method.';
+  } else {
+    aEl.textContent = 'Complete Tab A first';
+    aEl.style.color = '#7A9896';
+    diffEl.textContent = '—';
+    bEl.textContent = fmtD(bClv,2);
+    bEl.style.color = bClv>=0?'#0F2027':'#C0392B';
+    noteEl.textContent = 'Complete Tab A first to see the method comparison.';
+  }
+}
+
+function bindSlider(id,valId,scale,dec){
+  document.getElementById(id).addEventListener('input',function(){
+    const v = parseInt(this.value);
+    document.getElementById(valId).textContent = (v/scale).toFixed(dec)+'%';
+    if(id.startsWith('a')) updateA();
+    else { buildPeriodInputs(); updateB(); }
+  });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  bindSlider('a-ret','a-ret-v',100,0);
+  bindSlider('a-int','a-int-v',1000,1);
+  ['a-price','a-vc','a-ac'].forEach(id=>{
+    document.getElementById(id).addEventListener('input',updateA);
+  });
+
+  bindSlider('b-int','b-int-v',1000,1);
+  document.getElementById('b-periods').addEventListener('input',function(){
+    document.getElementById('b-periods-v').textContent = this.value;
+    buildPeriodInputs();
+    updateB();
+  });
+  document.getElementById('b-ac').addEventListener('input',updateB);
+
+  const focusModeBtn = document.getElementById('focusModeBtn');
+  if(focusModeBtn){
+    focusModeBtn.addEventListener('click',()=>{
+      const enabled = document.body.classList.toggle('focus-mode');
+      focusModeBtn.textContent = enabled ? 'Exit Focus Mode' : 'Focus Mode';
+      focusModeBtn.setAttribute('aria-pressed', String(enabled));
+    });
+  }
+
+  buildPeriodInputs();
+  updateA();
+  updateB();
+});
+</script>
+</body>
+</html>

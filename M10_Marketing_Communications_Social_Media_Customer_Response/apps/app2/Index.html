@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>M10 App 2 - Advertising Carryover Calculator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --navy: #0F2A4A;
+      --blue: #1D6FA4;
+      --gold: #C8932A;
+      --bg: #F3F7FB;
+      --panel: #FFFFFF;
+      --line: #DCE7F3;
+      --text: #14324F;
+      --muted: #4E6780;
+      --bar-light: #7FB4D8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .app {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #F8FBFF 0%, #FFFFFF 100%);
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      display: grid;
+      gap: 14px;
+      padding-bottom: 10px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: -999px;
+      background: #12222d;
+      color: #fff;
+      padding: 0.45rem 0.7rem;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+
+    .skip-link:focus {
+      left: 0.7rem;
+      top: 0.7rem;
+    }
+
+    .compact-header,
+    .quiz-card,
+    .required-callout,
+    .how-to,
+    .interactive-app,
+    .results-dashboard,
+    .canvas-reminder {
+      margin: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 14px;
+      box-shadow: 0 6px 14px rgba(15, 42, 74, 0.06);
+    }
+
+    .compact-header h1 {
+      margin: 0;
+      font-size: clamp(1.45rem, 2.1vw, 1.58rem);
+      line-height: 1.2;
+      color: var(--navy);
+    }
+
+    .compact-header .module {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .compact-header p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .quiz-card h2,
+    .interactive-head h2,
+    .results-dashboard h2,
+    .how-to summary {
+      margin: 0 0 6px;
+      font-size: 1.2rem;
+      color: var(--blue);
+    }
+
+    .quiz-card p,
+    .required-callout p,
+    .how-to li,
+    .results-dashboard p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .quiz-card ol,
+    .how-to ol {
+      margin: 0;
+      padding-left: 1.2rem;
+      display: grid;
+      gap: 0.15rem;
+    }
+
+    .required-callout {
+      border-left: 4px solid var(--gold);
+    }
+
+    .required-label {
+      margin: 0 0 4px;
+      color: #8a651d;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+
+    .how-to summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .how-to[open] summary {
+      margin-bottom: 8px;
+    }
+
+    .interactive-app {
+      display: grid;
+      gap: 12px;
+      padding: 14px 0 0;
+      overflow: hidden;
+    }
+
+    .interactive-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 0 14px;
+    }
+
+    .focus-btn {
+      border: 1px solid #BFD5E8;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--blue);
+      padding: 7px 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .quiz-workflow-banner {
+      margin: 0 14px;
+      border: 1px solid #C9DBEB;
+      border-radius: 10px;
+      background: #EEF6FD;
+      color: var(--navy);
+      padding: 10px 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .results-dashboard p {
+      color: var(--muted);
+    }
+
+    .canvas-reminder {
+      text-align: center;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    body.focus-mode [data-focus-hide] {
+      display: none;
+    }
+
+    .header {
+      background: var(--navy);
+      color: #fff;
+      padding: 12px;
+      border-bottom: 3px solid var(--blue);
+    }
+
+    .module {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #A9CBE4;
+      font-weight: 600;
+    }
+
+    h1 {
+      margin: 2px 0 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .content {
+      padding: 0 14px 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: var(--blue);
+    }
+
+    .input-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr;
+    }
+
+    .field {
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+      margin-top: 8px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .field:first-child {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .field-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: baseline;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .field-value {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .control-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 110px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--blue);
+    }
+
+    input[type="number"] {
+      width: 100%;
+      border: 1px solid #BFD5E8;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: #fff;
+    }
+
+    .metrics-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #FBFDFF;
+      padding: 10px;
+      display: grid;
+      gap: 4px;
+      align-content: start;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .metric-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--navy);
+      word-break: break-word;
+    }
+
+    .metric-value.primary {
+      font-size: 38px;
+      line-height: 1;
+      min-height: 36px;
+    }
+
+    .roi-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .roi-box {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      background: #FBFDFF;
+    }
+
+    .roi-title {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+
+    .roi-value {
+      font-size: 34px;
+      line-height: 1.05;
+      color: var(--navy);
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .gap-line {
+      margin-top: 8px;
+      border: 1px solid #D7E7F5;
+      background: #F6FBFF;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .context-line {
+      margin-top: 8px;
+      border: 1px solid #E6D7B8;
+      background: #FFF8EB;
+      color: #6C5120;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    th {
+      background: var(--navy);
+      color: #fff;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+    }
+
+    td:first-child,
+    th:first-child {
+      text-align: left;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #F8FBFF;
+    }
+
+    .table-foot {
+      margin-top: 8px;
+      display: grid;
+      gap: 4px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .chart {
+      max-height: 300px;
+      min-height: 210px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #FBFDFF;
+      padding: 10px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      overflow-x: auto;
+    }
+
+    .bar-wrap {
+      min-width: 48px;
+      display: grid;
+      gap: 6px;
+      justify-items: center;
+      align-content: end;
+    }
+
+    .bar {
+      width: 36px;
+      min-height: 2px;
+      border-radius: 6px 6px 0 0;
+      background: var(--bar-light);
+    }
+
+    .bar.main {
+      background: var(--navy);
+    }
+
+    .bar-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    button:focus,
+    input:focus,
+    select:focus,
+    summary:focus {
+      outline: 2px solid #1D6FA4;
+      outline-offset: 1px;
+    }
+
+    @media (min-width: 860px) {
+      .input-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .control-row {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics-grid,
+      .roi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-value.primary,
+      .roi-value {
+        font-size: 32px;
+      }
+
+      .compact-header,
+      .quiz-card,
+      .required-callout,
+      .how-to,
+      .interactive-app,
+      .results-dashboard,
+      .canvas-reminder {
+        margin: 0 8px;
+        padding: 12px;
+      }
+
+      .interactive-head,
+      .quiz-workflow-banner,
+      .content {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+  <div class="app">
+    <section class="compact-header">
+      <div class="module">MKT 472 · Module 10 · App 2</div>
+      <h1>Advertising Carryover Calculator</h1>
+      <p>Evaluate how carryover effects change total sales and ROI interpretation beyond the current period.</p>
+    </section>
+
+    <section class="quiz-card" data-focus-hide>
+      <h2>Learning Goal</h2>
+      <p>Compare short-run and total-impact ROI under different carryover assumptions. Identify how much future sales value is missed when analysis focuses only on current-period outcomes.</p>
+    </section>
+
+    <section class="quiz-card" data-focus-hide>
+      <h2>Worksheet Quiz Instructions</h2>
+      <ol>
+        <li>Read the Canvas quiz question first.</li>
+        <li>Follow the preset, scenario, or modifications specified in the question.</li>
+        <li>Use this app to perform the required calculations and analysis.</li>
+        <li>Enter your answers in the Canvas quiz.</li>
+        <li>Answers are submitted through Canvas, not through this app.</li>
+      </ol>
+    </section>
+
+    <section class="required-callout" data-focus-hide>
+      <p class="required-label">Required for Quiz</p>
+      <p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default starting values: Ad Spend $20M, Multiplier 12, c = 0.50, Contribution Margin 45%, Periods 8.</p>
+    </section>
+
+    <details class="how-to" data-focus-hide>
+      <summary>How to Use This App</summary>
+      <ol>
+        <li>Adjust each input using either slider or number field; both controls stay synchronized.</li>
+        <li>Review current and total impact metrics to compare short-run versus carryover-driven outcomes.</li>
+        <li>Use the ROI comparison panel and context line to evaluate the gap between current-only and total-impact ROI.</li>
+        <li>Check period table and bar chart to trace how carryover declines across projected periods.</li>
+      </ol>
+    </details>
+
+    <section class="interactive-app" id="interactiveApp">
+      <div class="interactive-head">
+        <h2>Interactive App</h2>
+        <button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+      </div>
+      <p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+      <header class="header">
+        <div class="module">MKT 472 · Module 10</div>
+        <h1>Advertising Carryover Calculator</h1>
+      </header>
+
+      <main class="content">
+      <section class="card" aria-label="Inputs and outputs panel">
+        <h2>Advertising Carryover Calculator</h2>
+        <div class="input-grid">
+          <div class="field">
+            <div class="field-head">
+              <label for="spendRange">Ad Spend ($M)</label>
+              <span class="field-value" id="spendDisplay"></span>
+            </div>
+            <div class="control-row">
+              <input id="spendRange" type="range" min="1" max="100" step="1" value="20" />
+              <input id="spendNum" type="number" min="1" max="100" step="1" value="20" />
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <label for="multiplierRange">Ad-to-Sales Multiplier</label>
+              <span class="field-value" id="multiplierDisplay"></span>
+            </div>
+            <div class="control-row">
+              <input id="multiplierRange" type="range" min="1" max="20" step="1" value="12" />
+              <input id="multiplierNum" type="number" min="1" max="20" step="1" value="12" />
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <label for="carryoverRange">Carryover Coefficient c</label>
+              <span class="field-value" id="carryoverDisplay"></span>
+            </div>
+            <div class="control-row">
+              <input id="carryoverRange" type="range" min="0" max="0.9" step="0.05" value="0.5" />
+              <input id="carryoverNum" type="number" min="0" max="0.9" step="0.05" value="0.5" />
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <label for="contributionRange">Contribution Margin (%)</label>
+              <span class="field-value" id="contributionDisplay"></span>
+            </div>
+            <div class="control-row">
+              <input id="contributionRange" type="range" min="10" max="80" step="1" value="45" />
+              <input id="contributionNum" type="number" min="10" max="80" step="1" value="45" />
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <label for="periodsRange">Periods to Project</label>
+              <span class="field-value" id="periodsDisplay"></span>
+            </div>
+            <div class="control-row">
+              <input id="periodsRange" type="range" min="2" max="12" step="1" value="8" />
+              <input id="periodsNum" type="number" min="2" max="12" step="1" value="8" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-label="Primary metrics panel">
+        <h2>Primary Metrics</h2>
+        <div class="metrics-grid">
+          <div class="metric">
+            <div class="metric-label">Current-Period Sales Impact</div>
+            <div class="metric-value primary" id="currentImpact">--</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Total Multi-Period Impact</div>
+            <div class="metric-value primary" id="totalImpact">--</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Total Profit Impact</div>
+            <div class="metric-value" id="totalProfit">--</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Current Period as % of Total</div>
+            <div class="metric-value" id="currentPct">--</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Missing Future Sales</div>
+            <div class="metric-value" id="missingSales">--</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-label="ROI comparison panel">
+        <h2>ROI Comparison</h2>
+        <div class="roi-grid">
+          <div class="roi-box">
+            <div class="roi-title">Current Period Only</div>
+            <div class="roi-value" id="shortRoi">--</div>
+          </div>
+          <div class="roi-box">
+            <div class="roi-title">All Periods Carryover</div>
+            <div class="roi-value" id="totalRoi">--</div>
+          </div>
+        </div>
+        <div class="gap-line" id="gapLine">--</div>
+        <div class="context-line" id="contextLine">--</div>
+      </section>
+
+      <section class="card" aria-label="Period-by-period carryover table">
+        <h2>Period-by-Period Carryover Table</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Period</th>
+                <th>Carryover Factor</th>
+                <th>Sales Impact</th>
+                <th>Profit Impact</th>
+                <th>Cumulative Impact</th>
+              </tr>
+            </thead>
+            <tbody id="periodBody"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <div id="tableCumulative">Table cumulative impact: --</div>
+          <div id="formulaTotal">Formula total impact: --</div>
+        </div>
+      </section>
+
+      <section class="card" aria-label="Diminishing carryover bar chart">
+        <h2>Diminishing Carryover Bar Chart</h2>
+        <div class="chart" id="chart"></div>
+      </section>
+      </main>
+    </section>
+
+    <section class="results-dashboard" aria-label="Results Dashboard">
+      <h2>Results / Dashboard</h2>
+      <p>Use carryover table values, ROI comparison outputs, and missing-future-sales metrics to complete the Canvas quiz responses.</p>
+    </section>
+
+    <p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+  </div>
+
+  <script>
+    const state = {
+      spend: 20,
+      multiplier: 12,
+      c: 0.5,
+      contribution: 45,
+      periods: 8
+    };
+
+    const specs = {
+      spend: { min: 1, max: 100, step: 1, decimals: 0 },
+      multiplier: { min: 1, max: 20, step: 1, decimals: 0 },
+      c: { min: 0, max: 0.9, step: 0.05, decimals: 2 },
+      contribution: { min: 10, max: 80, step: 1, decimals: 0 },
+      periods: { min: 2, max: 12, step: 1, decimals: 0 }
+    };
+
+    const pairMap = {
+      spend: ['spendRange', 'spendNum'],
+      multiplier: ['multiplierRange', 'multiplierNum'],
+      c: ['carryoverRange', 'carryoverNum'],
+      contribution: ['contributionRange', 'contributionNum'],
+      periods: ['periodsRange', 'periodsNum']
+    };
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function snapToStep(value, step, decimals) {
+      const snapped = Math.round(value / step) * step;
+      return Number(snapped.toFixed(decimals));
+    }
+
+    function normalizeValue(key, raw) {
+      const spec = specs[key];
+      const parsed = Number.parseFloat(raw);
+      const fallback = state[key];
+      const start = Number.isFinite(parsed) ? parsed : fallback;
+      const clamped = clamp(start, spec.min, spec.max);
+      return snapToStep(clamped, spec.step, spec.decimals);
+    }
+
+    function fmtMoneyM(value, decimals = 0) {
+      return `$${value.toFixed(decimals)}M`;
+    }
+
+    function fmtPct(value, decimals = 0) {
+      return `${value.toFixed(decimals)}%`;
+    }
+
+    function fmtFactor(value) {
+      return value.toFixed(3);
+    }
+
+    function fmtX(value) {
+      return `${value.toFixed(2)}x`;
+    }
+
+    function compute() {
+      const current = state.multiplier * state.spend;
+      const total = state.c >= 1 ? Infinity : current / (1 - state.c);
+      const margin = state.contribution / 100;
+      const totalProfit = total * margin;
+      const shortRoi = (current * margin) / state.spend;
+      const totalRoi = totalProfit / state.spend;
+      const currentPct = (current / total) * 100;
+      const roiGap = totalRoi / shortRoi;
+      const missingFutureSales = total - current;
+
+      const rows = [];
+      let cumulative = 0;
+      for (let p = 1; p <= state.periods; p += 1) {
+        const factor = Math.pow(state.c, p - 1);
+        const salesImpact = current * factor;
+        const profitImpact = salesImpact * margin;
+        cumulative += salesImpact;
+        rows.push({ period: p, factor, salesImpact, profitImpact, cumulative });
+      }
+
+      return {
+        current,
+        total,
+        totalProfit,
+        shortRoi,
+        totalRoi,
+        currentPct,
+        roiGap,
+        missingFutureSales,
+        rows,
+        tableCumulative: cumulative
+      };
+    }
+
+    function syncPairDisplays() {
+      document.getElementById('spendDisplay').textContent = fmtMoneyM(state.spend, 0);
+      document.getElementById('multiplierDisplay').textContent = state.multiplier.toFixed(0);
+      document.getElementById('carryoverDisplay').textContent = state.c.toFixed(2);
+      document.getElementById('contributionDisplay').textContent = fmtPct(state.contribution, 0);
+      document.getElementById('periodsDisplay').textContent = state.periods.toFixed(0);
+
+      Object.keys(pairMap).forEach((key) => {
+        const [rangeId, numberId] = pairMap[key];
+        const value = state[key];
+        const decimals = specs[key].decimals;
+        const display = decimals > 0 ? value.toFixed(decimals) : value.toFixed(0);
+        document.getElementById(rangeId).value = display;
+        document.getElementById(numberId).value = display;
+      });
+    }
+
+    function renderMetrics(result) {
+      document.getElementById('currentImpact').textContent = fmtMoneyM(result.current, 0);
+      document.getElementById('totalImpact').textContent = fmtMoneyM(result.total, 0);
+      document.getElementById('totalProfit').textContent = fmtMoneyM(result.totalProfit, 0);
+      document.getElementById('shortRoi').textContent = fmtX(result.shortRoi);
+      document.getElementById('totalRoi').textContent = fmtX(result.totalRoi);
+      document.getElementById('currentPct').textContent = fmtPct(result.currentPct, 0);
+      document.getElementById('missingSales').textContent = fmtMoneyM(result.missingFutureSales, 0);
+      document.getElementById('gapLine').textContent = `Gap Indicator: Total ROI is ${fmtX(result.roiGap)} higher than short-run alone`;
+      document.getElementById('contextLine').textContent = `A manager using short-run ROI alone is missing ${fmtMoneyM(result.missingFutureSales, 0)} in future sales.`;
+    }
+
+    function renderTable(result) {
+      const body = document.getElementById('periodBody');
+      body.innerHTML = '';
+
+      result.rows.forEach((row) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>Period ${row.period}</td>
+          <td>${fmtFactor(row.factor)}</td>
+          <td>${fmtMoneyM(row.salesImpact, 1)}</td>
+          <td>${fmtMoneyM(row.profitImpact, 1)}</td>
+          <td>${fmtMoneyM(row.cumulative, 1)}</td>
+        `;
+        body.appendChild(tr);
+      });
+
+      document.getElementById('tableCumulative').textContent = `Table cumulative impact: ${fmtMoneyM(result.tableCumulative, 1)}`;
+      document.getElementById('formulaTotal').textContent = `Formula total impact: ${fmtMoneyM(result.total, 1)}`;
+    }
+
+    function renderChart(result) {
+      const chart = document.getElementById('chart');
+      chart.innerHTML = '';
+      const maxSales = result.rows.length ? result.rows[0].salesImpact : 1;
+
+      result.rows.forEach((row, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'bar-wrap';
+
+        const bar = document.createElement('div');
+        bar.className = `bar${idx === 0 ? ' main' : ''}`;
+        bar.style.height = `${Math.max(4, (row.salesImpact / maxSales) * 160)}px`;
+        bar.title = `Period ${row.period}: ${fmtMoneyM(row.salesImpact, 1)}`;
+
+        const label = document.createElement('div');
+        label.className = 'bar-label';
+        label.textContent = `P${row.period}`;
+
+        wrap.appendChild(bar);
+        wrap.appendChild(label);
+        chart.appendChild(wrap);
+      });
+    }
+
+    function renderAll() {
+      syncPairDisplays();
+      const result = compute();
+      renderMetrics(result);
+      renderTable(result);
+      renderChart(result);
+    }
+
+    function setStateValue(key, raw) {
+      state[key] = normalizeValue(key, raw);
+      renderAll();
+    }
+
+    function wireInputs() {
+      Object.keys(pairMap).forEach((key) => {
+        const [rangeId, numberId] = pairMap[key];
+        document.getElementById(rangeId).addEventListener('input', (e) => setStateValue(key, e.currentTarget.value));
+        document.getElementById(numberId).addEventListener('input', (e) => setStateValue(key, e.currentTarget.value));
+      });
+    }
+
+    function runAcceptanceChecks() {
+      const eq = (a, b, tol = 0.01) => Math.abs(a - b) <= tol;
+      const d = compute();
+
+      if (!eq(d.current, 240, 0.001)) console.error(`Current-period impact mismatch: ${d.current}`);
+      if (!eq(d.total, 480, 0.001)) console.error(`Total multi-period impact mismatch: ${d.total}`);
+      if (!eq(d.totalProfit, 216, 0.001)) console.error(`Total profit impact mismatch: ${d.totalProfit}`);
+      if (!eq(d.shortRoi, 5.4, 0.001)) console.error(`Short-run ROI mismatch: ${d.shortRoi}`);
+      if (!eq(d.totalRoi, 10.8, 0.001)) console.error(`Total-impact ROI mismatch: ${d.totalRoi}`);
+      if (!eq(d.currentPct, 50, 0.001)) console.error(`Current period % mismatch: ${d.currentPct}`);
+      if (!eq(d.missingFutureSales, 240, 0.001)) console.error(`Missing future sales mismatch: ${d.missingFutureSales}`);
+
+      const savedC = state.c;
+      state.c = 0.3;
+      const c03 = compute();
+      if (!eq(c03.total, 342.8571428571, 0.25)) {
+        console.error(`c=0.30 total impact mismatch: ${c03.total}`);
+      }
+      if (!eq(c03.missingFutureSales, 102.8571428571, 0.25)) {
+        console.error(`c=0.30 missing future sales mismatch: ${c03.missingFutureSales}`);
+      }
+      state.c = savedC;
+    }
+
+    function init() {
+      wireInputs();
+      const focusModeBtn = document.getElementById('focusModeBtn');
+      if (focusModeBtn) {
+        focusModeBtn.addEventListener('click', () => {
+          const enabled = document.body.classList.toggle('focus-mode');
+          focusModeBtn.textContent = enabled ? 'Exit Focus Mode' : 'Focus Mode';
+          focusModeBtn.setAttribute('aria-pressed', String(enabled));
+        });
+      }
+      renderAll();
+      runAcceptanceChecks();
+    }
+
+    init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1054 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Channel Strategy Comparator</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --ink: #1a2533;
+      --muted: #5a6b78;
+      --line: #ccd6df;
+      --bg: #f3f7fa;
+      --card: #ffffff;
+      --brand: #0d8875;
+      --safe: #1a7a47;
+      --marginal: #b8860b;
+      --unsafe: #b52c2c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      color: var(--ink);
+      background: linear-gradient(170deg, #ffffff, #eef4f7);
+    }
+
+    .app {
+      width: min(1100px, 97vw);
+      margin: 0.8rem auto;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: -999px;
+      background: #12222d;
+      color: #fff;
+      padding: 0.45rem 0.7rem;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+
+    .skip-link:focus {
+      left: 0.7rem;
+      top: 0.7rem;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--bg);
+      padding: 0.75rem;
+    }
+
+    .app-header,
+    .quiz-card,
+    .required-callout,
+    .how-to,
+    .interactive-app,
+    .results-dashboard,
+    .canvas-reminder {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 0.85rem;
+      box-shadow: 0 6px 14px rgba(18, 34, 45, 0.05);
+    }
+
+    h1 {
+      font-size: clamp(1.32rem, 2vw, 1.58rem);
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      line-height: 1.25;
+    }
+
+    .quiz-card h2,
+    .interactive-head h2,
+    .results-dashboard h2,
+    .how-to summary {
+      margin-bottom: 0.35rem;
+    }
+
+    .quiz-card ol,
+    .how-to ol {
+      margin: 0;
+      padding-left: 1.2rem;
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .required-callout {
+      border-left: 4px solid var(--brand);
+    }
+
+    .required-label {
+      margin: 0 0 0.2rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--brand);
+    }
+
+    .how-to summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .how-to[open] summary {
+      margin-bottom: 0.45rem;
+    }
+
+    .interactive-app {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .interactive-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .focus-btn {
+      border: 1px solid #79a8a0;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0.35rem 0.62rem;
+      cursor: pointer;
+    }
+
+    .quiz-workflow-banner {
+      margin: 0;
+      border: 1px solid #b8c4ce;
+      border-radius: 10px;
+      background: #eef3f7;
+      padding: 0.5rem 0.65rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .results-dashboard p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .canvas-reminder {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+      padding-top: 0.6rem;
+      padding-bottom: 0.6rem;
+    }
+
+    body.focus-mode [data-focus-hide] {
+      display: none;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    .header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .module-note {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 0.25rem;
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .control-field {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .control-field label {
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .control-field select,
+    .control-field input {
+      border: 1px solid #b0bcc6;
+      border-radius: 8px;
+      padding: 0.35rem 0.45rem;
+      font: inherit;
+    }
+
+    .control-field input.invalid {
+      border-color: #b52c2c;
+      background: #fff3f3;
+    }
+
+    .error-note {
+      margin-top: 0.4rem;
+      color: #b52c2c;
+      font-size: 0.85rem;
+      font-weight: 700;
+      min-height: 1.1em;
+    }
+
+    .override-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.35rem;
+    }
+
+    .override-toggle input { cursor: pointer; }
+
+    .override-field {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s;
+    }
+
+    .override-field.open {
+      max-height: 50px;
+      margin-top: 0.35rem;
+    }
+
+    button {
+      border: 1px solid #79a8a0;
+      border-radius: 8px;
+      background: var(--brand);
+      color: #fff;
+      padding: 0.35rem 0.6rem;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    button.secondary {
+      background: #fff;
+      color: var(--ink);
+      border-color: #b8c4ce;
+    }
+
+    .slider-val {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .slider-val input[type="range"] { flex: 1; }
+
+    .slider-val span {
+      min-width: 50px;
+      text-align: right;
+      font-weight: 700;
+    }
+
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+    }
+
+    .metric-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      padding: 0.6rem;
+    }
+
+    .metric-card h3 {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .metric-card .value {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .metric-card .subtext {
+      margin-top: 0.25rem;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .ref-column {
+      margin-left: 0.8rem;
+      padding-left: 0.8rem;
+      border-left: 3px solid var(--line);
+    }
+
+    .ref-column h4 {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .ref-items {
+      display: grid;
+      gap: 0.2rem;
+      font-size: 0.84rem;
+    }
+
+    .ref-items .item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.3rem;
+    }
+
+    .ref-items .k { color: var(--muted); }
+    .ref-items .v { font-weight: 700; }
+
+    .break-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      padding: 0.6rem;
+    }
+
+    .bar-track {
+      position: relative;
+      height: 24px;
+      border-radius: 12px;
+      border: 1px solid #b8c4ce;
+      background: linear-gradient(90deg, #f5e6d3, #f0e0d0, #e8d4c4);
+      margin: 0.4rem 0;
+      overflow: hidden;
+    }
+
+    .bar-segment {
+      position: absolute;
+      top: 0;
+      height: 100%;
+    }
+
+    .bar-unsafe { background: rgba(181, 44, 44, 0.4); }
+    .bar-marginal { background: rgba(184, 134, 11, 0.3); }
+    .bar-safe { background: rgba(26, 122, 71, 0.3); }
+
+    .bar-marker {
+      position: absolute;
+      top: -3px;
+      width: 3px;
+      height: 30px;
+    }
+
+    .marker-breakeven { background: #333; }
+    .marker-current { background: #0d8875; border: 1px solid #fff; }
+    .marker-target { background: #d4a574; border: 1px solid #fff; }
+
+    .bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .zone-label {
+      margin-top: 0.3rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .zone-safe { color: var(--safe); }
+    .zone-marginal { color: var(--marginal); }
+    .zone-unsafe { color: var(--unsafe); }
+
+    .chart-wrap {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      padding: 0.6rem;
+      margin-top: 0.6rem;
+    }
+
+    .chart-wrap h2 {
+      margin-bottom: 0.35rem;
+    }
+
+    #nmc-chart {
+      max-height: 300px;
+    }
+
+    button:focus,
+    input:focus,
+    select:focus,
+    summary:focus {
+      outline: 2px solid #2e83b4;
+      outline-offset: 1px;
+    }
+
+    .detail-toggle {
+      margin-top: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .detail-toggle input {
+      cursor: pointer;
+    }
+
+    .detail-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s;
+      margin-top: 0.4rem;
+    }
+
+    .detail-panel.open {
+      max-height: 500px;
+    }
+
+    .detail-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.4rem;
+    }
+
+    .detail-item {
+      border: 1px solid #e0e6ed;
+      border-radius: 8px;
+      padding: 0.4rem;
+      background: #f9fbfd;
+    }
+
+    .detail-item .k {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .detail-item .v {
+      margin-top: 0.2rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1024px) {
+      .metrics-row { grid-template-columns: 1fr; }
+      .ref-column { margin-left: 0; padding-left: 0; border-left: none; border-top: 2px solid var(--line); padding-top: 0.4rem; margin-top: 0.4rem; }
+    }
+
+    @media (max-width: 800px) {
+      .app-header,
+      .quiz-card,
+      .required-callout,
+      .how-to,
+      .interactive-app,
+      .results-dashboard,
+      .canvas-reminder,
+      .panel {
+        padding: 0.82rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+  <main class="app">
+    <section class="app-header">
+      <div class="header-flex">
+        <div>
+          <h1>Channel Strategy Comparator</h1>
+          <p class="module-note">MKT 472 · M09 · App 2 | Complete App 1 before using App 2</p>
+          <p>Evaluate channel strategy profitability tradeoffs across market-share scenarios using the calculator and chart outputs.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="quiz-card" data-focus-hide>
+      <h2>Learning Goal</h2>
+      <p>Compare how Indirect, Mixed, and Direct channel strategies perform as market share changes. Identify when higher net margin contribution aligns with lower marketing ROI because of differing M&amp;S expense levels.</p>
+    </section>
+
+    <section class="quiz-card" data-focus-hide>
+      <h2>Worksheet Quiz Instructions</h2>
+      <ol>
+        <li>Read the Canvas quiz question first.</li>
+        <li>Follow the preset, scenario, or modifications specified in the question.</li>
+        <li>Use this app to perform the required calculations and analysis.</li>
+        <li>Enter your answers in the Canvas quiz.</li>
+        <li>Answers are submitted through Canvas, not through this app.</li>
+      </ol>
+    </section>
+
+    <section class="required-callout" data-focus-hide>
+      <p class="required-label">Required for Quiz</p>
+      <p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Indirect (Retailer-Wholesale).</p>
+    </section>
+
+    <details class="how-to" data-focus-hide>
+      <summary>How to Use This App</summary>
+      <ol>
+        <li>Select a strategy, adjust market demand, and set current and target market-share values.</li>
+        <li>Enable the M&amp;S override only when your quiz prompt specifies a custom expense value.</li>
+        <li>Review NMC, ROI, ROS, break-even share, and margin-of-safety outputs.</li>
+        <li>Use the chart to compare how strategy NMC changes from 0% to 40% market share.</li>
+      </ol>
+    </details>
+
+    <section class="interactive-app" id="interactiveApp">
+      <div class="interactive-head">
+        <h2>Interactive App</h2>
+        <button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+      </div>
+      <p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+    <section class="panel">
+      <div class="header-flex">
+        <h2>Controls</h2>
+        <button id="clear-ref" class="secondary">Clear Reference</button>
+      </div>
+
+      <div class="controls-grid">
+        <div class="control-field">
+          <label for="strategy-sel">Strategy</label>
+          <select id="strategy-sel">
+            <option value="Indirect">Indirect (Retailer-Wholesale)</option>
+            <option value="Mixed">Mixed (Agent-Distributor)</option>
+            <option value="Direct">Direct (Sales Force)</option>
+          </select>
+        </div>
+
+        <div class="control-field">
+          <label for="market-demand">Market Demand</label>
+          <input id="market-demand" type="number" min="1" step="1" value="1000000">
+        </div>
+
+        <div class="control-field">
+          <label>Current Market Share %</label>
+          <div class="slider-val">
+            <input id="current-share" type="range" min="1" max="60" value="20">
+            <span id="current-share-disp">20%</span>
+          </div>
+        </div>
+
+        <div class="control-field">
+          <label>Target Market Share %</label>
+          <div class="slider-val">
+            <input id="target-share" type="range" min="1" max="60" value="20">
+            <span id="target-share-disp">20%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="override-toggle">
+        <input id="override-toggle" type="checkbox">
+        <label for="override-toggle">Override M&S Expense</label>
+      </div>
+      <div class="override-field" id="override-field">
+        <input id="override-value" type="number" min="0" step="1" placeholder="Custom M&S expense $">
+      </div>
+      <div class="error-note" id="error-note"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Current Strategy Metrics</h2>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.8rem; align-items: start;">
+        <div class="metrics-row" id="metrics-main"></div>
+        <div class="ref-column" id="ref-column" style="display: none;">
+          <h4 id="ref-title"></h4>
+          <div class="ref-items" id="ref-items"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Break-Even Analysis</h2>
+      <div class="break-card">
+        <div class="bar-track" id="break-track"></div>
+        <div class="bar-labels">
+          <span>0%</span>
+          <span>60%</span>
+        </div>
+        <div class="zone-label" id="zone-label"></div>
+        <div style="margin-top: 0.35rem; font-size: 0.9rem;">
+          <div>BE Share: <strong id="be-share-disp">-</strong></div>
+          <div>Margin of Safety: <strong id="mos-disp">-</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="chart-wrap">
+        <h2>NMC vs. Market Share</h2>
+        <canvas id="nmc-chart" height="300"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="detail-toggle">
+        <input id="detail-toggle" type="checkbox">
+        <label for="detail-toggle">Show Calculation Details</label>
+      </div>
+      <div class="detail-panel" id="detail-panel">
+        <div class="detail-items" id="detail-items"></div>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="results-dashboard" aria-label="Results Dashboard">
+      <h2>Results / Dashboard</h2>
+      <p>Use the strategy metrics, break-even outputs, and NMC chart comparisons to complete your Canvas quiz responses.</p>
+    </section>
+
+    <p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+  </main>
+
+  <script>
+    (function initApp() {
+      const STRATEGIES = {
+        Indirect: {
+          pocketPrice: 673,
+          cogs: 500,
+          defaultMSExpenseDollars: 7840000,
+          defaultMSExpensePct: 5.0
+        },
+        Mixed: {
+          pocketPrice: 2352,
+          cogs: 1500,
+          defaultMSExpenseDollars: 4680000,
+          defaultMSExpensePct: 8.0
+        },
+        Direct: {
+          pocketPrice: 950,
+          cogs: 650,
+          defaultMSExpenseDollars: 30000000,
+          defaultMSExpensePct: 19.4
+        }
+      };
+
+      const state = {
+        marketDemand: 1000000,
+        currentShare: 20,
+        targetShare: 20,
+        selectedStrategy: "Indirect",
+        msExpenseOverride: null,
+        referenceStrategy: null,
+        referenceMetrics: null
+      };
+
+      const refs = {
+        focusModeBtn: document.getElementById("focusModeBtn"),
+        strategySel: document.getElementById("strategy-sel"),
+        marketDemand: document.getElementById("market-demand"),
+        currentShare: document.getElementById("current-share"),
+        targetShare: document.getElementById("target-share"),
+        currentShareDisp: document.getElementById("current-share-disp"),
+        targetShareDisp: document.getElementById("target-share-disp"),
+        overrideToggle: document.getElementById("override-toggle"),
+        overrideField: document.getElementById("override-field"),
+        overrideValue: document.getElementById("override-value"),
+        clearRefBtn: document.getElementById("clear-ref"),
+        metricsMain: document.getElementById("metrics-main"),
+        refColumn: document.getElementById("ref-column"),
+        refTitle: document.getElementById("ref-title"),
+        refItems: document.getElementById("ref-items"),
+        breakTrack: document.getElementById("break-track"),
+        zoneLabel: document.getElementById("zone-label"),
+        beShareDisp: document.getElementById("be-share-disp"),
+        mosDisp: document.getElementById("mos-disp"),
+        detailToggle: document.getElementById("detail-toggle"),
+        detailPanel: document.getElementById("detail-panel"),
+        detailItems: document.getElementById("detail-items"),
+        errorNote: document.getElementById("error-note")
+      };
+
+      let nmcChart = null;
+
+      function fmtCurrency(val) {
+        const abs = Math.abs(val);
+        if (abs >= 1000000) {
+          return "$" + (Math.round(val / 100000) / 10).toFixed(1) + "M";
+        }
+        return "$" + Math.round(val).toLocaleString();
+      }
+
+      function fmtPct(val) {
+        return val.toFixed(1) + "%";
+      }
+
+      function fmtVol(val) {
+        return Math.round(val).toLocaleString();
+      }
+
+      function toNum(v) {
+        const n = Number(v);
+        return Number.isFinite(n) ? n : 0;
+      }
+
+      function calc(strategy, demand, share) {
+        const vol = demand * (share / 100);
+        const strat = STRATEGIES[strategy];
+        const msExp = state.msExpenseOverride !== null ? state.msExpenseOverride : strat.defaultMSExpenseDollars;
+        const rev = strat.pocketPrice * vol;
+        const gc = (strat.pocketPrice - strat.cogs) * vol;
+        const nmc = gc - msExp;
+        const ros = rev === 0 ? 0 : (nmc / rev) * 100;
+        const roi = msExp === 0 ? 0 : (nmc / msExp) * 100;
+        const beVol = strat.pocketPrice === strat.cogs ? 0 : msExp / (strat.pocketPrice - strat.cogs);
+        const beShare = demand === 0 ? 0 : (beVol / demand) * 100;
+        const mos = share - beShare;
+        return { vol, rev, gc, nmc, ros, roi, beVol, beShare, mos, msExp, pocketPrice: strat.pocketPrice };
+      }
+
+      function renderMetrics() {
+        const current = calc(state.selectedStrategy, state.marketDemand, state.currentShare);
+        refs.metricsMain.innerHTML = "";
+
+        const cards = [
+          { label: "NMC", value: fmtCurrency(current.nmc), sub: "Net Margin Contribution" },
+          { label: "Marketing ROI", value: fmtPct(current.roi), sub: "" },
+          { label: "Marketing ROS", value: fmtPct(current.ros), sub: "" },
+          { label: "Pocket Price", value: "$" + current.pocketPrice, sub: "" },
+          { label: "Current Volume", value: fmtVol(current.vol), sub: "" }
+        ];
+
+        cards.forEach(c => {
+          const card = document.createElement("div");
+          card.className = "metric-card";
+          card.innerHTML = `<h3>${c.label}</h3><div class="value">${c.value}</div>${c.sub ? `<div class="subtext">${c.sub}</div>` : ""}`;
+          refs.metricsMain.appendChild(card);
+        });
+
+        renderRefColumn();
+        renderBreakEven(current);
+        renderDetails(current);
+      }
+
+      function renderRefColumn() {
+        if (!state.referenceStrategy) {
+          refs.refColumn.style.display = "none";
+          return;
+        }
+        refs.refColumn.style.display = "block";
+        refs.refTitle.textContent = state.referenceStrategy;
+        refs.refItems.innerHTML = "";
+        const items = [
+          ["NMC", fmtCurrency(state.referenceMetrics.nmc)],
+          ["ROI", fmtPct(state.referenceMetrics.roi)],
+          ["ROS", fmtPct(state.referenceMetrics.ros)],
+          ["BE Share", fmtPct(state.referenceMetrics.beShare)]
+        ];
+        items.forEach(it => {
+          const div = document.createElement("div");
+          div.className = "item";
+          div.innerHTML = `<span class="k">${it[0]}</span><span class="v">${it[1]}</span>`;
+          refs.refItems.appendChild(div);
+        });
+      }
+
+      function renderBreakEven(current) {
+        refs.breakTrack.innerHTML = "";
+        const beShare = current.beShare;
+        const curShare = state.currentShare;
+        const targetShare = state.targetShare;
+        const scaleMax = 60;
+
+        if (beShare > 100) {
+          refs.zoneLabel.className = "zone-label zone-unsafe";
+          refs.zoneLabel.textContent = "Not achievable at any market share";
+          refs.beShareDisp.textContent = "> 100%";
+          refs.mosDisp.textContent = "N/A";
+          return;
+        }
+
+        let zone = "safe";
+        if (curShare < beShare) {
+          zone = "unsafe";
+        } else if (current.mos <= 5) {
+          zone = "marginal";
+        }
+
+        const unsafeW = Math.min(beShare, scaleMax) / scaleMax * 100;
+        const marginalW = Math.max(0, Math.min(5, scaleMax - beShare)) / scaleMax * 100;
+        const safeW = 100 - unsafeW - marginalW;
+
+        if (unsafeW > 0) {
+          const el = document.createElement("span");
+          el.className = "bar-segment bar-unsafe";
+          el.style.left = "0%";
+          el.style.width = unsafeW + "%";
+          refs.breakTrack.appendChild(el);
+        }
+
+        if (marginalW > 0) {
+          const el = document.createElement("span");
+          el.className = "bar-segment bar-marginal";
+          el.style.left = unsafeW + "%";
+          el.style.width = marginalW + "%";
+          refs.breakTrack.appendChild(el);
+        }
+
+        if (safeW > 0) {
+          const el = document.createElement("span");
+          el.className = "bar-segment bar-safe";
+          el.style.left = (unsafeW + marginalW) + "%";
+          el.style.width = safeW + "%";
+          refs.breakTrack.appendChild(el);
+        }
+
+        const beMarker = document.createElement("span");
+        beMarker.className = "bar-marker marker-breakeven";
+        beMarker.style.left = (beShare / scaleMax * 100) + "%";
+        beMarker.title = "Break-even share: " + fmtPct(beShare);
+        refs.breakTrack.appendChild(beMarker);
+
+        const curMarker = document.createElement("span");
+        curMarker.className = "bar-marker marker-current";
+        curMarker.style.left = Math.max(0, (curShare / scaleMax * 100)) + "%";
+        curMarker.title = "Current share: " + fmtPct(curShare);
+        refs.breakTrack.appendChild(curMarker);
+
+        const targetMarker = document.createElement("span");
+        targetMarker.className = "bar-marker marker-target";
+        targetMarker.style.left = Math.max(0, (targetShare / scaleMax * 100)) + "%";
+        targetMarker.title = "Target share: " + fmtPct(targetShare);
+        refs.breakTrack.appendChild(targetMarker);
+
+        refs.zoneLabel.className = "zone-label zone-" + zone;
+        const zoneText = zone === "safe" ? "Safe" : zone === "marginal" ? "Marginal" : "Unprofitable";
+        refs.zoneLabel.textContent = zoneText + " | Margin of Safety: " + fmtPct(current.mos);
+        refs.beShareDisp.textContent = fmtPct(beShare);
+        refs.mosDisp.textContent = fmtPct(current.mos);
+      }
+
+      function renderDetails(current) {
+        refs.detailItems.innerHTML = "";
+        const items = [
+          ["Volume", fmtVol(current.vol)],
+          ["Revenue", fmtCurrency(current.rev)],
+          ["Gross Contribution", fmtCurrency(current.gc)],
+          ["M&S Expense", fmtCurrency(current.msExp)],
+          ["NMC", fmtCurrency(current.nmc)],
+          ["ROS", fmtPct(current.ros)],
+          ["ROI", fmtPct(current.roi)],
+          ["Break-even Volume", fmtVol(current.beVol)],
+          ["Break-even Share", fmtPct(current.beShare)]
+        ];
+        items.forEach(it => {
+          const div = document.createElement("div");
+          div.className = "detail-item";
+          div.innerHTML = `<div class="k">${it[0]}</div><div class="v">${it[1]}</div>`;
+          refs.detailItems.appendChild(div);
+        });
+      }
+
+      function renderChart() {
+        const sharePoints = [];
+        for (let s = 0; s <= 40; s += 1) {
+          sharePoints.push(s);
+        }
+
+        const datasets = [];
+        const colors = { Indirect: "#1b4f9b", Mixed: "#2c7a47", Direct: "#d4a547" };
+        const strats = ["Indirect", "Mixed", "Direct"];
+
+        strats.forEach(s => {
+          const nmcValues = sharePoints.map(share => {
+            const strat = STRATEGIES[s];
+            const vol = state.marketDemand * (share / 100);
+            const msExp = s === state.selectedStrategy && state.msExpenseOverride !== null ? state.msExpenseOverride : strat.defaultMSExpenseDollars;
+            const gc = (strat.pocketPrice - strat.cogs) * vol;
+            return gc - msExp;
+          });
+
+          const marginPerUnit = STRATEGIES[s].pocketPrice - STRATEGIES[s].cogs;
+          const beShare = marginPerUnit <= 0 ? 101 : ((s === state.selectedStrategy && state.msExpenseOverride !== null ? state.msExpenseOverride : STRATEGIES[s].defaultMSExpenseDollars) / marginPerUnit) / state.marketDemand * 100;
+
+          datasets.push({
+            label: s,
+            data: nmcValues,
+            borderColor: colors[s],
+            backgroundColor: colors[s] + "33",
+            tension: 0.3,
+            pointRadius: 3,
+            pointBackgroundColor: colors[s],
+            fill: false
+          });
+
+          if (beShare >= 0 && beShare <= 40) {
+            datasets.push({
+              label: s + " BE",
+              data: sharePoints.map(share => Math.abs(share - beShare) < 0.5 ? 0 : null),
+              borderColor: "transparent",
+              backgroundColor: colors[s],
+              pointRadius: 6,
+              pointHoverRadius: 7,
+              showLine: false
+            });
+          }
+        });
+
+        if (!nmcChart) {
+          const currentShareLinePlugin = {
+            id: "currentShareLine",
+            afterDatasetsDraw(chart, args, pluginOptions) {
+              const xScale = chart.scales.x;
+              const chartArea = chart.chartArea;
+              if (!xScale || !chartArea) {
+                return;
+              }
+              const x = xScale.getPixelForValue(Math.round(pluginOptions.currentShare));
+              const ctx = chart.ctx;
+              ctx.save();
+              ctx.setLineDash([6, 6]);
+              ctx.strokeStyle = "#444";
+              ctx.lineWidth = 2;
+              ctx.beginPath();
+              ctx.moveTo(x, chartArea.top);
+              ctx.lineTo(x, chartArea.bottom);
+              ctx.stroke();
+              ctx.restore();
+            }
+          };
+
+          nmcChart = new Chart(document.getElementById("nmc-chart"), {
+            type: "line",
+            data: { labels: sharePoints.map(s => s + "%"), datasets },
+            plugins: [currentShareLinePlugin],
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: true,
+                  labels: {
+                    filter: (item) => item.text !== "Current Share" && !item.text.endsWith(" BE")
+                  }
+                },
+                currentShareLine: {
+                  currentShare: state.currentShare
+                }
+              },
+              scales: {
+                x: { title: { display: true, text: "Market Share %" } },
+                y: { title: { display: true, text: "NMC ($)" } }
+              }
+            }
+          });
+        } else {
+          nmcChart.data.datasets = datasets;
+          nmcChart.options.plugins.currentShareLine.currentShare = state.currentShare;
+          nmcChart.update();
+        }
+      }
+
+      function recalc() {
+        let errorMsg = "";
+
+        state.marketDemand = Math.max(1, toNum(refs.marketDemand.value));
+        if (toNum(refs.marketDemand.value) <= 0) {
+          errorMsg = "Market demand must be greater than 0.";
+          refs.marketDemand.classList.add("invalid");
+        } else {
+          refs.marketDemand.classList.remove("invalid");
+        }
+
+        state.currentShare = Math.max(1, Math.min(60, toNum(refs.currentShare.value)));
+        state.targetShare = Math.max(1, Math.min(60, toNum(refs.targetShare.value)));
+        state.selectedStrategy = refs.strategySel.value;
+
+        if (refs.overrideToggle.checked) {
+          const overrideRaw = toNum(refs.overrideValue.value);
+          if (overrideRaw <= 0) {
+            state.msExpenseOverride = null;
+            refs.overrideValue.classList.add("invalid");
+            if (!errorMsg) {
+              errorMsg = "M&S override must be greater than 0 when enabled.";
+            }
+          } else {
+            state.msExpenseOverride = overrideRaw;
+            refs.overrideValue.classList.remove("invalid");
+          }
+        } else {
+          state.msExpenseOverride = null;
+          refs.overrideValue.classList.remove("invalid");
+        }
+
+        refs.marketDemand.value = String(state.marketDemand);
+        refs.currentShare.value = String(state.currentShare);
+        refs.targetShare.value = String(state.targetShare);
+        refs.currentShareDisp.textContent = state.currentShare + "%";
+        refs.targetShareDisp.textContent = state.targetShare + "%";
+        refs.errorNote.textContent = errorMsg;
+
+        renderMetrics();
+        renderChart();
+      }
+
+      refs.strategySel.addEventListener("change", () => {
+        const current = calc(state.selectedStrategy, state.marketDemand, state.currentShare);
+        state.referenceStrategy = state.selectedStrategy;
+        state.referenceMetrics = current;
+        recalc();
+      });
+
+      refs.marketDemand.addEventListener("input", recalc);
+      refs.currentShare.addEventListener("input", recalc);
+      refs.targetShare.addEventListener("input", recalc);
+      refs.overrideToggle.addEventListener("change", () => {
+        refs.overrideField.classList.toggle("open", refs.overrideToggle.checked);
+        recalc();
+      });
+      refs.overrideValue.addEventListener("input", recalc);
+      refs.clearRefBtn.addEventListener("click", () => {
+        state.referenceStrategy = null;
+        state.referenceMetrics = null;
+        renderRefColumn();
+      });
+
+      refs.detailToggle.addEventListener("change", () => {
+        refs.detailPanel.classList.toggle("open", refs.detailToggle.checked);
+      });
+
+      if (refs.focusModeBtn) {
+        refs.focusModeBtn.addEventListener("click", () => {
+          const enabled = document.body.classList.toggle("focus-mode");
+          refs.focusModeBtn.textContent = enabled ? "Exit Focus Mode" : "Focus Mode";
+          refs.focusModeBtn.setAttribute("aria-pressed", String(enabled));
+        });
+      }
+
+      recalc();
+    })();
+  </script>
+</body>
+</html>

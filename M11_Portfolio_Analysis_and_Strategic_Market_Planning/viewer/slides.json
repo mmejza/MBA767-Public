@@ -1,0 +1,190 @@
+{
+  "module": "M11",
+  "title": "Portfolio Analysis & Strategic Market Planning",
+  "chapter": 11,
+  "total": 21,
+  "slides": [
+    {
+      "id": "s01",
+      "file": "slides/s01-title.html",
+      "title": "Portfolio Analysis & Strategic Market Planning",
+      "pattern": "Title",
+      "lo": [],
+      "chapterFlag": false
+    },
+    {
+      "id": "s02",
+      "file": "slides/s02-objectives.html",
+      "title": "Learning Objectives",
+      "pattern": "Objectives",
+      "lo": ["LO1","LO2","LO3","LO4","LO5","LO6"],
+      "chapterFlag": true,
+      "chapterNote": "Ch. 11 covers more than this deck — see Slide 03"
+    },
+    {
+      "id": "s03",
+      "file": "slides/s03-chapter-gate.html",
+      "title": "What Chapter 11 Covers Beyond This Deck",
+      "pattern": "Chapter Gate",
+      "lo": ["LO1","LO2","LO4","LO5","LO6"],
+      "chapterFlag": true,
+      "chapterNote": "Gate 1 tests all five topics listed here"
+    },
+    {
+      "id": "s04",
+      "file": "slides/s04-planning-process.html",
+      "title": "Strategic Market Planning",
+      "pattern": "Concept Definition",
+      "lo": ["LO2"],
+      "chapterFlag": false
+    },
+    {
+      "id": "s05",
+      "file": "slides/s05-performance-criteria.html",
+      "title": "Business Performance Criteria for Portfolio Review",
+      "pattern": "Classification",
+      "lo": ["LO1"],
+      "chapterFlag": false
+    },
+    {
+      "id": "s06",
+      "file": "slides/s06-portfolio-types.html",
+      "title": "Two Approaches to Portfolio Visualization",
+      "pattern": "Contrast",
+      "lo": ["LO1"],
+      "chapterFlag": false
+    },
+    {
+      "id": "s07",
+      "file": "slides/s07-unbalanced-diagnostic.html",
+      "title": "Meridian Industrial — Portfolio Snapshot",
+      "pattern": "Diagnostic",
+      "lo": ["LO1"],
+      "chapterFlag": false,
+      "note": "Do NOT interpret — prompt student to predict before advancing"
+    },
+    {
+      "id": "s08",
+      "file": "slides/s08-balanced-reveal.html",
+      "title": "Meridian Industrial — Adding the Life Cycle Changes Everything",
+      "pattern": "Reveal",
+      "lo": ["LO1"],
+      "chapterFlag": true,
+      "chapterNote": "Diversification variance data — Fig. 11-16, pp. 395–397 · Gate 1 Q5"
+    },
+    {
+      "id": "s09",
+      "file": "slides/s09-single-factor-diagnostic.html",
+      "title": "Five Product Lines — Single-Factor Analysis",
+      "pattern": "Diagnostic",
+      "lo": ["LO2","LO3"],
+      "chapterFlag": false,
+      "note": "Prompt student to write strategy for each product before advancing"
+    },
+    {
+      "id": "s10",
+      "file": "slides/s10-single-factor-reveal.html",
+      "title": "Five Product Lines — Strategy Recommendations",
+      "pattern": "Reveal",
+      "lo": ["LO2","LO3"],
+      "chapterFlag": false
+    },
+    {
+      "id": "s11",
+      "file": "slides/s11-single-factor-trap.html",
+      "title": "Misconception: High Growth Rate = Attractive Market",
+      "pattern": "Misconception",
+      "lo": ["LO2"],
+      "chapterFlag": true,
+      "chapterNote": "GE/McKinsey name is chapter-only — p. 385 · Gate 1 Q1"
+    },
+    {
+      "id": "s12",
+      "file": "slides/s12-mai-factors.html",
+      "title": "Market Attractiveness — Three Dimensions, Nine Factors",
+      "pattern": "Classification",
+      "lo": ["LO3"],
+      "chapterFlag": false
+    },
+    {
+      "id": "s13",
+      "file": "slides/s13-mai-setup.html",
+      "title": "Market Attractiveness Index — Setup",
+      "pattern": "Worked Example — Setup",
+      "lo": ["LO3"],
+      "chapterFlag": false,
+      "note": "Attempt before advancing — all ? values must be calculated"
+    },
+    {
+      "id": "s14",
+      "file": "slides/s14-mai-solution.html",
+      "title": "Market Attractiveness Index — Solution",
+      "pattern": "Worked Example — Solution",
+      "lo": ["LO3"],
+      "chapterFlag": false,
+      "answer": "MAI = 61"
+    },
+    {
+      "id": "s15",
+      "file": "slides/s15-cpi-factors.html",
+      "title": "Competitive Position — Three Dimensions, Nine Factors",
+      "pattern": "Classification",
+      "lo": ["LO4"],
+      "chapterFlag": false,
+      "note": "Critical: rating scale differs from MAI — 0=behind/100=ahead"
+    },
+    {
+      "id": "s16",
+      "file": "slides/s16-cpi-setup.html",
+      "title": "Competitive Position Index — Setup",
+      "pattern": "Worked Example — Setup",
+      "lo": ["LO4"],
+      "chapterFlag": false,
+      "note": "Parallel structure to S13 — students apply same method"
+    },
+    {
+      "id": "s17",
+      "file": "slides/s17-cpi-solution.html",
+      "title": "Competitive Position Index — Solution",
+      "pattern": "Worked Example — Solution",
+      "lo": ["LO4"],
+      "chapterFlag": false,
+      "answer": "CPI = 55"
+    },
+    {
+      "id": "s18",
+      "file": "slides/s18-portfolio-grid.html",
+      "title": "GE/McKinsey Portfolio Grid — Strategy Selection",
+      "pattern": "Portfolio / Matrix",
+      "lo": ["LO5"],
+      "chapterFlag": false,
+      "note": "Threshold values 0/33/67/100 are chapter-exclusive — stated on slide"
+    },
+    {
+      "id": "s19",
+      "file": "slides/s19-grid-practice.html",
+      "title": "Where Does This Brand Belong? — Practice",
+      "pattern": "Practice",
+      "lo": ["LO5"],
+      "chapterFlag": false,
+      "note": "Uses MAI=61 and CPI=55 from S13-S17; answer = medium/medium cell"
+    },
+    {
+      "id": "s20",
+      "file": "slides/s20-strategic-vs-mix.html",
+      "title": "Strategic Market Plan vs. Marketing Mix Strategy",
+      "pattern": "Contrast",
+      "lo": ["LO2"],
+      "chapterFlag": false
+    },
+    {
+      "id": "s21",
+      "file": "slides/s21-strategy-taxonomy.html",
+      "title": "Strategic Market Plans — Seven Strategies",
+      "pattern": "Classification",
+      "lo": ["LO5","LO6"],
+      "chapterFlag": true,
+      "chapterNote": "Monetize/Harvest/Divest operational detail — pp. 391–392 · Gate 1 V4 Q4"
+    }
+  ]
+}

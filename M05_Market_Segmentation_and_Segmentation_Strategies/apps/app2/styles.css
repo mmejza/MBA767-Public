@@ -1,0 +1,10 @@
+/* Canvas quiz mode support styles layered under Index.html inline styles. */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+	outline: 3px solid #1f6fb8;
+	outline-offset: 2px;
+}

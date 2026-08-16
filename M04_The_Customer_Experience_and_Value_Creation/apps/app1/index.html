@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MKT 472 · M04 App 1 · Lifecycle Cost & Economic Value Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#interactive-app">Skip to interactive app</a>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════ -->
+  <header class="app-header">
+    <div class="app-header__inner">
+      <p class="app-header__eyebrow">MKT 472 · Module 4</p>
+      <h1 class="app-header__title">Lifecycle Cost &amp; Economic Value Calculator</h1>
+      <p class="app-header__instructions">
+        Compare total lifecycle costs to determine whether a higher purchase price still creates positive customer value.
+      </p>
+    </div>
+  </header>
+
+  <main class="app-main">
+
+    <section class="quiz-card" data-focus-hide aria-labelledby="learning-goal-title">
+      <h2 class="quiz-card__title" id="learning-goal-title">Learning Goal</h2>
+      <p>
+        Use lifecycle cost components to compare the competitor and your company beyond purchase price alone.
+        Identify when total cost differences create positive economic value for the buyer.
+      </p>
+    </section>
+
+    <section class="quiz-card" data-focus-hide aria-labelledby="worksheet-instructions-title">
+      <h2 class="quiz-card__title" id="worksheet-instructions-title">Worksheet Quiz Instructions</h2>
+      <ol class="quiz-card__list">
+        <li>Use this app to perform the required calculations.</li>
+        <li>Follow the required preset or scenario.</li>
+        <li>Record your final answers in the Canvas quiz questions below.</li>
+        <li>Answers are submitted through Canvas, not through this app.</li>
+      </ol>
+    </section>
+
+    <section class="required-callout" data-focus-hide aria-label="Required for Quiz">
+      <p class="required-callout__label">Required for Quiz</p>
+      <p>Start with the Telecom Switch preset before making any modifications.</p>
+    </section>
+
+    <details class="how-to" data-focus-hide>
+      <summary>How to Use This App</summary>
+      <ol>
+        <li>Load the required preset for the quiz task.</li>
+        <li>Adjust lifecycle cost sliders for competitor and company as directed.</li>
+        <li>Check Economic Value, Indifference Price, and Headroom in the dashboard.</li>
+        <li>Use the quantity toggle to scale customer savings when needed.</li>
+      </ol>
+    </details>
+
+    <section class="interactive-app" id="interactive-app" aria-label="Interactive app">
+      <div class="interactive-app__head">
+        <h2 class="interactive-app__title">Interactive App</h2>
+        <button class="btn btn--focus" id="focus-toggle" type="button" aria-pressed="false">
+          Focus Mode
+        </button>
+      </div>
+
+    <!-- ═══════════════════════════════════════
+         PRESET SELECTOR
+    ═══════════════════════════════════════ -->
+    <section class="preset-bar" aria-label="Preset scenarios">
+      <span class="preset-bar__label" id="preset-label">Load a preset:</span>
+      <div class="preset-bar__buttons" role="group" aria-labelledby="preset-label">
+        <button class="btn btn--preset" id="btn-telecom" aria-pressed="false"
+                data-preset="telecom">Telecom Switch</button>
+        <button class="btn btn--preset" id="btn-indiff" aria-pressed="false"
+                data-preset="indiff">Indifference Zone</button>
+        <button class="btn btn--reset" id="btn-reset">Reset</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         SLIDER PANELS
+    ═══════════════════════════════════════ -->
+    <div class="panels-grid">
+
+      <!-- COMPETITOR PANEL -->
+      <section class="panel panel--competitor" aria-label="Competitor cost inputs">
+        <h2 class="panel__title">
+          <span class="panel__badge panel__badge--competitor">Competitor</span>
+          Lifecycle Costs
+        </h2>
+
+        <div class="slider-group" id="competitor-sliders">
+          <!-- Purchase Price -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="c-purchase">Purchase Price</label>
+              <output class="slider-row__value" id="c-purchase-val" for="c-purchase">$300</output>
+            </div>
+            <input class="slider" type="range" id="c-purchase"
+                   min="100" max="5000" step="50" value="300"
+                   aria-label="Competitor purchase price"
+                   aria-valuemin="100" aria-valuemax="5000" aria-valuenow="300">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$100</span><span>$5,000</span>
+            </div>
+          </div>
+
+          <!-- Installation / Acquisition -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="c-installation">Installation / Acquisition</label>
+              <output class="slider-row__value" id="c-installation-val" for="c-installation">$200</output>
+            </div>
+            <input class="slider" type="range" id="c-installation"
+                   min="0" max="2000" step="50" value="200"
+                   aria-label="Competitor installation and acquisition cost"
+                   aria-valuemin="0" aria-valuemax="2000" aria-valuenow="200">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$0</span><span>$2,000</span>
+            </div>
+          </div>
+
+          <!-- Usage / Operating -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="c-usage">Usage / Operating</label>
+              <output class="slider-row__value" id="c-usage-val" for="c-usage">$500</output>
+            </div>
+            <input class="slider" type="range" id="c-usage"
+                   min="0" max="2000" step="50" value="500"
+                   aria-label="Competitor usage and operating cost"
+                   aria-valuemin="0" aria-valuemax="2000" aria-valuenow="500">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$0</span><span>$2,000</span>
+            </div>
+          </div>
+
+          <!-- Financing / Insurance -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="c-financing">Financing / Insurance</label>
+              <output class="slider-row__value" id="c-financing-val" for="c-financing">$0</output>
+            </div>
+            <input class="slider" type="range" id="c-financing"
+                   min="0" max="1000" step="25" value="0"
+                   aria-label="Competitor financing and insurance cost"
+                   aria-valuemin="0" aria-valuemax="1000" aria-valuenow="0">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$0</span><span>$1,000</span>
+            </div>
+          </div>
+
+          <!-- Maintenance -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="c-maintenance">Maintenance</label>
+              <output class="slider-row__value" id="c-maintenance-val" for="c-maintenance">$0</output>
+            </div>
+            <input class="slider" type="range" id="c-maintenance"
+                   min="0" max="1000" step="25" value="0"
+                   aria-label="Competitor maintenance cost"
+                   aria-valuemin="0" aria-valuemax="1000" aria-valuenow="0">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$0</span><span>$1,000</span>
+            </div>
+          </div>
+
+          <!-- Disposal -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="c-disposal">Disposal</label>
+              <output class="slider-row__value" id="c-disposal-val" for="c-disposal">$0</output>
+            </div>
+            <input class="slider" type="range" id="c-disposal"
+                   min="0" max="500" step="25" value="0"
+                   aria-label="Competitor disposal cost"
+                   aria-valuemin="0" aria-valuemax="500" aria-valuenow="0">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$0</span><span>$500</span>
+            </div>
+          </div>
+        </div><!-- /competitor-sliders -->
+
+        <div class="panel__lcc-total">
+          Competitor LCC: <strong id="c-lcc-inline">$1,000</strong>
+        </div>
+      </section><!-- /panel--competitor -->
+
+      <!-- COMPANY PANEL -->
+      <section class="panel panel--company" aria-label="Company cost inputs">
+        <h2 class="panel__title">
+          <span class="panel__badge panel__badge--company">Your Company</span>
+          Lifecycle Costs
+        </h2>
+
+        <div class="slider-group" id="company-sliders">
+          <!-- Purchase Price -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="co-purchase">Purchase Price</label>
+              <output class="slider-row__value" id="co-purchase-val" for="co-purchase">$375</output>
+            </div>
+            <input class="slider" type="range" id="co-purchase"
+                   min="100" max="5000" step="50" value="375"
+                   aria-label="Company purchase price"
+                   aria-valuemin="100" aria-valuemax="5000" aria-valuenow="375">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$100</span><span>$5,000</span>
+            </div>
+          </div>
+
+          <!-- Installation / Acquisition -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="co-installation">Installation / Acquisition</label>
+              <output class="slider-row__value" id="co-installation-val" for="co-installation">$100</output>
+            </div>
+            <input class="slider" type="range" id="co-installation"
+                   min="0" max="2000" step="50" value="100"
+                   aria-label="Company installation and acquisition cost"
+                   aria-valuemin="0" aria-valuemax="2000" aria-valuenow="100">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$0</span><span>$2,000</span>
+            </div>
+          </div>
+
+          <!-- Usage / Operating -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="co-usage">Usage / Operating</label>
+              <output class="slider-row__value" id="co-usage-val" for="co-usage">$400</output>
+            </div>
+            <input class="slider" type="range" id="co-usage"
+                   min="0" max="2000" step="50" value="400"
+                   aria-label="Company usage and operating cost"
+                   aria-valuemin="0" aria-valuemax="2000" aria-valuenow="400">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$0</span><span>$2,000</span>
+            </div>
+          </div>
+
+          <!-- Financing / Insurance -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="co-financing">Financing / Insurance</label>
+              <output class="slider-row__value" id="co-financing-val" for="co-financing">$0</output>
+            </div>
+            <input class="slider" type="range" id="co-financing"
+                   min="0" max="1000" step="25" value="0"
+                   aria-label="Company financing and insurance cost"
+                   aria-valuemin="0" aria-valuemax="1000" aria-valuenow="0">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$0</span><span>$1,000</span>
+            </div>
+          </div>
+
+          <!-- Maintenance -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="co-maintenance">Maintenance</label>
+              <output class="slider-row__value" id="co-maintenance-val" for="co-maintenance">$0</output>
+            </div>
+            <input class="slider" type="range" id="co-maintenance"
+                   min="0" max="1000" step="25" value="0"
+                   aria-label="Company maintenance cost"
+                   aria-valuemin="0" aria-valuemax="1000" aria-valuenow="0">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$0</span><span>$1,000</span>
+            </div>
+          </div>
+
+          <!-- Disposal -->
+          <div class="slider-row">
+            <div class="slider-row__header">
+              <label class="slider-row__label" for="co-disposal">Disposal</label>
+              <output class="slider-row__value" id="co-disposal-val" for="co-disposal">$0</output>
+            </div>
+            <input class="slider" type="range" id="co-disposal"
+                   min="0" max="500" step="25" value="0"
+                   aria-label="Company disposal cost"
+                   aria-valuemin="0" aria-valuemax="500" aria-valuenow="0">
+            <div class="slider-row__range-labels" aria-hidden="true">
+              <span>$0</span><span>$500</span>
+            </div>
+          </div>
+        </div><!-- /company-sliders -->
+
+        <div class="panel__lcc-total">
+          Company LCC: <strong id="co-lcc-inline">$875</strong>
+        </div>
+      </section><!-- /panel--company -->
+
+    </div><!-- /panels-grid -->
+
+    <!-- ═══════════════════════════════════════
+         QUANTITY TOGGLE
+    ═══════════════════════════════════════ -->
+    <section class="quantity-section" aria-label="Quantity selector">
+      <p class="quantity-section__label" id="qty-label">Scale total savings by quantity:</p>
+      <div class="qty-buttons" role="group" aria-labelledby="qty-label">
+        <button class="btn btn--qty btn--qty-active" id="qty-1" data-qty="1"
+                aria-pressed="true" aria-label="1 unit">1 unit</button>
+        <button class="btn btn--qty" id="qty-10" data-qty="10"
+                aria-pressed="false" aria-label="10 units">10 units</button>
+        <button class="btn btn--qty" id="qty-100" data-qty="100"
+                aria-pressed="false" aria-label="100 units">100 units</button>
+      </div>
+    </section>
+
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         OUTPUT DASHBOARD
+    ═══════════════════════════════════════ -->
+    <section class="dashboard" aria-label="Calculated results">
+      <h2 class="dashboard__title">Results Dashboard</h2>
+
+      <!-- EV Badge -->
+      <div class="ev-badge ev-badge--positive" id="ev-badge" role="status" aria-live="polite">
+        <span class="ev-badge__icon" aria-hidden="true">▲</span>
+        <span class="ev-badge__text" id="ev-badge-text">
+          Economic value: +$125 — this product creates value for the buyer.
+        </span>
+      </div>
+
+      <!-- Above-ceiling warning -->
+      <div class="warning-banner" id="ceiling-warning" role="alert" aria-live="assertive" hidden>
+        <span class="warning-banner__icon" aria-hidden="true">⚠</span>
+        <span class="warning-banner__text">
+          WARNING: Company price exceeds the indifference ceiling.
+          A rational buyer choosing on total lifecycle cost would prefer the competitor.
+        </span>
+      </div>
+
+      <!-- Metric Cards Grid -->
+      <div class="metrics-grid">
+
+        <div class="metric-card metric-card--competitor">
+          <div class="metric-card__label">Competitor LCC</div>
+          <div class="metric-card__value" id="out-comp-lcc">$1,000</div>
+          <div class="metric-card__sub">Total lifecycle cost</div>
+        </div>
+
+        <div class="metric-card metric-card--company">
+          <div class="metric-card__label">Company LCC</div>
+          <div class="metric-card__value" id="out-comp-lcc-co">$875</div>
+          <div class="metric-card__sub">Total lifecycle cost</div>
+        </div>
+
+        <div class="metric-card metric-card--ev" id="metric-ev">
+          <div class="metric-card__label">Economic Value</div>
+          <div class="metric-card__value" id="out-ev">+$125</div>
+          <div class="metric-card__sub">Competitor LCC − Company LCC</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-card__label">Price Premium</div>
+          <div class="metric-card__value" id="out-premium">+25.0%</div>
+          <div class="metric-card__sub">(Company price − Competitor price) ÷ Competitor price</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-card__label">Indifference Price</div>
+          <div class="metric-card__value" id="out-indiff">$500</div>
+          <div class="metric-card__sub">Max price buyer would pay vs. competitor</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-card__label">Headroom</div>
+          <div class="metric-card__value" id="out-headroom">$125</div>
+          <div class="metric-card__sub">Indifference Price − Company Price</div>
+        </div>
+
+      </div><!-- /metrics-grid -->
+
+      <!-- Customer Savings at Scale -->
+      <div class="savings-banner" id="savings-banner">
+        <div class="savings-banner__qty-label" id="savings-qty-label">At <strong>1 unit</strong>,</div>
+        <div class="savings-banner__value-row">
+          <span class="savings-banner__prefix">total customer savings =</span>
+          <span class="savings-banner__value" id="out-savings">$125</span>
+        </div>
+        <div class="savings-banner__formula" id="savings-formula">
+          Economic Value ($125) × 1 unit
+        </div>
+      </div>
+
+    </section><!-- /dashboard -->
+
+    <!-- ═══════════════════════════════════════
+         STACKED BAR CHART
+    ═══════════════════════════════════════ -->
+    <section class="chart-section" aria-label="Lifecycle cost comparison chart">
+      <h2 class="chart-section__title">Lifecycle Cost Breakdown</h2>
+      <p class="chart-section__subtitle">
+        Stacked bars show each cost category's contribution to total lifecycle cost.
+      </p>
+      <div class="chart-container">
+        <canvas id="lccChart"
+                aria-label="Stacked bar chart comparing competitor and company lifecycle costs by category"
+                role="img"></canvas>
+      </div>
+    </section>
+
+    <p class="canvas-reminder" aria-label="Canvas submission reminder">
+      Submit final answers through the Canvas quiz questions below the app.
+    </p>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>MKT 472 · Module 4 · Lifecycle Cost &amp; Economic Value Calculator</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

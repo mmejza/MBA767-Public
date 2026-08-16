@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M11 · S19 · Grid Practice</title>
+<link rel="stylesheet" href="../slides.css">
+</head>
+<body>
+<div class="slide">
+
+  <div class="slide-header">
+    <div class="slide-title">Where Does This Brand Belong? — Grid Placement Practice</div>
+    <div class="slide-meta">
+      <span class="lo-tag">LO 5</span>
+      <span class="pattern-tag">Practice</span>
+      <span class="slide-num">19 / 21</span>
+    </div>
+  </div>
+
+  <div class="slide-body">
+
+    <div class="practice-header">
+      <span class="attempt-badge">Attempt before advancing</span>
+      <span class="practice-question">
+        Use your calculated scores from Slides 13–17 to complete all four questions below.
+      </span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;">
+
+      <!-- Left: Given data + grid -->
+      <div style="display:flex;flex-direction:column;gap:8px;">
+
+        <div class="col-panel" style="padding:10px 14px;">
+          <div class="panel-title">From your worked examples</div>
+          <div style="display:flex;gap:20px;margin-top:6px;">
+            <div>
+              <div class="label">MAI (Slides 13–14)</div>
+              <div style="font-family:var(--font-mono);font-size:22px;font-weight:600;color:var(--accent);">61</div>
+            </div>
+            <div>
+              <div class="label">CPI (Slides 16–17)</div>
+              <div style="font-family:var(--font-mono);font-size:22px;font-weight:600;color:var(--teal);">55</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini grid -->
+        <div style="flex:1;display:grid;grid-template-columns:44px repeat(3,1fr);grid-template-rows:22px repeat(3,1fr);gap:2px;">
+          <div></div>
+          <div style="font-family:var(--font-mono);font-size:8px;color:var(--text-dim);text-align:center;display:flex;align-items:center;justify-content:center;">Low<br>CPI</div>
+          <div style="font-family:var(--font-mono);font-size:8px;color:var(--text-sec);text-align:center;display:flex;align-items:center;justify-content:center;">Med<br>CPI</div>
+          <div style="font-family:var(--font-mono);font-size:8px;color:var(--text-dim);text-align:center;display:flex;align-items:center;justify-content:center;">High<br>CPI</div>
+
+          <div style="font-family:var(--font-mono);font-size:8px;color:var(--text-dim);display:flex;align-items:center;justify-content:flex-end;padding-right:4px;text-align:right;line-height:1.2;">High<br>MAI</div>
+          <div style="background:var(--navy-mid);border:1px solid var(--rule);"></div>
+          <div style="background:var(--navy-mid);border:1px solid var(--rule);"></div>
+          <div style="background:var(--navy-mid);border:1px solid var(--rule);"></div>
+
+          <div style="font-family:var(--font-mono);font-size:8px;color:var(--accent);display:flex;align-items:center;justify-content:flex-end;padding-right:4px;text-align:right;line-height:1.2;font-weight:600;">Med<br>MAI</div>
+          <div style="background:var(--navy-mid);border:1px solid var(--rule);"></div>
+          <div style="background:rgba(232,160,32,0.15);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:16px;color:var(--accent);font-weight:700;">?</span>
+          </div>
+          <div style="background:var(--navy-mid);border:1px solid var(--rule);"></div>
+
+          <div style="font-family:var(--font-mono);font-size:8px;color:var(--text-dim);display:flex;align-items:center;justify-content:flex-end;padding-right:4px;text-align:right;line-height:1.2;">Low<br>MAI</div>
+          <div style="background:var(--navy-mid);border:1px solid var(--rule);"></div>
+          <div style="background:var(--navy-mid);border:1px solid var(--rule);"></div>
+          <div style="background:var(--navy-mid);border:1px solid var(--rule);"></div>
+        </div>
+
+      </div>
+
+      <!-- Right: Questions -->
+      <div style="display:flex;flex-direction:column;gap:8px;">
+
+        <div class="col-panel" style="padding:10px 14px;">
+          <div class="panel-title">Q1 — Threshold classification</div>
+          <p class="practice-question">Which zone does MAI = 61 fall in (Low/Med/High)?<br>Which zone does CPI = 55 fall in?<br>Apply the 0/33/67/100 thresholds from Slide 18.</p>
+        </div>
+
+        <div class="col-panel" style="padding:10px 14px;">
+          <div class="panel-title">Q2 — Strategy identification</div>
+          <p class="practice-question">Name the applicable strategies from the grid cell where MAI = 61 and CPI = 55 intersect.</p>
+        </div>
+
+        <div class="col-panel" style="padding:10px 14px;">
+          <div class="panel-title">Q3 — Classify each strategy</div>
+          <p class="practice-question">For each strategy you identified, classify it as offensive or defensive.</p>
+        </div>
+
+        <div class="col-panel" style="padding:10px 14px;border-color:var(--accent-dim);">
+          <div class="panel-title" style="color:var(--accent);">Q4 — Recommendation</div>
+          <p class="practice-question">Which strategy would you recommend — and what additional information would you need to decide between the options in this cell?</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

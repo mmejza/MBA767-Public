@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>M08 App 2 - Performance Value Pricing Simulator</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell">
+		<header class="app-header">
+			<p class="module-label">MKT 472 · Module 8 · App 2</p>
+			<h1>Performance Value Pricing Simulator</h1>
+			<p class="sub">Compute weighted value scores by segment and test pricing strategy outcomes.</p>
+		</header>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Evaluate how segment-specific weighting changes firm-versus-competitor value outcomes. Compare value advantage across pricing strategies using VP scenarios and adjusted value scores. Interpret when the same product profile yields opposite strategic conclusions under different segment priorities.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Quality-Conscious.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Load a segment preset or set custom weights that always sum to 100%.</li>
+				<li>Enter firm and competitor preference scores plus price inputs.</li>
+				<li>Review value score summary and VP1-VP5 table changes across price points.</li>
+				<li>Use the value map and verdict output to compare strategic fit by segment.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+			<div class="app-grid">
+		<section class="panel input-panel">
+			<h1>Performance Value Pricing Simulator</h1>
+			<p class="sub">Compute weighted value scores by segment and test pricing strategy outcomes.</p>
+
+			<div class="preset-row" role="group" aria-label="Segment presets">
+				<button type="button" data-preset="quality">Quality-Conscious</button>
+				<button type="button" data-preset="balanced">Balanced Segment</button>
+				<button type="button" data-preset="influenced">Price-Influenced</button>
+				<button type="button" data-preset="sensitive">Price-Sensitive</button>
+				<button type="button" id="reset-btn" class="secondary">Reset</button>
+			</div>
+
+			<p class="active-segment">Active Segment: <strong id="active-segment">Quality-Conscious</strong></p>
+
+			<section class="card">
+				<h2>Attribute Labels</h2>
+				<div class="label-grid">
+					<label for="attr1-label">Attribute 1 Label</label>
+					<input id="attr1-label" type="text" value="Trim / Feature Quality">
+
+					<label for="attr2-label">Attribute 2 Label</label>
+					<input id="attr2-label" type="text" value="Paint / Finish Quality">
+
+					<label for="attr3-label">Attribute 3 Label</label>
+					<input id="attr3-label" type="text" value="Price" readonly aria-readonly="true">
+				</div>
+			</section>
+
+			<section class="card">
+				<h2>Weights (must sum to 100%)</h2>
+				<div class="weight-total">Current Total: <strong id="weight-total">100%</strong></div>
+
+				<div class="weight-row">
+					<label for="w1-slider">Attribute 1 Weight</label>
+					<input id="w1-slider" type="range" min="0" max="100" step="1" value="50">
+					<input id="w1-number" type="number" min="0" max="100" step="1" value="50" aria-label="Attribute 1 weight percentage">
+					<span>%</span>
+				</div>
+
+				<div class="weight-row">
+					<label for="w2-slider">Attribute 2 Weight</label>
+					<input id="w2-slider" type="range" min="0" max="100" step="1" value="43">
+					<input id="w2-number" type="number" min="0" max="100" step="1" value="43" aria-label="Attribute 2 weight percentage">
+					<span>%</span>
+				</div>
+
+				<div class="weight-row">
+					<label for="w3-slider">Price Weight</label>
+					<input id="w3-slider" type="range" min="0" max="100" step="1" value="7">
+					<input id="w3-number" type="number" min="0" max="100" step="1" value="7" aria-label="Price weight percentage">
+					<span>%</span>
+				</div>
+			</section>
+
+			<section class="card">
+				<h2>Preference Scores</h2>
+				<div class="score-grid header-row">
+					<div></div>
+					<div>Firm</div>
+					<div>Competitor</div>
+				</div>
+				<div class="score-grid">
+					<label for="firm-a1" id="a1-score-label">Attribute 1</label>
+					<input id="firm-a1" type="number" min="0" max="1" step="0.01" value="1.00">
+					<input id="comp-a1" type="number" min="0" max="1" step="0.01" value="0.50">
+
+					<label for="firm-a2" id="a2-score-label">Attribute 2</label>
+					<input id="firm-a2" type="number" min="0" max="1" step="0.01" value="0.90">
+					<input id="comp-a2" type="number" min="0" max="1" step="0.01" value="0.60">
+
+					<label for="firm-price-score">Price Score</label>
+					<input id="firm-price-score" type="number" min="0" max="1" step="0.01" value="0.40">
+					<input id="comp-price-score" type="number" min="0" max="1" step="0.01" value="0.70">
+				</div>
+			</section>
+
+			<section class="card">
+				<h2>Price Inputs</h2>
+				<div class="price-grid">
+					<label for="firm-price">Firm Price</label>
+					<input id="firm-price" type="number" min="0" step="0.01" value="3.00">
+
+					<label for="comp-price">Competitor Price</label>
+					<input id="comp-price" type="number" min="0" step="0.01" value="1.50">
+
+					<label for="price-step">Price Step</label>
+					<input id="price-step" type="number" min="0.01" step="0.01" value="0.50">
+				</div>
+			</section>
+		</section>
+
+		<section class="panel output-panel">
+			<section class="card">
+				<h2>Value Score Summary</h2>
+				<dl id="summary-list" class="summary-list"></dl>
+				<p id="verdict-badge" class="badge">VALUE ADVANTAGE</p>
+				<p id="verdict-text" class="verdict-text">Firm offers higher weighted customer value at current assumptions.</p>
+			</section>
+
+			<section class="card">
+				<h2>VP1-VP5 Strategy Table</h2>
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th>VP</th>
+								<th>Company Price</th>
+								<th>Competitor Price</th>
+								<th>Price Premium</th>
+								<th>% Price Premium</th>
+								<th>Adjusted Value Score</th>
+								<th>Value Advantage</th>
+								<th>% Value Advantage</th>
+							</tr>
+						</thead>
+						<tbody id="vp-table-body"></tbody>
+					</table>
+				</div>
+			</section>
+
+			<section class="card">
+				<h2 id="map-title">Value Map - Quality-Conscious</h2>
+				<svg id="value-map" viewBox="0 0 460 300" role="img" aria-label="Value map showing firm and competitor positions by price and total value score.">
+					<g id="map-layer"></g>
+				</svg>
+				<div class="map-meta">
+					<span><strong>X-axis:</strong> Price</span>
+					<span><strong>Y-axis:</strong> Total Value Score</span>
+				</div>
+			</section>
+		</section>
+			</div>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results / Dashboard</h2>
+			<p>Use weighted value scores, VP strategy rows, and value-map interpretation to complete Canvas quiz responses.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

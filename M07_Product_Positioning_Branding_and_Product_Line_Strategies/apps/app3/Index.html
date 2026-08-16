@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>M07 App 3 - Product Line Strategy Analyzer</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell">
+		<header class="app-header">
+			<p class="module-label">MKT 472 · Module 7 · App 3</p>
+			<h1>Product Line Strategy Analyzer</h1>
+			<p>Analyze hardcoded ROA benchmarks and classify brand growth strategy decisions.</p>
+		</header>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Evaluate how lifecycle stage and line breadth combinations affect hardcoded ROA outcomes. Interpret revenue effects of ROA changes under different preset scenarios. Classify brand growth decisions by mapping input conditions to line extension, brand extension, fighter/flanker, or new brand outputs.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Apex Athletic.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Choose a named preset or set before/after lifecycle stage and line breadth values manually.</li>
+				<li>Review hardcoded ROA outputs, ROA change, and revenue impact for the selected before/after states.</li>
+				<li>Use Tab B inputs to classify the brand growth strategy and review logic notes.</li>
+				<li>Check warnings and QA indicators for counterintuitive or ambiguous classification cases.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+		<nav class="tabs" aria-label="Analyzer tabs">
+			<button class="tab-btn active" data-tab="roa" type="button" aria-controls="tab-roa" aria-selected="true">Product Line ROA Simulator</button>
+			<button class="tab-btn" data-tab="strategy" type="button" aria-controls="tab-strategy" aria-selected="false">Brand Growth Strategy Classifier</button>
+		</nav>
+
+		<section id="tab-roa" class="tab-panel">
+			<div class="panel-head">
+				<h2>Tab A - Product Line ROA Simulator</h2>
+				<label for="preset-select">
+					Named Presets
+					<select id="preset-select">
+						<option value="custom">Custom</option>
+						<option value="ge">GE Appliances</option>
+						<option value="intel">Intel</option>
+						<option value="apex">Apex Athletic</option>
+					</select>
+				</label>
+			</div>
+
+			<div class="roa-grid">
+				<section class="control-card">
+					<h3>Before State</h3>
+					<label for="before-stage">Lifecycle stage</label>
+					<select id="before-stage">
+						<option value="Emerging">Emerging</option>
+						<option value="Growing">Growing</option>
+						<option value="Mature">Mature</option>
+						<option value="Declining">Declining</option>
+					</select>
+
+					<label for="before-breadth">Line breadth</label>
+					<select id="before-breadth">
+						<option value="Narrow">Narrow</option>
+						<option value="Average">Average</option>
+						<option value="Broad">Broad</option>
+					</select>
+				</section>
+
+				<section class="control-card">
+					<h3>After State</h3>
+					<label for="after-stage">Lifecycle stage</label>
+					<select id="after-stage">
+						<option value="Emerging">Emerging</option>
+						<option value="Growing">Growing</option>
+						<option value="Mature">Mature</option>
+						<option value="Declining">Declining</option>
+					</select>
+
+					<label for="after-breadth">Line breadth</label>
+					<select id="after-breadth">
+						<option value="Narrow">Narrow</option>
+						<option value="Average">Average</option>
+						<option value="Broad">Broad</option>
+					</select>
+				</section>
+
+				<section class="control-card">
+					<h3>Revenue Impact</h3>
+					<label for="revenue-input">Revenue amount</label>
+					<input id="revenue-input" type="number" min="0" step="any" value="480">
+
+					<label for="revenue-unit">Revenue unit</label>
+					<select id="revenue-unit">
+						<option value="M">Millions ($M)</option>
+						<option value="B">Billions ($B)</option>
+					</select>
+				</section>
+			</div>
+
+			<div class="results-grid">
+				<article class="result-card">
+					<h3>Before ROA</h3>
+					<p id="before-roa" class="big">23%</p>
+				</article>
+				<article class="result-card">
+					<h3>After ROA</h3>
+					<p id="after-roa" class="big">18%</p>
+				</article>
+				<article class="result-card">
+					<h3>ROA Change</h3>
+					<p id="roa-change" class="big negative">-5%</p>
+				</article>
+				<article class="result-card">
+					<h3>Revenue Impact</h3>
+					<p id="revenue-impact" class="big negative">-$24M</p>
+				</article>
+			</div>
+
+			<p id="declining-note" class="note" hidden>Figure 7-24 (Ch7, p.256) does not report ROA benchmarks for the Declining stage.</p>
+			<p id="mature-warning" class="danger" hidden></p>
+			<p id="roa-message" class="message" role="status" aria-live="polite"></p>
+
+			<section class="table-card">
+				<h3>Hardcoded ROA Table</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Lifecycle Stage</th>
+							<th>Narrow</th>
+							<th>Average</th>
+							<th>Broad</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Emerging</td>
+							<td>11%</td>
+							<td>16%</td>
+							<td>27%</td>
+						</tr>
+						<tr>
+							<td>Growing</td>
+							<td>13%</td>
+							<td>18%</td>
+							<td>29%</td>
+						</tr>
+						<tr>
+							<td>Mature</td>
+							<td>23%</td>
+							<td class="red-emphasis">18%</td>
+							<td>23%</td>
+						</tr>
+						<tr>
+							<td>Declining</td>
+							<td>N/A</td>
+							<td>N/A</td>
+							<td>N/A</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section class="qa-inline">
+				<h3>Inline QA Checks</h3>
+				<ul id="qa-inline-list"></ul>
+			</section>
+		</section>
+
+		<section id="tab-strategy" class="tab-panel" hidden>
+			<h2>Tab B - Brand Growth Strategy Classifier</h2>
+			<div class="strategy-grid">
+				<section class="control-card">
+					<label for="existing-brand">Existing Brand?</label>
+					<select id="existing-brand">
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+					</select>
+
+					<label for="existing-category">Existing Category?</label>
+					<select id="existing-category">
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+					</select>
+
+					<label for="intent">Strategic Intent</label>
+					<select id="intent">
+						<option value="Add variety within current category">Add variety within current category</option>
+						<option value="Fight a low-price competitor">Fight a low-price competitor</option>
+						<option value="Enter a new product market">Enter a new product market</option>
+						<option value="Grow volume in current position">Grow volume in current position</option>
+					</select>
+				</section>
+
+				<section class="result-card strategy-result">
+					<h3>Classification Result</h3>
+					<p id="strategy-output"></p>
+					<p id="strategy-logic" class="note"></p>
+					<div id="fighter-warning" class="amber" hidden>
+						Gate 2 alert: Fighter brands are commonly misclassified as Brand Extensions. Know this distinction cold.
+					</div>
+				</section>
+			</div>
+
+			<section class="examples-card">
+				<h3>Reference Examples</h3>
+				<ul>
+					<li>Brand Extension: Honda outboard motors; Amazon Echo</li>
+					<li>New Brand: Lexus; Aquafina</li>
+					<li>Fighter / Flanker Brand: Intel Celeron; Cricket Wireless</li>
+				</ul>
+			</section>
+		</section>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results / Dashboard</h2>
+			<p>Use ROA outputs, revenue impact, classification results, and warnings to complete answers in Canvas.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

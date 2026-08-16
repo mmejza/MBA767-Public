@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MKT 472 · Module 10 · Study Focus Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:      #0D9B87;
+    --teal-dk:   #0a7a6b;
+    --teal-lt:   #e6f7f5;
+    --teal-mid:  #b3e4de;
+    --navy:      #0F2027;
+    --navy-mid:  #1a3340;
+    --amber:     #E6A800;
+    --amber-lt:  #fff8e1;
+    --amber-dk:  #b37f00;
+    --gray-lt:   #F2F4F5;
+    --gray-mid:  #D0D5D8;
+    --gray-dk:   #6b7280;
+    --white:     #ffffff;
+    --text:      #1a2630;
+    --text-soft: #4a5568;
+
+    --font-head: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+    --font-body: 'Barlow', Arial, sans-serif;
+
+    --radius:    8px;
+    --shadow:    0 2px 8px rgba(15,32,39,0.10);
+    --shadow-md: 0 4px 16px rgba(15,32,39,0.13);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    background: var(--gray-lt);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+  }
+
+  .page-header {
+    background: var(--navy);
+    padding: 36px 40px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 6px;
+    background: var(--teal);
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 40px; right: 40px;
+    height: 1px;
+    background: rgba(13,155,135,0.35);
+  }
+  .eyebrow {
+    font-family: var(--font-head);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .header-subtitle {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--teal-mid);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .badge {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border-right: 1px solid var(--gray-mid);
+  }
+  .badge:last-child { border-right: none; }
+  .badge-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .badge-label {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--gray-dk);
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .badge-value {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .purpose-block {
+    padding: 28px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+    border-left: 5px solid var(--teal);
+    background: var(--teal-lt);
+  }
+  .purpose-block p {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .purpose-block p:last-child { margin-bottom: 0; }
+  .purpose-block strong { color: var(--navy); font-weight: 600; }
+
+  .gate-section {
+    padding: 32px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .section-label {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-dk);
+    margin-bottom: 16px;
+  }
+  .gate-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .gate-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .gate-card-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .gate-card--g1 .gate-card-header { background: var(--teal); }
+  .gate-card--g2 .gate-card-header { background: var(--navy); }
+  .gate-card-title {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .gate-badge {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .gate-card--g1 .gate-badge {
+    background: rgba(255,255,255,0.25);
+    color: var(--white);
+  }
+  .gate-card--g2 .gate-badge {
+    background: var(--teal);
+    color: var(--white);
+  }
+  .gate-card-body {
+    padding: 16px 20px;
+    background: var(--white);
+    border: 1px solid var(--gray-mid);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+  .gate-spec {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray-lt);
+    font-size: 13.5px;
+  }
+  .gate-spec:last-child { border-bottom: none; padding-bottom: 0; }
+  .gate-spec-key { color: var(--gray-dk); font-weight: 500; }
+  .gate-spec-val {
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+    text-align: right;
+  }
+  .gate-spec-val--teal { color: var(--teal); }
+  .gate-spec-val--amber { color: var(--amber-dk); }
+
+  .tips-section {
+    padding: 32px 40px;
+    background: var(--gray-lt);
+    border-bottom: 2px solid var(--gray-mid);
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .tip-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 12px;
+  }
+  .tip-icon { font-size: 22px; margin-top: 1px; flex-shrink: 0; }
+  .tip-title {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 5px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .tip-body { font-size: 13px; color: #444; line-height: 1.5; }
+
+  .questions-section {
+    padding: 32px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .q-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .q-block {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--gray-mid);
+    background: var(--white);
+  }
+  .q-block--g1 { border-left: 4px solid var(--teal); }
+  .q-block--g2 { border-left: 4px solid var(--navy); }
+  .q-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .q-block--g1 .q-num { background: var(--teal); }
+  .q-block--g2 .q-num { background: var(--navy); color: var(--amber); }
+  .q-body {
+    background: var(--white);
+    padding: 12px 16px 12px 14px;
+  }
+  .q-tag {
+    display: inline-block;
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-bottom: 7px;
+  }
+  .q-block--g1 .q-tag { background: var(--teal-lt); color: var(--teal-dk); }
+  .q-block--g2 .q-tag { background: #e8ecf0; color: var(--navy); }
+  .q-tag--warn { background: #fef2f2 !important; color: #b91c1c !important; }
+  .q-topic {
+    font-family: var(--font-head);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-size: 15px;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .q-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .q-loc {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    background: var(--gray-lt);
+    border: 1px solid var(--gray-mid);
+    border-radius: 3px;
+    padding: 2px 8px;
+  }
+  .q-hint {
+    padding-top: 10px;
+    border-top: 1px solid var(--gray-lt);
+    font-size: 13px;
+    color: var(--text-soft);
+    font-style: italic;
+  }
+
+  .formula-box {
+    margin-top: 10px;
+    background: var(--navy);
+    border-radius: 6px;
+    padding: 12px 14px;
+    color: #e8f8f8;
+  }
+  .formula-label {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+  }
+  .formula-text {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #ffffff;
+  }
+  .fo-var { color: #f5c842; }
+
+  .amber-callout {
+    background: var(--amber-lt);
+    border: 2px solid var(--amber);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 28px 40px 0;
+  }
+  .amber-callout-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .amber-callout-icon { font-size: 22px; }
+  .amber-callout-title {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--amber-dk);
+  }
+  .amber-callout-body {
+    font-size: 14px;
+    color: #5a4000;
+    line-height: 1.65;
+  }
+  .amber-callout-body strong { color: #3a2800; }
+  .amber-callout-list { margin-top: 10px; padding-left: 18px; }
+  .amber-callout-list li { margin-bottom: 6px; font-size: 13.5px; color: #5a4000; }
+
+  .sequence-footer {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin: 44px 40px 0;
+  }
+  .sf-label {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+  }
+  .sf-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sf-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .sf-step-num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(13,155,135,.25);
+    border: 1.5px solid var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-top: 1px;
+  }
+  .sf-step-text {
+    font-size: 14px;
+    color: #c0d8d5;
+    line-height: 1.4;
+  }
+  .sf-step-text strong { color: var(--white); }
+  .sf-step-text .arrow { color: var(--teal); font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .page-header { padding: 24px 20px 20px; }
+    .badge-row { flex-direction: column; }
+    .badge { border-right: none; border-bottom: 1px solid var(--gray-mid); }
+    .badge:last-child { border-bottom: none; }
+    .gate-cards { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .purpose-block, .gate-section, .tips-section,
+    .questions-section { padding: 20px 20px; }
+    .amber-callout { margin: 0 20px; }
+    .sequence-footer { padding: 20px 20px; margin: 28px 20px 0; }
+    .header-title { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <div class="eyebrow">MKT 472 &nbsp;·&nbsp; Module 10 &nbsp;·&nbsp; Chapter 10 Reading</div>
+    <h1 class="header-title">Study Focus Guide</h1>
+    <p class="header-subtitle">
+      <em>Marketing Communications, Social Media, and Customer Response</em> &nbsp;·&nbsp;
+      Eight questions to answer while you read &nbsp;·&nbsp; Est. 70-80 min
+    </p>
+  </header>
+
+  <div class="badge-row">
+    <div class="badge">
+      <div class="badge-icon">📖</div>
+      <div>
+        <div class="badge-label">Chapter pages</div>
+        <div class="badge-value">pp. 341-368</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">⏱</div>
+      <div>
+        <div class="badge-label">Reading time</div>
+        <div class="badge-value">70-80 min</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">✏️</div>
+      <div>
+        <div class="badge-label">Focus questions</div>
+        <div class="badge-value">8 questions</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">🔓</div>
+      <div>
+        <div class="badge-label">Unlocks</div>
+        <div class="badge-value">Gate 1 - Slides</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="purpose-block">
+    <p>
+      This guide identifies exactly what to look for as you read Chapter 10.
+      <strong>Gate 1</strong> tests five topics that appear only in the chapter, not in the slides or lecture.
+      <strong>Gate 2</strong> tests three chapter-dependent topics that require both the reading and the slide deck to solve correctly.
+    </p>
+    <p>
+      Answer these questions in your own words while you read, not after.
+      The guide itself is not graded. Gate 1 and Gate 2 are.
+    </p>
+  </div>
+
+  <div class="gate-section">
+    <div class="section-label">Gate Specifications</div>
+    <div class="gate-cards">
+      <div class="gate-card gate-card--g1">
+        <div class="gate-card-header">
+          <span class="gate-card-title">Gate 1 - Basic Reading Check</span>
+          <span class="gate-badge">Chapter Only</span>
+        </div>
+        <div class="gate-card-body">
+          <div class="gate-spec"><span class="gate-spec-key">Questions</span><span class="gate-spec-val">5</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Threshold to pass</span><span class="gate-spec-val gate-spec-val--teal">80% (4 of 5)</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Attempts</span><span class="gate-spec-val">2</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Point value</span><span class="gate-spec-val">0 pts - access only</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Feedback</span><span class="gate-spec-val">Per-answer with page ref</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Unlocks</span><span class="gate-spec-val gate-spec-val--teal">Slide Deck Viewer</span></div>
+        </div>
+      </div>
+
+      <div class="gate-card gate-card--g2">
+        <div class="gate-card-header">
+          <span class="gate-card-title">Gate 2 - Applied Reading Check</span>
+          <span class="gate-badge">Chapter + Slides</span>
+        </div>
+        <div class="gate-card-body">
+          <div class="gate-spec"><span class="gate-spec-key">Questions</span><span class="gate-spec-val">8</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Threshold to pass</span><span class="gate-spec-val">None - graded as submitted</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Attempts</span><span class="gate-spec-val gate-spec-val--amber">1 - no retries</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Point value</span><span class="gate-spec-val gate-spec-val--teal">20 pts (10% of module)</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Feedback</span><span class="gate-spec-val">Correct / Incorrect only</span></div>
+          <div class="gate-spec"><span class="gate-spec-key">Unlocks</span><span class="gate-spec-val gate-spec-val--teal">Lecture Video</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-section">
+    <div class="section-label">Reading Strategy for Chapter 10</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">📍</div>
+        <div>
+          <div class="tip-title">Mark the chapter-only cases</div>
+          <div class="tip-body">Flag the AFLAC duck campaign, the trade promotion trap, the Loctite rebrand, the Post-it sample case, and the promotional sub-types before you start. Gate 1 pulls from all five.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">✍️</div>
+        <div>
+          <div class="tip-title">Write down the formulas</div>
+          <div class="tip-body">Next to each formula, write what it measures and which communication decision it supports so the logic stays visible when you revisit it.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⚠️</div>
+        <div>
+          <div class="tip-title">Do not trust the highest raw rate</div>
+          <div class="tip-body">CRI is a multiplicative diagnostic. The stage with the lowest rate is not always the stage that produces the biggest gain when improved, so read the marginal logic carefully.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🔗</div>
+        <div>
+          <div class="tip-title">Connect the metrics</div>
+          <div class="tip-body">Chapter 10 links CRI, GRP, weighted message frequency, and carryover into one decision sequence. Map that sequence now so Gate 2 feels like a review instead of a surprise.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="questions-section">
+    <div class="section-label">Eight Focus Questions - Answer These While You Read</div>
+
+    <div class="q-list">
+      <div class="q-block q-block--g1">
+        <div class="q-num">1</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 1 - Chapter Only</div>
+          <div class="q-topic">AFLAC duck campaign</div>
+          <div class="q-text">Before the duck campaign launched, what was AFLAC's name recognition rating in the United States? What happened to revenues in the first two weeks after the commercials aired? And what eventually caused the campaign to lose effectiveness over time - what does Chapter 10 call this phenomenon?</div>
+          <div class="q-meta"><span class="q-loc">Chapter 10 - p. 358</span></div>
+          <div class="q-hint">This case is the chapter's example of strong frequency effects and eventual wear-out. Gate 1 expects the exact statistic.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g1">
+        <div class="q-num">2</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 1 - Chapter Only</div>
+          <div class="q-topic">Trade promotion forward-buying trap</div>
+          <div class="q-text">When the supplier announced a price promotion in advance, what did the retailer do in the month before the promotion began, and why? Over the full three-month window, which party's gross profit declined relative to the no-promotion baseline - and by approximately what percentage?</div>
+          <div class="q-meta"><span class="q-loc">Chapter 10 - pp. 367-368 · Fig. 10-24</span></div>
+          <div class="q-hint">The month-2 spike looks like success, but the three-month comparison reveals the loss. Make sure you understand both views of the data.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g1">
+        <div class="q-num">3</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 1 - Chapter Only</div>
+          <div class="q-topic">Loctite / RC-601 to Quick Metal</div>
+          <div class="q-text">What was the original brand name? Who was the original target audience, and why did the initial ad campaign fail despite a technically superior product? Who turned out to be the actual buyers? What happened to sales after the relaunch?</div>
+          <div class="q-meta"><span class="q-loc">Chapter 10 - p. 360</span></div>
+          <div class="q-hint">This case shows that the real problem can be the message and the target, not the product or the budget.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g1">
+        <div class="q-num">4</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 1 - Chapter Only</div>
+          <div class="q-topic">Promotional sub-types</div>
+          <div class="q-text">Chapter 10 identifies three sub-types of brand-action promotional communications. Define each one in a sentence and give a real example from the chapter: (a) Promotional Giveaway, (b) Promotional Gift, and (c) Minimum Purchase.</div>
+          <div class="q-meta"><span class="q-loc">Chapter 10 - pp. 341-342</span></div>
+          <div class="q-hint">Gate 1 may give you a scenario and ask which sub-type it represents. Know the differences before you start.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g1">
+        <div class="q-num">5</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 1 - Chapter Only</div>
+          <div class="q-topic">Post-it Note free-sample case</div>
+          <div class="q-text">For how long did 3M's advertising campaign for Post-it Notes fail, and across how many test markets? What was 3M's corporate policy that initially blocked the solution? How did the marketing director circumvent it? What does this case imply about when advertising alone is insufficient to stimulate customer action?</div>
+          <div class="q-meta"><span class="q-loc">Chapter 10 - p. 362</span></div>
+          <div class="q-hint">This case extends the CRI framework: even perfect comprehension does not guarantee action if the product's benefits can only be discovered through use.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g2">
+        <div class="q-num">6</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 2 - Chapter + Slides</div>
+          <div class="q-topic">Customer Response Index hierarchy</div>
+          <div class="q-text">List the five stages in the CRI hierarchy in order. For the department-store campaign example in Figure 10-15, write out the CRI calculation step by step and confirm the 4.4% result. Then identify which stage had the lowest rate - and note whether that stage was also the one that would have yielded the highest marginal CRI gain if improved.</div>
+          <div class="formula-box">
+            <div class="formula-label">Formula</div>
+            <div class="formula-text">CRI = <span class="fo-var">Exposure</span> × <span class="fo-var">Awareness</span> × <span class="fo-var">Comprehension</span> × <span class="fo-var">Intention</span> × <span class="fo-var">Purchase</span></div>
+          </div>
+          <div class="q-meta"><span class="q-loc">Chapter 10 - p. 355 · Fig. 10-15 · Slides S09-S12</span></div>
+          <div class="q-hint">Gate 2 uses a new set of stage inputs. Practice the chapter example first so the multiplication sequence feels automatic.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g2">
+        <div class="q-num">7</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 2 - Chapter + Slides</div>
+          <div class="q-topic">GRP and weighted average message frequency</div>
+          <div class="q-text">Write out the GRP formula and calculate it for the chapter example (60% reach, 4 exposures). Then work through the weighted-average message frequency table on p. 359: multiply each recall level by its percentage, sum the column, and confirm the approximately 3.85 result. What is the strategic implication of the gap between messages sent (8) and average messages received (about 4)?</div>
+          <div class="formula-box">
+            <div class="formula-label">Formulas</div>
+            <div class="formula-text">GRP = <span class="fo-var">Reach%</span> × <span class="fo-var">Frequency</span><br>WA Freq = Σ (<span class="fo-var">Recall Level</span> × <span class="fo-var">% Recalling That Many</span>)</div>
+          </div>
+          <div class="q-meta"><span class="q-loc">Chapter 10 - pp. 359-360 · Slides S14-S16</span></div>
+          <div class="q-hint">Use the chapter numbers first, then connect them to the slide logic about media selection and actual frequency.</div>
+        </div>
+      </div>
+
+      <div class="q-block q-block--g2">
+        <div class="q-num">8</div>
+        <div class="q-body">
+          <div class="q-tag">Gate 2 - Chapter + Slides</div>
+          <div class="q-topic">Advertising carryover - two formulas</div>
+          <div class="q-text">Write out the carryover model for Hart Schaffner Marx (p. 365): what is the current-period sales impact? What is the total multi-period impact using the total-impact formula? What percentage of the total does the current period represent? What does this imply about a manager who uses only current-period ROI to evaluate the ad budget?</div>
+          <div class="formula-box">
+            <div class="formula-label">Formulas</div>
+            <div class="formula-text">Current-Period Impact = <span class="fo-var">Multiplier</span> × <span class="fo-var">Ad Spend</span><br>Total Impact = <span class="fo-var">Current</span> ÷ (1 - <span class="fo-var">Carryover Coefficient</span>)</div>
+          </div>
+          <div class="q-meta"><span class="q-loc">Chapter 10 - pp. 364-366 · Slides S22-S23</span></div>
+          <div class="q-hint">Gate 2 repeats these formulas with different parameters. If the chapter example is clear, the case calculation is straightforward.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="amber-callout">
+    <div class="amber-callout-header">
+      <span class="amber-callout-icon">🎯</span>
+      <span class="amber-callout-title">Highest-Probability Gate 1 Targets</span>
+    </div>
+    <div class="amber-callout-body">
+      If you are short on time, prioritize these three areas - they appear on Gate 1 across question variants and cannot be answered from the slides alone:
+      <ul class="amber-callout-list">
+        <li><strong>AFLAC and wear-out (Q1):</strong> know the exact pre-duck awareness statistic and the name of the wear-out effect.</li>
+        <li><strong>Trade promotion and promotional sub-types (Q2 and Q4):</strong> be able to explain the forward-buying trap and distinguish giveaway, gift, and minimum purchase.</li>
+        <li><strong>Loctite and Post-it (Q3 and Q5):</strong> know how target audience, policy, and sample access changed the outcome in each case.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sequence-footer">
+    <div class="sf-label">What comes next</div>
+    <div class="sf-steps">
+      <div class="sf-step">
+        <div class="sf-step-num">1</div>
+        <div class="sf-step-text"><strong>Complete Chapter 10 reading</strong> - work through Questions 1-5 as you go</div>
+      </div>
+      <div class="sf-step">
+        <div class="sf-step-num">2</div>
+        <div class="sf-step-text"><strong>Gate 1: Basic Reading Check</strong> <span class="arrow">→</span> 5 questions, chapter only, 80% to unlock slides · 2 attempts · 0 points</div>
+      </div>
+      <div class="sf-step">
+        <div class="sf-step-num">3</div>
+        <div class="sf-step-text"><strong>Slide Deck Viewer</strong> <span class="arrow">→</span> unlocked by Gate 1 · return to Questions 6-8 after viewing</div>
+      </div>
+      <div class="sf-step">
+        <div class="sf-step-num">4</div>
+        <div class="sf-step-text"><strong>Gate 2: Applied Reading Check</strong> <span class="arrow">→</span> 8 questions, chapter + slides, 1 attempt · 20 points</div>
+      </div>
+      <div class="sf-step">
+        <div class="sf-step-num">5</div>
+        <div class="sf-step-text"><strong>Lecture Video</strong> <span class="arrow">→</span> unlocked by Gate 2</div>
+      </div>
+      <div class="sf-step">
+        <div class="sf-step-num">6</div>
+        <div class="sf-step-text"><strong>Applications and case work</strong> <span class="arrow">→</span> app activities, discussion, and the Apex Audio carryover case follow the lecture</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
+</div>
+</body>
+</html>

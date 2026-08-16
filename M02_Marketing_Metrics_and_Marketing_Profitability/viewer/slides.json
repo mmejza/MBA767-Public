@@ -1,0 +1,28 @@
+{
+  "title": "Marketing Metrics and Marketing Profitability",
+  "moduleLabel": "MKT 472 · Module 02 · Lecture Slides",
+  "slides": [
+    "slides/s01-title.html",
+    "slides/s02-learning-objectives.html",
+    "slides/s03-chapter-gate1.html",
+    "slides/s04-metrics-failure.html",
+    "slides/s05-market-compounding-formula.html",
+    "slides/s06-market-compounding-setup.html",
+    "slides/s07-market-compounding-solution.html",
+    "slides/s08-metric-classification-framework.html",
+    "slides/s09-metric-classification-examples.html",
+    "slides/s10-nmc-formula.html",
+    "slides/s11-nmc-setup.html",
+    "slides/s12-nmc-solution.html",
+    "slides/s13-ros-roi-formulas.html",
+    "slides/s14-roi-floor.html",
+    "slides/s15-ros-vs-roi.html",
+    "slides/s16-drop-paradox-concept.html",
+    "slides/s17-drop-paradox-setup.html",
+    "slides/s18-drop-paradox-solution.html",
+    "slides/s19-nmc-levers.html",
+    "slides/s20-scenario-setup.html",
+    "slides/s21-scenario-solution.html",
+    "slides/s22-synthesis.html"
+  ]
+}

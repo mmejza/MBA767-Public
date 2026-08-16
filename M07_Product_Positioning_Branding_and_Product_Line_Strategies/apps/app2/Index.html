@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>M07 App 2 - Brand Equity Scorecard Calculator</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell">
+		<header class="app-header">
+			<p class="module-label">MKT 472 · Module 7 · App 2</p>
+			<h1>Brand Equity Scorecard Calculator</h1>
+			<p>Build intuition for brand assets, liabilities, equity, and temporary liability spikes.</p>
+			<div class="header-actions">
+				<button id="load-andersen" type="button">Load Arthur Andersen Pre-Enron</button>
+				<button id="reset-all" type="button" class="secondary">Reset to Neutral</button>
+			</div>
+		</header>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Evaluate how brand assets and liabilities combine into an overall equity score. Interpret how temporary liability spikes can rapidly reduce equity even when assets are strong. Use tab outputs to compare baseline and post-spike equity conditions.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Set asset and liability sliders using the allowed 0, 25, 50, 75, and 100 values.</li>
+				<li>Review tab totals and horizontal bars for assets and liabilities.</li>
+				<li>Open Brand Equity to compare assets, liabilities, and computed equity.</li>
+				<li>Use Spike Simulator to test temporary liability shocks without changing original sliders.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+		<nav class="tabs" aria-label="Scorecard tabs">
+			<button class="tab-btn active" data-tab="assets" type="button" aria-controls="tab-assets" aria-selected="true">Brand Assets</button>
+			<button class="tab-btn" data-tab="liabilities" type="button" aria-controls="tab-liabilities" aria-selected="false">Brand Liabilities</button>
+			<button class="tab-btn" data-tab="equity" type="button" aria-controls="tab-equity" aria-selected="false">Brand Equity</button>
+		</nav>
+
+		<section id="tab-assets" class="tab-panel">
+			<h2>Tab A - Brand Assets</h2>
+			<p class="hint">Values snap to 0, 25, 50, 75, 100 only. All dimensions weighted equally at 20%.</p>
+			<div id="assets-grid" class="score-grid"></div>
+			<div class="totals-row">
+				<span>Assets Total</span>
+				<strong id="assets-total">50.0</strong>
+			</div>
+			<div class="chart-card">
+				<h3>Assets Horizontal Bars</h3>
+				<div id="assets-bars" class="bars"></div>
+			</div>
+		</section>
+
+		<section id="tab-liabilities" class="tab-panel" hidden>
+			<h2>Tab B - Brand Liabilities</h2>
+			<p class="warning">Higher scores indicate greater brand risk.</p>
+			<div id="liabilities-grid" class="score-grid"></div>
+			<div class="totals-row">
+				<span>Liabilities Total</span>
+				<strong id="liabilities-total">50.0</strong>
+			</div>
+			<div class="chart-card">
+				<h3>Liabilities Horizontal Bars</h3>
+				<div id="liabilities-bars" class="bars"></div>
+			</div>
+		</section>
+
+		<section id="tab-equity" class="tab-panel" hidden>
+			<h2>Tab C - Brand Equity</h2>
+			<div class="equity-board">
+				<article>
+					<h3>Assets Total</h3>
+					<p id="equity-assets">50.0</p>
+				</article>
+				<article>
+					<h3>Liabilities Total</h3>
+					<p id="equity-liabilities">50.0</p>
+				</article>
+				<article>
+					<h3>Brand Equity</h3>
+					<p id="equity-total" class="equity-zero">0.0</p>
+				</article>
+			</div>
+
+			<div class="spike-card">
+				<h3>Spike Simulator</h3>
+				<p>Temporarily force one liability dimension to 100 without altering original sliders.</p>
+				<div class="spike-controls">
+					<label for="spike-dimension">
+						Liability dimension
+						<select id="spike-dimension"></select>
+					</label>
+					<button id="run-spike" type="button">Run Spike</button>
+					<button id="reset-spike" type="button" class="secondary">Reset Spike View</button>
+				</div>
+
+				<div class="spike-results">
+					<p><strong>Original Equity:</strong> <span id="spike-original">0.0</span></p>
+					<p><strong>Post-Spike Equity:</strong> <span id="spike-post">0.0</span></p>
+					<p><strong>Point Change:</strong> <span id="spike-change">0.0</span></p>
+				</div>
+			</div>
+			<p id="message" class="message" role="status" aria-live="polite"></p>
+		</section>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results / Dashboard</h2>
+			<p>Use tab totals, equity outputs, and spike simulator results to complete Canvas quiz responses.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

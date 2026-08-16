@@ -1,0 +1,1152 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Needs-Based Segmentation Builder</title>
+	<link rel="stylesheet" href="styles.css" />
+	<style>
+		:root {
+			--bg-a: #f4f8f2;
+			--bg-b: #e4efe0;
+			--panel: #fbfef9;
+			--line: #bfd0b8;
+			--text: #1e2e1f;
+			--muted: #4f6553;
+			--accent: #2e6d48;
+			--warn: #9a5f00;
+			--alert: #a43f2e;
+			--shadow: 0 10px 24px rgba(30, 46, 31, 0.08);
+			--radius: 14px;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+			color: var(--text);
+			background: radial-gradient(circle at top left, var(--bg-a), var(--bg-b));
+			line-height: 1.35;
+		}
+
+		.app-shell {
+			width: min(1100px, 96vw);
+			margin: 1rem auto 2rem;
+			display: grid;
+			gap: 1rem;
+		}
+
+		.skip-link {
+			position: absolute;
+			left: -999px;
+			top: -999px;
+			background: #1f5d3a;
+			color: #fff;
+			padding: 0.45rem 0.7rem;
+			border-radius: 8px;
+			z-index: 1000;
+		}
+
+		.skip-link:focus {
+			left: 0.7rem;
+			top: 0.7rem;
+		}
+
+		.hero,
+		.panel,
+		.feedback-panel {
+			border: 1px solid var(--line);
+			border-radius: var(--radius);
+			background: var(--panel);
+			box-shadow: var(--shadow);
+			padding: 0.95rem;
+		}
+
+		.hero h1 {
+			margin: 0;
+			font-size: clamp(1.3rem, 2vw, 1.6rem);
+		}
+
+		.hero p {
+			margin: 0.35rem 0 0;
+			color: var(--muted);
+		}
+
+		.panel h2,
+		.feedback-panel h2 {
+			margin: 0 0 0.7rem;
+			font-size: 1.2rem;
+		}
+
+		.quiz-card,
+		.required-callout,
+		.how-to,
+		.interactive-app,
+		.results-dashboard,
+		.canvas-reminder {
+			border: 1px solid var(--line);
+			border-radius: var(--radius);
+			background: var(--panel);
+			box-shadow: var(--shadow);
+			padding: 0.95rem;
+		}
+
+		.quiz-card h2,
+		.interactive-head h2,
+		.results-dashboard h2 {
+			margin: 0 0 0.5rem;
+			font-size: 1.2rem;
+		}
+
+		.quiz-card ol,
+		.how-to ol {
+			margin: 0;
+			padding-left: 1.2rem;
+			display: grid;
+			gap: 0.2rem;
+		}
+
+		.required-callout {
+			border-left: 4px solid var(--accent);
+		}
+
+		.required-label {
+			margin: 0 0 0.2rem;
+			font-size: 0.78rem;
+			font-weight: 700;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			color: var(--accent);
+		}
+
+		.how-to summary {
+			cursor: pointer;
+			font-weight: 700;
+		}
+
+		.how-to[open] summary {
+			margin-bottom: 0.45rem;
+		}
+
+		.interactive-app {
+			display: grid;
+			gap: 0.8rem;
+		}
+
+		.interactive-head {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 0.6rem;
+			flex-wrap: wrap;
+		}
+
+		.focus-btn {
+			border: 1px solid #8ba686;
+			border-radius: 10px;
+			background: #e8f5e3;
+			color: #22412a;
+			padding: 0.42rem 0.65rem;
+			cursor: pointer;
+		}
+
+		.focus-btn:hover {
+			filter: brightness(0.98);
+		}
+
+		.quiz-workflow-banner {
+			margin: 0;
+			border: 1px solid #9db896;
+			border-radius: 10px;
+			background: #edf7e9;
+			padding: 0.5rem 0.65rem;
+			font-weight: 700;
+			font-size: 0.92rem;
+		}
+
+		.results-dashboard__note {
+			margin: 0;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		.canvas-reminder {
+			padding-top: 0.6rem;
+			padding-bottom: 0.6rem;
+			text-align: center;
+			font-size: 0.82rem;
+			color: var(--muted);
+		}
+
+		body.focus-mode [data-focus-hide] {
+			display: none;
+		}
+
+		label {
+			display: grid;
+			gap: 0.3rem;
+			font-size: 0.94rem;
+		}
+
+		select,
+		input,
+		textarea,
+		button {
+			font: inherit;
+		}
+
+		select,
+		input,
+		textarea {
+			border: 1px solid #9cb499;
+			border-radius: 10px;
+			background: #fff;
+			color: var(--text);
+			padding: 0.42rem 0.55rem;
+		}
+
+		textarea {
+			min-height: 70px;
+			resize: vertical;
+		}
+
+		input:focus,
+		textarea:focus,
+		select:focus {
+			outline: 2px solid #7bb18b;
+			outline-offset: 1px;
+		}
+
+		.category-grid {
+			display: grid;
+			grid-template-columns: 1.1fr 1.9fr;
+			gap: 0.8rem;
+		}
+
+		.problem-box {
+			border: 1px solid #c8d7c3;
+			border-radius: 12px;
+			background: #f7fcf4;
+			padding: 0.7rem;
+		}
+
+		.problem-box h3 {
+			margin: 0;
+			font-size: 0.98rem;
+		}
+
+		.problem-box p {
+			margin: 0.35rem 0 0;
+		}
+
+		.benefit-preview {
+			margin: 0.6rem 0 0;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.4rem;
+			padding: 0;
+			list-style: none;
+		}
+
+		.benefit-preview li {
+			border: 1px solid #b8d0b1;
+			border-radius: 999px;
+			background: #edf7e9;
+			font-size: 0.82rem;
+			padding: 0.2rem 0.5rem;
+		}
+
+		.sorting-layout {
+			display: grid;
+			grid-template-columns: 1.2fr 1fr;
+			gap: 0.8rem;
+		}
+
+		.source-bin,
+		.bucket-grid {
+			border: 1px solid #c8d7c3;
+			border-radius: 12px;
+			padding: 0.65rem;
+			background: #fcfffa;
+		}
+
+		.source-bin h3,
+		.bucket-grid h3 {
+			margin: 0 0 0.5rem;
+			font-size: 0.96rem;
+		}
+
+		.cards-wrap {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			min-height: 110px;
+		}
+
+		.benefit-card {
+			width: 220px;
+			border: 1px solid #afc5a8;
+			border-radius: 12px;
+			background: #f4fbf0;
+			padding: 0.42rem;
+			display: grid;
+			gap: 0.4rem;
+			cursor: grab;
+		}
+
+		.benefit-card:active {
+			cursor: grabbing;
+		}
+
+		.benefit-card p {
+			margin: 0;
+			font-size: 0.9rem;
+		}
+
+		.benefit-card label {
+			font-size: 0.78rem;
+			color: var(--muted);
+			gap: 0.2rem;
+		}
+
+		.benefit-card select {
+			font-size: 0.82rem;
+			padding: 0.25rem 0.4rem;
+		}
+
+		.bucket-grid {
+			display: grid;
+			gap: 0.6rem;
+		}
+
+		.bucket {
+			border: 1px dashed #9fb79a;
+			border-radius: 10px;
+			background: #f7fdf3;
+			min-height: 98px;
+			padding: 0.45rem;
+			display: grid;
+			align-content: start;
+			gap: 0.3rem;
+		}
+
+		.bucket.drag-over {
+			border-style: solid;
+			border-color: #4f8b61;
+			background: #ecf8e7;
+		}
+
+		.bucket h4 {
+			margin: 0;
+			font-size: 0.9rem;
+		}
+
+		.bucket-list {
+			margin: 0;
+			padding-left: 1rem;
+			font-size: 0.86rem;
+		}
+
+		.bucket-empty {
+			margin: 0;
+			color: var(--muted);
+			font-size: 0.82rem;
+		}
+
+		.contradiction-box {
+			border: 1px solid #e0b9b1;
+			border-radius: 10px;
+			background: #fff1ef;
+			color: #6f2f24;
+			padding: 0.6rem;
+			font-size: 0.88rem;
+			margin-top: 0.7rem;
+		}
+
+		.profile-grid {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(260px, 1fr));
+			gap: 0.8rem;
+		}
+
+		.profile-column {
+			border: 1px solid #c8d7c3;
+			border-radius: 12px;
+			background: #fcfffa;
+			padding: 0.7rem;
+			display: grid;
+			gap: 0.5rem;
+		}
+
+		.token-builder {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 0.4rem;
+		}
+
+		.token-builder button {
+			border: 1px solid #8ba686;
+			border-radius: 10px;
+			background: #e8f5e3;
+			color: #22412a;
+			padding: 0.42rem 0.65rem;
+			cursor: pointer;
+		}
+
+		.token-builder button:hover {
+			filter: brightness(0.98);
+		}
+
+		.tokens {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.35rem;
+		}
+
+		.token {
+			border: 1px solid #9db896;
+			border-radius: 999px;
+			background: #eef8e9;
+			font-size: 0.8rem;
+			padding: 0.2rem 0.5rem;
+			display: inline-flex;
+			align-items: center;
+			gap: 0.35rem;
+		}
+
+		.token button {
+			border: 1px solid #8ca886;
+			border-radius: 999px;
+			background: #fff;
+			padding: 0.05rem 0.35rem;
+			font-size: 0.73rem;
+			cursor: pointer;
+		}
+
+		.score-row {
+			display: flex;
+			align-items: baseline;
+			gap: 0.55rem;
+		}
+
+		.score-row strong {
+			font-size: 2rem;
+			line-height: 1;
+			color: var(--accent);
+		}
+
+		.feedback-list {
+			margin: 0.45rem 0 0;
+			padding-left: 1rem;
+		}
+
+		.qa-list {
+			margin: 0.5rem 0 0;
+			padding-left: 1rem;
+			font-size: 0.9rem;
+		}
+
+		@media (max-width: 980px) {
+			.category-grid,
+			.sorting-layout,
+			.profile-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.benefit-card {
+				width: 100%;
+			}
+
+			.quiz-card,
+			.required-callout,
+			.how-to,
+			.interactive-app,
+			.results-dashboard,
+			.canvas-reminder {
+				padding: 0.85rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<a class="skip-link" href="#appContainer">Skip to interactive app</a>
+	<main class="app-shell">
+		<section class="hero">
+			<p class="required-label">MKT 472 · Module 5 · App 1</p>
+			<h1>Needs-Based Segmentation Builder</h1>
+			<p>This activity helps you build segments around needs, behaviors, and psychographics rather than demographics alone.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Identify distinct customer segments by sorting needs-based benefits into coherent buckets. Build a segment profile that combines needs, psychographics, and usage behavior. Evaluate completeness and contradiction flags to improve segment quality.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Select a product category and review the customer problem and benefits.</li>
+				<li>Assign benefit cards to segment buckets and resolve contradiction flags.</li>
+				<li>Build a profile with core need, demographic, psychographic, and usage identifiers.</li>
+				<li>Review completeness score, strengths, missing items, and QA checks.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+			<div id="appContainer">
+
+		<section class="panel" aria-labelledby="panel-a-title">
+			<h2 id="panel-a-title">1) Product Category / Customer Problem Selection</h2>
+			<div class="category-grid">
+				<label>
+					Product Category
+					<select id="category-select"></select>
+				</label>
+				<div class="problem-box">
+					<h3>Customer Problem</h3>
+					<p id="customer-problem"></p>
+					<ul id="benefit-preview" class="benefit-preview"></ul>
+				</div>
+			</div>
+		</section>
+
+		<section class="panel" aria-labelledby="panel-b-title">
+			<h2 id="panel-b-title">2) Benefit Sorting into Segment Buckets</h2>
+			<div class="sorting-layout">
+				<div class="source-bin">
+					<h3>Benefit Cards (drag or assign)</h3>
+					<div id="benefit-source" class="cards-wrap"></div>
+				</div>
+				<div class="bucket-grid">
+					<h3>Segment Buckets</h3>
+					<div class="bucket" data-bucket="1">
+						<h4>Segment Bucket 1</h4>
+						<ul id="bucket-list-1" class="bucket-list"></ul>
+						<p id="bucket-empty-1" class="bucket-empty">No benefits assigned yet.</p>
+					</div>
+					<div class="bucket" data-bucket="2">
+						<h4>Segment Bucket 2</h4>
+						<ul id="bucket-list-2" class="bucket-list"></ul>
+						<p id="bucket-empty-2" class="bucket-empty">No benefits assigned yet.</p>
+					</div>
+					<div class="bucket" data-bucket="3">
+						<h4>Segment Bucket 3</h4>
+						<ul id="bucket-list-3" class="bucket-list"></ul>
+						<p id="bucket-empty-3" class="bucket-empty">No benefits assigned yet.</p>
+					</div>
+				</div>
+			</div>
+			<div id="contradiction-box" class="contradiction-box">
+				Contradiction check: no incompatible benefit groupings detected.
+			</div>
+		</section>
+
+		<section class="panel" aria-labelledby="panel-c-title">
+			<h2 id="panel-c-title">3) Segment Profile Builder with Completeness Score</h2>
+			<div class="profile-grid">
+				<div class="profile-column">
+					<label>
+						Core Need Statement
+						<textarea id="core-need" placeholder="Example: Need reliable, low-risk returns while preserving flexibility."></textarea>
+					</label>
+
+					<div>
+						<label>Demographic identifiers</label>
+						<div class="token-builder">
+							<input id="demo-input" type="text" placeholder="Add one demographic attribute">
+							<button id="demo-add" type="button">Add</button>
+						</div>
+						<ul id="demo-tokens" class="tokens"></ul>
+					</div>
+
+					<div>
+						<label>Lifestyle/Psychographic identifiers</label>
+						<div class="token-builder">
+							<input id="psycho-input" type="text" placeholder="Add one lifestyle or psychographic attribute">
+							<button id="psycho-add" type="button">Add</button>
+						</div>
+						<ul id="psycho-tokens" class="tokens"></ul>
+					</div>
+
+					<div>
+						<label>Usage behavior identifiers</label>
+						<div class="token-builder">
+							<input id="usage-input" type="text" placeholder="Add one usage behavior attribute">
+							<button id="usage-add" type="button">Add</button>
+						</div>
+						<ul id="usage-tokens" class="tokens"></ul>
+					</div>
+				</div>
+
+				<div class="feedback-panel">
+					<h2>Output / Feedback</h2>
+					<div class="score-row">
+						<span>Completeness:</span>
+						<strong id="score-value">0%</strong>
+					</div>
+					<p id="score-summary"></p>
+					<p id="demographic-heavy"></p>
+					<p id="contradiction-status"></p>
+
+					<h3>What is strong</h3>
+					<ul id="strengths" class="feedback-list"></ul>
+
+					<h3>What is missing</h3>
+					<ul id="missing" class="feedback-list"></ul>
+
+					<h3>QA Checks</h3>
+					<ul id="qa-results" class="qa-list"></ul>
+				</div>
+			</div>
+		</section>
+			</div>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results Dashboard</h2>
+			<p class="results-dashboard__note">Use the completeness score, contradiction status, and QA checks in Panel 3 to confirm segment quality before entering quiz answers.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script src="script.js"></script>
+	<script>
+		(function initNeedsSegmentationBuilder() {
+			const DATA = {
+				"Athletic footwear": {
+					problem: "What shoes should I buy for training?",
+					benefits: [
+						"Maximum performance",
+						"Injury prevention",
+						"Style and brand",
+						"Best value",
+						"Comfort for all-day wear",
+						"Specialized surface traction"
+					]
+				},
+				"Financial planning": {
+					problem: "How should I invest my savings?",
+					benefits: [
+						"Maximize growth",
+						"Minimize tax burden",
+						"Safety with modest return",
+						"Income for retirement",
+						"Growth with acceptable risk",
+						"Simplicity and low fees"
+					]
+				},
+				"Meal delivery": {
+					problem: "How do I get good food without cooking?",
+					benefits: [
+						"Fastest possible delivery",
+						"Healthy and nutritious",
+						"Lowest cost per meal",
+						"Restaurant-quality experience",
+						"Dietary restriction compliance",
+						"Family portion sizing"
+					]
+				},
+				"Project management software": {
+					problem: "How do I keep my team on track?",
+					benefits: [
+						"Reduce missed deadlines",
+						"Minimize team communication overhead",
+						"Integrate with existing tools",
+						"Lowest cost",
+						"Easiest onboarding",
+						"Executive visibility and reporting"
+					]
+				}
+			};
+
+			const CONTRADICTIONS = [
+				["Maximum performance", "Best value"],
+				["Fastest possible delivery", "Restaurant-quality experience"]
+			];
+
+			const state = {
+				currentCategory: "Athletic footwear",
+				assignments: {},
+				demographics: [],
+				psychographics: [],
+				usage: []
+			};
+
+			const els = {
+				categorySelect: document.querySelector("#category-select"),
+				customerProblem: document.querySelector("#customer-problem"),
+				benefitPreview: document.querySelector("#benefit-preview"),
+				benefitSource: document.querySelector("#benefit-source"),
+				contradictionBox: document.querySelector("#contradiction-box"),
+				contradictionStatus: document.querySelector("#contradiction-status"),
+				coreNeed: document.querySelector("#core-need"),
+				demoInput: document.querySelector("#demo-input"),
+				psychoInput: document.querySelector("#psycho-input"),
+				usageInput: document.querySelector("#usage-input"),
+				demoAdd: document.querySelector("#demo-add"),
+				psychoAdd: document.querySelector("#psycho-add"),
+				usageAdd: document.querySelector("#usage-add"),
+				demoTokens: document.querySelector("#demo-tokens"),
+				psychoTokens: document.querySelector("#psycho-tokens"),
+				usageTokens: document.querySelector("#usage-tokens"),
+				scoreValue: document.querySelector("#score-value"),
+				scoreSummary: document.querySelector("#score-summary"),
+				demographicHeavy: document.querySelector("#demographic-heavy"),
+				strengths: document.querySelector("#strengths"),
+				missing: document.querySelector("#missing"),
+				qaResults: document.querySelector("#qa-results")
+			};
+
+			function scoreProfile(profile) {
+				const coreNeedPresent = profile.coreNeed.trim().length > 0;
+				const demoCount = Math.min(profile.demographics.length, 3);
+				const psychoCount = Math.min(profile.psychographics.length, 3);
+				const usageCount = Math.min(profile.usage.length, 3);
+
+				let score = 0;
+				if (coreNeedPresent) {
+					score += 20;
+				}
+				score += demoCount * 5;
+				score += psychoCount * 5;
+				score += usageCount * 10;
+
+				const hasDemo = profile.demographics.length > 0;
+				const hasPsycho = profile.psychographics.length > 0;
+				const hasUsage = profile.usage.length > 0;
+				const demographicsOnly = hasDemo && !hasPsycho && !hasUsage;
+
+				if (demographicsOnly) {
+					score = Math.min(score, 60);
+				}
+
+				return {
+					score,
+					coreNeedPresent,
+					demoCount,
+					psychoCount,
+					usageCount,
+					demographicsOnly
+				};
+			}
+
+			function tokenize(listEl, values, group) {
+				listEl.innerHTML = "";
+				if (values.length === 0) {
+					const li = document.createElement("li");
+					li.textContent = "No identifiers added yet.";
+					li.style.color = "#4f6553";
+					li.style.fontSize = "0.85rem";
+					listEl.appendChild(li);
+					return;
+				}
+
+				values.forEach(function eachToken(value, index) {
+					const li = document.createElement("li");
+					li.className = "token";
+					li.textContent = value;
+
+					const remove = document.createElement("button");
+					remove.type = "button";
+					remove.textContent = "Remove";
+					remove.addEventListener("click", function removeToken() {
+						state[group].splice(index, 1);
+						updateAll();
+					});
+
+					li.appendChild(remove);
+					listEl.appendChild(li);
+				});
+			}
+
+			function addIdentifier(group, inputEl) {
+				const value = inputEl.value.trim();
+				if (!value) {
+					return;
+				}
+				state[group].push(value);
+				inputEl.value = "";
+				updateAll();
+			}
+
+			function resetAssignmentsForCategory(categoryName) {
+				state.assignments = {};
+				DATA[categoryName].benefits.forEach(function eachBenefit(benefit) {
+					state.assignments[benefit] = 0;
+				});
+			}
+
+			function bucketsFromAssignments() {
+				const buckets = { 1: [], 2: [], 3: [] };
+				Object.keys(state.assignments).forEach(function each(benefit) {
+					const bucket = state.assignments[benefit];
+					if (bucket >= 1 && bucket <= 3) {
+						buckets[bucket].push(benefit);
+					}
+				});
+				return buckets;
+			}
+
+			function contradictionMessages(buckets) {
+				const messages = [];
+				[1, 2, 3].forEach(function eachBucket(bucketId) {
+					const items = buckets[bucketId];
+					CONTRADICTIONS.forEach(function checkPair(pair) {
+						if (items.includes(pair[0]) && items.includes(pair[1])) {
+							messages.push(
+								"Bucket " + bucketId + " mixes incompatible needs: '" + pair[0] + "' and '" + pair[1] +
+								"'. This segment may combine customers with conflicting priorities."
+							);
+						}
+					});
+				});
+				return messages;
+			}
+
+			function renderBuckets() {
+				const buckets = bucketsFromAssignments();
+
+				[1, 2, 3].forEach(function renderBucket(id) {
+					const list = document.querySelector("#bucket-list-" + id);
+					const empty = document.querySelector("#bucket-empty-" + id);
+					list.innerHTML = "";
+
+					if (buckets[id].length === 0) {
+						empty.hidden = false;
+						return;
+					}
+
+					empty.hidden = true;
+					buckets[id].forEach(function eachBenefit(benefit) {
+						const li = document.createElement("li");
+						li.textContent = benefit;
+						list.appendChild(li);
+					});
+				});
+
+				const contradictions = contradictionMessages(buckets);
+				if (contradictions.length > 0) {
+					els.contradictionBox.textContent = contradictions.join(" ");
+					els.contradictionStatus.textContent = "Contradictions exist: yes. Re-check segment logic for incompatible needs.";
+				} else {
+					els.contradictionBox.textContent = "Contradiction check: no incompatible benefit groupings detected.";
+					els.contradictionStatus.textContent = "Contradictions exist: no.";
+				}
+
+				return contradictions;
+			}
+
+			function createCard(benefit) {
+				const card = document.createElement("article");
+				card.className = "benefit-card";
+				card.draggable = true;
+				card.dataset.benefit = benefit;
+
+				const text = document.createElement("p");
+				text.textContent = benefit;
+
+				const assignLabel = document.createElement("label");
+				assignLabel.textContent = "Assign to";
+
+				const assignSelect = document.createElement("select");
+				assignSelect.innerHTML = [
+					'<option value="0">Unassigned</option>',
+					'<option value="1">Segment Bucket 1</option>',
+					'<option value="2">Segment Bucket 2</option>',
+					'<option value="3">Segment Bucket 3</option>'
+				].join("");
+				assignSelect.value = String(state.assignments[benefit]);
+				assignSelect.addEventListener("change", function onAssign(event) {
+					state.assignments[benefit] = Number(event.target.value);
+					renderBuckets();
+					updateFeedbackOnly();
+				});
+
+				card.addEventListener("dragstart", function onDragStart(event) {
+					event.dataTransfer.setData("text/plain", benefit);
+				});
+
+				assignLabel.appendChild(assignSelect);
+				card.appendChild(text);
+				card.appendChild(assignLabel);
+				return card;
+			}
+
+			function renderCards() {
+				els.benefitSource.innerHTML = "";
+				DATA[state.currentCategory].benefits.forEach(function eachBenefit(benefit) {
+					els.benefitSource.appendChild(createCard(benefit));
+				});
+			}
+
+			function renderCategoryPanel() {
+				const selected = DATA[state.currentCategory];
+				els.customerProblem.textContent = selected.problem;
+				els.benefitPreview.innerHTML = "";
+				selected.benefits.forEach(function eachBenefit(item) {
+					const li = document.createElement("li");
+					li.textContent = item;
+					els.benefitPreview.appendChild(li);
+				});
+			}
+
+			function buildFeedback(scoreData, contradictions) {
+				const strengths = [];
+				const missing = [];
+
+				if (scoreData.coreNeedPresent) {
+					strengths.push("Core need is clearly stated.");
+				} else {
+					missing.push("Add a core need statement (+20 points). ");
+				}
+
+				if (scoreData.demoCount > 0) {
+					strengths.push("Demographics included (" + scoreData.demoCount + " counted toward score). ");
+				} else {
+					missing.push("Add at least one demographic identifier.");
+				}
+
+				if (scoreData.psychoCount > 0) {
+					strengths.push("Lifestyle/psychographic dimensions are present.");
+				} else {
+					missing.push("Add lifestyle/psychographic identifiers to avoid demographic-only thinking.");
+				}
+
+				if (scoreData.usageCount > 0) {
+					strengths.push("Usage behavior data is included.");
+				} else {
+					missing.push("Add usage behavior identifiers to strengthen segment usefulness.");
+				}
+
+				if (contradictions.length > 0) {
+					missing.push("Resolve contradiction warnings in segment buckets.");
+				} else {
+					strengths.push("Benefit buckets avoid required contradiction pairs.");
+				}
+
+				if (scoreData.demographicsOnly) {
+					els.demographicHeavy.textContent =
+						"Demographic-heavy profile: yes. Score is capped at 60 until lifestyle/psychographic or usage behavior is added.";
+				} else {
+					els.demographicHeavy.textContent =
+						"Demographic-heavy profile: no. Profile includes more than demographic descriptors.";
+				}
+
+				els.scoreSummary.textContent =
+					"Scoring detail: Core need " + (scoreData.coreNeedPresent ? "20" : "0") +
+					", Demographics " + (scoreData.demoCount * 5) +
+					", Lifestyle/Psychographic " + (scoreData.psychoCount * 5) +
+					", Usage Behavior " + (scoreData.usageCount * 10) +
+					(scoreData.demographicsOnly ? ". Demographics-only cap applied (max 60)." : ".");
+
+				els.strengths.innerHTML = "";
+				strengths.forEach(function each(item) {
+					const li = document.createElement("li");
+					li.textContent = item;
+					els.strengths.appendChild(li);
+				});
+
+				els.missing.innerHTML = "";
+				missing.forEach(function each(item) {
+					const li = document.createElement("li");
+					li.textContent = item;
+					els.missing.appendChild(li);
+				});
+			}
+
+			function runQATests() {
+				const testResults = [];
+
+				const t1 = scoreProfile({
+					coreNeed: "Need value and convenience",
+					demographics: ["Age 25-34", "Urban", "Middle income"],
+					psychographics: [],
+					usage: []
+				});
+				testResults.push({
+					label: "Demographics-only profile caps at 60",
+					pass: t1.score <= 60
+				});
+
+				const t2Buckets = { 1: ["Maximum performance", "Best value"], 2: [], 3: [] };
+				const t2 = contradictionMessages(t2Buckets);
+				testResults.push({
+					label: "Maximum performance + Best value triggers contradiction",
+					pass: t2.length > 0
+				});
+
+				const t3Buckets = { 1: ["Fastest possible delivery", "Restaurant-quality experience"], 2: [], 3: [] };
+				const t3 = contradictionMessages(t3Buckets);
+				testResults.push({
+					label: "Fastest delivery + Restaurant-quality triggers contradiction",
+					pass: t3.length > 0
+				});
+
+				const t4Base = scoreProfile({
+					coreNeed: "Need low hassle meal decisions",
+					demographics: ["Young professional", "City"],
+					psychographics: [],
+					usage: []
+				}).score;
+				const t4Boost = scoreProfile({
+					coreNeed: "Need low hassle meal decisions",
+					demographics: ["Young professional", "City", "Mid income"],
+					psychographics: ["Health-driven", "Time-poor", "Convenience-first"],
+					usage: ["Orders 4x weekly", "Bulk Sunday prep", "Mobile app only"]
+				}).score;
+				testResults.push({
+					label: "Adding lifestyle + usage can exceed demographic-only cap",
+					pass: t4Boost > 60 && t4Boost > t4Base
+				});
+
+				els.qaResults.innerHTML = "";
+				testResults.forEach(function each(result) {
+					const li = document.createElement("li");
+					li.textContent = (result.pass ? "PASS: " : "FAIL: ") + result.label;
+					els.qaResults.appendChild(li);
+				});
+			}
+
+			function updateFeedbackOnly() {
+				const contradictions = contradictionMessages(bucketsFromAssignments());
+				const scoreData = scoreProfile({
+					coreNeed: els.coreNeed.value,
+					demographics: state.demographics,
+					psychographics: state.psychographics,
+					usage: state.usage
+				});
+
+				els.scoreValue.textContent = scoreData.score + "%";
+				buildFeedback(scoreData, contradictions);
+			}
+
+			function updateAll() {
+				renderTokenGroups();
+				renderCategoryPanel();
+				renderCards();
+				const contradictions = renderBuckets();
+
+				const scoreData = scoreProfile({
+					coreNeed: els.coreNeed.value,
+					demographics: state.demographics,
+					psychographics: state.psychographics,
+					usage: state.usage
+				});
+
+				els.scoreValue.textContent = scoreData.score + "%";
+				buildFeedback(scoreData, contradictions);
+				runQATests();
+			}
+
+			function wireCategory() {
+				Object.keys(DATA).forEach(function addOption(categoryName) {
+					const opt = document.createElement("option");
+					opt.value = categoryName;
+					opt.textContent = categoryName;
+					els.categorySelect.appendChild(opt);
+				});
+
+				els.categorySelect.value = state.currentCategory;
+				els.categorySelect.addEventListener("change", function onCategoryChange(event) {
+					state.currentCategory = event.target.value;
+					resetAssignmentsForCategory(state.currentCategory);
+					updateAll();
+				});
+			}
+
+			function wireDnd() {
+				const buckets = document.querySelectorAll(".bucket");
+				buckets.forEach(function eachBucket(bucketEl) {
+					bucketEl.addEventListener("dragover", function onDragOver(event) {
+						event.preventDefault();
+						bucketEl.classList.add("drag-over");
+					});
+
+					bucketEl.addEventListener("dragleave", function onDragLeave() {
+						bucketEl.classList.remove("drag-over");
+					});
+
+					bucketEl.addEventListener("drop", function onDrop(event) {
+						event.preventDefault();
+						bucketEl.classList.remove("drag-over");
+						const benefit = event.dataTransfer.getData("text/plain");
+						const bucketId = Number(bucketEl.dataset.bucket);
+						if (benefit && Object.prototype.hasOwnProperty.call(state.assignments, benefit)) {
+							state.assignments[benefit] = bucketId;
+							updateAll();
+						}
+					});
+				});
+			}
+
+			function wireProfileInputs() {
+				els.demoAdd.addEventListener("click", function onAddDemo() {
+					addIdentifier("demographics", els.demoInput);
+				});
+				els.psychoAdd.addEventListener("click", function onAddPsycho() {
+					addIdentifier("psychographics", els.psychoInput);
+				});
+				els.usageAdd.addEventListener("click", function onAddUsage() {
+					addIdentifier("usage", els.usageInput);
+				});
+
+				[
+					[els.demoInput, "demographics"],
+					[els.psychoInput, "psychographics"],
+					[els.usageInput, "usage"]
+				].forEach(function each(pair) {
+					pair[0].addEventListener("keydown", function onEnter(event) {
+						if (event.key === "Enter") {
+							event.preventDefault();
+							addIdentifier(pair[1], pair[0]);
+						}
+					});
+				});
+
+				els.coreNeed.addEventListener("input", updateFeedbackOnly);
+			}
+
+			function renderTokenGroups() {
+				tokenize(els.demoTokens, state.demographics, "demographics");
+				tokenize(els.psychoTokens, state.psychographics, "psychographics");
+				tokenize(els.usageTokens, state.usage, "usage");
+			}
+
+			resetAssignmentsForCategory(state.currentCategory);
+			wireCategory();
+			wireDnd();
+			wireProfileInputs();
+			updateAll();
+		})();
+	</script>
+</body>
+</html>

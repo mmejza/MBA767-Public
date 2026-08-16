@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>MKT 472 Module 4 - Conjoint Analysis CVI Simulator</title>
+	<link rel="stylesheet" href="styles.css" />
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+	<script src="script.js" defer></script>
+</head>
+<body>
+	<main class="app-shell" aria-labelledby="page-title">
+		<header class="card header-card compact-header">
+			<div>
+				<p class="module-kicker">MKT 472 Module 4</p>
+				<h1 id="page-title">Conjoint Analysis CVI Simulator</h1>
+				<p class="purpose-line">Use conjoint preference values to compare customer value versus profitability across two strategies.</p>
+			</div>
+			<div class="focus-controls">
+				<button id="focus-mode-btn" type="button" aria-label="Enter focus mode">Focus Mode</button>
+				<p id="focus-mode-status" class="focus-status" role="status" aria-live="polite">Focus mode off</p>
+			</div>
+		</header>
+
+		<section class="card learning-goal-card instructional-panel" aria-label="Learning goal">
+			<h2>Learning Goal</h2>
+			<p>
+				Identify how strategy design affects CVI and test whether the highest customer-value option is also the highest
+				profitability option. Use this to spot the value-margin paradox in conjoint decisions.
+			</p>
+		</section>
+
+		<section class="card instructional-panel" aria-label="How to use this app">
+			<details id="how-to-panel" class="how-to-details">
+				<summary aria-label="How to use this app">How to Use This App</summary>
+				<ol>
+					<li>Confirm the Silent Floor preset, then review each attribute’s preference levels.</li>
+					<li>Select levels for Strategy A and Strategy B and set each strategy price premium.</li>
+					<li>Read CVI values, value drivers, and the comparison flag in the dashboard.</li>
+					<li>Use preference and CVI charts to visualize why one strategy ranks higher.</li>
+				</ol>
+			</details>
+		</section>
+
+		<section class="card quiz-instructions instructional-panel" aria-label="Worksheet quiz instructions">
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Use this app to perform the required calculations.</li>
+				<li>Follow the required preset or scenario.</li>
+				<li>Record your final answers in the Canvas quiz questions below.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="card required-quiz-callout instructional-panel" aria-label="Required for quiz">
+			<h2>Required for Quiz</h2>
+			<p>Load the Silent Floor preset and begin with the default scenario before making modifications.</p>
+		</section>
+
+		<section class="main-interactive" aria-label="Main interactive app">
+			<section class="card control-card" aria-label="Preset controls">
+				<h2>Preset Controls</h2>
+				<div class="preset-row">
+					<label for="preset-select">Preset</label>
+					<select id="preset-select" aria-label="Preset selection">
+						<option value="silent-floor">Silent Floor</option>
+					</select>
+					<button id="apply-preset-btn" type="button" aria-label="Apply selected preset">Apply Preset</button>
+					<button id="reset-btn" type="button" aria-label="Reset simulator">Reset</button>
+				</div>
+			</section>
+
+			<section class="card" aria-label="Conjoint preference editor">
+				<h2>Editable Conjoint Preference Table</h2>
+				<div id="attribute-editor" class="attribute-editor"></div>
+			</section>
+
+			<section class="card" aria-label="Strategy setup">
+				<h2>Strategy Setup</h2>
+				<div class="strategy-grid">
+					<article class="strategy-card">
+						<h3>Strategy A</h3>
+						<div id="strategy-a-controls" class="strategy-controls"></div>
+						<label for="strategy-a-price">Strategy A Price Premium (%)</label>
+						<input id="strategy-a-price" type="number" min="0" max="100" step="5" aria-label="Strategy A price premium percent" />
+					</article>
+					<article class="strategy-card">
+						<h3>Strategy B</h3>
+						<div id="strategy-b-controls" class="strategy-controls"></div>
+						<label for="strategy-b-price">Strategy B Price Premium (%)</label>
+						<input id="strategy-b-price" type="number" min="0" max="100" step="5" aria-label="Strategy B price premium percent" />
+					</article>
+				</div>
+			</section>
+
+			<section class="card" aria-label="Preference curve charts">
+				<h2>Preference Curves</h2>
+				<div id="pref-chart-grid" class="pref-chart-grid"></div>
+			</section>
+		</section>
+
+		<section class="card" aria-label="CVI dashboard">
+			<h2>Decision Dashboard</h2>
+			<div class="dashboard-grid">
+				<article class="metric-card"><h3>CVI A</h3><p id="cvi-a">0.00</p></article>
+				<article class="metric-card"><h3>CVI B</h3><p id="cvi-b">0.00</p></article>
+				<article class="metric-card"><h3>Higher Customer-Value Strategy</h3><p id="higher-cvi">-</p></article>
+				<article class="metric-card"><h3>Higher Price-Premium Strategy</h3><p id="higher-price">-</p></article>
+				<article class="metric-card"><h3>Do Rankings Match?</h3><p id="ranking-match">-</p></article>
+			</div>
+
+			<div class="value-drivers">
+				<p id="value-driver-a">Value driver: -</p>
+				<p id="value-driver-b">Value driver: -</p>
+			</div>
+
+			<div id="profitability-flag" class="callout" role="status" aria-live="polite"></div>
+			<div id="interpretation" class="interpretation" role="status" aria-live="polite"></div>
+		</section>
+
+		<section class="card" aria-label="CVI comparison chart">
+			<h2>CVI Comparison</h2>
+			<div class="cvi-chart-wrap">
+				<canvas id="cvi-chart" aria-label="Horizontal bar chart comparing CVI for Strategy A and Strategy B"></canvas>
+			</div>
+			<p id="cvi-chart-note" class="chart-note" role="status" aria-live="polite"></p>
+			<p id="cvi-chart-summary" class="chart-summary" role="status" aria-live="polite"></p>
+		</section>
+
+		<section class="card canvas-reminder instructional-panel" aria-label="Canvas submission reminder">
+			<p>
+				Submit final answers through Canvas quiz questions below the app.
+			</p>
+		</section>
+	</main>
+</body>
+</html>

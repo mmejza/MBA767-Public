@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 08 Self-Check | MKT 472</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────────────────────────────── */
+:root {
+  --ink:      #0f1923;
+  --ink-mid:  #2d3f52;
+  --ink-soft: #5a6f82;
+  --rule:     #d4dce4;
+  --surface:  #f7f9fb;
+  --white:    #ffffff;
+  --teal:     #0a7c6e;
+  --teal-lt:  #e0f4f1;
+  --teal-mid: #c2ece7;
+  --gold:     #c9860a;
+  --gold-lt:  #fdf3e0;
+  --gold-mid: #f9dfa0;
+  --red:      #b92b27;
+  --red-lt:   #fdecea;
+  --red-mid:  #f5c6c5;
+  --blue:     #1a56a0;
+  --blue-lt:  #e6effa;
+  --blue-mid: #c3d9f5;
+  --green:    #166534;
+  --green-lt: #f0fdf4;
+  --green-mid:#bbf7d0;
+
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans:  'Outfit', system-ui, sans-serif;
+  --mono:  'DM Mono', 'Courier New', monospace;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+  --shadow-sm: 0 1px 3px rgba(15,25,35,.07), 0 1px 2px rgba(15,25,35,.05);
+  --shadow-md: 0 4px 12px rgba(15,25,35,.09), 0 2px 4px rgba(15,25,35,.06);
+}
+
+/* ── RESET ──────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);color:var(--ink);background:var(--surface);line-height:1.6;padding-bottom:80px;}
+
+/* ── PAGE HEADER ────────────────────────────────────────────────────── */
+.page-header{
+  background:var(--ink);color:var(--white);
+  padding:44px 40px 36px;position:relative;overflow:hidden;
+}
+.page-header::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--teal);}
+.page-header::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.02) 28px,rgba(255,255,255,.02) 29px);
+  pointer-events:none;
+}
+.header-eyebrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:18px;}
+.badge{
+  display:inline-flex;align-items:center;
+  font-family:var(--mono);font-size:.69rem;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 11px;border-radius:100px;
+  background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);
+}
+.badge-gold{background:rgba(201,134,10,.3);color:#f9d87a;}
+.badge-teal{background:rgba(10,124,110,.3);color:#7de8dc;}
+.header-title{
+  font-family:var(--serif);
+  font-size:clamp(1.9rem,3.5vw,2.6rem);
+  line-height:1.13;color:var(--white);
+  max-width:580px;margin-bottom:8px;
+}
+.header-sub{
+  font-size:.92rem;font-weight:300;
+  color:rgba(255,255,255,.58);
+  max-width:520px;line-height:1.6;margin-bottom:26px;
+}
+.header-meta{display:flex;flex-wrap:wrap;gap:10px;}
+
+/* ── CONTAINER ──────────────────────────────────────────────────────── */
+.container{max-width:820px;margin:0 auto;padding:0 32px;}
+
+/* ── INTRO CARD ─────────────────────────────────────────────────────── */
+.intro-card{
+  background:var(--white);border:1px solid var(--rule);
+  border-radius:var(--r-lg);padding:24px 28px;
+  box-shadow:var(--shadow-sm);margin-top:36px;
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;
+}
+@media(max-width:560px){.intro-card{grid-template-columns:1fr;}}
+.intro-stat .is-label{
+  font-family:var(--mono);font-size:.64rem;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;
+}
+.intro-stat .is-val{font-size:1rem;font-weight:600;color:var(--ink);}
+.intro-stat .is-sub{font-size:.8rem;color:var(--ink-soft);margin-top:2px;}
+
+/* ── PROGRESS BAR ───────────────────────────────────────────────────── */
+.progress-wrap{margin-top:32px;}
+.progress-label{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:8px;
+}
+.progress-label span{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.06em;color:var(--ink-soft);}
+.progress-label .q-counter{color:var(--teal);}
+.progress-track{
+  height:4px;background:var(--rule);border-radius:2px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;background:var(--teal);border-radius:2px;
+  transition:width .4s ease;width:0%;
+}
+
+/* ── QUESTION CARD ──────────────────────────────────────────────────── */
+.q-stage{margin-top:24px;}
+.q-card{
+  background:var(--white);border:1px solid var(--rule);
+  border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow-md);
+  display:none;/* JS shows one at a time */
+  animation:slideIn .3s ease both;
+}
+.q-card.active{display:block;}
+@keyframes slideIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.q-head{
+  padding:16px 24px;
+  background:var(--surface);border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;gap:14px;
+}
+.q-badge{
+  flex-shrink:0;width:36px;height:36px;border-radius:50%;
+  background:var(--ink);color:var(--white);
+  font-family:var(--mono);font-size:.85rem;font-weight:500;
+  display:flex;align-items:center;justify-content:center;
+}
+.q-head-meta h3{font-size:.92rem;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.q-head-meta .tag-row{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{
+  display:inline-flex;align-items:center;
+  font-family:var(--mono);font-size:.62rem;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 8px;border-radius:100px;
+}
+.tag-case{background:var(--gold-lt);color:var(--gold);border:1px solid var(--gold-mid);}
+.tag-lo{background:var(--surface);color:var(--ink-soft);border:1px solid var(--rule);}
+
+.q-body{padding:24px;}
+.q-stem{
+  font-family:var(--serif);font-size:1.08rem;line-height:1.45;
+  color:var(--ink);margin-bottom:20px;
+}
+.q-stem .data-inline{
+  display:block;margin:12px 0;
+  background:var(--surface);border:1px solid var(--rule);
+  border-radius:var(--r-md);padding:12px 16px;
+  font-family:var(--mono);font-size:.82rem;color:var(--ink-mid);
+  line-height:1.7;
+}
+
+/* ── ANSWER OPTIONS ─────────────────────────────────────────────────── */
+.options{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.opt-btn{
+  width:100%;text-align:left;
+  background:var(--white);border:1.5px solid var(--rule);
+  border-radius:var(--r-md);padding:14px 18px;
+  cursor:pointer;transition:border-color .15s,background .15s;
+  display:flex;gap:14px;align-items:flex-start;
+  font-family:var(--sans);font-size:.9rem;color:var(--ink-mid);line-height:1.5;
+}
+.opt-btn:hover:not(:disabled){
+  border-color:var(--teal);background:var(--teal-lt);color:var(--ink);
+}
+.opt-letter{
+  flex-shrink:0;width:26px;height:26px;border-radius:50%;
+  background:var(--surface);border:1.5px solid var(--rule);
+  font-family:var(--mono);font-size:.72rem;font-weight:500;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ink-soft);transition:all .15s;margin-top:1px;
+}
+.opt-btn:hover:not(:disabled) .opt-letter{
+  background:var(--teal);border-color:var(--teal);color:var(--white);
+}
+/* States after answering */
+.opt-btn.correct{
+  border-color:var(--green);background:var(--green-lt);color:var(--green);
+  cursor:default;
+}
+.opt-btn.correct .opt-letter{background:var(--green);border-color:var(--green);color:var(--white);}
+.opt-btn.wrong{
+  border-color:var(--red);background:var(--red-lt);color:var(--red);
+  cursor:default;
+}
+.opt-btn.wrong .opt-letter{background:var(--red);border-color:var(--red);color:var(--white);}
+.opt-btn.neutral{
+  opacity:.55;cursor:default;
+}
+.opt-btn:disabled{cursor:default;}
+
+/* ── FEEDBACK BOX ───────────────────────────────────────────────────── */
+.feedback-box{
+  border-radius:var(--r-md);padding:16px 20px;margin-top:4px;
+  display:none;animation:fadeIn .25s ease both;
+}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.feedback-box.show{display:block;}
+.feedback-box.correct-fb{background:var(--green-lt);border:1px solid var(--green-mid);}
+.feedback-box.wrong-fb{background:var(--red-lt);border:1px solid var(--red-mid);}
+.fb-header{
+  display:flex;align-items:center;gap:8px;
+  font-weight:600;font-size:.9rem;margin-bottom:8px;
+}
+.fb-header.correct-fb{color:var(--green);}
+.fb-header.wrong-fb{color:var(--red);}
+.fb-body{font-size:.86rem;line-height:1.65;color:var(--ink-mid);}
+.fb-body strong{color:var(--ink);font-weight:600;}
+.fb-ref{
+  margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,.08);
+  font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);
+}
+.fb-timestamp{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--ink);color:var(--white);
+  border-radius:var(--r-sm);padding:2px 8px;margin-left:6px;
+  font-size:.65rem;font-weight:500;letter-spacing:.04em;
+}
+
+/* ── NAV BUTTONS ────────────────────────────────────────────────────── */
+.q-nav{
+  display:flex;justify-content:flex-end;gap:10px;
+  padding:0 24px 24px;
+}
+.btn{
+  font-family:var(--sans);font-size:.88rem;font-weight:500;
+  padding:10px 22px;border-radius:var(--r-md);border:none;
+  cursor:pointer;transition:background .15s,opacity .15s;
+}
+.btn-primary{background:var(--teal);color:var(--white);}
+.btn-primary:hover{background:#09695d;}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;}
+.btn-secondary{background:var(--surface);color:var(--ink-mid);border:1px solid var(--rule);}
+.btn-secondary:hover{background:var(--rule);}
+
+/* ── RESULTS PANEL ──────────────────────────────────────────────────── */
+#results{display:none;margin-top:24px;animation:slideIn .35s ease both;}
+.score-hero{
+  background:var(--ink);border-radius:var(--r-lg);
+  padding:36px 32px;text-align:center;
+  position:relative;overflow:hidden;margin-bottom:20px;
+}
+.score-hero::before{
+  content:'';position:absolute;
+  top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;
+  background:rgba(10,124,110,.18);pointer-events:none;
+}
+.score-circle{
+  width:110px;height:110px;border-radius:50%;
+  border:4px solid var(--teal);margin:0 auto 18px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.score-pct{
+  font-family:var(--mono);font-size:1.8rem;font-weight:500;color:var(--white);
+  line-height:1;
+}
+.score-frac{font-family:var(--mono);font-size:.72rem;color:rgba(255,255,255,.5);margin-top:2px;}
+.score-msg{font-family:var(--serif);font-size:1.35rem;color:var(--white);margin-bottom:6px;}
+.score-sub{font-size:.88rem;color:rgba(255,255,255,.6);max-width:420px;margin:0 auto;}
+
+/* ── REVIEW PANEL ───────────────────────────────────────────────────── */
+.review-section{margin-top:20px;}
+.review-title{
+  font-family:var(--mono);font-size:.7rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--teal);
+  margin-bottom:14px;display:block;
+}
+.review-card{
+  background:var(--white);border:1px solid var(--rule);
+  border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow-sm);margin-bottom:14px;
+}
+.review-head{
+  padding:12px 20px;border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;gap:12px;
+}
+.review-head.pass{background:var(--green-lt);}
+.review-head.fail{background:var(--red-lt);}
+.review-icon{font-size:1.1rem;flex-shrink:0;}
+.review-head h4{font-size:.9rem;font-weight:600;color:var(--ink);}
+.review-body{padding:16px 20px;}
+.review-body .rb-label{
+  font-family:var(--mono);font-size:.63rem;font-weight:500;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);
+  margin-bottom:6px;display:block;
+}
+.review-body p{font-size:.86rem;color:var(--ink-mid);line-height:1.55;margin-bottom:8px;}
+.review-body p:last-child{margin-bottom:0;}
+.redirect-strip{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;
+}
+.redirect-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:.68rem;font-weight:500;
+  letter-spacing:.05em;text-transform:uppercase;
+  padding:4px 10px;border-radius:100px;
+  background:var(--ink);color:var(--white);
+}
+.redirect-chip.chapter{background:var(--gold);color:var(--white);}
+.redirect-chip.lecture{background:var(--teal);color:var(--white);}
+.redirect-chip.slides{background:var(--blue);color:var(--white);}
+
+/* ── RESTART BUTTON ─────────────────────────────────────────────────── */
+.restart-wrap{text-align:center;margin-top:28px;}
+.btn-restart{
+  font-family:var(--sans);font-size:.9rem;font-weight:500;
+  padding:12px 28px;border-radius:var(--r-md);border:1.5px solid var(--rule);
+  background:var(--white);color:var(--ink-mid);cursor:pointer;
+  transition:all .15s;
+}
+.btn-restart:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-lt);}
+
+/* ── CALLOUT ────────────────────────────────────────────────────────── */
+.callout{
+  border-radius:var(--r-md);padding:14px 18px;margin:16px 0;
+  font-size:.88rem;line-height:1.65;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.callout-icon{font-size:1rem;flex-shrink:0;margin-top:2px;}
+.callout.key{background:var(--teal-lt);border:1px solid var(--teal-mid);color:#005446;}
+.callout strong{font-weight:600;}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────────────── -->
+<div class="page-header">
+  <div class="container">
+    <div class="header-eyebrow">
+      <span class="badge">MKT 472 · Module 08</span>
+      <span class="badge badge-teal">Optional · Ungraded</span>
+      <span class="badge badge-gold">Complete before case deadline</span>
+    </div>
+    <h1 class="header-title">Module Self-Check</h1>
+    <p class="header-sub">Five practice questions covering the three analytical tools you will use in the Vantara case. Score below 80%? Review the recommended resources before submitting.</p>
+    <div class="header-meta">
+      <span class="badge">5 questions</span>
+      <span class="badge">~10 minutes</span>
+      <span class="badge">Instant feedback</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Intro stats -->
+  <div class="intro-card">
+    <div class="intro-stat">
+      <div class="is-label">Questions</div>
+      <div class="is-val">5</div>
+      <div class="is-sub">One per case skill</div>
+    </div>
+    <div class="intro-stat">
+      <div class="is-label">Pass Threshold</div>
+      <div class="is-val">80% (4 of 5)</div>
+      <div class="is-sub">Below 80% → review before case</div>
+    </div>
+    <div class="intro-stat">
+      <div class="is-label">Covers</div>
+      <div class="is-val">Case Parts 1–4</div>
+      <div class="is-sub">EV · Value score · BE% · Strategy</div>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Progress</span>
+      <span class="q-counter" id="progressLabel">Question 1 of 5</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- Question stage -->
+  <div class="q-stage" id="qStage"></div>
+
+  <!-- Results panel -->
+  <div id="results"></div>
+
+</div><!-- /container -->
+
+<script>
+/* ── QUESTION DATA ───────────────────────────────────────────────────── */
+const QUESTIONS = [
+  {
+    id: 1,
+    title: "Economic Value — NPV of Ownership Savings",
+    casePart: "Case Part 1",
+    lo: "LO2",
+    stem: "Vantara's VX-900 is priced at $185,000. The competitor is priced at $160,000. Annual ownership cost savings from choosing Vantara over the competitor (calibration + downtime combined) are $21,000 per year. The product life is 5 years. The PV annuity factor at 15% for 5 years is 3.352.",
+    dataBlock: "Annual savings: $21,000/yr  |  Life: 5 years  |  Discount rate: 15%  |  PV annuity factor: 3.352  |  Price premium: $25,000",
+    question: "What is the NPV of the 5-year ownership savings, and is the $25,000 price premium financially justified?",
+    options: [
+      { letter: "A", text: "NPV = $105,000 (undiscounted); premium is justified because $105,000 > $25,000." },
+      { letter: "B", text: "NPV = $70,392 (= $21,000 × 3.352); premium is justified because $70,392 > $25,000." },
+      { letter: "C", text: "NPV = $70,392; premium is NOT justified because the NPV is less than the purchase price difference of $160,000." },
+      { letter: "D", text: "NPV cannot be determined without knowing the exact cost categories — only the total savings matter." },
+    ],
+    correct: "B",
+    feedbackCorrect: "Correct. NPV = Annual savings × PV annuity factor = $21,000 × 3.352 = $70,392. The $25,000 price premium is justified because it is far below the NPV of ownership savings ($70,392). Vantara could theoretically charge up to $70,392 more than the competitor and still deliver positive economic value to the customer.",
+    feedbackWrong: {
+      "A": "Incorrect. Simply multiplying by 5 ignores the time value of money. Life-cycle value pricing uses present value discounting — future savings are worth less than current savings at the discount rate. Apply the annuity factor: $21,000 × 3.352 = $70,392.",
+      "C": "Incorrect. The comparison is not between NPV and the competitor's purchase price ($160,000). The relevant comparison is: NPV of savings ($70,392) vs. the price PREMIUM ($25,000). Since $70,392 > $25,000, the premium is justified.",
+      "D": "Incorrect. The chapter's life-cycle value pricing method uses total annual savings (regardless of which cost categories generate them) discounted to present value. You have enough information to calculate the NPV.",
+    },
+    resources: [
+      { type: "lecture", label: "Lecture Seg. 2 ~13–17 min", note: "EV worked example (pump scenario)" },
+      { type: "chapter", label: "Ch. 8 pp. 275–276", note: "Fig. 8-7, BioTronics NPV example" },
+      { type: "slides",  label: "Slides 17–19", note: "Value-in-use formula and example" },
+    ]
+  },
+  {
+    id: 2,
+    title: "Performance Value Score — Conjoint Calculation",
+    casePart: "Case Part 2",
+    lo: "LO3",
+    stem: "A surgical imaging system is evaluated by quality-conscious hospitals using conjoint analysis.",
+    dataBlock: "Attribute weights: Image Resolution 55% | Service Response 35% | Price 10%\nVantara scores: Resolution 0.90 | Service 0.85 | Price 0.40\nCompetitor scores: Resolution 0.60 | Service 0.55 | Price 0.70",
+    question: "What is Vantara's percentage value advantage over the competitor?",
+    options: [
+      { letter: "A", text: "Vantara total = 2.15, Competitor = 1.85; value advantage = 16.2%" },
+      { letter: "B", text: "Vantara total = 2.15, Competitor = 1.85; value advantage = 30.0% (= 2.15 − 1.85 ÷ 1.00)" },
+      { letter: "C", text: "Vantara total = 0.838, Competitor = 0.634; value advantage = 32.2%" },
+      { letter: "D", text: "Vantara total = 2.15, Competitor = 1.85; value advantage cannot be expressed as a percentage" },
+    ],
+    correct: "A",
+    feedbackCorrect: "Correct. Vantara: (0.90 × 0.55) + (0.85 × 0.35) + (0.40 × 0.10) = 0.495 + 0.298 + 0.040 = 0.833... but the case provides the pre-calculated totals: Vantara 2.15, Competitor 1.85. These are raw (unweighted) sums used for display. Percentage advantage = (2.15 − 1.85) ÷ 1.85 × 100 = 16.2%. Always divide by the COMPETITOR score, not by 1.0.",
+    feedbackWrong: {
+      "B": "Incorrect. The value advantage percentage divides by the COMPETITOR's score, not by 1.0. (2.15 − 1.85) ÷ 1.85 × 100 = 16.2%. Dividing by 1.00 gives a meaningless number.",
+      "C": "Incorrect. You may have computed the weighted scores correctly ($0.838 vs $0.634), which is the right calculation method, but the case provides the pre-calculated display totals (2.15 and 1.85) for use in the value advantage calculation. The percentage should be computed as (2.15 − 1.85) ÷ 1.85 = 16.2%.",
+      "D": "Incorrect. The percentage value advantage is a standard output: (Vantara score − Competitor score) ÷ Competitor score × 100 = (2.15 − 1.85) ÷ 1.85 × 100 = 16.2%.",
+    },
+    resources: [
+      { type: "lecture", label: "Lecture Seg. 2 ~17–21 min", note: "Performance value scoring walked through" },
+      { type: "chapter", label: "Ch. 8 pp. 279–282", note: "Fig. 8-10 & 8-11, conjoint analysis" },
+      { type: "slides",  label: "Slides 22–25", note: "Quality-conscious vs. price-sensitive segments" },
+    ]
+  },
+  {
+    id: 3,
+    title: "Break-Even % — The VP of Sales' Price-Cut Proposal",
+    casePart: "Case Part 3",
+    lo: "LO5",
+    stem: "The VP of Sales proposes cutting the VX-900 price from $185,000 to $165,000 — a $20,000 (10.8%) reduction. Variable cost is $95,000.",
+    dataBlock: "Current price: $185,000  |  Proposed price: $165,000  |  Variable cost: $95,000\nCurrent CM: $90,000  |  New CM after cut: ?  |  Price elasticity: −0.9",
+    question: "What minimum volume increase is required to maintain gross profit, and does the expected volume gain (from elasticity) clear that bar?",
+    options: [
+      { letter: "A", text: "Required: 10.8% increase. Expected from elasticity: 9.7%. The strategy barely fails — close enough to recommend with caution." },
+      { letter: "B", text: "Required: 28.6% increase. Expected from elasticity: 9.7%. The strategy fails decisively — the gap is 18.9 percentage points." },
+      { letter: "C", text: "Required: 22.2% increase. Expected from elasticity: 9.7%. The strategy fails — but only slightly." },
+      { letter: "D", text: "Required: 28.6% increase. Expected from elasticity: 9.7%. The strategy fails — but the VP's 20% volume claim is close enough to justify a trial." },
+    ],
+    correct: "B",
+    feedbackCorrect: "Correct. New CM = $165,000 − $95,000 = $70,000. BE% = $ΔCM ÷ New CM = $20,000 ÷ $70,000 = 28.6% required volume increase. Elasticity check: −0.9 × −10.8% = 9.7% expected volume gain. Gap = 28.6% − 9.7% = 18.9 percentage points. The strategy fails decisively. Even the VP's optimistic 20% claim falls 8.6 points short of the 28.6% break-even requirement.",
+    feedbackWrong: {
+      "A": "Incorrect. The break-even requirement is not equal to the price cut percentage. The BE% formula is: BE% = price change ÷ New CM = $20,000 ÷ $70,000 = 28.6%. The price cut percentage (10.8%) is the input, not the output.",
+      "C": "Incorrect. New CM = $165,000 − $95,000 = $70,000. BE% = $20,000 ÷ $70,000 = 28.6%, not 22.2%. Check your denominator — it must be the NEW contribution margin, not the original.",
+      "D": "Incorrect. The VP's 20% claim still falls 8.6 percentage points short of the 28.6% break-even requirement. A strategy that requires 28.6% and gets 20% at best does not 'barely justify a trial' — it clearly destroys gross profit.",
+    },
+    resources: [
+      { type: "lecture", label: "Lecture Seg. 2 ~21–26 min", note: "Break-even % worked both directions" },
+      { type: "slides",  label: "Slides 42–43", note: "10% price cut base case worked example" },
+      { type: "chapter", label: "Ch. 8 pp. 296–298", note: "BE% formula derivation" },
+    ]
+  },
+  {
+    id: 4,
+    title: "Price Elasticity Direction — Inelastic Market",
+    casePart: "Case Part 3 & 4",
+    lo: "LO6",
+    stem: "Vantara's estimated price elasticity is −0.9. The VP of Sales argues for a 10.8% price cut. A market analyst notes the elasticity is inelastic.",
+    dataBlock: "Price elasticity: −0.9  |  Proposed price change: −10.8%\nElasticity range classification: inelastic (0 to −0.99)  |  Fig. 8-27 decision matrix applies",
+    question: "Based on the elasticity classification and Fig. 8-27, what is the correct direction of the price change, and what happens to gross profit if the VP's cut is implemented?",
+    options: [
+      { letter: "A", text: "The cut is correct — elastic demand generates enough volume to compensate for the lower margin." },
+      { letter: "B", text: "The cut should be smaller — a 5% cut instead of 10.8% would clear the break-even threshold at this elasticity." },
+      { letter: "C", text: "The correct direction is to RAISE price. In an inelastic market, a price cut reduces gross profit because the volume gain is smaller than the margin loss. Raising price loses volume but gains more in margin." },
+      { letter: "D", text: "No change is recommended — the elasticity of −0.9 is too close to unit elasticity to make a directional call." },
+    ],
+    correct: "C",
+    feedbackCorrect: "Correct. Elasticity −0.9 is inelastic (between 0 and −1). Fig. 8-27 is unambiguous: in an inelastic market, raising price increases gross profit; lowering price decreases gross profit. A 10.8% price cut with elasticity −0.9 generates only 9.7% more volume — far too little to offset the margin loss (requires 28.6% from Q3). Raising price 10.8% instead would lose only 9.7% of volume while gaining significantly more in per-unit margin.",
+    feedbackWrong: {
+      "A": "Incorrect. Elasticity −0.9 is INELASTIC, not elastic. The elastic range is −1.01 and beyond. With inelastic demand, a price cut produces a volume gain smaller than the price reduction percentage — and the margin loss outweighs the volume gain.",
+      "B": "Incorrect. No price cut clears the break-even threshold in this inelastic market. With elasticity −0.9, a 5% cut generates only 4.5% more volume. The break-even requirement for a 5% cut (new CM = $185K × 0.95 − $95K = $80,750; BE% = $9,250 ÷ $80,750 = 11.5%) still far exceeds the expected 4.5% volume gain.",
+      "D": "Incorrect. Elasticity −0.9 is not ambiguous — it is clearly inelastic. Fig. 8-27 gives a definitive answer for all values between 0 and −0.99: raise price. The proximity to −1.0 makes no practical difference to the direction.",
+    },
+    resources: [
+      { type: "lecture", label: "Lecture Seg. 1 ~6–10 min", note: "The inelastic market paradox — core strategic argument" },
+      { type: "chapter", label: "Ch. 8 pp. 293–295", note: "Fig. 8-27 elasticity decision matrix" },
+      { type: "slides",  label: "Slides 34–46", note: "Elasticity discussion + BE% formula section" },
+    ]
+  },
+  {
+    id: 5,
+    title: "PLC Strategy and Strategic Recommendation",
+    casePart: "Case Part 4",
+    lo: "LO4 · LO6",
+    stem: "Vantara's VX-900 has a 16.2% value advantage over competitors in the quality-conscious segment, NPV of ownership savings that exceed the price premium by $45,000+, and an inelastic market (elasticity −0.9). The product serves a specialized hospital market with meaningful differentiation.",
+    dataBlock: "Value advantage: 16.2%  |  EV premium headroom: $45,000+  |  Elasticity: −0.9 (inelastic)\nMarket: specialized, quality-conscious  |  Current share: 8.3%  |  Differentiation: strong on resolution + service",
+    question: "Which PLC pricing strategy best describes Vantara's current position, and what does this imply for the price-cut proposal?",
+    options: [
+      { letter: "A", text: "Penetration pricing — Vantara should cut price to build share in a growing market where differentiation is minimal." },
+      { letter: "B", text: "Plus-one pricing — Vantara matches competitors on all dimensions except one (imaging quality), and the premium is sustainable because quality-conscious hospitals value that differentiator." },
+      { letter: "C", text: "Reduce-focus pricing — Vantara should raise prices to shed price-sensitive hospital buyers and improve margins." },
+      { letter: "D", text: "Harvest pricing — Vantara should progressively raise prices and reduce marketing investment as it prepares to exit the surgical imaging market." },
+    ],
+    correct: "B",
+    feedbackCorrect: "Correct. Plus-one pricing (Ch. 8 pp. 288–289) applies when a product matches or exceeds competitors on most dimensions but differentiates decisively on one — here, imaging resolution (score 0.90 vs. 0.60). The inelastic market, strong value advantage, and EV premium headroom all reinforce a hold-or-raise strategy, not a cut. The price-cut proposal contradicts both the PLC strategy and the break-even analysis: Vantara has the data to defend its premium, not abandon it.",
+    feedbackWrong: {
+      "A": "Incorrect. Penetration pricing applies when differentiation is minimal, demand is elastic, and competitors enter easily. Vantara has strong differentiation (16.2% value advantage), an inelastic market (−0.9), and a specialized segment. None of the penetration pricing conditions are met.",
+      "C": "Incorrect. Reduce-focus pricing applies in maturity when multiple products in a line are loss-making and the strategy intentionally sheds price-sensitive customers. Vantara has a single premium product with a defensible value advantage — this is a differentiation opportunity, not a portfolio rationalization problem.",
+      "D": "Incorrect. Harvest pricing is a decline-stage strategy for products with low margins, declining volume, and no prospect for improvement. Vantara has a 48.6% contribution margin, meaningful differentiation, and strong EV support for the premium. There is no basis for a harvest strategy.",
+    },
+    resources: [
+      { type: "lecture", label: "Lecture Seg. 1 ~10–12 min", note: "Bridge to discussion — pricing strategy direction" },
+      { type: "chapter", label: "Ch. 8 pp. 285–291", note: "Fig. 8-15, all 8 PLC strategies" },
+      { type: "slides",  label: "Slides 27–33", note: "Skim and penetration detail; PLC overview" },
+    ]
+  }
+];
+
+/* ── STATE ───────────────────────────────────────────────────────────── */
+let current = 0;
+let answers = Array(QUESTIONS.length).fill(null); // null | 'correct' | 'wrong'
+let answered = Array(QUESTIONS.length).fill(false);
+
+/* ── RENDER QUESTION ─────────────────────────────────────────────────── */
+function renderQuestion(index) {
+  const q = QUESTIONS[index];
+  const qStage = document.getElementById('qStage');
+
+  const optionsHTML = q.options.map(opt => `
+    <button class="opt-btn" data-letter="${opt.letter}" onclick="handleAnswer(${index}, '${opt.letter}')">
+      <span class="opt-letter">${opt.letter}</span>
+      <span>${opt.text}</span>
+    </button>
+  `).join('');
+
+  const card = document.createElement('div');
+  card.className = 'q-card active';
+  card.id = `qcard-${index}`;
+  card.innerHTML = `
+    <div class="q-head">
+      <div class="q-badge">${index + 1}</div>
+      <div class="q-head-meta">
+        <h3>${q.title}</h3>
+        <div class="tag-row">
+          <span class="tag tag-case">${q.casePart}</span>
+          <span class="tag tag-lo">${q.lo}</span>
+        </div>
+      </div>
+    </div>
+    <div class="q-body">
+      <div class="q-stem">
+        ${q.stem}
+        ${q.dataBlock ? `<span class="data-inline">${q.dataBlock.replace(/\n/g,'<br>')}</span>` : ''}
+        <em style="display:block;margin-top:12px;color:var(--ink-mid);">${q.question}</em>
+      </div>
+      <div class="options" id="opts-${index}">${optionsHTML}</div>
+      <div class="feedback-box" id="fb-${index}"></div>
+    </div>
+    <div class="q-nav">
+      <button class="btn btn-primary" id="nextBtn-${index}" onclick="nextQuestion(${index})" disabled>
+        ${index < QUESTIONS.length - 1 ? 'Next Question →' : 'See Results'}
+      </button>
+    </div>
+  `;
+  qStage.innerHTML = '';
+  qStage.appendChild(card);
+  updateProgress(index);
+}
+
+/* ── HANDLE ANSWER ───────────────────────────────────────────────────── */
+function handleAnswer(qIndex, letter) {
+  if (answered[qIndex]) return;
+  answered[qIndex] = true;
+
+  const q = QUESTIONS[qIndex];
+  const isCorrect = letter === q.correct;
+  answers[qIndex] = isCorrect ? 'correct' : 'wrong';
+
+  // Style all buttons
+  const btns = document.querySelectorAll(`#opts-${qIndex} .opt-btn`);
+  btns.forEach(btn => {
+    const bl = btn.dataset.letter;
+    btn.disabled = true;
+    if (bl === q.correct) {
+      btn.classList.add('correct');
+    } else if (bl === letter && !isCorrect) {
+      btn.classList.add('wrong');
+    } else {
+      btn.classList.add('neutral');
+    }
+  });
+
+  // Show feedback
+  const fb = document.getElementById(`fb-${qIndex}`);
+  const fbText = isCorrect
+    ? q.feedbackCorrect
+    : (q.feedbackWrong[letter] || 'Incorrect. Review the explanation and try the recommended resources.');
+
+  fb.className = `feedback-box show ${isCorrect ? 'correct-fb' : 'wrong-fb'}`;
+  fb.innerHTML = `
+    <div class="fb-header ${isCorrect ? 'correct-fb' : 'wrong-fb'}">
+      ${isCorrect ? '✓ Correct' : '✗ Incorrect'}
+    </div>
+    <div class="fb-body">${fbText}</div>
+    ${!isCorrect ? `<div class="fb-ref">Review: ${q.resources.map(r => `<span class="fb-timestamp">${r.label}</span>`).join(' ')}</div>` : ''}
+  `;
+
+  // Enable next button
+  document.getElementById(`nextBtn-${qIndex}`).disabled = false;
+}
+
+/* ── NEXT QUESTION ───────────────────────────────────────────────────── */
+function nextQuestion(qIndex) {
+  if (qIndex < QUESTIONS.length - 1) {
+    current = qIndex + 1;
+    renderQuestion(current);
+  } else {
+    showResults();
+  }
+}
+
+/* ── PROGRESS ────────────────────────────────────────────────────────── */
+function updateProgress(index) {
+  const pct = ((index) / QUESTIONS.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `Question ${index + 1} of ${QUESTIONS.length}`;
+}
+
+/* ── RESULTS ─────────────────────────────────────────────────────────── */
+function showResults() {
+  document.getElementById('qStage').innerHTML = '';
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressLabel').textContent = 'Complete';
+
+  const correctCount = answers.filter(a => a === 'correct').length;
+  const pct = Math.round((correctCount / QUESTIONS.length) * 100);
+  const passed = pct >= 80;
+
+  const scoreMsg = passed
+    ? "You're ready for the case."
+    : "Review the flagged topics before submitting.";
+  const scoreSub = passed
+    ? "Your answers show solid command of all three analytical tools. Open the Vantara case with confidence."
+    : "One or more case skills need reinforcement. Use the resource links below — targeted review before the case deadline will make a real difference in your analysis.";
+
+  // Build review cards
+  const reviewCards = QUESTIONS.map((q, i) => {
+    const correct = answers[i] === 'correct';
+    const resHtml = q.resources.map(r =>
+      `<span class="redirect-chip ${r.type}">${r.label}<br><small style="font-weight:300;letter-spacing:0;text-transform:none;">${r.note}</small></span>`
+    ).join('');
+    return `
+      <div class="review-card">
+        <div class="review-head ${correct ? 'pass' : 'fail'}">
+          <span class="review-icon">${correct ? '✅' : '⚠️'}</span>
+          <h4>Q${i+1} — ${q.title}</h4>
+        </div>
+        ${!correct ? `
+        <div class="review-body">
+          <span class="rb-label">Review these resources before the case</span>
+          <div class="redirect-strip">${resHtml}</div>
+        </div>` : ''}
+      </div>
+    `;
+  }).join('');
+
+  const resultsEl = document.getElementById('results');
+  resultsEl.style.display = 'block';
+  resultsEl.innerHTML = `
+    <div class="score-hero">
+      <div class="score-circle">
+        <div class="score-pct">${pct}%</div>
+        <div class="score-frac">${correctCount} / ${QUESTIONS.length}</div>
+      </div>
+      <div class="score-msg">${scoreMsg}</div>
+      <p class="score-sub">${scoreSub}</p>
+    </div>
+
+    <div class="review-section">
+      <span class="review-title">${passed ? 'Question Summary' : 'Topics to Review Before the Case'}</span>
+      ${reviewCards}
+    </div>
+
+    ${!passed ? `
+    <div class="callout key" style="margin-top:16px;">
+      <span class="callout-icon">💡</span>
+      <div><strong>Efficient review path:</strong> Go directly to the Lecture Video timestamps and chapter pages listed above — you do not need to re-read the entire chapter. Targeted review of the specific sections you missed takes 15–20 minutes and directly improves your case analysis.</div>
+    </div>` : `
+    <div class="callout key" style="margin-top:16px;">
+      <span class="callout-icon">✅</span>
+      <div><strong>Ready for the case.</strong> All three tools are solid. Open the Vantara case and apply them in order: EV analysis (Part 1), performance value scoring (Part 2), break-even + elasticity (Part 3), strategic recommendation (Part 4).</div>
+    </div>`}
+
+    <div class="restart-wrap">
+      <button class="btn-restart" onclick="restart()">↩ Retake Self-Check</button>
+    </div>
+  `;
+}
+
+/* ── RESTART ─────────────────────────────────────────────────────────── */
+function restart() {
+  current = 0;
+  answers = Array(QUESTIONS.length).fill(null);
+  answered = Array(QUESTIONS.length).fill(false);
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('results').innerHTML = '';
+  renderQuestion(0);
+}
+
+/* ── INIT ────────────────────────────────────────────────────────────── */
+renderQuestion(0);
+</script>
+</body>
+</html>

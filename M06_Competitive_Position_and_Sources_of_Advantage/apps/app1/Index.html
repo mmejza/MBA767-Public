@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Competitive Advantage Profiler</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell">
+		<header class="app-header">
+			<p class="module-label">MKT 472 · Module 6 · App 1</p>
+			<h1>Competitive Advantage Profiler</h1>
+			<p>Threshold-based analysis of cost, differentiation, and market strength.</p>
+		</header>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Evaluate whether cost, differentiation, and market position each cross a true advantage threshold. Compare index statuses to distinguish genuine advantage from parity. Use sensitivity scenarios to test how metric changes alter profit implications.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Vantage Industrial.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Choose a preset or enter input values for cost, differentiation, and market share fields.</li>
+				<li>Select direct DI entry or the 3-benefit DI calculation mode.</li>
+				<li>Review output cards for VCAI, DI, RMS, and corresponding status labels.</li>
+				<li>Use the sensitivity panel to compare before/after metric and profit implication changes.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+		<section class="zone input-zone" aria-labelledby="input-zone-title">
+			<div class="zone-title-row">
+				<h2 id="input-zone-title">1) Input Panel</h2>
+				<label class="preset-control" for="preset-select">
+					Preset
+					<select id="preset-select">
+						<option value="">Select preset...</option>
+						<option value="strong-differentiator">Strong Differentiator</option>
+						<option value="cost-leader">Cost Leader</option>
+						<option value="market-dominant">Market Dominant</option>
+						<option value="no-advantage">No Advantage</option>
+						<option value="vantage-industrial">Vantage Industrial</option>
+					</select>
+				</label>
+			</div>
+
+			<div class="input-groups">
+				<fieldset class="group-card">
+					<legend>Group A - Cost</legend>
+					<label>
+						Firm COGS% (30-80)
+						<input id="firm-cogs" type="number" min="30" max="80" step="0.1" value="52">
+					</label>
+					<label>
+						Competitor Avg COGS% (30-80)
+						<input id="comp-cogs" type="number" min="30" max="80" step="0.1" value="58">
+					</label>
+				</fieldset>
+
+				<fieldset class="group-card">
+					<legend>Group B - Differentiation</legend>
+					<div class="mode-toggle" role="radiogroup" aria-label="DI mode">
+						<label>
+							<input type="radio" name="di-mode" value="direct" checked>
+							Direct DI Entry
+						</label>
+						<label>
+							<input type="radio" name="di-mode" value="benefits">
+							3-Benefit Calculation Tool
+						</label>
+					</div>
+
+					<div id="direct-di-wrap" class="subgroup">
+						<label>
+							Direct DI (-50 to +150)
+							<input id="direct-di" type="number" min="-50" max="150" step="0.1" value="0">
+						</label>
+					</div>
+
+					<div id="benefit-tool-wrap" class="subgroup" hidden>
+						<div class="benefit-grid benefit-header" aria-hidden="true">
+							<span>Benefit Name</span>
+							<span>Weight</span>
+							<span>Firm Rating</span>
+							<span>Competitor Rating</span>
+						</div>
+						<div class="benefit-grid">
+							<input id="b1-name" type="text" value="Reliability" aria-label="Benefit 1 name">
+							<input id="b1-weight" type="number" min="0" max="100" step="0.1" value="40" aria-label="Benefit 1 weight">
+							<input id="b1-firm" type="number" min="1" max="10" step="0.1" value="7" aria-label="Benefit 1 firm rating">
+							<input id="b1-comp" type="number" min="1" max="10" step="0.1" value="6" aria-label="Benefit 1 competitor rating">
+						</div>
+						<div class="benefit-grid">
+							<input id="b2-name" type="text" value="Service" aria-label="Benefit 2 name">
+							<input id="b2-weight" type="number" min="0" max="100" step="0.1" value="35" aria-label="Benefit 2 weight">
+							<input id="b2-firm" type="number" min="1" max="10" step="0.1" value="7" aria-label="Benefit 2 firm rating">
+							<input id="b2-comp" type="number" min="1" max="10" step="0.1" value="6" aria-label="Benefit 2 competitor rating">
+						</div>
+						<div class="benefit-grid">
+							<input id="b3-name" type="text" value="Innovation" aria-label="Benefit 3 name">
+							<input id="b3-weight" type="number" min="0" max="100" step="0.1" value="25" aria-label="Benefit 3 weight">
+							<input id="b3-firm" type="number" min="1" max="10" step="0.1" value="7" aria-label="Benefit 3 firm rating">
+							<input id="b3-comp" type="number" min="1" max="10" step="0.1" value="6" aria-label="Benefit 3 competitor rating">
+						</div>
+						<p id="weight-validation" class="helper-text">Weights must sum to 100.0</p>
+					</div>
+				</fieldset>
+
+				<fieldset class="group-card">
+					<legend>Group C - Marketing</legend>
+					<label>
+						Firm Share (0-50)
+						<input id="firm-share" type="number" min="0" max="50" step="0.1" value="18">
+					</label>
+					<label>
+						Competitor 1 Share (0-50)
+						<input id="comp1-share" type="number" min="0" max="50" step="0.1" value="24">
+					</label>
+					<label>
+						Competitor 2 Share (0-50)
+						<input id="comp2-share" type="number" min="0" max="50" step="0.1" value="19">
+					</label>
+					<label>
+						Competitor 3 Share (0-50)
+						<input id="comp3-share" type="number" min="0" max="50" step="0.1" value="14">
+					</label>
+					<p id="rms-validation" class="helper-text">Competitor shares must sum above 0.</p>
+				</fieldset>
+			</div>
+		</section>
+
+		<section class="zone output-zone" aria-labelledby="output-zone-title">
+			<h2 id="output-zone-title">2) Output Panel</h2>
+			<div class="ca-grid" id="ca-grid"></div>
+
+			<div id="profit-band" class="profit-band">
+				<h3 id="profit-label">Profit Implication</h3>
+				<p id="profit-roi">ROI Band:</p>
+			</div>
+
+			<article class="recommendation-box">
+				<h3>Primary Advantage Recommendation</h3>
+				<p id="recommendation-text"></p>
+			</article>
+		</section>
+
+		<section class="zone sensitivity-zone" aria-labelledby="sensitivity-zone-title">
+			<h2 id="sensitivity-zone-title">3) Sensitivity Panel</h2>
+			<div id="sensitivity-grid" class="sensitivity-grid"></div>
+		</section>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results / Dashboard</h2>
+			<p>Use index outputs, status labels, recommendation guidance, and sensitivity scenarios to complete Canvas quiz responses.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

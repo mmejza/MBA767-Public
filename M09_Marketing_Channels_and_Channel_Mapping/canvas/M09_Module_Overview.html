@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 09 Overview | MKT 472</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------------
+   CANVAS-FRIENDLY MODULE OVERVIEW
+   Canonical architecture and visual system
+------------------------------------------------------------------- */
+:root {
+  --ink: #0f1923;
+  --ink-mid: #2d3f52;
+  --ink-soft: #5a6f82;
+  --rule: #d4dce4;
+  --surface: #f7f9fb;
+  --white: #ffffff;
+  --muted: #5a6f82;
+  --text: #0f1923;
+  --border: #d4dce4;
+
+  --teal: #0a7c6e;
+  --teal-lt: #e0f4f1;
+  --teal-mid: #c2ece7;
+  --gold: #c9860a;
+  --gold-lt: #fdf3e0;
+  --gold-mid: #f9dfa0;
+  --red: #b92b27;
+  --red-lt: #fdecea;
+  --blue: #1a56a0;
+  --blue-lt: #e6effa;
+  --blue-mid: #c3d9f5;
+
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+  --mono: 'DM Mono', 'Courier New', monospace;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+
+  --shadow-sm: 0 1px 3px rgba(15,25,35,.07), 0 1px 2px rgba(15,25,35,.05);
+  --shadow-md: 0 4px 12px rgba(15,25,35,.09), 0 2px 4px rgba(15,25,35,.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--surface); }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--surface);
+  line-height: 1.6;
+  padding-bottom: 80px;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--teal); }
+p { margin-bottom: 12px; font-size: .92rem; color: var(--ink-mid); line-height: 1.65; }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); font-weight: 600; }
+
+.page-header {
+  background: var(--ink);
+  color: var(--white);
+  padding: 48px 40px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-55deg, transparent, transparent 28px, rgba(255,255,255,.022) 28px, rgba(255,255,255,.022) 29px);
+  pointer-events: none;
+}
+.page-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--teal);
+}
+.container { max-width: 880px; margin: 0 auto; padding: 0 32px; }
+.header-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 20px; }
+.badge {
+  display: inline-flex; align-items: center;
+  font-family: var(--mono); font-size: .69rem; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 11px; border-radius: 100px;
+  background: rgba(255,255,255,.1); color: rgba(255,255,255,.8);
+}
+.badge-teal { background: rgba(10,124,110,.3); color: #7de8dc; }
+.badge-gold { background: rgba(201,134,10,.3); color: #f9d87a; }
+.header-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 2.85rem);
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  color: var(--white);
+  max-width: 700px;
+  margin-bottom: 8px;
+}
+.header-sub {
+  font-size: .95rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.58);
+  max-width: 680px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+.header-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.section { margin-top: 48px; }
+.section-label {
+  font-family: var(--mono);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: block;
+  margin-bottom: 14px;
+}
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rule) 20%, var(--rule) 80%, transparent);
+  margin: 44px 0;
+}
+
+.central-question {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 var(--r-lg) var(--r-lg) 0;
+  padding: 28px 32px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+.central-question .cq-label {
+  font-family: var(--mono); font-size: .66rem; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--teal);
+  margin-bottom: 12px; display: block;
+}
+.central-question .cq-text {
+  font-family: var(--serif);
+  font-size: 1.45rem; line-height: 1.35;
+  color: var(--ink);
+}
+.central-question .cq-follow {
+  margin-top: 14px;
+  font-size: .91rem; color: var(--ink-mid); line-height: 1.6;
+}
+
+.callout {
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: .88rem;
+  line-height: 1.65;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+.callout.info { background: var(--blue-lt); border: 1px solid var(--blue-mid); color: var(--blue); }
+.callout.key { background: var(--teal-lt); border: 1px solid var(--teal-mid); color: #005446; }
+.callout.warn { background: var(--gold-lt); border: 1px solid var(--gold-mid); color: #7a4e00; }
+.callout .callout-label {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.params-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-top: 20px;
+}
+@media (max-width: 540px) { .params-grid { grid-template-columns: 1fr; } }
+.param-cell {
+  background: var(--white);
+  padding: 14px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.param-cell .p-label {
+  font-family: var(--mono); font-size: .67rem; font-weight: 500;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink-soft); flex-shrink: 0; min-width: 130px;
+  margin-top: 2px;
+}
+.param-cell .p-val {
+  font-size: .9rem; color: var(--ink-mid); line-height: 1.5;
+}
+.param-cell .p-val strong { color: var(--ink); font-weight: 600; }
+
+.lo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 4px 0;
+}
+@media (max-width: 620px) { .lo-grid { grid-template-columns: 1fr; } }
+.lo-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+}
+.lo-badge {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background: var(--teal);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+.lo-content { flex: 1; }
+.lo-bloom {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  margin-bottom: 3px;
+}
+.lo-text { font-size: 13px; line-height: 1.5; color: var(--text); }
+
+.gate-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 4px 0;
+}
+@media (max-width: 580px) { .gate-grid { grid-template-columns: 1fr; } }
+.gate-card {
+  border-radius: 6px;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+.gate-card.gate1 { background: #f0faf8; border-top: 3px solid var(--teal); }
+.gate-card.gate2 { background: #f5f3ff; border-top: 3px solid #7c5ccc; }
+.gate-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.gate1 .gate-label { color: var(--teal); }
+.gate2 .gate-label { color: #5a3ea0; }
+.gate-name { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.gate-specs { list-style: none; }
+.gate-specs li {
+  font-size: 12.5px;
+  color: var(--muted);
+  padding: 3px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.gate-specs li:last-child { border-bottom: none; }
+.gate-specs li span:last-child { font-weight: 600; color: var(--text); }
+
+.exclusive-list { list-style: none; margin: 4px 0; }
+.exclusive-list li {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 5px;
+  background: var(--surface);
+  margin-bottom: 6px;
+  border: 1px solid var(--border);
+  font-size: 13.5px;
+  align-items: flex-start;
+}
+.excl-num {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background: var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-top: 1px;
+}
+.excl-body { flex: 1; }
+.excl-title { font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.excl-ref { font-size: 11.5px; color: var(--muted); }
+
+.trap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+@media (max-width: 620px) { .trap-grid { grid-template-columns: 1fr; } }
+.trap-card {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+}
+.trap-card.warn { background: var(--gold-lt); border-color: var(--gold-mid); }
+.trap-card.risk { background: var(--red-lt); border-color: rgba(185,43,39,.2); }
+.trap-card .trap-title {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 7px;
+}
+.trap-card p { font-size: .86rem; margin-bottom: 8px; }
+
+.sequence-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  border: 1px solid var(--rule); border-radius: var(--r-lg);
+  overflow: hidden; box-shadow: var(--shadow-sm);
+  margin-top: 20px; font-size: .85rem;
+}
+.sequence-table th {
+  background: var(--ink-mid); color: rgba(255,255,255,.8);
+  font-family: var(--mono); font-size: .64rem; font-weight: 500;
+  letter-spacing: .07em; text-transform: uppercase;
+  padding: 11px 16px; text-align: left;
+}
+.sequence-table td {
+  padding: 11px 16px; border-bottom: 1px solid var(--rule);
+  vertical-align: top; line-height: 1.5;
+  background: var(--white); color: var(--ink-mid);
+}
+.sequence-table tr:last-child td { border-bottom: none; }
+.sequence-table tr:nth-child(even) td { background: var(--surface); }
+.seq-num {
+  font-family: var(--mono); font-size: .78rem; font-weight: 500;
+  color: var(--white); background: var(--ink);
+  width: 24px; height: 24px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.seq-num.gate-item { background: var(--gold); color: var(--ink); }
+.seq-num.locked { background: var(--muted); }
+.seq-time { font-family: var(--mono); font-size: .78rem; color: var(--teal); white-space: nowrap; }
+.seq-item-name { font-weight: 600; color: var(--ink); display: block; margin-bottom: 2px; }
+.seq-item-note { font-size: .8rem; color: var(--ink-soft); line-height: 1.45; }
+.seq-pts {
+  font-family: var(--mono); font-size: .75rem; font-weight: 500;
+  color: var(--gold); white-space: nowrap;
+}
+.seq-pts.zero { color: var(--ink-soft); }
+
+.grade-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin: 4px 0;
+}
+.grade-table th {
+  background: var(--ink);
+  color: #fff;
+  padding: 9px 12px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.grade-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.grade-table tr:nth-child(even) td { background: var(--surface); }
+.grade-table tr.total-row td {
+  background: var(--teal-lt);
+  font-weight: 700;
+  color: var(--ink);
+  border-top: 2px solid var(--teal);
+}
+.pts-badge {
+  display: inline-block;
+  background: var(--teal);
+  color: #fff;
+  border-radius: 4px;
+  padding: 1px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 36px;
+  text-align: center;
+}
+.pts-badge.zero { background: var(--muted); }
+.pts-badge.large { background: var(--ink); }
+
+.tips-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 18px;
+  margin: 6px 0;
+}
+.tips-box ul { padding-left: 18px; margin: 0; }
+.tips-box li { font-size: 13.5px; padding: 3px 0; line-height: 1.55; }
+.tips-box li strong { color: var(--ink); }
+
+.pacing-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-top: 20px;
+  font-size: .85rem;
+}
+.pacing-table th {
+  background: var(--ink-mid);
+  color: rgba(255,255,255,.8);
+  font-family: var(--mono);
+  font-size: .64rem;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 11px 16px;
+  text-align: left;
+}
+.pacing-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  line-height: 1.5;
+  background: var(--white);
+  color: var(--ink-mid);
+}
+.pacing-table tr:last-child td { border-bottom: none; }
+.pacing-table tr:nth-child(even) td { background: var(--surface); }
+
+.page-footer {
+  margin-top: 40px;
+  padding: 16px 36px;
+  background: var(--ink);
+  font-size: 11.5px;
+  color: #6a8a9a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.page-footer span { color: var(--teal); font-weight: 600; }
+
+@media (max-width: 720px) {
+  .page-header, .page-footer, .container { padding-left: 18px; padding-right: 18px; }
+  .param-cell, .gate-card, .central-question { padding-left: 18px; padding-right: 18px; }
+}
+@media (max-width: 620px) {
+  .header-title { font-size: 2rem; }
+  .central-question .cq-text { font-size: 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- 1. Header -->
+<header class="page-header">
+  <div class="container">
+    <div class="header-eyebrow">
+      <span class="badge">MKT 472</span>
+      <span class="badge">Module 09</span>
+      <span class="badge badge-gold">Chapter 9</span>
+      <span class="badge badge-teal">4.0-5.5 hours total</span>
+    </div>
+    <h1 class="header-title">Marketing Channels and Channel Mapping</h1>
+    <p class="header-sub">How channel structure determines what you actually receive.</p>
+    <div class="header-meta">
+      <span class="badge">Part III · Marketing Program Design</span>
+      <span class="badge">165 points</span>
+      <span class="badge">Two-Gate Accountability</span>
+      <span class="badge badge-gold">Reduced Workload Module</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- 2. Central Question -->
+  <section class="section">
+    <span class="section-label">Central Question</span>
+    <div class="central-question">
+      <span class="cq-label">What this module asks you to figure out</span>
+      <div class="cq-text">If the direct channel delivers higher margins and higher NMC than the indirect channel - why would any firm ever choose indirect?</div>
+      <p class="cq-follow">The answer is not obvious. By the end of this module you will have computed the pocket price waterfall across three channel configurations, calculated NMC and Marketing ROI for each, and discovered why the channel with the highest margin can simultaneously have the lowest return on marketing investment.</p>
+      <p class="cq-follow">That reversal - the channel ROI paradox - is the analytical core of this module and the foundation of the NovaTech case.</p>
+    </div>
+    <div class="callout warn" style="margin-top:20px;">
+      <span class="callout-icon">!</span>
+      <div>
+        <div class="callout-label">Strategic Framing</div>
+        <p>Do not assume channel margin and channel ROI point to the same decision. This module is built around that contradiction.</p>
+      </div>
+    </div>
+    <div class="callout key" style="margin-top:12px;">
+      <span class="callout-icon">i</span>
+      <div>
+        <div class="callout-label">Reduced Workload Module &mdash; 165 Points</div>
+        <p>Module 9 is a lite module. <strong>No discussion is assigned.</strong> App 3 is not included. The module runs for 7 days (Jul&nbsp;2&#8211;8) and is worth 165 points instead of the standard 195. The case contributes 125 points (vs. 120 in standard modules) to offset the missing apps and discussion. All other components are identical to standard modules.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 3. Module at a Glance -->
+  <section class="section">
+    <span class="section-label">Module at a Glance</span>
+    <div class="params-grid">
+      <div class="param-cell">
+        <span class="p-label">Textbook</span>
+        <span class="p-val"><strong>Chapter 9</strong> - Marketing Channels and Channel Mapping</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Estimated Time</span>
+        <span class="p-val"><strong>4.0-5.5 hours</strong> across all activities</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Lecture Video</span>
+        <span class="p-val"><strong>~30 minutes</strong>, two segments</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Interactive Apps</span>
+        <span class="p-val"><strong>2 apps</strong> with worksheets (45-55 min combined)</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Case Analysis</span>
+        <span class="p-val"><strong>NovaTech Distribution</strong> - 55-65 min</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Learning Objectives</span>
+        <span class="p-val"><strong>4 objectives</strong> focused on pocket price, channel ROI, break-even share, and channel system evaluation</span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Pacing</span>
+        <span class="p-val">Plan for a <strong>7-day window</strong> at <strong>90&#8211;120 minutes per day</strong></span>
+      </div>
+      <div class="param-cell">
+        <span class="p-label">Total Points</span>
+        <span class="p-val"><strong>165 pts</strong> &#8212; Gate&nbsp;2 (20) &#183; Apps (20) &#183; Case (125) &#183; No discussion assigned</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 4. Before You Begin / Study Tips -->
+  <section class="section">
+    <span class="section-label">Before You Begin / Study Tips</span>
+    <div class="tips-box">
+      <ul>
+        <li><strong>Read Chapter 9 before viewing slides.</strong> Gate 1 tests chapter-only topics that the slide deck does not cover.</li>
+        <li><strong>Track both NMC and Marketing ROI together.</strong> The module's central paradox appears when those two metrics diverge across channels.</li>
+        <li><strong>Keep app and case data separate.</strong> The NovaTech Distribution case uses original fictional data that does not appear in chapter examples, slides, lecture, or app presets.</li>
+        <li><strong>Complete App 1 before App 2.</strong> The pocket price and ROI mechanics from App 1 are required to reason correctly in the strategy comparator.</li>
+        <li><strong>Use the study focus guide while reading.</strong> It flags the chapter-only concepts that appear in Gate 1 and prevents rework after your first attempt.</li>
+      </ul>
+    </div>
+    <div class="callout key" style="margin-top:16px;">
+      <span class="callout-icon">i</span>
+      <div>
+        <div class="callout-label">Deadline Pattern</div>
+        <p>Gate 2 is due Jul&nbsp;7. Case is due Jul&nbsp;8. No discussion is assigned in this module. Complete Gates and apps early in the window to leave time for the case.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 5. Learning Objectives -->
+  <section class="section">
+    <span class="section-label">Learning Objectives</span>
+    <div class="lo-grid">
+      <div class="lo-card">
+        <div class="lo-badge">LO1</div>
+        <div class="lo-content">
+          <div class="lo-bloom">Application</div>
+          <div class="lo-text">Compute pocket price across a multi-tier channel by tracing the full waterfall of discounts, commissions, and transaction costs.</div>
+        </div>
+      </div>
+      <div class="lo-card">
+        <div class="lo-badge">LO2</div>
+        <div class="lo-content">
+          <div class="lo-bloom">Analysis</div>
+          <div class="lo-text">Calculate NMC, Marketing ROS, and Marketing ROI; explain why the highest-margin channel can have the lowest ROI.</div>
+        </div>
+      </div>
+      <div class="lo-card">
+        <div class="lo-badge">LO3</div>
+        <div class="lo-content">
+          <div class="lo-bloom">Evaluation</div>
+          <div class="lo-text">Evaluate whether a channel strategy switch is justified by computing break-even market share and comparing it to current share.</div>
+        </div>
+      </div>
+      <div class="lo-card">
+        <div class="lo-badge">LO4</div>
+        <div class="lo-content">
+          <div class="lo-bloom">Analysis</div>
+          <div class="lo-text">Distinguish direct, indirect, and mixed channel systems by cost structure, control, and profitability profile.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 6. Two-Gate Model -->
+  <section class="section">
+    <span class="section-label">Two-Gate Model</span>
+    <p>Gate 1 certifies you read before viewing slides. Gate 2 certifies you synthesized reading with slides before the lecture. Students who game Gate 1 cannot game Gate 2.</p>
+    <div class="gate-grid">
+      <div class="gate-card gate1">
+        <div class="gate-label">Gate 1</div>
+        <div class="gate-name">Basic Reading Check</div>
+        <ul class="gate-specs">
+          <li><span>Unlocks</span><span>Slide Deck Viewer</span></li>
+          <li><span>Questions</span><span>5 MC (chapter-only)</span></li>
+          <li><span>Threshold</span><span>80% to proceed</span></li>
+          <li><span>Attempts</span><span>2</span></li>
+          <li><span>Feedback</span><span>Per-answer + page ref</span></li>
+          <li><span>Points</span><span>0 (access control only)</span></li>
+        </ul>
+      </div>
+      <div class="gate-card gate2">
+        <div class="gate-label">Gate 2</div>
+        <div class="gate-name">Applied Reading Check</div>
+        <ul class="gate-specs">
+          <li><span>Unlocks</span><span>Lecture Video</span></li>
+          <li><span>Questions</span><span>8 (includes numeric)</span></li>
+          <li><span>Threshold</span><span>Graded as submitted</span></li>
+          <li><span>Attempts</span><span>1</span></li>
+          <li><span>Feedback</span><span>Correct/Incorrect only</span></li>
+          <li><span>Points</span><span>20 pts</span></li>
+        </ul>
+        <p style="font-size:11.5px;color:var(--ink-soft);margin-top:8px;font-style:italic;">Requires calculation and synthesis. View slides before attempting.</p>
+      </div>
+    </div>
+    <div class="callout info" style="margin-top:16px;">
+      <span class="callout-icon">i</span>
+      <div>
+        <div class="callout-label">Why Two Gates?</div>
+        <p>Gate 1 verifies chapter-only coverage. Gate 2 verifies applied synthesis and keeps the lecture focused on interpretation rather than first exposure.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 7. Chapter-Exclusive Content -->
+  <section class="section">
+    <span class="section-label">Chapter-Exclusive Content</span>
+    <p>Gate 1 tests these topics. They do not appear on the slides. Read Chapter 9 before attempting Gate 1.</p>
+    <ul class="exclusive-list">
+      <li>
+        <div class="excl-num">1</div>
+        <div class="excl-body">
+          <div class="excl-title">Channel value proposition</div>
+          <div class="excl-ref">Four components: sales growth, profitability, return on capital, and brand leverage.</div>
+        </div>
+      </li>
+      <li>
+        <div class="excl-num">2</div>
+        <div class="excl-body">
+          <div class="excl-title">Channel performance triad</div>
+          <div class="excl-ref">Customer reach, operating efficiency, and service quality (Figure 9-8).</div>
+        </div>
+      </li>
+      <li>
+        <div class="excl-num">3</div>
+        <div class="excl-body">
+          <div class="excl-title">Outlet share S-curve</div>
+          <div class="excl-ref">Nonlinear dynamics where dominant outlet share blocks competitor entry (Figure 9-23).</div>
+        </div>
+      </li>
+      <li>
+        <div class="excl-num">4</div>
+        <div class="excl-body">
+          <div class="excl-title">VARs vs. OEMs</div>
+          <div class="excl-ref">Distinction and examples including Ford, IBM, and Caterpillar.</div>
+        </div>
+      </li>
+      <li>
+        <div class="excl-num">5</div>
+        <div class="excl-body">
+          <div class="excl-title">Wholesaler transaction math</div>
+          <div class="excl-ref">24M transactions at $1.2B to 241,200 at $210M (82.5% reduction; Figures 9-21 and 9-22).</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 8. Two Traps to Watch For -->
+  <section class="section">
+    <span class="section-label">Two Traps to Watch For</span>
+    <p>These two errors appear repeatedly in gate responses, app interpretation, and NovaTech recommendations.</p>
+    <div class="trap-grid">
+      <div class="trap-card warn">
+        <div class="trap-title">Assuming higher margin and higher NMC automatically mean higher ROI</div>
+        <p>The channel ROI paradox is the module core: a channel can produce higher margin and higher NMC but still deliver lower Marketing ROI because ROI depends on the M&amp;S expense base.</p>
+        <p><strong>Where it appears:</strong> Gate 2 numeric items, App 1 ROI paradox prompt, and the NovaTech recommendation logic.</p>
+      </div>
+      <div class="trap-card risk">
+        <div class="trap-title">Using the wrong data source for the decision</div>
+        <p>Chapter examples, slides, lecture scenarios, app presets, and case data serve different purposes. Importing numbers across them leads to invalid conclusions.</p>
+        <p><strong>Where it appears:</strong> App worksheets and case analysis. Keep NovaTech values separate from chapter and app defaults.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 9. Module Sequence -->
+  <section class="section">
+    <span class="section-label">Module Sequence</span>
+    <p>Complete each item before the next unlocks. Estimated total: 4.0-5.5 hours.</p>
+    <table class="sequence-table" aria-label="Module sequence table">
+      <thead>
+        <tr>
+          <th style="width: 36px;">#</th>
+          <th>Item</th>
+          <th style="width: 92px;">Time</th>
+          <th style="width: 100px;">Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="seq-num">1</span></td>
+          <td><span class="seq-item-name">Module Overview &amp; Orientation (this page)</span><span class="seq-item-note">Unlocks Chapter 9 reading.</span></td>
+          <td class="seq-time">5 min</td>
+          <td class="seq-pts zero">-</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">2</span></td>
+          <td><span class="seq-item-name">Chapter 9 Reading + Study Focus Guide</span><span class="seq-item-note">Unlocks Gate 1.</span></td>
+          <td class="seq-time">70-80 min</td>
+          <td class="seq-pts zero">-</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num gate-item">3</span></td>
+          <td><span class="seq-item-name">Gate 1: Basic Reading Check</span><span class="seq-item-note">5 questions, chapter-only. 80% required. 2 attempts. Unlocks slide deck.</span></td>
+          <td class="seq-time">10-12 min</td>
+          <td class="seq-pts zero">0 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">4</span></td>
+          <td><span class="seq-item-name">Slide Deck Viewer</span><span class="seq-item-note">Unlocks Gate 2.</span></td>
+          <td class="seq-time">15-20 min</td>
+          <td class="seq-pts zero">-</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num gate-item">5</span></td>
+          <td><span class="seq-item-name">Gate 2: Applied Reading Check</span><span class="seq-item-note">8 questions including numeric items. One attempt. Unlocks lecture.</span></td>
+          <td class="seq-time">20-23 min</td>
+          <td class="seq-pts">20 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">6</span></td>
+          <td><span class="seq-item-name">Lecture Video: The Channel Profitability Trap</span><span class="seq-item-note">Two segments, about 30 minutes total.</span></td>
+          <td class="seq-time">30 min</td>
+          <td class="seq-pts zero">—</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">7</span></td>
+          <td><span class="seq-item-name">App 1: Channel Pocket Price &amp; Profitability Calculator + Worksheet</span><span class="seq-item-note">Unlocks App 2.</span></td>
+          <td class="seq-time">20-25 min</td>
+          <td class="seq-pts">10 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">8</span></td>
+          <td><span class="seq-item-name">App 2: Channel Strategy Comparator + Worksheet</span><span class="seq-item-note">Unlocks discussion.</span></td>
+          <td class="seq-time">25-30 min</td>
+          <td class="seq-pts">10 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num locked">9</span></td>
+          <td><span class="seq-item-name">Case Draft &#8212; Parts 1&#8211;3</span><span class="seq-item-note">Advisory only &#8212; no submission. Use Days 5&#8211;6 to complete the quantitative sections before the final submission. No discussion is assigned in this module.</span></td>
+          <td class="seq-time">60&#8211;70 min</td>
+          <td class="seq-pts zero">0 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">10</span></td>
+          <td><span class="seq-item-name">Case Analysis &#8212; Final Submission: NovaTech Distribution</span><span class="seq-item-note">Due Day&nbsp;7 (Jul&nbsp;8, 11:59pm). Four-part analysis: pocket price, NMC and Marketing ROI, break-even market share, and channel recommendation. Individual submission.</span></td>
+          <td class="seq-time">30&#8211;40 min</td>
+          <td class="seq-pts">125 pts</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 10. Grading Summary -->
+  <section class="section">
+    <span class="section-label">Grading Summary</span>
+    <table class="grade-table" aria-label="Grading summary table">
+      <thead>
+        <tr>
+          <th>Assessment</th>
+          <th>Points</th>
+          <th>% of Module</th>
+          <th>Grading</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gate 1: Basic Reading Check</td>
+          <td><span class="pts-badge zero">0</span></td>
+          <td>Access control only</td>
+          <td>Auto · 80% threshold</td>
+        </tr>
+        <tr>
+          <td>Gate 2: Applied Reading Check</td>
+          <td><span class="pts-badge">20</span></td>
+          <td>12.1%</td>
+          <td>Auto-graded</td>
+        </tr>
+        <tr>
+          <td>App Worksheets (2 x 10 pts)</td>
+          <td><span class="pts-badge">20</span></td>
+          <td>12.1%</td>
+          <td>Auto-graded</td>
+        </tr>
+        <tr>
+          <td>Case Analysis: NovaTech Distribution</td>
+          <td><span class="pts-badge large">125</span></td>
+          <td>75.8%</td>
+          <td>Rubric</td>
+        </tr>
+        <tr class="total-row">
+          <td>Total</td>
+          <td><span class="pts-badge large">165</span></td>
+          <td>100%</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 11. Pacing in the Summer Session -->
+  <section class="section">
+    <span class="section-label">Pacing in the Summer Session</span>
+    <p>This module opens Jul&nbsp;2 and runs for 7 days. Gates are due Jul&nbsp;7 at 11:59pm. Case is due Jul&nbsp;8 at 11:59pm. <strong>No discussion is assigned.</strong> Use the longer window to work carefully through the pocket price and ROI calculations before beginning the case.</p>
+    <table class="pacing-table" aria-label="Pacing in the summer session table">
+      <thead>
+        <tr>
+          <th style="width: 90px;">Day</th>
+          <th>Suggested Work</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Day 1<br><span style="font-size:.78rem;color:var(--ink-soft);">Jul 2</span></td>
+          <td>Read Chapter&nbsp;9 with the Study Focus Guide (70&#8211;80&nbsp;min). Complete Gate&nbsp;1 (10&#8211;12&nbsp;min). View the Slide Deck (15&#8211;20&nbsp;min). Complete Gate&nbsp;2 (20&#8211;23&nbsp;min). ~120&nbsp;min total.</td>
+        </tr>
+        <tr>
+          <td>Day 2<br><span style="font-size:.78rem;color:var(--ink-soft);">Jul 3</span></td>
+          <td>Watch the lecture video (~30&nbsp;min). Complete App&nbsp;1 (20&#8211;25&nbsp;min) and App&nbsp;2 (25&#8211;30&nbsp;min). ~80&nbsp;min total.</td>
+        </tr>
+        <tr>
+          <td>Day 3<br><span style="font-size:.78rem;color:var(--ink-soft);">Jul 4</span></td>
+          <td>Optional buffer day. M08 discussion is due today &#8212; focus on completing that first. No M09 work required today.</td>
+        </tr>
+        <tr>
+          <td>Days 4&#8211;5<br><span style="font-size:.78rem;color:var(--ink-soft);">Jul 5&#8211;6</span></td>
+          <td>Case draft: complete the quantitative sections (Parts&nbsp;1&#8211;3). Check all pocket price and ROI calculations before writing the recommendation. ~120&nbsp;min total across both days.</td>
+        </tr>
+        <tr>
+          <td>Day 6<br><span style="font-size:.78rem;color:var(--ink-soft);">Jul 7</span></td>
+          <td>Review draft calculations. Gate&nbsp;2 official deadline today (Jul&nbsp;7, 11:59pm).</td>
+        </tr>
+        <tr>
+          <td>Day 7<br><span style="font-size:.78rem;color:var(--ink-soft);">Jul 8</span></td>
+          <td>Write strategic recommendation and submit final case analysis (30&#8211;40&nbsp;min). <strong>Due Jul&nbsp;8 at 11:59pm.</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout info" style="margin-top:16px;">
+      <span class="callout-icon">i</span>
+      <div>
+        <div class="callout-label">M09 Lite Pacing Note</div>
+        <p>This module overlaps with M08 (also opening Jul&nbsp;2) and M10 (opening Jul&nbsp;6). Do not let the 7-day window create a false sense of extra time &#8212; M08 and M10 work runs concurrently. Complete Gates and apps early to preserve Days&nbsp;5&#8211;7 for the NovaTech case.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 12. Footer -->
+  <section class="section">
+    <span class="section-label">Footer</span>
+    <div class="page-footer">
+      <span>MKT 472 · Module 09 · Chapter 9</span>
+      <span>Marketing Channels and Channel Mapping · Part III: Marketing Program Design</span>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

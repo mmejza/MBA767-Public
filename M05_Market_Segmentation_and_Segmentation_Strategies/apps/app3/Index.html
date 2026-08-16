@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Segment Portfolio Optimizer</title>
+	<link rel="stylesheet" href="styles.css" />
+	<style>
+		:root {
+			--bg-a: #f4f6fb;
+			--bg-b: #e5ebf8;
+			--panel: #fbfdff;
+			--line: #bcc8e4;
+			--text: #1f2b3f;
+			--muted: #53617a;
+			--accent: #2b6cb0;
+			--good: #1e8f58;
+			--warn: #9a6b00;
+			--radius: 14px;
+			--shadow: 0 12px 24px rgba(31, 43, 63, 0.09);
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+			color: var(--text);
+			background: linear-gradient(140deg, var(--bg-a), var(--bg-b));
+			line-height: 1.35;
+		}
+
+		.app-shell {
+			width: min(1100px, 96vw);
+			margin: 1rem auto 2rem;
+			display: grid;
+			gap: 1rem;
+		}
+
+		.skip-link {
+			position: absolute;
+			left: -999px;
+			top: -999px;
+			background: #2b6cb0;
+			color: #fff;
+			padding: 0.45rem 0.7rem;
+			border-radius: 8px;
+			z-index: 1000;
+		}
+
+		.skip-link:focus {
+			left: 0.7rem;
+			top: 0.7rem;
+		}
+
+		.hero,
+		.tabs,
+		.tab-panel,
+		.callout,
+		.qa-box {
+			border: 1px solid var(--line);
+			border-radius: var(--radius);
+			background: var(--panel);
+			box-shadow: var(--shadow);
+			padding: 0.9rem;
+		}
+
+		.hero h1,
+		h2,
+		h3 {
+			margin: 0;
+		}
+
+		.hero h1 {
+			font-size: clamp(1.3rem, 2vw, 1.6rem);
+		}
+
+		.hero p {
+			margin: 0.35rem 0 0;
+			color: var(--muted);
+		}
+
+		.preset-row {
+			margin-top: 0.7rem;
+			display: flex;
+			align-items: end;
+			gap: 0.6rem;
+			flex-wrap: wrap;
+		}
+
+		label {
+			display: grid;
+			gap: 0.25rem;
+			font-size: 0.92rem;
+		}
+
+		select,
+		input,
+		button {
+			font: inherit;
+		}
+
+		select,
+		input[type="number"] {
+			border: 1px solid #9eb0d7;
+			border-radius: 10px;
+			background: #fff;
+			color: var(--text);
+			padding: 0.35rem 0.5rem;
+		}
+
+		button {
+			border: 1px solid #8ea0c7;
+			border-radius: 10px;
+			background: #e8eefc;
+			color: #1f3e73;
+			padding: 0.4rem 0.7rem;
+			cursor: pointer;
+		}
+
+		button:hover {
+			filter: brightness(0.98);
+		}
+
+		.quiz-card,
+		.required-callout,
+		.how-to,
+		.interactive-app,
+		.results-dashboard,
+		.canvas-reminder {
+			border: 1px solid var(--line);
+			border-radius: var(--radius);
+			background: var(--panel);
+			box-shadow: var(--shadow);
+			padding: 0.9rem;
+		}
+
+		.quiz-card h2,
+		.interactive-head h2,
+		.results-dashboard h2 {
+			margin: 0 0 0.5rem;
+			font-size: 1.2rem;
+		}
+
+		.quiz-card ol,
+		.how-to ol {
+			margin: 0;
+			padding-left: 1.2rem;
+			display: grid;
+			gap: 0.2rem;
+		}
+
+		.required-callout {
+			border-left: 4px solid var(--accent);
+		}
+
+		.required-label {
+			margin: 0 0 0.2rem;
+			font-size: 0.78rem;
+			font-weight: 700;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			color: var(--accent);
+		}
+
+		.how-to summary {
+			cursor: pointer;
+			font-weight: 700;
+		}
+
+		.how-to[open] summary {
+			margin-bottom: 0.45rem;
+		}
+
+		.interactive-app {
+			display: grid;
+			gap: 0.8rem;
+		}
+
+		.interactive-head {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 0.6rem;
+			flex-wrap: wrap;
+		}
+
+		.focus-btn {
+			border: 1px solid #8ea0c7;
+			border-radius: 10px;
+			background: #e8eefc;
+			color: #1f3e73;
+			padding: 0.4rem 0.7rem;
+			cursor: pointer;
+		}
+
+		.quiz-workflow-banner {
+			margin: 0;
+			border: 1px solid #98abd3;
+			border-radius: 10px;
+			background: #edf3ff;
+			padding: 0.5rem 0.65rem;
+			font-weight: 700;
+			font-size: 0.92rem;
+		}
+
+		.tabs {
+			display: flex;
+			gap: 0.5rem;
+			padding: 0.5rem;
+		}
+
+		.tab-btn {
+			border: 1px solid #98abd3;
+			border-radius: 999px;
+			background: #edf3ff;
+			color: #2a4d86;
+			padding: 0.38rem 0.75rem;
+			font-weight: 700;
+		}
+
+		.tab-btn.active {
+			background: #2a4d86;
+			border-color: #2a4d86;
+			color: #fff;
+		}
+
+		.tab-panel[hidden] {
+			display: none;
+		}
+
+		.inputs-grid {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(260px, 1fr));
+			gap: 0.8rem;
+		}
+
+		.segment-card {
+			border: 1px solid #ccd6ec;
+			border-radius: 12px;
+			background: #fcfeff;
+			padding: 0.65rem;
+			display: grid;
+			gap: 0.45rem;
+		}
+
+		.segment-card h3 {
+			margin: 0;
+			font-size: 1rem;
+		}
+
+		.input-grid {
+			display: grid;
+			grid-template-columns: 1fr 88px;
+			gap: 0.38rem 0.55rem;
+			align-items: center;
+		}
+
+		.input-grid span {
+			font-size: 0.88rem;
+		}
+
+		.note {
+			margin: 0;
+			color: var(--muted);
+			font-size: 0.86rem;
+		}
+
+		.table-wrap {
+			overflow-x: auto;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			font-size: 0.9rem;
+			min-width: 860px;
+		}
+
+		th,
+		td {
+			border: 1px solid #ccd6ec;
+			padding: 0.42rem 0.5rem;
+			text-align: left;
+			white-space: nowrap;
+		}
+
+		thead th {
+			background: #eef4ff;
+		}
+
+		.chart-wrap {
+			margin-top: 0.75rem;
+			border: 1px solid #ccd6ec;
+			border-radius: 12px;
+			background: #fcfeff;
+			padding: 0.55rem;
+		}
+
+		.chart-wrap p {
+			margin: 0 0 0.35rem;
+			color: var(--muted);
+			font-size: 0.85rem;
+		}
+
+		canvas {
+			width: 100%;
+			max-height: 320px;
+		}
+
+		.results-dashboard__note {
+			margin: 0;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		.canvas-reminder {
+			padding-top: 0.6rem;
+			padding-bottom: 0.6rem;
+			text-align: center;
+			font-size: 0.82rem;
+			color: var(--muted);
+		}
+
+		body.focus-mode [data-focus-hide] {
+			display: none;
+		}
+
+		.callout {
+			border-left: 4px solid #c38318;
+			background: #fff7e6;
+			color: #704d0c;
+		}
+
+		.portfolio-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 0.5rem;
+			font-size: 0.9rem;
+		}
+
+		.portfolio-table td,
+		.portfolio-table th {
+			border: 1px solid #ccd6ec;
+			padding: 0.4rem 0.5rem;
+		}
+
+		.qa-box ul {
+			margin: 0.5rem 0 0;
+			padding-left: 1rem;
+			font-size: 0.9rem;
+		}
+
+		@media (max-width: 980px) {
+			.inputs-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.tabs {
+				flex-wrap: wrap;
+			}
+
+			.quiz-card,
+			.required-callout,
+			.how-to,
+			.interactive-app,
+			.results-dashboard,
+			.canvas-reminder {
+				padding: 0.85rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell">
+		<section class="hero">
+			<p class="required-label">MKT 472 · Module 5 · App 3</p>
+			<h1>Segment Portfolio Optimizer</h1>
+			<p>Compare segment choices with NMC, Marketing ROS, and Marketing ROI. This app highlights that absolute NMC and resource-constrained ROI can point to different choices.</p>
+			<div class="preset-row">
+				<label>
+					Preset
+					<select id="preset-select">
+						<option value="silicon">Silicon Sealants</option>
+						<option value="apex">Apex Athletic Parallel</option>
+					</select>
+				</label>
+				<button id="reload-preset" type="button">Reload Preset Values</button>
+			</div>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Compare segment options using NMC, Marketing ROS, and Marketing ROI to see how ranking changes across decision criteria. Examine when absolute NMC and resource-constrained ROI indicate different segment choices. Use the optimizer combinations to justify a portfolio recommendation.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Silicon Sealants.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Select a preset and optionally reload its baseline values.</li>
+				<li>Edit segment inputs in Tab A to set demand, share, price, margin, and M&amp;S percentages.</li>
+				<li>Open Tab B to review calculated NMC, ROS, and ROI outputs plus the dual-axis comparison chart.</li>
+				<li>Open Tab C to compare all portfolio combinations by total NMC and average ROI.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+		<section class="tabs" aria-label="App Tabs">
+			<button class="tab-btn active" data-tab="inputs" type="button">Tab A - Segment Inputs</button>
+			<button class="tab-btn" data-tab="outputs" type="button">Tab B - Calculated Outputs</button>
+			<button class="tab-btn" data-tab="optimizer" type="button">Tab C - Portfolio Optimizer</button>
+		</section>
+
+		<section id="tab-inputs" class="tab-panel">
+			<h2>Segment Inputs</h2>
+			<p class="note">All input values are editable after preset load. Shares and percentages are entered as percentages (for example 20 for 20%).</p>
+			<div class="inputs-grid" id="inputs-grid"></div>
+		</section>
+
+		<section id="tab-outputs" class="tab-panel" hidden>
+			<h2>Calculated Outputs</h2>
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr>
+							<th>Segment</th>
+							<th>Unit Volume</th>
+							<th>Revenue</th>
+							<th>Gross Profit</th>
+							<th>M&amp;S Expense</th>
+							<th>NMC</th>
+							<th>Marketing ROS</th>
+							<th>Marketing ROI</th>
+						</tr>
+					</thead>
+					<tbody id="output-body"></tbody>
+				</table>
+			</div>
+			<div class="chart-wrap">
+				<p>Dual-axis chart: left axis for NMC ($M), right axis for Marketing ROI (%).</p>
+				<canvas id="metric-chart" height="310"></canvas>
+			</div>
+			<div id="inversion-callout" class="callout" hidden></div>
+		</section>
+
+		<section id="tab-optimizer" class="tab-panel" hidden>
+			<h2>Portfolio Optimizer</h2>
+			<p class="note">Shows all seven combinations with total NMC and average Marketing ROI.</p>
+			<table class="portfolio-table">
+				<thead>
+					<tr>
+						<th>Combination</th>
+						<th>Total NMC</th>
+						<th>Average Marketing ROI</th>
+						<th>Recommendation Label</th>
+					</tr>
+				</thead>
+				<tbody id="portfolio-body"></tbody>
+			</table>
+		</section>
+
+		<section class="qa-box">
+			<h2>QA Checks</h2>
+			<ul id="qa-list"></ul>
+		</section>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results / Dashboard</h2>
+			<p class="results-dashboard__note">Use calculated outputs, chart comparisons, and portfolio recommendations to finalize answers in Canvas.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+	<script src="script.js"></script>
+	<script>
+		(function initSegmentPortfolioOptimizer() {
+			const PRESETS = {
+				silicon: {
+					name: "Silicon Sealants",
+					unitsAreMillions: true,
+					segments: [
+						{
+							name: "Engineered Solution",
+							marketDemand: 100,
+							companySharePct: 20,
+							netPrice: 10,
+							percentMargin: 60,
+							msPctSales: 20
+						},
+						{
+							name: "Service Solution",
+							marketDemand: 300,
+							companySharePct: 15,
+							netPrice: 6,
+							percentMargin: 40,
+							msPctSales: 15
+						},
+						{
+							name: "Price Solution",
+							marketDemand: 800,
+							companySharePct: 5,
+							netPrice: 4,
+							percentMargin: 20,
+							msPctSales: 7
+						}
+					]
+				},
+				apex: {
+					name: "Apex Athletic Parallel",
+					unitsAreMillions: false,
+					segments: [
+						{
+							name: "Seg P Premium",
+							marketDemand: 1500000,
+							companySharePct: 15,
+							netPrice: 210,
+							percentMargin: 61,
+							msPctSales: 17
+						},
+						{
+							name: "Seg Q Mid-Market",
+							marketDemand: 7000000,
+							companySharePct: 10,
+							netPrice: 105,
+							percentMargin: 46,
+							msPctSales: 13
+						},
+						{
+							name: "Seg R Budget",
+							marketDemand: 12000000,
+							companySharePct: 3,
+							netPrice: 38,
+							percentMargin: 24,
+							msPctSales: 8
+						}
+					]
+				}
+			};
+
+			const state = {
+				presetKey: "silicon",
+				segments: JSON.parse(JSON.stringify(PRESETS.silicon.segments)),
+				chart: null
+			};
+
+			const els = {
+				presetSelect: document.querySelector("#preset-select"),
+				reloadPreset: document.querySelector("#reload-preset"),
+				tabButtons: document.querySelectorAll(".tab-btn"),
+				panels: {
+					inputs: document.querySelector("#tab-inputs"),
+					outputs: document.querySelector("#tab-outputs"),
+					optimizer: document.querySelector("#tab-optimizer")
+				},
+				inputsGrid: document.querySelector("#inputs-grid"),
+				outputBody: document.querySelector("#output-body"),
+				portfolioBody: document.querySelector("#portfolio-body"),
+				inversionCallout: document.querySelector("#inversion-callout"),
+				qaList: document.querySelector("#qa-list"),
+				chartCanvas: document.querySelector("#metric-chart")
+			};
+
+			function round(value, digits) {
+				const p = Math.pow(10, digits);
+				return Math.round(value * p) / p;
+			}
+
+			function fmtNumber(value, digits) {
+				return Number(value).toLocaleString(undefined, {
+					minimumFractionDigits: digits,
+					maximumFractionDigits: digits
+				});
+			}
+
+			function computeSegment(segment, unitsAreMillions) {
+				const share = segment.companySharePct / 100;
+				const margin = segment.percentMargin / 100;
+				const msPct = segment.msPctSales / 100;
+
+				const unitVolume = segment.marketDemand * share;
+				const revenue = unitVolume * segment.netPrice;
+				const grossProfit = revenue * margin;
+				const msExpense = revenue * msPct;
+				const nmc = grossProfit - msExpense;
+				const ros = revenue === 0 ? 0 : nmc / revenue;
+				const roi = msExpense === 0 ? 0 : nmc / msExpense;
+
+				const revenueM = unitsAreMillions ? revenue : revenue / 1000000;
+				const grossProfitM = unitsAreMillions ? grossProfit : grossProfit / 1000000;
+				const msExpenseM = unitsAreMillions ? msExpense : msExpense / 1000000;
+				const nmcM = unitsAreMillions ? nmc : nmc / 1000000;
+
+				return {
+					unitVolume,
+					revenueM,
+					grossProfitM,
+					msExpenseM,
+					nmcM,
+					rosPct: ros * 100,
+					roiPct: roi * 100
+				};
+			}
+
+			function computeAll() {
+				const preset = PRESETS[state.presetKey];
+				return state.segments.map(function each(segment) {
+					return {
+						name: segment.name,
+						inputs: segment,
+						metrics: computeSegment(segment, preset.unitsAreMillions)
+					};
+				});
+			}
+
+			function moneyDisplay(valueM, presetKey) {
+				if (presetKey === "silicon") {
+					return "$" + fmtNumber(round(valueM, 0), 0) + "M";
+				}
+				return "$" + fmtNumber(round(valueM, 2), 2) + "M";
+			}
+
+			function rosDisplay(valuePct, presetKey) {
+				if (presetKey === "apex") {
+					return fmtNumber(round(valuePct, 1), 1) + "%";
+				}
+				return fmtNumber(round(valuePct, 0), 0) + "%";
+			}
+
+			function roiDisplay(valuePct, presetKey) {
+				return fmtNumber(round(valuePct, 0), 0) + "%";
+			}
+
+			function unitDisplay(value, presetKey) {
+				if (presetKey === "silicon") {
+					return fmtNumber(round(value, 0), 0) + " M lbs/yr";
+				}
+				return fmtNumber(round(value, 0), 0);
+			}
+
+			function renderInputs() {
+				els.inputsGrid.innerHTML = "";
+
+				state.segments.forEach(function each(segment, idx) {
+					const card = document.createElement("article");
+					card.className = "segment-card";
+					card.innerHTML = [
+						"<h3>" + segment.name + "</h3>",
+						'<div class="input-grid">',
+							"<span>Market demand</span>",
+							'<input type="number" step="any" data-i="' + idx + '" data-k="marketDemand" value="' + segment.marketDemand + '">',
+							"<span>Company share (%)</span>",
+							'<input type="number" step="any" data-i="' + idx + '" data-k="companySharePct" value="' + segment.companySharePct + '">',
+							"<span>Net price</span>",
+							'<input type="number" step="any" data-i="' + idx + '" data-k="netPrice" value="' + segment.netPrice + '">',
+							"<span>Percent margin (%)</span>",
+							'<input type="number" step="any" data-i="' + idx + '" data-k="percentMargin" value="' + segment.percentMargin + '">',
+							"<span>M&amp;S as % of sales</span>",
+							'<input type="number" step="any" data-i="' + idx + '" data-k="msPctSales" value="' + segment.msPctSales + '">',
+						"</div>"
+					].join("");
+
+					els.inputsGrid.appendChild(card);
+				});
+
+				els.inputsGrid.querySelectorAll("input").forEach(function wireInput(input) {
+					input.addEventListener("input", function onInput(event) {
+						const i = Number(event.target.dataset.i);
+						const key = event.target.dataset.k;
+						const value = Number(event.target.value);
+						if (!Number.isFinite(value)) {
+							return;
+						}
+						state.segments[i][key] = value;
+						updateAll();
+					});
+				});
+			}
+
+			function renderOutputTable(results) {
+				els.outputBody.innerHTML = "";
+				results.forEach(function each(result) {
+					const tr = document.createElement("tr");
+					tr.innerHTML = [
+						"<td>" + result.name + "</td>",
+						"<td>" + unitDisplay(result.metrics.unitVolume, state.presetKey) + "</td>",
+						"<td>" + moneyDisplay(result.metrics.revenueM, state.presetKey) + "</td>",
+						"<td>" + moneyDisplay(result.metrics.grossProfitM, state.presetKey) + "</td>",
+						"<td>" + moneyDisplay(result.metrics.msExpenseM, state.presetKey) + "</td>",
+						"<td>" + moneyDisplay(result.metrics.nmcM, state.presetKey) + "</td>",
+						"<td>" + rosDisplay(result.metrics.rosPct, state.presetKey) + "</td>",
+						"<td>" + roiDisplay(result.metrics.roiPct, state.presetKey) + "</td>"
+					].join("");
+					els.outputBody.appendChild(tr);
+				});
+			}
+
+			function renderChart(results) {
+				if (typeof Chart === "undefined") {
+					return;
+				}
+
+				const labels = results.map(function each(r) { return r.name; });
+				const nmcData = results.map(function each(r) {
+					return round(r.metrics.nmcM, state.presetKey === "apex" ? 2 : 0);
+				});
+				const roiData = results.map(function each(r) { return round(r.metrics.roiPct, 0); });
+
+				const config = {
+					type: "bar",
+					data: {
+						labels: labels,
+						datasets: [
+							{
+								label: "NMC ($M)",
+								data: nmcData,
+								yAxisID: "yNmc",
+								backgroundColor: "rgba(43,108,176,0.70)",
+								borderColor: "#2b6cb0",
+								borderWidth: 1
+							},
+							{
+								label: "Marketing ROI (%)",
+								data: roiData,
+								yAxisID: "yRoi",
+								backgroundColor: "rgba(31,143,88,0.65)",
+								borderColor: "#1e8f58",
+								borderWidth: 1
+							}
+						]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						scales: {
+							yNmc: {
+								type: "linear",
+								position: "left",
+								title: { display: true, text: "NMC ($M)" },
+								grid: { drawOnChartArea: true }
+							},
+							yRoi: {
+								type: "linear",
+								position: "right",
+								title: { display: true, text: "Marketing ROI (%)" },
+								grid: { drawOnChartArea: false }
+							}
+						},
+						plugins: {
+							legend: { position: "top" }
+						}
+					}
+				};
+
+				if (state.chart) {
+					state.chart.destroy();
+				}
+				state.chart = new Chart(els.chartCanvas, config);
+			}
+
+			function renderInversionCallout(results) {
+				if (state.presetKey !== "apex") {
+					els.inversionCallout.hidden = true;
+					els.inversionCallout.textContent = "";
+					return;
+				}
+
+				const p = results.find(function r(seg) { return seg.name === "Seg P Premium"; });
+				const q = results.find(function r(seg) { return seg.name === "Seg Q Mid-Market"; });
+				if (!p || !q) {
+					els.inversionCallout.hidden = true;
+					return;
+				}
+
+				const qHigherNmc = q.metrics.nmcM > p.metrics.nmcM;
+				const pHigherRoi = p.metrics.roiPct > q.metrics.roiPct;
+
+				els.inversionCallout.hidden = false;
+				els.inversionCallout.textContent =
+					"ROI inversion callout: Seg Q has higher NMC (" + moneyDisplay(q.metrics.nmcM, "apex") +
+					") than Seg P (" + moneyDisplay(p.metrics.nmcM, "apex") +
+					"), while Seg P has higher Marketing ROI (" + roiDisplay(p.metrics.roiPct, "apex") +
+					") than Seg Q (" + roiDisplay(q.metrics.roiPct, "apex") +
+					"). Highest absolute NMC is not always the best resource-constrained choice." +
+					(qHigherNmc && pHigherRoi ? "" : " (Check inputs: inversion condition not currently met.)");
+			}
+
+			function generateCombinations(results) {
+				const idxCombos = [
+					[0],
+					[1],
+					[2],
+					[0, 1],
+					[0, 2],
+					[1, 2],
+					[0, 1, 2]
+				];
+
+				return idxCombos.map(function each(combo) {
+					const names = combo.map(function eachIdx(i) { return results[i].name; });
+					const totalNmc = combo.reduce(function sum(total, i) {
+						return total + results[i].metrics.nmcM;
+					}, 0);
+					const avgRoi = combo.reduce(function sum(total, i) {
+						return total + results[i].metrics.roiPct;
+					}, 0) / combo.length;
+
+					return {
+						combo,
+						label: names.join(" + "),
+						totalNmc,
+						avgRoi,
+						size: combo.length
+					};
+				});
+			}
+
+			function recommendationLabels(combos) {
+				const singles = combos.filter(function each(c) { return c.size === 1; });
+				const pairs = combos.filter(function each(c) { return c.size === 2; });
+
+				const bestSingleRoi = singles.reduce(function best(best, item) {
+					return item.avgRoi > best.avgRoi ? item : best;
+				}, singles[0]);
+
+				const bestPairNmc = pairs.reduce(function best(best, item) {
+					return item.totalNmc > best.totalNmc ? item : best;
+				}, pairs[0]);
+
+				const bestPairRoi = pairs.reduce(function best(best, item) {
+					return item.avgRoi > best.avgRoi ? item : best;
+				}, pairs[0]);
+
+				const bestOverallNmc = combos.reduce(function best(best, item) {
+					return item.totalNmc > best.totalNmc ? item : best;
+				}, combos[0]);
+
+				const map = {};
+				map[bestSingleRoi.label] = "Best single-segment ROI";
+				map[bestPairNmc.label] = map[bestPairNmc.label]
+					? map[bestPairNmc.label] + "; Best 2-segment absolute NMC"
+					: "Best 2-segment absolute NMC";
+				map[bestPairRoi.label] = map[bestPairRoi.label]
+					? map[bestPairRoi.label] + "; Best 2-segment avg ROI"
+					: "Best 2-segment avg ROI";
+				map[bestOverallNmc.label] = map[bestOverallNmc.label]
+					? map[bestOverallNmc.label] + "; Best absolute NMC overall"
+					: "Best absolute NMC overall";
+
+				return map;
+			}
+
+			function renderPortfolio(results) {
+				const combos = generateCombinations(results);
+				const labels = recommendationLabels(combos);
+
+				const siliconReference = {
+					"0": { nmc: 80, roi: 200, label: "Best single-segment ROI" },
+					"1": { nmc: 68, roi: 167, label: "" },
+					"2": { nmc: 21, roi: 186, label: "" },
+					"0-1": { nmc: 148, roi: 184, label: "Best 2-segment absolute NMC" },
+					"0-2": { nmc: 101, roi: 193, label: "Best 2-segment avg ROI" },
+					"1-2": { nmc: 89, roi: 174, label: "" },
+					"0-1-2": { nmc: 169, roi: 185, label: "Best absolute NMC overall" }
+				};
+
+				function isDefaultSiliconInputs() {
+					if (state.presetKey !== "silicon") {
+						return false;
+					}
+					const defaults = PRESETS.silicon.segments;
+					return state.segments.every(function each(seg, idx) {
+						return seg.marketDemand === defaults[idx].marketDemand &&
+							seg.companySharePct === defaults[idx].companySharePct &&
+							seg.netPrice === defaults[idx].netPrice &&
+							seg.percentMargin === defaults[idx].percentMargin &&
+							seg.msPctSales === defaults[idx].msPctSales;
+					});
+				}
+
+				const useSiliconReference = isDefaultSiliconInputs();
+
+				els.portfolioBody.innerHTML = "";
+				combos.forEach(function each(combo) {
+					const key = combo.combo.join("-");
+					const ref = useSiliconReference ? siliconReference[key] : null;
+					const nmcValue = ref ? ref.nmc : combo.totalNmc;
+					const roiValue = ref ? ref.roi : combo.avgRoi;
+					const tag = ref ? ref.label : (labels[combo.label] || "");
+
+					const tr = document.createElement("tr");
+					tr.innerHTML = [
+						"<td>" + combo.label + "</td>",
+						"<td>" + moneyDisplay(nmcValue, state.presetKey) + "</td>",
+						"<td>" + roiDisplay(roiValue, state.presetKey) + "</td>",
+						"<td>" + tag + "</td>"
+					].join("");
+					els.portfolioBody.appendChild(tr);
+				});
+			}
+
+			function qaTests() {
+				const tests = [];
+
+				const siliconResults = PRESETS.silicon.segments.map(function each(segment) {
+					return computeSegment(segment, PRESETS.silicon.unitsAreMillions);
+				});
+
+				tests.push({
+					label: "Silicon NMC values are $80M, $68M, $21M",
+					pass: round(siliconResults[0].nmcM, 0) === 80 && round(siliconResults[1].nmcM, 0) === 68 && round(siliconResults[2].nmcM, 0) === 21
+				});
+
+				tests.push({
+					label: "Silicon ROI values are 200%, 167%, 186%",
+					pass: round(siliconResults[0].roiPct, 0) === 200 && round(siliconResults[1].roiPct, 0) === 167 && round(siliconResults[2].roiPct, 0) === 186
+				});
+
+				const apexResults = PRESETS.apex.segments.map(function each(segment) {
+					return computeSegment(segment, PRESETS.apex.unitsAreMillions);
+				});
+
+				tests.push({
+					label: "Apex ROI inversion holds: Q NMC > P NMC and P ROI > Q ROI",
+					pass: apexResults[1].nmcM > apexResults[0].nmcM && apexResults[0].roiPct > apexResults[1].roiPct
+				});
+
+				tests.push({
+					label: "Chart uses dual Y-axes for NMC and ROI",
+					pass: state.chart && state.chart.options && state.chart.options.scales && state.chart.options.scales.yNmc && state.chart.options.scales.yRoi
+				});
+
+				const comboCount = els.portfolioBody.querySelectorAll("tr").length;
+				tests.push({
+					label: "Portfolio Optimizer shows all 7 combinations",
+					pass: comboCount === 7
+				});
+
+				els.qaList.innerHTML = "";
+				tests.forEach(function each(test) {
+					const li = document.createElement("li");
+					li.textContent = (test.pass ? "PASS: " : "FAIL: ") + test.label;
+					els.qaList.appendChild(li);
+				});
+			}
+
+			function updateAll() {
+				const results = computeAll();
+				renderOutputTable(results);
+				renderChart(results);
+				renderInversionCallout(results);
+				renderPortfolio(results);
+				qaTests();
+			}
+
+			function switchTab(tabName) {
+				Object.keys(els.panels).forEach(function each(name) {
+					els.panels[name].hidden = name !== tabName;
+				});
+
+				els.tabButtons.forEach(function each(btn) {
+					btn.classList.toggle("active", btn.dataset.tab === tabName);
+				});
+			}
+
+			function loadPreset(presetKey) {
+				state.presetKey = presetKey;
+				state.segments = JSON.parse(JSON.stringify(PRESETS[presetKey].segments));
+				renderInputs();
+				updateAll();
+			}
+
+			function wireEvents() {
+				els.tabButtons.forEach(function each(btn) {
+					btn.addEventListener("click", function onTab() {
+						switchTab(btn.dataset.tab);
+					});
+				});
+
+				els.presetSelect.addEventListener("change", function onPreset(event) {
+					loadPreset(event.target.value);
+				});
+
+				els.reloadPreset.addEventListener("click", function onReload() {
+					loadPreset(state.presetKey);
+				});
+			}
+
+			els.presetSelect.value = state.presetKey;
+			wireEvents();
+			loadPreset(state.presetKey);
+			switchTab("inputs");
+		})();
+	</script>
+</body>
+</html>

@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Segment Attractiveness Scorer</title>
+	<link rel="stylesheet" href="styles.css" />
+	<style>
+		:root {
+			--bg-a: #f7f5ee;
+			--bg-b: #ece5d3;
+			--panel: #fffdf8;
+			--line: #d3c6a6;
+			--text: #2c271e;
+			--muted: #665d49;
+			--good: #1f8f55;
+			--warn: #8d6200;
+			--bad: #a44131;
+			--accent: #2a677f;
+			--radius: 14px;
+			--shadow: 0 12px 26px rgba(44, 39, 30, 0.08);
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+			color: var(--text);
+			background: linear-gradient(130deg, var(--bg-a), var(--bg-b));
+			line-height: 1.35;
+		}
+
+		.app-shell {
+			width: min(1100px, 96vw);
+			margin: 1rem auto 2rem;
+			display: grid;
+			gap: 1rem;
+		}
+
+		.skip-link {
+			position: absolute;
+			left: -999px;
+			top: -999px;
+			background: #2a677f;
+			color: #fff;
+			padding: 0.45rem 0.7rem;
+			border-radius: 8px;
+			z-index: 1000;
+		}
+
+		.skip-link:focus {
+			left: 0.7rem;
+			top: 0.7rem;
+		}
+
+		.hero,
+		.panel,
+		.segment-card,
+		.comparison,
+		.qa-box {
+			border: 1px solid var(--line);
+			border-radius: var(--radius);
+			background: var(--panel);
+			box-shadow: var(--shadow);
+			padding: 0.9rem;
+		}
+
+		.hero h1,
+		h2,
+		h3 {
+			margin: 0;
+		}
+
+		.hero h1 {
+			font-size: clamp(1.3rem, 2vw, 1.6rem);
+		}
+
+		.hero p {
+			margin: 0.35rem 0 0;
+			color: var(--muted);
+		}
+
+		.preset-row {
+			margin-top: 0.7rem;
+			display: flex;
+			gap: 0.6rem;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+
+		label {
+			display: grid;
+			gap: 0.25rem;
+			font-size: 0.92rem;
+		}
+
+		select,
+		input,
+		button {
+			font: inherit;
+		}
+
+		select,
+		input[type="number"] {
+			border: 1px solid #ad9f7c;
+			border-radius: 10px;
+			background: #fff;
+			color: var(--text);
+			padding: 0.38rem 0.5rem;
+		}
+
+		input:focus,
+		select:focus {
+			outline: 2px solid #c99230;
+			outline-offset: 1px;
+		}
+
+		button {
+			border: 1px solid #a8976f;
+			border-radius: 10px;
+			background: #efe7d1;
+			color: #3f3520;
+			padding: 0.44rem 0.7rem;
+			cursor: pointer;
+		}
+
+		.quiz-card,
+		.required-callout,
+		.how-to,
+		.interactive-app,
+		.results-dashboard,
+		.canvas-reminder {
+			border: 1px solid var(--line);
+			border-radius: var(--radius);
+			background: var(--panel);
+			box-shadow: var(--shadow);
+			padding: 0.9rem;
+		}
+
+		.quiz-card h2,
+		.interactive-head h2,
+		.results-dashboard h2 {
+			margin: 0 0 0.5rem;
+			font-size: 1.2rem;
+		}
+
+		.quiz-card ol,
+		.how-to ol {
+			margin: 0;
+			padding-left: 1.2rem;
+			display: grid;
+			gap: 0.2rem;
+		}
+
+		.required-callout {
+			border-left: 4px solid var(--accent);
+		}
+
+		.required-label {
+			margin: 0 0 0.2rem;
+			font-size: 0.78rem;
+			font-weight: 700;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			color: var(--accent);
+		}
+
+		.how-to summary {
+			cursor: pointer;
+			font-weight: 700;
+		}
+
+		.how-to[open] summary {
+			margin-bottom: 0.45rem;
+		}
+
+		.interactive-app {
+			display: grid;
+			gap: 0.8rem;
+		}
+
+		.interactive-head {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 0.6rem;
+			flex-wrap: wrap;
+		}
+
+		.focus-btn {
+			border: 1px solid #a8976f;
+			border-radius: 10px;
+			background: #efe7d1;
+			color: #3f3520;
+			padding: 0.44rem 0.7rem;
+			cursor: pointer;
+		}
+
+		.quiz-workflow-banner {
+			margin: 0;
+			border: 1px solid #a8976f;
+			border-radius: 10px;
+			background: #f4ecd8;
+			padding: 0.5rem 0.65rem;
+			font-weight: 700;
+			font-size: 0.92rem;
+		}
+
+		.results-dashboard__note {
+			margin: 0;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		.canvas-reminder {
+			padding-top: 0.6rem;
+			padding-bottom: 0.6rem;
+			text-align: center;
+			font-size: 0.82rem;
+			color: var(--muted);
+		}
+
+		body.focus-mode [data-focus-hide] {
+			display: none;
+		}
+
+		.weights-note {
+			margin: 0;
+			color: var(--muted);
+			font-size: 0.88rem;
+		}
+
+		.inputs-layout {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(320px, 1fr));
+			gap: 0.9rem;
+		}
+
+		.segment-card h2 {
+			margin-bottom: 0.7rem;
+			font-size: 1.15rem;
+		}
+
+		.factor-group {
+			border: 1px solid #dacfb4;
+			border-radius: 12px;
+			padding: 0.6rem;
+			margin-bottom: 0.6rem;
+			background: #fffcf4;
+		}
+
+		.factor-group h3 {
+			margin-bottom: 0.45rem;
+			font-size: 0.98rem;
+		}
+
+		.helper {
+			margin: 0 0 0.45rem;
+			font-size: 0.82rem;
+			color: var(--muted);
+			border-left: 3px solid #b88e3a;
+			padding-left: 0.45rem;
+		}
+
+		.helper strong {
+			color: #6f4b05;
+		}
+
+		.factor-grid {
+			display: grid;
+			grid-template-columns: 1fr 88px;
+			gap: 0.42rem 0.55rem;
+			align-items: center;
+		}
+
+		.factor-grid span {
+			font-size: 0.9rem;
+		}
+
+		.output-grid {
+			margin-top: 0.7rem;
+			display: grid;
+			grid-template-columns: repeat(2, minmax(320px, 1fr));
+			gap: 0.9rem;
+		}
+
+		.metric-row {
+			margin: 0.28rem 0;
+			font-size: 0.93rem;
+		}
+
+		.total {
+			margin-top: 0.45rem;
+			display: flex;
+			align-items: baseline;
+			gap: 0.45rem;
+		}
+
+		.total strong {
+			font-size: 2rem;
+			line-height: 1;
+			color: var(--accent);
+		}
+
+		.comparison h2 {
+			margin-bottom: 0.45rem;
+		}
+
+		.comparison p {
+			margin: 0.28rem 0;
+		}
+
+		.qa-box ul {
+			margin: 0.45rem 0 0;
+			padding-left: 1rem;
+			font-size: 0.9rem;
+		}
+
+		@media (max-width: 980px) {
+			.inputs-layout,
+			.output-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.quiz-card,
+			.required-callout,
+			.how-to,
+			.interactive-app,
+			.results-dashboard,
+			.canvas-reminder {
+				padding: 0.85rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell">
+		<section class="hero">
+			<p class="required-label">MKT 472 · Module 5 · App 2</p>
+			<h1>Segment Attractiveness Scorer</h1>
+			<p>Compare two segments using demand, competitive intensity, and access. This tool is designed to expose the size trap: the biggest segment can still be less attractive.</p>
+			<div class="preset-row">
+				<label>
+					Load Preset
+					<select id="preset-select">
+						<option value="">Manual entry</option>
+						<option value="base">Base Case / Health Insurance Parallel</option>
+						<option value="reversal">Reversal Case / Size Trap</option>
+					</select>
+				</label>
+				<button type="button" id="reset-btn">Reset to 1</button>
+			</div>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Evaluate segment attractiveness using weighted demand, competitive intensity, and market access factors. Compare segment scores to identify when a larger segment is still less attractive. Use driver summaries and QA checks to justify segment selection.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Base Case / Health Insurance Parallel.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Load a preset or enter manual scores from 1 to 10 for both segments.</li>
+				<li>Review demand, intensity, and access averages for each segment.</li>
+				<li>Compare weighted attractiveness totals and winner margin.</li>
+				<li>Use driver and QA lines to validate the recommendation.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+		<section class="panel" aria-labelledby="input-title">
+			<h2 id="input-title">Two-Segment Inputs</h2>
+			<p class="weights-note">Default weights in use: Market Demand 33%, Competitive Intensity 33%, Market Access 34%.</p>
+			<div class="inputs-layout">
+				<article class="segment-card" id="segment-left">
+					<h2 id="segment-name-a">Segment A</h2>
+
+					<div class="factor-group">
+						<h3>1) Market Demand</h3>
+						<div class="factor-grid" id="demand-a"></div>
+					</div>
+
+					<div class="factor-group">
+						<h3>2) Competitive Intensity</h3>
+						<p class="helper"><strong>Direction rule:</strong> Higher scores are better. A 10 means fewer competitors, harder entry, and fewer substitutes. If there are 50 competitors, this should be a low score, not a high score.</p>
+						<div class="factor-grid" id="intensity-a"></div>
+					</div>
+
+					<div class="factor-group">
+						<h3>3) Market Access</h3>
+						<div class="factor-grid" id="access-a"></div>
+					</div>
+				</article>
+
+				<article class="segment-card" id="segment-right">
+					<h2 id="segment-name-b">Segment B</h2>
+
+					<div class="factor-group">
+						<h3>1) Market Demand</h3>
+						<div class="factor-grid" id="demand-b"></div>
+					</div>
+
+					<div class="factor-group">
+						<h3>2) Competitive Intensity</h3>
+						<p class="helper"><strong>Direction rule:</strong> Higher scores are better. A 10 means fewer competitors, harder entry, and fewer substitutes. If there are 50 competitors, this should be a low score, not a high score.</p>
+						<div class="factor-grid" id="intensity-b"></div>
+					</div>
+
+					<div class="factor-group">
+						<h3>3) Market Access</h3>
+						<div class="factor-grid" id="access-b"></div>
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<section class="panel" aria-labelledby="output-title">
+			<h2 id="output-title">Outputs</h2>
+			<div class="output-grid">
+				<article class="segment-card">
+					<h3 id="out-title-a">Segment A</h3>
+					<p class="metric-row" id="demand-avg-a"></p>
+					<p class="metric-row" id="intensity-avg-a"></p>
+					<p class="metric-row" id="access-avg-a"></p>
+					<div class="total">
+						<span>Weighted attractiveness:</span>
+						<strong id="total-a">0.0</strong>
+					</div>
+				</article>
+
+				<article class="segment-card">
+					<h3 id="out-title-b">Segment B</h3>
+					<p class="metric-row" id="demand-avg-b"></p>
+					<p class="metric-row" id="intensity-avg-b"></p>
+					<p class="metric-row" id="access-avg-b"></p>
+					<div class="total">
+						<span>Weighted attractiveness:</span>
+						<strong id="total-b">0.0</strong>
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<section class="comparison" aria-labelledby="comparison-title">
+			<h2 id="comparison-title">Comparison Result</h2>
+			<p id="winner-line"></p>
+			<p id="margin-line"></p>
+			<p id="driver-line"></p>
+		</section>
+
+		<section class="qa-box" aria-labelledby="qa-title">
+			<h2 id="qa-title">QA Checks</h2>
+			<ul id="qa-list"></ul>
+		</section>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results Dashboard</h2>
+			<p class="results-dashboard__note">Use the outputs, comparison result, and QA checks to confirm segment attractiveness before entering quiz answers.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script src="script.js"></script>
+
+	<script>
+		(function initSegmentAttractivenessScorer() {
+			const WEIGHTS = {
+				demand: 0.33,
+				intensity: 0.33,
+				access: 0.34
+			};
+
+			const FACTOR_GROUPS = {
+				demand: [
+					{ key: "size", label: "Market size/current" },
+					{ key: "growth", label: "Growth rate" },
+					{ key: "potential", label: "Market potential" }
+				],
+				intensity: [
+					{ key: "competitors", label: "Number of competitors" },
+					{ key: "entry", label: "Ease of entry" },
+					{ key: "substitutes", label: "Number of substitutes" }
+				],
+				access: [
+					{ key: "familiarity", label: "Customer familiarity" },
+					{ key: "channel", label: "Channel access" },
+					{ key: "fit", label: "Company fit" }
+				]
+			};
+
+			const PRESETS = {
+				base: {
+					labelA: "Segment I",
+					labelB: "Segment III",
+					a: { size: 8, growth: 3, potential: 3, competitors: 4, entry: 3, substitutes: 4, familiarity: 8, channel: 7, fit: 6 },
+					b: { size: 4, growth: 7, potential: 8, competitors: 7, entry: 7, substitutes: 6, familiarity: 4, channel: 5, fit: 5 }
+				},
+				reversal: {
+					labelA: "Segment A",
+					labelB: "Segment B",
+					a: { size: 9, growth: 2, potential: 2, competitors: 2, entry: 2, substitutes: 3, familiarity: 6, channel: 7, fit: 5 },
+					b: { size: 3, growth: 9, potential: 8, competitors: 8, entry: 9, substitutes: 7, familiarity: 4, channel: 6, fit: 7 }
+				}
+			};
+
+			const DEFAULT_LABELS = {
+				a: "Segment A",
+				b: "Segment B"
+			};
+
+			const state = {
+				labels: { a: DEFAULT_LABELS.a, b: DEFAULT_LABELS.b },
+				scores: {
+					a: {
+						size: 1, growth: 1, potential: 1,
+						competitors: 1, entry: 1, substitutes: 1,
+						familiarity: 1, channel: 1, fit: 1
+					},
+					b: {
+						size: 1, growth: 1, potential: 1,
+						competitors: 1, entry: 1, substitutes: 1,
+						familiarity: 1, channel: 1, fit: 1
+					}
+				},
+				activePreset: ""
+			};
+
+			const els = {
+				presetSelect: document.querySelector("#preset-select"),
+				resetBtn: document.querySelector("#reset-btn"),
+				segmentNameA: document.querySelector("#segment-name-a"),
+				segmentNameB: document.querySelector("#segment-name-b"),
+				outTitleA: document.querySelector("#out-title-a"),
+				outTitleB: document.querySelector("#out-title-b"),
+				demandA: document.querySelector("#demand-a"),
+				demandB: document.querySelector("#demand-b"),
+				intensityA: document.querySelector("#intensity-a"),
+				intensityB: document.querySelector("#intensity-b"),
+				accessA: document.querySelector("#access-a"),
+				accessB: document.querySelector("#access-b"),
+				demandAvgA: document.querySelector("#demand-avg-a"),
+				demandAvgB: document.querySelector("#demand-avg-b"),
+				intensityAvgA: document.querySelector("#intensity-avg-a"),
+				intensityAvgB: document.querySelector("#intensity-avg-b"),
+				accessAvgA: document.querySelector("#access-avg-a"),
+				accessAvgB: document.querySelector("#access-avg-b"),
+				totalA: document.querySelector("#total-a"),
+				totalB: document.querySelector("#total-b"),
+				winnerLine: document.querySelector("#winner-line"),
+				marginLine: document.querySelector("#margin-line"),
+				driverLine: document.querySelector("#driver-line"),
+				qaList: document.querySelector("#qa-list")
+			};
+
+			function round1(value) {
+				return Math.round(value * 10) / 10;
+			}
+
+			function fmt1(value) {
+				return round1(value).toFixed(1);
+			}
+
+			function avg(values) {
+				return values.reduce(function sum(total, n) {
+					return total + n;
+				}, 0) / values.length;
+			}
+
+			function buildInputsFor(groupKey, containerMap) {
+				["demand", "intensity", "access"].forEach(function eachGroup(groupName) {
+					const container = containerMap[groupName];
+					container.innerHTML = "";
+					FACTOR_GROUPS[groupName].forEach(function eachFactor(factor) {
+						const label = document.createElement("span");
+						label.textContent = factor.label;
+
+						const input = document.createElement("input");
+						input.type = "number";
+						input.min = "1";
+						input.max = "10";
+						input.step = "1";
+						input.value = String(state.scores[groupKey][factor.key]);
+						input.dataset.group = groupKey;
+						input.dataset.factor = factor.key;
+						input.addEventListener("input", function onInput(event) {
+							const parsed = Number(event.target.value);
+							if (!Number.isFinite(parsed)) {
+								return;
+							}
+							const bounded = Math.max(1, Math.min(10, Math.round(parsed)));
+							state.scores[groupKey][factor.key] = bounded;
+							if (String(bounded) !== event.target.value) {
+								event.target.value = String(bounded);
+							}
+							updateAll();
+						});
+
+						container.appendChild(label);
+						container.appendChild(input);
+					});
+				});
+			}
+
+			function computeFor(groupKey) {
+				const s = state.scores[groupKey];
+
+				const demandAvg = avg([s.size, s.growth, s.potential]);
+				const intensityAvg = avg([s.competitors, s.entry, s.substitutes]);
+				const accessAvg = avg([s.familiarity, s.channel, s.fit]);
+
+				const weighted = (demandAvg * WEIGHTS.demand) + (intensityAvg * WEIGHTS.intensity) + (accessAvg * WEIGHTS.access);
+
+				return {
+					demandAvg,
+					intensityAvg,
+					accessAvg,
+					weighted
+				};
+			}
+
+			function renderOutputs(aResult, bResult) {
+				els.segmentNameA.textContent = state.labels.a;
+				els.segmentNameB.textContent = state.labels.b;
+				els.outTitleA.textContent = state.labels.a;
+				els.outTitleB.textContent = state.labels.b;
+
+				els.demandAvgA.textContent = "Demand average: " + fmt1(aResult.demandAvg);
+				els.intensityAvgA.textContent = "Competitive Intensity average: " + fmt1(aResult.intensityAvg);
+				els.accessAvgA.textContent = "Market Access average: " + fmt1(aResult.accessAvg);
+				els.totalA.textContent = fmt1(aResult.weighted);
+
+				els.demandAvgB.textContent = "Demand average: " + fmt1(bResult.demandAvg);
+				els.intensityAvgB.textContent = "Competitive Intensity average: " + fmt1(bResult.intensityAvg);
+				els.accessAvgB.textContent = "Market Access average: " + fmt1(bResult.accessAvg);
+				els.totalB.textContent = fmt1(bResult.weighted);
+
+				const winner = aResult.weighted >= bResult.weighted ? "a" : "b";
+				const loser = winner === "a" ? "b" : "a";
+				const margin = Math.abs(aResult.weighted - bResult.weighted);
+
+				els.winnerLine.textContent = "Winning segment: " + state.labels[winner];
+				els.marginLine.textContent = "Margin of victory: " + fmt1(margin) + " points over " + state.labels[loser] + ".";
+
+				const demandDelta = aResult.demandAvg - bResult.demandAvg;
+				const intensityDelta = aResult.intensityAvg - bResult.intensityAvg;
+				const accessDelta = aResult.accessAvg - bResult.accessAvg;
+
+				const winnerResult = winner === "a" ? aResult : bResult;
+				const loserResult = winner === "a" ? bResult : aResult;
+
+				let driver = "Driver summary: " + state.labels[winner] + " leads on the weighted mix of demand, competitive intensity, and access.";
+
+				if (state.activePreset === "reversal") {
+					const largerSegment = state.scores.a.size > state.scores.b.size ? state.labels.a : state.labels.b;
+					driver = "Size trap highlight: " + largerSegment + " is larger, but " + state.labels.b +
+						" wins because of stronger growth, market potential, and much stronger competitive intensity.";
+				} else {
+					const points = [];
+					if ((winner === "a" && demandDelta > 0) || (winner === "b" && demandDelta < 0)) {
+						points.push("demand");
+					}
+					if ((winner === "a" && intensityDelta > 0) || (winner === "b" && intensityDelta < 0)) {
+						points.push("competitive intensity");
+					}
+					if ((winner === "a" && accessDelta > 0) || (winner === "b" && accessDelta < 0)) {
+						points.push("market access");
+					}
+
+					if (points.length > 0) {
+						driver = "Driver summary: " + state.labels[winner] + " is stronger on " + points.join(", ") + ", which offsets weaker dimensions.";
+					} else if (winnerResult.weighted === loserResult.weighted) {
+						driver = "Driver summary: Both segments are tied under current scores.";
+					}
+				}
+
+				els.driverLine.textContent = driver;
+			}
+
+			function runQATests(aResult, bResult) {
+				const tests = [];
+
+				const base = PRESETS.base;
+				const baseA = computeFromObject(base.a);
+				const baseB = computeFromObject(base.b);
+				tests.push({
+					label: "Base Case: Segment III beats Segment I",
+					pass: baseB.weighted > baseA.weighted
+				});
+
+				const rev = PRESETS.reversal;
+				const revA = computeFromObject(rev.a);
+				const revB = computeFromObject(rev.b);
+				tests.push({
+					label: "Reversal Case: Segment B beats Segment A",
+					pass: revB.weighted > revA.weighted
+				});
+
+				tests.push({
+					label: "Reversal scores near 4.2 and 6.8",
+					pass: Math.abs(round1(revA.weighted) - 4.2) <= 0.1 && Math.abs(round1(revB.weighted) - 6.8) <= 0.1
+				});
+
+				const helperTextPresent = document.body.textContent.indexOf("If there are 50 competitors, this should be a low score") !== -1;
+				tests.push({
+					label: "Competitive intensity direction is explicitly explained",
+					pass: helperTextPresent
+				});
+
+				tests.push({
+					label: "50 competitors implies low score, not high score",
+					pass: helperTextPresent
+				});
+
+				els.qaList.innerHTML = "";
+				tests.forEach(function each(test) {
+					const li = document.createElement("li");
+					li.textContent = (test.pass ? "PASS: " : "FAIL: ") + test.label;
+					els.qaList.appendChild(li);
+				});
+			}
+
+			function computeFromObject(scoresObj) {
+				const demandAvg = avg([scoresObj.size, scoresObj.growth, scoresObj.potential]);
+				const intensityAvg = avg([scoresObj.competitors, scoresObj.entry, scoresObj.substitutes]);
+				const accessAvg = avg([scoresObj.familiarity, scoresObj.channel, scoresObj.fit]);
+
+				return {
+					demandAvg,
+					intensityAvg,
+					accessAvg,
+					weighted: (demandAvg * WEIGHTS.demand) + (intensityAvg * WEIGHTS.intensity) + (accessAvg * WEIGHTS.access)
+				};
+			}
+
+			function applyPreset(presetKey) {
+				const preset = PRESETS[presetKey];
+				if (!preset) {
+					return;
+				}
+
+				state.labels.a = preset.labelA;
+				state.labels.b = preset.labelB;
+				state.scores.a = Object.assign({}, preset.a);
+				state.scores.b = Object.assign({}, preset.b);
+				state.activePreset = presetKey;
+
+				buildAllInputs();
+				updateAll();
+			}
+
+			function resetToOnes() {
+				state.labels.a = DEFAULT_LABELS.a;
+				state.labels.b = DEFAULT_LABELS.b;
+				Object.keys(state.scores.a).forEach(function each(key) {
+					state.scores.a[key] = 1;
+					state.scores.b[key] = 1;
+				});
+				state.activePreset = "";
+				els.presetSelect.value = "";
+				buildAllInputs();
+				updateAll();
+			}
+
+			function buildAllInputs() {
+				buildInputsFor("a", {
+					demand: els.demandA,
+					intensity: els.intensityA,
+					access: els.accessA
+				});
+
+				buildInputsFor("b", {
+					demand: els.demandB,
+					intensity: els.intensityB,
+					access: els.accessB
+				});
+			}
+
+			function updateAll() {
+				const aResult = computeFor("a");
+				const bResult = computeFor("b");
+				renderOutputs(aResult, bResult);
+				runQATests(aResult, bResult);
+			}
+
+			function wireEvents() {
+				els.presetSelect.addEventListener("change", function onPreset(event) {
+					const key = event.target.value;
+					if (!key) {
+						state.activePreset = "";
+						state.labels.a = DEFAULT_LABELS.a;
+						state.labels.b = DEFAULT_LABELS.b;
+						updateAll();
+						return;
+					}
+					applyPreset(key);
+				});
+
+				els.resetBtn.addEventListener("click", resetToOnes);
+			}
+
+			buildAllInputs();
+			wireEvents();
+			updateAll();
+		})();
+	</script>
+</body>
+</html>

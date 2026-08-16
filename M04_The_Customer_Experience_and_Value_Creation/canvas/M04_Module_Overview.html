@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 04 Overview | MKT 472</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------------
+   CANONICAL MKT 472 OVERVIEW STYLES (M08-aligned)
+------------------------------------------------------------------- */
+:root {
+  --ink: #0f1923;
+  --ink-mid: #2d3f52;
+  --ink-soft: #5a6f82;
+  --rule: #d4dce4;
+  --surface: #f7f9fb;
+  --white: #ffffff;
+
+  --teal: #0a7c6e;
+  --teal-lt: #e0f4f1;
+  --teal-mid: #c2ece7;
+  --gold: #c9860a;
+  --gold-lt: #fdf3e0;
+  --gold-mid: #f9dfa0;
+  --red: #b92b27;
+  --red-lt: #fdecea;
+  --blue: #1a56a0;
+  --blue-lt: #e6effa;
+  --blue-mid: #c3d9f5;
+
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+  --mono: 'DM Mono', 'Courier New', monospace;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+
+  --shadow-sm: 0 1px 3px rgba(15,25,35,.07), 0 1px 2px rgba(15,25,35,.05);
+  --shadow-md: 0 4px 12px rgba(15,25,35,.09), 0 2px 4px rgba(15,25,35,.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--surface); }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--surface);
+  line-height: 1.6;
+  padding-bottom: 80px;
+}
+
+p { margin-bottom: 12px; font-size: .92rem; color: var(--ink-mid); line-height: 1.65; }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); font-weight: 600; }
+
+.page-header {
+  background: var(--ink);
+  color: var(--white);
+  padding: 48px 40px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-55deg, transparent, transparent 28px, rgba(255,255,255,.022) 28px, rgba(255,255,255,.022) 29px);
+  pointer-events: none;
+}
+.page-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--teal);
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+
+.header-eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: .69rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  border-radius: 100px;
+  background: rgba(255,255,255,.1);
+  color: rgba(255,255,255,.82);
+}
+.badge-teal { background: rgba(10,124,110,.3); color: #7de8dc; }
+.badge-gold { background: rgba(201,134,10,.3); color: #f9d87a; }
+
+.header-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 2.85rem);
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  color: var(--white);
+  max-width: 700px;
+  margin-bottom: 8px;
+}
+.header-sub {
+  font-size: .95rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.62);
+  max-width: 690px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+.header-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.section { margin-top: 48px; }
+.section-label {
+  font-family: var(--mono);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: block;
+  margin-bottom: 14px;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rule) 20%, var(--rule) 80%, transparent);
+  margin: 44px 0;
+}
+
+.central-question {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 var(--r-lg) var(--r-lg) 0;
+  padding: 28px 32px;
+  box-shadow: var(--shadow-md);
+}
+.central-question .cq-label {
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+  display: block;
+}
+.central-question .cq-text {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.central-question .cq-follow {
+  margin-top: 14px;
+  font-size: .91rem;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+
+.trap-card {
+  background: var(--ink);
+  border-radius: var(--r-lg);
+  padding: 28px 32px;
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.trap-card::before {
+  content: 'PERCEPTION GAP';
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-family: var(--mono);
+  font-size: .6rem;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.18);
+}
+.trap-scenario {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.trap-box {
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.trap-box.before { background: rgba(10,124,110,.2); }
+.trap-box.after { background: rgba(185,43,39,.2); }
+.trap-box .t-label {
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+.trap-box.before .t-label { color: #7de8dc; }
+.trap-box.after .t-label { color: #f4a5a3; }
+.trap-box .t-claim {
+  font-size: .9rem;
+  color: rgba(255,255,255,.9);
+  line-height: 1.55;
+}
+.trap-box .t-claim strong { color: var(--white); }
+.trap-arrow {
+  font-size: 1.4rem;
+  color: rgba(255,255,255,.3);
+  text-align: center;
+}
+.trap-reveal {
+  background: rgba(255,255,255,.06);
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  font-size: .88rem;
+  color: rgba(255,255,255,.78);
+  line-height: 1.62;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.trap-reveal strong { color: #f9d87a; }
+
+.glance-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background: var(--white);
+}
+.glance-table thead th {
+  background: var(--ink-mid);
+  color: rgba(255,255,255,.9);
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 11px 14px;
+}
+.glance-table td {
+  border-bottom: 1px solid var(--rule);
+  padding: 11px 14px;
+  vertical-align: top;
+  font-size: .86rem;
+  color: var(--ink-mid);
+  line-height: 1.52;
+}
+.glance-table tbody tr:nth-child(even) td { background: var(--surface); }
+.glance-table tbody tr:last-child td {
+  border-bottom: none;
+  background: var(--teal-lt);
+  font-weight: 700;
+  color: var(--ink);
+}
+.glance-table td.col-time {
+  font-family: var(--mono);
+  color: var(--teal);
+  white-space: nowrap;
+}
+
+.callout {
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: .88rem;
+  line-height: 1.65;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+.callout.info { background: var(--blue-lt); border: 1px solid var(--blue-mid); color: var(--blue); }
+.callout.key { background: var(--teal-lt); border: 1px solid var(--teal-mid); color: #005446; }
+.callout.warn { background: var(--gold-lt); border: 1px solid var(--gold-mid); color: #7a4e00; }
+.callout .callout-label {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.tips-box {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+.tips-box ul { padding-left: 20px; }
+.tips-box li {
+  font-size: .88rem;
+  color: var(--ink-mid);
+  line-height: 1.55;
+  margin: 4px 0;
+}
+
+.lo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.lo-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+}
+.lo-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  background: var(--teal);
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: .72rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.lo-text {
+  font-size: .87rem;
+  color: var(--ink-mid);
+  line-height: 1.55;
+}
+
+.gate-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.gate-card {
+  border-radius: var(--r-md);
+  padding: 16px;
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow-sm);
+}
+.gate1 { background: #f0faf8; border-top: 3px solid var(--teal); }
+.gate2 { background: #f5f7ff; border-top: 3px solid var(--blue); }
+.gate-label {
+  font-family: var(--mono);
+  font-size: .64rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.gate1 .gate-label { color: var(--teal); }
+.gate2 .gate-label { color: var(--blue); }
+.gate-title {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.gate-specs {
+  list-style: none;
+  padding-left: 0;
+}
+.gate-specs li {
+  font-size: .84rem;
+  color: var(--ink-mid);
+  padding: 3px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.gate-specs li:last-child { border-bottom: none; }
+
+.exclusive-list {
+  list-style: none;
+  padding-left: 0;
+}
+.exclusive-list li {
+  display: flex;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 6px;
+  background: var(--white);
+  margin-bottom: 7px;
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow-sm);
+}
+.excl-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: .68rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.excl-title {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.excl-ref {
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: var(--ink-soft);
+}
+
+.trap-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.trap-pane {
+  border-radius: var(--r-md);
+  border: 1px solid var(--rule);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.trap-pane.warn {
+  background: var(--gold-lt);
+  border-color: var(--gold-mid);
+}
+.trap-pane.risk {
+  background: var(--red-lt);
+  border-color: rgba(185,43,39,.25);
+}
+.trap-title {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.sequence-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  font-size: .85rem;
+}
+.sequence-table th {
+  background: var(--ink-mid);
+  color: rgba(255,255,255,.8);
+  font-family: var(--mono);
+  font-size: .64rem;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 11px 12px;
+  text-align: left;
+}
+.sequence-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  line-height: 1.48;
+  background: var(--white);
+  color: var(--ink-mid);
+}
+.sequence-table tr:last-child td { border-bottom: none; }
+.sequence-table tr:nth-child(even) td { background: var(--surface); }
+.seq-id {
+  font-family: var(--mono);
+  color: var(--ink);
+  font-size: .78rem;
+}
+.seq-time {
+  font-family: var(--mono);
+  color: var(--teal);
+  white-space: nowrap;
+  font-size: .78rem;
+}
+.seq-pts {
+  font-family: var(--mono);
+  color: var(--gold);
+  white-space: nowrap;
+  font-size: .76rem;
+}
+
+.grade-table,
+.pacing-table,
+.notes-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background: var(--white);
+}
+.grade-table th,
+.pacing-table th,
+.notes-table th {
+  background: var(--ink);
+  color: rgba(255,255,255,.9);
+  padding: 9px 12px;
+  text-align: left;
+  font-family: var(--mono);
+  font-size: .64rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.grade-table td,
+.pacing-table td,
+.notes-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  font-size: .85rem;
+  color: var(--ink-mid);
+}
+.grade-table tr:nth-child(even) td,
+.pacing-table tr:nth-child(even) td,
+.notes-table tr:nth-child(even) td { background: var(--surface); }
+.grade-table tr:last-child td,
+.pacing-table tr:last-child td,
+.notes-table tr:last-child td { border-bottom: none; }
+.grade-total td {
+  background: var(--teal-lt) !important;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.subhead {
+  margin-top: 22px;
+  margin-bottom: 10px;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.page-footer {
+  margin-top: 52px;
+  padding: 16px 20px;
+  background: var(--ink);
+  border-radius: var(--r-md);
+  font-size: .76rem;
+  color: #8eabbb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.page-footer span { color: var(--teal); font-weight: 600; }
+
+@media (max-width: 760px) {
+  .page-header, .container { padding-left: 18px; padding-right: 18px; }
+  .central-question, .trap-card { padding-left: 18px; padding-right: 18px; }
+  .lo-grid, .gate-grid, .trap-compare { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .header-title { font-size: 2rem; }
+  .central-question .cq-text { font-size: 1.2rem; }
+  .trap-scenario { grid-template-columns: 1fr; }
+  .trap-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- 1. Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="header-eyebrow">
+      <span class="badge">MKT 472</span>
+      <span class="badge">Module 04</span>
+      <span class="badge badge-gold">Chapter 4</span>
+      <span class="badge badge-teal">4.3-5.5 hours total</span>
+    </div>
+    <h1 class="header-title">The Customer Experience and Value Creation</h1>
+    <p class="header-sub">Module Overview Page · Canvas Page · Item 1 in Module Sequence · Unlocks Chapter Reading</p>
+    <div class="header-meta">
+      <span class="badge">Two-Gate Accountability</span>
+      <span class="badge">Apex Industrial Case</span>
+      <span class="badge">Summer Session</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 2. Central Question -->
+<section class="section">
+  <span class="section-label">The Central Question</span>
+
+  <div class="central-question">
+    <span class="cq-label">What this module asks you to figure out</span>
+    <div class="cq-text">Is Apex Industrial's FilterPro X7 correctly priced — or is the firm either leaving money on the table or asking customers to pay more than the product is worth?</div>
+    <p class="cq-follow">This module gives you four measurement tools to close that gap: economic value, relative performance value, perceived value, and emotional value. Each one reveals something the others miss. Your case analysis will answer that question with calculations. This page prepares you for the work ahead.</p>
+  </div>
+
+  <div class="trap-card">
+    <div class="trap-scenario">
+      <div class="trap-box before">
+        <span class="t-label">Customer Reality</span>
+        <p class="t-claim">Only <strong>8% of customers</strong> describe their experience as superior.</p>
+      </div>
+      <div class="trap-arrow">→</div>
+      <div class="trap-box after">
+        <span class="t-label">Company Belief</span>
+        <p class="t-claim"><strong>80% of companies</strong> believe they deliver a superior experience.</p>
+      </div>
+    </div>
+    <div class="trap-reveal"><strong>What this means:</strong> That gap is not primarily an execution failure. It is a measurement failure. Companies are not evaluating what customers actually experience — they are evaluating what they believe they deliver.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 3. Module at a Glance -->
+<section class="section">
+  <span class="section-label">Module at a Glance</span>
+  <table class="glance-table" aria-label="Module 4 at a glance table">
+    <thead>
+      <tr>
+        <th style="width: 35%;">Item</th>
+        <th style="width: 16%;">Est. Time</th>
+        <th>What You Are Doing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Chapter 4 Reading</td>
+        <td class="col-time">70-80 min</td>
+        <td>Building the foundation. Eight study focus questions will guide you.</td>
+      </tr>
+      <tr>
+        <td>Gate 1: Basic Reading Check</td>
+        <td class="col-time">10-12 min</td>
+        <td>5 questions drawn from chapter-exclusive content. 80% threshold to proceed.</td>
+      </tr>
+      <tr>
+        <td>Slide Deck (29 slides)</td>
+        <td class="col-time">15-20 min</td>
+        <td>Formulas, worked examples, and the two traps to watch for.</td>
+      </tr>
+      <tr>
+        <td>Gate 2: Applied Reading Check</td>
+        <td class="col-time">20-23 min</td>
+        <td>8 questions combining chapter and slides. Graded. 1 attempt.</td>
+      </tr>
+      <tr>
+        <td>Lecture Video (2 segments)</td>
+        <td class="col-time">~30 min</td>
+        <td>Segment 1: strategic reasoning. Segment 2: worked calculations with the sign trap demonstrated.</td>
+      </tr>
+      <tr>
+        <td>App 1 + Worksheet</td>
+        <td class="col-time">20-25 min</td>
+        <td>Lifecycle cost builder — find the indifference price.</td>
+      </tr>
+      <tr>
+        <td>App 2 + Worksheet</td>
+        <td class="col-time">20-25 min</td>
+        <td>PCV Index chain — encounter the sign trap live.</td>
+      </tr>
+      <tr>
+        <td>App 3 + Worksheet</td>
+        <td class="col-time">15-20 min</td>
+        <td>Conjoint CVI simulator — resolve the CVI vs. profit question.</td>
+      </tr>
+      <tr>
+        <td>Discussion: single post (Part 1 + Part 2)</td>
+        <td class="col-time">20-25 min</td>
+        <td>Side with the Product Manager or the Pricing Analyst. Part 2: devil's advocate. Due Day 3 (Jun 20, 11:59pm).</td>
+      </tr>
+      <tr>
+        <td>Case Analysis: Apex Industrial</td>
+        <td class="col-time">55-65 min</td>
+        <td>4 parts, 125 points. Apply all three tools to a filtration manufacturer.</td>
+      </tr>
+      <tr>
+        <td>Module Self-Check (optional)</td>
+        <td class="col-time">10 min</td>
+        <td>Ungraded practice. Recommended before submitting the case.</td>
+      </tr>
+      <tr>
+        <td>TOTAL</td>
+        <td class="col-time">4.3-5.5 hours</td>
+        <td>Plan accordingly — this is a dense module.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- 4. Before You Begin / Study Tips -->
+<section class="section">
+  <span class="section-label">Before You Begin / Study Tips</span>
+
+  <div class="tips-box">
+    <ul>
+      <li><strong>Read Chapter 4 before doing anything else in this module.</strong> Gate 1 tests content that does not appear on slides or in the lecture video.</li>
+      <li><strong>Use the study focus guide in the Chapter Reading item.</strong> Gate 1 tests five chapter-only topics.</li>
+      <li><strong>Do not skip ahead.</strong> Gate 1 certifies you read before viewing slides. Gate 2 certifies you connected the reading to the slides before watching the lecture.</li>
+      <li><strong>Complete both gates early.</strong> If you complete both gates early, you have more time to revisit the lecture and apps before the case is due.</li>
+      <li><strong>Complete Apps 1–3 before posting your discussion.</strong> The apps produce the specific index values (PCV Index, OPI, CPI) that your discussion post must cite. The discussion is due Jun 20 at 11:59pm — after the apps, not before.</li>
+    </ul>
+  </div>
+
+  <div class="callout key">
+    <span class="callout-icon">📖</span>
+    <div>
+      <div class="callout-label">Chapter-exclusive logic</div>
+      Tests content present in Chapter 4 but absent from slides and script. If you rely on slides alone, you will not pass Gate 1.
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="callout-icon">!</span>
+    <div>
+      <div class="callout-label">Prerequisite-chain reminder</div>
+      Configure each item's prerequisites in the Canvas module editor exactly as shown. The chain is strict — no item may be moved earlier without breaking the pedagogical sequence.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 5. Learning Objectives -->
+<section class="section">
+  <span class="section-label">Learning Objectives</span>
+  <p>This module gives you four measurement tools to close the 8%/80% gap: economic value, relative performance value, perceived value, and emotional value.</p>
+  <div class="lo-grid">
+    <div class="lo-card">
+      <div class="lo-num">LO1</div>
+      <div class="lo-text">Evaluate the 8%/80% perception gap and explain why it is primarily a measurement failure rather than an execution failure.</div>
+    </div>
+    <div class="lo-card">
+      <div class="lo-num">LO2</div>
+      <div class="lo-text">Calculate and interpret economic value for Apex Industrial's FilterPro X7 pricing decision.</div>
+    </div>
+    <div class="lo-card">
+      <div class="lo-num">LO3</div>
+      <div class="lo-text">Apply relative performance value and perceived value logic to identify whether the firm is leaving money on the table or overpricing.</div>
+    </div>
+    <div class="lo-card">
+      <div class="lo-num">LO4</div>
+      <div class="lo-text">Use emotional value and conjoint CVI evidence while distinguishing customer value from firm profit.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 6. Two-Gate Model -->
+<section class="section">
+  <span class="section-label">The Two-Gate Model</span>
+  <p>This module uses a two-gate reading accountability system. Here is how it works and why.</p>
+  <div class="gate-grid">
+    <article class="gate-card gate1">
+      <div class="gate-label">Gate 1</div>
+      <div class="gate-title">Basic Reading Check</div>
+      <ul class="gate-specs">
+        <li>Unlocks: Slide Deck Viewer</li>
+        <li>5 questions · Chapter only · 80% threshold · 2 attempts · 0 points</li>
+        <li>Tests content present in Chapter 4 but absent from slides and script.</li>
+        <li>If you rely on slides alone, you will not pass Gate 1.</li>
+      </ul>
+    </article>
+    <article class="gate-card gate2">
+      <div class="gate-label">Gate 2</div>
+      <div class="gate-title">Applied Reading Check</div>
+      <ul class="gate-specs">
+        <li>Unlocks: Lecture Video</li>
+        <li>8 questions · Chapter + slides · 1 attempt · 20 points</li>
+        <li>Requires synthesis: you need both the chapter and the slide deck.</li>
+        <li>Numeric questions use parameterized inputs — no two versions share the same correct answer.</li>
+      </ul>
+    </article>
+  </div>
+  <div class="callout warn">
+    <span class="callout-icon">!</span>
+    <div><strong>Why two gates?</strong> A single gate before the lecture creates one gap: students who score just above the threshold proceed without genuine chapter internalization. Gate 1 certifies you read before viewing slides. Gate 2 certifies you connected the reading to the slides before watching the lecture. Students who game Gate 1 cannot game Gate 2 — the applied questions require both sources.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 7. Chapter-Exclusive Content -->
+<section class="section">
+  <span class="section-label">Chapter-Exclusive Content</span>
+  <p>The slide deck covers formulas, worked examples, and calculation procedures. It does not cover everything. Gate 1 tests the following five topics, which appear only in Chapter 4. Use the study focus guide in the Chapter Reading item to find them.</p>
+  <ol class="exclusive-list">
+    <li>
+      <div class="excl-num">1</div>
+      <div>
+        <div class="excl-title">Total Customer Experience — three-stage model</div>
+        <p>Most businesses understand the purchase stage. The chapter identifies the two stages they systematically neglect — and what those gaps cost them.</p>
+        <div class="excl-ref">Fig 4-2, pp. 116-117</div>
+      </div>
+    </li>
+    <li>
+      <div class="excl-num">2</div>
+      <div>
+        <div class="excl-title">Lifecycle cost categories — six types with named industry examples</div>
+        <p>The slides list the six category names. The chapter covers one specific company case per category: Sealed Air AirCap (usage cost), Loctite Quick Metal (maintenance), Kathon (disposal), American Hospital Supply (acquisition), GE Capital (financing). Gate 1 tests these company-to-category matches.</p>
+        <div class="excl-ref">pp. 126-132, Figs 4-11 to 4-15</div>
+      </div>
+    </li>
+    <li>
+      <div class="excl-num">3</div>
+      <div>
+        <div class="excl-title">Weyerhaeuser particleboard case</div>
+        <p>A firm that could not compete on price discovered two customer usage problems through observation — then created economic value by solving them with a higher-priced product. The mechanism is the core of economic value logic.</p>
+        <div class="excl-ref">pp. 118-119, 127</div>
+      </div>
+    </li>
+    <li>
+      <div class="excl-num">4</div>
+      <div>
+        <div class="excl-title">The 8%/80% perception gap</div>
+        <p>Only 8% of customers describe their experience as superior, yet 80% of companies believe they deliver a superior experience. The chapter opens with this statistic. The slides do not mention it. Gate 1 asks what it implies about measurement vs. execution.</p>
+        <div class="excl-ref">Ch. 4 opening, p. 115</div>
+      </div>
+    </li>
+    <li>
+      <div class="excl-num">5</div>
+      <div>
+        <div class="excl-title">Brand personality — five types with defining traits</div>
+        <p>Sincerity · Excitement · Competence · Sophistication · Ruggedness. Each type has named traits and a named brand example. Gate 1 presents novel brand scenarios (not the named examples) and asks you to classify them.</p>
+        <div class="excl-ref">Fig 4-27, pp. 143-144</div>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<div class="divider"></div>
+
+<!-- 8. Two Traps to Watch For -->
+<section class="section">
+  <span class="section-label">Two Traps to Watch For</span>
+  <p>This module contains two specific calculation errors that students make frequently. Both are addressed explicitly in the lecture video and the apps. Know them before you start.</p>
+  <div class="trap-compare">
+    <article class="trap-pane warn">
+      <div class="trap-title">Trap 1 — The Cost of Purchase Index Sign</div>
+      <p>The Cost of Purchase Index uses the same calculation method as the product performance indexes — same threshold rule, same averaging. But the sign runs in the OPPOSITE direction.</p>
+      <p>A relative advantage score of +27 on Purchase Price means customers rate your price as HIGHER than competitors. That is a competitive DISadvantage — not an advantage.</p>
+      <p><strong>Where to find it:</strong> Lecture Segment 2 catches this error on screen. App 2 triggers a SIGN CHECK alert when you make it.</p>
+    </article>
+    <article class="trap-pane risk">
+      <div class="trap-title">Trap 2 — CVI Does Not Equal Profit</div>
+      <p>The conjoint analysis produces a Customer Value Index (CVI) for each strategy. A higher CVI means more customer value. It does not mean more profit.</p>
+      <p>The strategy that charges more may generate a lower CVI (because buyers prefer lower prices) but more firm profit (because the premium exceeds the customer value gap).</p>
+      <p><strong>Where to find it:</strong> Lecture Segment 1 plants this question. Segment 2 resolves it. App 3 surfaces it after you calculate both CVIs.</p>
+    </article>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 9. Module Sequence -->
+<section class="section">
+  <span class="section-label">Module Sequence</span>
+  <p>Configure each item's prerequisites in the Canvas module editor exactly as shown. The chain is strict — no item may be moved earlier without breaking the pedagogical sequence.</p>
+  <table class="sequence-table" aria-label="Module sequence table">
+    <thead>
+      <tr>
+        <th style="width: 48px;">#</th>
+        <th>Item</th>
+        <th style="width: 88px;">Time</th>
+        <th style="width: 90px;">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="seq-id">1</td>
+        <td>Module Overview &amp; Orientation</td>
+        <td class="seq-time">5 min</td>
+        <td class="seq-pts">-</td>
+      </tr>
+      <tr>
+        <td class="seq-id">2</td>
+        <td>Chapter 4 Reading</td>
+        <td class="seq-time">70-80 min</td>
+        <td class="seq-pts">-</td>
+      </tr>
+      <tr>
+        <td class="seq-id">3</td>
+        <td>Gate 1: Basic Reading Check</td>
+        <td class="seq-time">10-12 min</td>
+        <td class="seq-pts">0</td>
+      </tr>
+      <tr>
+        <td class="seq-id">4</td>
+        <td>Slide Deck Viewer</td>
+        <td class="seq-time">15-20 min</td>
+        <td class="seq-pts">-</td>
+      </tr>
+      <tr>
+        <td class="seq-id">5</td>
+        <td>Gate 2: Applied Reading Check</td>
+        <td class="seq-time">20-23 min</td>
+        <td class="seq-pts">20</td>
+      </tr>
+      <tr>
+        <td class="seq-id">6</td>
+        <td>Lecture Video (2 segments)</td>
+        <td class="seq-time">~30 min</td>
+        <td class="seq-pts">—</td>
+      </tr>
+      <tr>
+        <td class="seq-id">7</td>
+        <td>App 1 + Worksheet</td>
+        <td class="seq-time">20-25 min</td>
+        <td class="seq-pts">10</td>
+      </tr>
+      <tr>
+        <td class="seq-id">8</td>
+        <td>App 2 + Worksheet</td>
+        <td class="seq-time">20-25 min</td>
+        <td class="seq-pts">10</td>
+      </tr>
+      <tr>
+        <td class="seq-id">9</td>
+        <td>App 3 + Worksheet</td>
+        <td class="seq-time">15-20 min</td>
+        <td class="seq-pts">10</td>
+      </tr>
+      <tr>
+        <td class="seq-id">10</td>
+        <td>Discussion: "The Product Manager vs. the Pricing Analyst"<br><small style="color:var(--ink-soft);font-size:.78rem;">Due Day 3 (Jun 20, 11:59pm) · Part 1: position 150–200 words · Part 2: devil's advocate 100–150 words</small></td>
+        <td class="seq-time">20-25 min</td>
+        <td class="seq-pts">20 pts</td>
+      </tr>
+      <tr>
+        <td class="seq-id">11</td>
+        <td>Case Draft — Parts 1–3<br><small style="color:var(--ink-soft);font-size:.78rem;">Day 4 — advisory only · No grade; no unlock dependency · Complete calculations before Day 5</small></td>
+        <td class="seq-time">30-40 min</td>
+        <td class="seq-pts">0</td>
+      </tr>
+      <tr>
+        <td class="seq-id">12</td>
+        <td>Case Analysis: Apex Industrial — Final Submission<br><small style="color:var(--ink-soft);font-size:.78rem;">Due Day 5 (Jun 22, 11:59pm) · 4 parts · individual submission</small></td>
+        <td class="seq-time">55-65 min</td>
+        <td class="seq-pts">125</td>
+      </tr>
+      <tr>
+        <td class="seq-id">13</td>
+        <td>Module Self-Check (optional)</td>
+        <td class="seq-time">10 min</td>
+        <td class="seq-pts">0</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- 10. Grading Summary -->
+<section class="section">
+  <span class="section-label">Grading Summary</span>
+  <table class="grade-table" aria-label="Grading summary table">
+    <thead>
+      <tr>
+        <th>Assessment</th>
+        <th style="width: 90px;">Points</th>
+        <th style="width: 110px;">% of Module</th>
+        <th>Grading</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Gate 1: Basic Reading Check</td>
+        <td>0</td>
+        <td>-</td>
+        <td>Auto-graded · access control only</td>
+      </tr>
+      <tr>
+        <td>Gate 2: Applied Reading Check</td>
+        <td>20</td>
+        <td>10%</td>
+        <td>Auto-graded</td>
+      </tr>
+      <tr>
+        <td>App Worksheets (3 × 10 pts)</td>
+        <td>30</td>
+        <td>15%</td>
+        <td>Auto-graded short answer</td>
+      </tr>
+      <tr>
+        <td>Discussion: "The Product Manager vs. the Pricing Analyst"</td>
+        <td>20</td>
+        <td>10%</td>
+        <td>Rubric</td>
+      </tr>
+      <tr>
+        <td>Case Analysis: Apex Industrial</td>
+        <td>125</td>
+        <td>64%</td>
+        <td>Rubric</td>
+      </tr>
+      <tr class="grade-total">
+        <td>TOTAL</td>
+        <td>195</td>
+        <td>100%</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <span class="callout-icon">!</span>
+    <div>The case analysis is 62% of your module grade. It requires calculations from all three measurement tools (economic value, PCV Index, conjoint CVI). The apps and discussion are designed to prepare you for those calculations before you attempt the case. Do not skip ahead.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 11. Pacing in the Summer Session -->
+<section class="section">
+  <span class="section-label">Pacing in the Summer Session</span>
+  <p>This module opens Jun 18 and runs for 5 days. Discussion is due Jun 20 at 11:59pm. Gates are due Jun 21 at 11:59pm. Case is due Jun 22 at 11:59pm. Total estimated time is 4.3–5.5 hours across the full window.</p>
+  <table class="pacing-table" aria-label="Summer pacing table">
+    <thead>
+      <tr>
+        <th style="width: 90px;">Day</th>
+        <th>Suggested Work</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Day 1<br><small style="color:var(--ink-soft);font-size:.78rem;">Jun 18</small></td>
+        <td>Read Chapter 4 with the study focus guide (70–80 min). Complete Gate 1. View the slide deck. Complete Gate 2. ~120 min total.</td>
+      </tr>
+      <tr>
+        <td>Day 2<br><small style="color:var(--ink-soft);font-size:.78rem;">Jun 19</small></td>
+        <td>Watch lecture video — both segments (~30 min). Complete Apps 1, 2, and 3 with worksheets (~60 min). ~90 min total.</td>
+      </tr>
+      <tr>
+        <td>Day 3<br><small style="color:var(--ink-soft);font-size:.78rem;">Jun 20</small></td>
+        <td>Post discussion — Part 1 (position, 150–200 words) + Part 2 (devil's advocate, 100–150 words). Due 11:59pm. ~25 min.</td>
+      </tr>
+      <tr>
+        <td>Day 4<br><small style="color:var(--ink-soft);font-size:.78rem;">Jun 21</small></td>
+        <td>Begin Case Analysis — complete Parts 1–3 (economic value, PCV Index chain, conjoint CVI). Advisory; no grade. ~40 min.</td>
+      </tr>
+      <tr>
+        <td>Day 5<br><small style="color:var(--ink-soft);font-size:.78rem;">Jun 22</small></td>
+        <td>Finalize and submit Case Analysis — Part 4 strategic recommendation + all calculations. Due 11:59pm. Optional: module self-check before submitting. ~35 min.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout warn">
+    <span class="callout-icon">!</span>
+    <div>The discussion is due on Day 3 — after the apps, not before. The calculations you run in Apps 1–3 are the evidence base for your argument. Do not post your discussion before completing the apps. The case splits across Days 4 and 5: use Day 4 for the quantitative work and Day 5 for the strategic recommendation.</div>
+  </div>
+</section>
+
+<div class="divider"></div>

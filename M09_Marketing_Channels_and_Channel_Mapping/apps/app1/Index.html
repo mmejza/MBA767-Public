@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Channel Pocket Price & Profitability Calculator</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<style>
+		:root {
+			--ink: #12222d;
+			--muted: #566977;
+			--line: #cdd7df;
+			--bg: #f3f7f9;
+			--card: #ffffff;
+			--brand: #0d8875;
+			--warn: #b12c2c;
+			--good: #157347;
+			--blue-hi: #1b4f9b;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			margin: 0;
+			font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+			color: var(--ink);
+			background: linear-gradient(170deg, #ffffff, #eef4f7);
+		}
+
+		.app {
+			width: min(1100px, 97vw);
+			margin: 0.8rem auto;
+			display: grid;
+			gap: 0.75rem;
+		}
+
+		.skip-link {
+			position: absolute;
+			left: -999px;
+			top: -999px;
+			background: #12222d;
+			color: #fff;
+			padding: 0.45rem 0.7rem;
+			border-radius: 8px;
+			z-index: 1000;
+		}
+
+		.skip-link:focus {
+			left: 0.7rem;
+			top: 0.7rem;
+		}
+
+		.panel {
+			border: 1px solid var(--line);
+			border-radius: 12px;
+			background: var(--bg);
+			padding: 0.75rem;
+		}
+
+		.quiz-card,
+		.required-callout,
+		.how-to,
+		.interactive-app,
+		.results-dashboard,
+		.canvas-reminder,
+		.app-header {
+			border: 1px solid var(--line);
+			border-radius: 12px;
+			background: #fff;
+			padding: 0.75rem;
+			box-shadow: 0 6px 14px rgba(18, 34, 45, 0.05);
+		}
+
+		.app-header h1 {
+			font-size: clamp(1.3rem, 2vw, 1.6rem);
+		}
+
+		.quiz-card h2,
+		.interactive-head h2,
+		.results-dashboard h2 {
+			font-size: 1.2rem;
+			margin: 0 0 0.45rem;
+		}
+
+		.quiz-card ol,
+		.how-to ol {
+			margin: 0;
+			padding-left: 1.2rem;
+			display: grid;
+			gap: 0.2rem;
+		}
+
+		.required-callout {
+			border-left: 4px solid var(--brand);
+		}
+
+		.required-label {
+			margin: 0 0 0.2rem;
+			font-size: 0.78rem;
+			font-weight: 700;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			color: var(--brand);
+		}
+
+		.how-to summary {
+			cursor: pointer;
+			font-weight: 700;
+		}
+
+		.how-to[open] summary {
+			margin-bottom: 0.45rem;
+		}
+
+		.interactive-app {
+			display: grid;
+			gap: 0.75rem;
+		}
+
+		.interactive-head {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 0.6rem;
+			flex-wrap: wrap;
+		}
+
+		.focus-btn {
+			border: 1px solid #79a8a0;
+			border-radius: 8px;
+			background: #fff;
+			color: var(--ink);
+			padding: 0.35rem 0.62rem;
+			cursor: pointer;
+		}
+
+		.quiz-workflow-banner {
+			margin: 0;
+			border: 1px solid #b8c4ce;
+			border-radius: 10px;
+			background: #eef3f7;
+			padding: 0.5rem 0.65rem;
+			font-size: 0.92rem;
+			font-weight: 700;
+			color: #1f2937;
+		}
+
+		.results-dashboard p {
+			margin: 0;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		.canvas-reminder {
+			padding-top: 0.6rem;
+			padding-bottom: 0.6rem;
+			text-align: center;
+			font-size: 0.82rem;
+			color: var(--muted);
+		}
+
+		body.focus-mode [data-focus-hide] {
+			display: none;
+		}
+
+		h1, h2, h3, p { margin: 0; }
+
+		.header-top {
+			display: flex;
+			justify-content: space-between;
+			gap: 0.6rem;
+			align-items: flex-start;
+			flex-wrap: wrap;
+		}
+
+		.module-tag {
+			margin-top: 0.3rem;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		.preset-row {
+			display: flex;
+			gap: 0.4rem;
+			flex-wrap: wrap;
+		}
+
+		button, input { font: inherit; }
+
+		button:focus,
+		input:focus,
+		summary:focus {
+			outline: 2px solid #2e83b4;
+			outline-offset: 1px;
+		}
+
+		button {
+			border: 1px solid #79a8a0;
+			border-radius: 8px;
+			background: var(--brand);
+			color: #fff;
+			padding: 0.35rem 0.62rem;
+			cursor: pointer;
+		}
+
+		button.secondary {
+			background: #fff;
+			color: var(--ink);
+			border-color: #b8c4ce;
+		}
+
+		.input-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 0.6rem;
+		}
+
+		.channel-col {
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			background: var(--card);
+			padding: 0.6rem;
+		}
+
+		.channel-col h3 { margin-bottom: 0.35rem; }
+
+		.field {
+			display: grid;
+			grid-template-columns: 1fr 90px;
+			gap: 0.35rem;
+			margin-top: 0.35rem;
+			align-items: center;
+		}
+
+		.field label { font-size: 0.86rem; color: var(--muted); }
+
+		.field .num {
+			border: 1px solid #b0bec9;
+			border-radius: 8px;
+			padding: 0.25rem 0.35rem;
+			width: 100%;
+			text-align: right;
+		}
+
+		.field .slider {
+			grid-column: 1 / span 2;
+			width: 100%;
+		}
+
+		.warning {
+			margin-top: 0.45rem;
+			color: var(--warn);
+			font-weight: 700;
+			font-size: 0.84rem;
+			min-height: 1rem;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			background: #fff;
+			font-size: 0.88rem;
+		}
+
+		th, td {
+			border: 1px solid var(--line);
+			padding: 0.35rem 0.4rem;
+			text-align: right;
+		}
+
+		th:first-child, td:first-child { text-align: left; }
+		thead th { background: #edf3f7; }
+		.pocket-row td { background: #e5f4f1; font-weight: 700; }
+
+		.metrics-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 0.6rem;
+		}
+
+		.metric-card {
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			background: #fff;
+			padding: 0.55rem;
+		}
+
+		.metric-list {
+			margin-top: 0.35rem;
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 0.28rem 0.4rem;
+		}
+
+		.metric-list dt { color: var(--muted); font-size: 0.86rem; }
+		.metric-list dd { margin: 0; font-weight: 700; }
+
+		.hi-nmc { color: var(--blue-hi); font-weight: 800; }
+		.hi-roi { color: var(--good); font-weight: 800; }
+
+		.aggregate {
+			margin-top: 0.55rem;
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			background: #fff;
+			padding: 0.55rem;
+			font-size: 0.9rem;
+		}
+
+		.agg-grid {
+			margin-top: 0.35rem;
+			display: grid;
+			grid-template-columns: repeat(5, minmax(120px, 1fr));
+			gap: 0.45rem;
+		}
+
+		.agg-item {
+			border: 1px solid #d8e0e7;
+			border-radius: 8px;
+			padding: 0.4rem;
+			background: #f9fcfd;
+		}
+
+		.agg-item .k { color: var(--muted); font-size: 0.8rem; }
+		.agg-item .v { margin-top: 0.2rem; font-weight: 700; }
+
+		.viz-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 0.6rem;
+		}
+
+		.chart-card, .break-card {
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			background: #fff;
+			padding: 0.55rem;
+		}
+
+		.demand-row {
+			margin-top: 0.45rem;
+			display: grid;
+			grid-template-columns: 1fr 150px;
+			gap: 0.45rem;
+			align-items: center;
+		}
+
+		.demand-row input {
+			border: 1px solid #b0bec9;
+			border-radius: 8px;
+			padding: 0.25rem 0.35rem;
+			text-align: right;
+		}
+
+		.bar-wrap { margin-top: 0.55rem; }
+		.bar-title { font-weight: 700; font-size: 0.9rem; }
+
+		.bar-track {
+			margin-top: 0.3rem;
+			position: relative;
+			height: 18px;
+			border-radius: 9px;
+			border: 1px solid #c9d4de;
+			background: #eef3f6;
+			overflow: hidden;
+		}
+
+		.bar-break {
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 100%;
+			background: #f2c572;
+			opacity: 0.95;
+		}
+
+		.bar-safe {
+			position: absolute;
+			top: 0;
+			height: 100%;
+			background: #6bbd8f;
+			opacity: 0.95;
+		}
+
+		.bar-deficit {
+			position: absolute;
+			top: 0;
+			height: 100%;
+			background: #dc7a7a;
+			opacity: 0.95;
+		}
+
+		.bar-marker {
+			position: absolute;
+			top: -2px;
+			width: 2px;
+			height: 22px;
+			background: #203746;
+		}
+
+		.bar-meta {
+			margin-top: 0.28rem;
+			font-size: 0.84rem;
+			color: var(--muted);
+			display: flex;
+			justify-content: space-between;
+			gap: 0.4rem;
+			flex-wrap: wrap;
+		}
+
+		@media (max-width: 1080px) {
+			.input-grid, .metrics-grid, .viz-grid { grid-template-columns: 1fr; }
+		}
+
+		@media (max-width: 800px) {
+			.quiz-card,
+			.required-callout,
+			.how-to,
+			.interactive-app,
+			.results-dashboard,
+			.canvas-reminder,
+			.app-header {
+				padding: 0.85rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app">
+		<section class="app-header">
+			<div class="header-top">
+				<div>
+					<h1>Channel Pocket Price &amp; Profitability Calculator</h1>
+					<p class="module-tag">MKT 472 · M09 · App 1</p>
+					<p>Compare channel pocket price and profitability tradeoffs across Direct, Mixed, and Indirect structures.</p>
+				</div>
+				<div class="preset-row">
+					<button type="button" id="base-btn">Base Case</button>
+					<button type="button" id="shift-btn">Shift to Direct</button>
+					<button type="button" id="reset-btn" class="secondary">Reset</button>
+				</div>
+			</div>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Compare channel profitability outcomes using pocket price, NMC, ROS, and ROI metrics. Evaluate how channel structure changes can shift ranking between NMC and ROI results. Interpret break-even share and margin-of-safety outputs for channel viability decisions.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Base Case.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Choose a preset or adjust channel inputs for Direct, Mixed, and Indirect columns.</li>
+				<li>Review waterfall steps to confirm channel pocket price formation.</li>
+				<li>Compare profitability cards and aggregate metrics to evaluate channel tradeoffs.</li>
+				<li>Use chart and break-even bars to assess ROI, NMC, and margin-of-safety implications.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+		<section class="panel">
+			<h2>Inputs</h2>
+			<div class="input-grid" id="input-grid"></div>
+		</section>
+
+		<section class="panel">
+			<h2>Pocket Price Waterfall</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Waterfall Step</th>
+						<th>Direct</th>
+						<th>Mixed</th>
+						<th>Indirect</th>
+					</tr>
+				</thead>
+				<tbody id="waterfall-body"></tbody>
+			</table>
+		</section>
+
+		<section class="panel">
+			<h2>Profitability</h2>
+			<div class="metrics-grid" id="metrics-grid"></div>
+			<div class="aggregate">
+				<strong>Aggregate Row</strong>
+				<div class="agg-grid" id="aggregate-grid"></div>
+			</div>
+		</section>
+
+		<section class="panel">
+			<div class="viz-grid">
+				<div class="chart-card">
+					<h2>ROI vs. NMC - Are They the Same Channel?</h2>
+					<canvas id="roi-nmc-chart" height="300" style="max-height:320px;"></canvas>
+				</div>
+				<div class="break-card">
+					<h2>Break-even Market Share Bars</h2>
+					<div class="demand-row">
+						<label for="market-demand">Market Demand</label>
+						<input id="market-demand" type="number" min="1" step="1">
+					</div>
+					<div id="break-bars"></div>
+				</div>
+			</div>
+		</section>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results / Dashboard</h2>
+			<p>Use waterfall outputs, profitability metrics, and break-even share comparisons to complete Canvas quiz responses.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script>
+		(function initApp() {
+			const CHANNELS = ["Direct", "Mixed", "Indirect"];
+			const FIELD_ORDER = [
+				{ key: "endUserPrice", label: "End-user Price", type: "currency", min: 100, max: 15000, step: 10 },
+				{ key: "retailerDiscount", label: "Retailer Discount %", type: "percent", min: 0, max: 60, step: 0.1 },
+				{ key: "distributorDiscount", label: "Distributor Discount %", type: "percent", min: 0, max: 60, step: 0.1 },
+				{ key: "agentCommission", label: "Agent Commission %", type: "percent", min: 0, max: 60, step: 0.1 },
+				{ key: "transactionCost", label: "Transaction Cost %", type: "percent", min: 0, max: 40, step: 0.1 },
+				{ key: "cogs", label: "COGS", type: "currency", min: 0, max: 12000, step: 10 },
+				{ key: "volume", label: "Volume", type: "volume", min: 0, max: 1000000, step: 1000 },
+				{ key: "msExpensePct", label: "M&S Expense %", type: "percent", min: 0, max: 50, step: 0.1 }
+			];
+
+			const BASE_CASE = {
+				marketDemand: 1000000,
+				Direct: {
+					endUserPrice: 10000,
+					retailerDiscount: 0,
+					distributorDiscount: 0,
+					agentCommission: 0,
+					transactionCost: 5,
+					cogs: 6000,
+					volume: 40000,
+					msExpensePct: 15
+				},
+				Mixed: {
+					endUserPrice: 3000,
+					retailerDiscount: 0,
+					distributorDiscount: 15,
+					agentCommission: 5,
+					transactionCost: 2,
+					cogs: 1500,
+					volume: 20000,
+					msExpensePct: 8
+				},
+				Indirect: {
+					endUserPrice: 1000,
+					retailerDiscount: 20,
+					distributorDiscount: 15,
+					agentCommission: 0,
+					transactionCost: 1,
+					cogs: 500,
+					volume: 40000,
+					msExpensePct: 5
+				}
+			};
+
+			const SHIFT_TO_DIRECT = {
+				marketDemand: 1000000,
+				Direct: {
+					endUserPrice: 10000,
+					retailerDiscount: 0,
+					distributorDiscount: 0,
+					agentCommission: 0,
+					transactionCost: 5,
+					cogs: 6000,
+					volume: 55000,
+					msExpensePct: 19.4
+				},
+				Mixed: {
+					endUserPrice: 3000,
+					retailerDiscount: 0,
+					distributorDiscount: 15,
+					agentCommission: 5,
+					transactionCost: 2,
+					cogs: 1500,
+					volume: 20000,
+					msExpensePct: 8
+				},
+				Indirect: {
+					endUserPrice: 1000,
+					retailerDiscount: 20,
+					distributorDiscount: 15,
+					agentCommission: 0,
+					transactionCost: 1,
+					cogs: 500,
+					volume: 25000,
+					msExpensePct: 5
+				}
+			};
+
+			const state = JSON.parse(JSON.stringify(BASE_CASE));
+
+			const refs = {
+				focusModeBtn: document.getElementById("focusModeBtn"),
+				inputGrid: document.getElementById("input-grid"),
+				waterfallBody: document.getElementById("waterfall-body"),
+				metricsGrid: document.getElementById("metrics-grid"),
+				aggregateGrid: document.getElementById("aggregate-grid"),
+				marketDemand: document.getElementById("market-demand"),
+				breakBars: document.getElementById("break-bars"),
+				baseBtn: document.getElementById("base-btn"),
+				shiftBtn: document.getElementById("shift-btn"),
+				resetBtn: document.getElementById("reset-btn")
+			};
+
+			const chartPointLabels = {
+				id: "pointLabels",
+				afterDatasetsDraw(chart) {
+					const { ctx } = chart;
+					ctx.save();
+					ctx.font = "12px Segoe UI";
+					ctx.fillStyle = "#1c3445";
+					chart.data.datasets.forEach((ds, i) => {
+						const point = chart.getDatasetMeta(i).data[0];
+						if (!point) return;
+						ctx.fillText(ds.label, point.x + 8, point.y - 8);
+					});
+					ctx.restore();
+				}
+			};
+
+			Chart.register(chartPointLabels);
+
+			let roiNmcChart = null;
+
+			function fmtCurrency(value) {
+				const abs = Math.abs(value);
+				const rounded = abs >= 1000000 ? Math.round(value / 1000) * 1000 : Math.round(value);
+				return "$" + rounded.toLocaleString();
+			}
+
+			function fmtPocket(value) {
+				return "$" + value.toFixed(2);
+			}
+
+			function fmtPct(value) {
+				return value.toFixed(1) + "%";
+			}
+
+			function toNum(v) {
+				const n = Number(v);
+				return Number.isFinite(n) ? n : 0;
+			}
+
+			function applyPreset(preset) {
+				const src = preset === "shift" ? SHIFT_TO_DIRECT : BASE_CASE;
+				const clone = JSON.parse(JSON.stringify(src));
+				Object.assign(state, clone);
+				renderInputs();
+				recalc();
+			}
+
+			function createField(channel, field) {
+				const wrap = document.createElement("div");
+				wrap.className = "field";
+
+				const label = document.createElement("label");
+				label.textContent = field.label;
+				label.htmlFor = channel + "-" + field.key + "-num";
+
+				const numInput = document.createElement("input");
+				numInput.className = "num";
+				numInput.id = channel + "-" + field.key + "-num";
+				numInput.type = "number";
+				numInput.step = String(field.step);
+				numInput.min = String(field.min);
+				numInput.max = String(field.max);
+				numInput.value = String(state[channel][field.key]);
+
+				const slider = document.createElement("input");
+				slider.className = "slider";
+				slider.type = "range";
+				slider.min = String(field.min);
+				slider.max = String(field.max);
+				slider.step = String(field.step);
+				slider.value = String(state[channel][field.key]);
+
+				function syncAndRender(value) {
+					state[channel][field.key] = toNum(value);
+					numInput.value = String(state[channel][field.key]);
+					slider.value = String(state[channel][field.key]);
+					recalc();
+				}
+
+				numInput.addEventListener("input", function onNumber() {
+					syncAndRender(numInput.value);
+				});
+				slider.addEventListener("input", function onSlider() {
+					syncAndRender(slider.value);
+				});
+
+				wrap.appendChild(label);
+				wrap.appendChild(numInput);
+				wrap.appendChild(slider);
+				return wrap;
+			}
+
+			function renderInputs() {
+				refs.inputGrid.innerHTML = "";
+				CHANNELS.forEach(function eachChannel(channel) {
+					const col = document.createElement("div");
+					col.className = "channel-col";
+
+					const h3 = document.createElement("h3");
+					h3.textContent = channel;
+					col.appendChild(h3);
+
+					FIELD_ORDER.forEach(function eachField(field) {
+						col.appendChild(createField(channel, field));
+					});
+
+					const warn = document.createElement("p");
+					warn.className = "warning";
+					warn.id = channel + "-warning";
+					col.appendChild(warn);
+
+					refs.inputGrid.appendChild(col);
+				});
+			}
+
+			function calcChannel(channelData, marketDemand) {
+				const step1_wholesale = channelData.endUserPrice * (1 - channelData.retailerDiscount / 100);
+				const step2_postAgent = step1_wholesale * (1 - channelData.agentCommission / 100);
+				const step3_postDist = step2_postAgent * (1 - channelData.distributorDiscount / 100);
+				const step4_pocketPrice = step3_postDist * (1 - channelData.transactionCost / 100);
+
+				const pocketPrice = step4_pocketPrice;
+				const unitContribution = pocketPrice - channelData.cogs;
+				const percentMargin = pocketPrice === 0 ? 0 : (unitContribution / pocketPrice) * 100;
+				const channelRevenue = pocketPrice * channelData.volume;
+				const grossContribution = unitContribution * channelData.volume;
+				const msExpenseDollars = channelRevenue * (channelData.msExpensePct / 100);
+				const nmc = grossContribution - msExpenseDollars;
+				const marketingROS = channelRevenue === 0 ? 0 : (nmc / channelRevenue) * 100;
+				const marketingROI = msExpenseDollars === 0 ? 0 : (nmc / msExpenseDollars) * 100;
+				const breakEvenVolume = unitContribution === 0 ? 0 : msExpenseDollars / unitContribution;
+				const breakEvenShare = marketDemand === 0 ? 0 : (breakEvenVolume / marketDemand) * 100;
+				const currentShare = marketDemand === 0 ? 0 : (channelData.volume / marketDemand) * 100;
+				const marginOfSafety = currentShare - breakEvenShare;
+
+				return {
+					step1_wholesale,
+					step2_postAgent,
+					step3_postDist,
+					step4_pocketPrice,
+					pocketPrice,
+					percentMargin,
+					channelRevenue,
+					grossContribution,
+					msExpenseDollars,
+					nmc,
+					marketingROS,
+					marketingROI,
+					breakEvenVolume,
+					breakEvenShare,
+					currentShare,
+					marginOfSafety
+				};
+			}
+
+			function renderWaterfall(results) {
+				const rows = [
+					{
+						label: "End-user price",
+						values: ch => state[ch].endUserPrice
+					},
+					{
+						label: "Retailer discount",
+						values: ch => -(state[ch].endUserPrice - results[ch].step1_wholesale)
+					},
+					{
+						label: "Wholesale price",
+						values: ch => results[ch].step1_wholesale
+					},
+					{
+						label: "Agent commission",
+						values: ch => -(results[ch].step1_wholesale - results[ch].step2_postAgent)
+					},
+					{
+						label: "Distributor discount",
+						values: ch => -(results[ch].step2_postAgent - results[ch].step3_postDist)
+					},
+					{
+						label: "Transaction cost",
+						values: ch => -(results[ch].step3_postDist - results[ch].step4_pocketPrice)
+					},
+					{
+						label: "Pocket price",
+						values: ch => results[ch].pocketPrice,
+						className: "pocket-row"
+					}
+				];
+
+				refs.waterfallBody.innerHTML = "";
+				rows.forEach(function eachRow(row) {
+					const tr = document.createElement("tr");
+					if (row.className) tr.className = row.className;
+					const cells = ["<td>" + row.label + "</td>"];
+					CHANNELS.forEach(function eachChannel(ch) {
+						cells.push("<td>" + fmtPocket(row.values(ch)) + "</td>");
+					});
+					tr.innerHTML = cells.join("");
+					refs.waterfallBody.appendChild(tr);
+				});
+			}
+
+			function renderMetrics(results, aggregate) {
+				refs.metricsGrid.innerHTML = "";
+
+				const highestNmc = Math.max(results.Direct.nmc, results.Mixed.nmc, results.Indirect.nmc);
+				const highestRoi = Math.max(results.Direct.marketingROI, results.Mixed.marketingROI, results.Indirect.marketingROI);
+
+				CHANNELS.forEach(function eachChannel(ch) {
+					const card = document.createElement("div");
+					card.className = "metric-card";
+
+					const h3 = document.createElement("h3");
+					h3.textContent = ch;
+					card.appendChild(h3);
+
+					const dl = document.createElement("dl");
+					dl.className = "metric-list";
+
+					const entries = [
+						["Pocket Price", fmtPocket(results[ch].pocketPrice), ""],
+						["Margin %", fmtPct(results[ch].percentMargin), ""],
+						["Channel Revenue", fmtCurrency(results[ch].channelRevenue), ""],
+						["NMC", fmtCurrency(results[ch].nmc), results[ch].nmc === highestNmc ? "hi-nmc" : ""],
+						["Marketing ROS", fmtPct(results[ch].marketingROS), ""],
+						["Marketing ROI", fmtPct(results[ch].marketingROI), results[ch].marketingROI === highestRoi ? "hi-roi" : ""],
+						["Break-even Market Share", fmtPct(results[ch].breakEvenShare), ""]
+					];
+
+					entries.forEach(function eachEntry(item) {
+						const dt = document.createElement("dt");
+						dt.textContent = item[0];
+						const dd = document.createElement("dd");
+						dd.textContent = item[1];
+						if (item[2]) dd.className = item[2];
+						dl.appendChild(dt);
+						dl.appendChild(dd);
+					});
+
+					card.appendChild(dl);
+					refs.metricsGrid.appendChild(card);
+				});
+
+				refs.aggregateGrid.innerHTML = "";
+				const aggItems = [
+					["Total Volume", Math.round(aggregate.totalVolume).toLocaleString()],
+					["Weighted Avg Pocket Price", fmtPocket(aggregate.weightedAvgPocketPrice)],
+					["Total NMC", fmtCurrency(aggregate.totalNMC)],
+					["Total M&S Expense", fmtCurrency(aggregate.totalMSExpense)],
+					["Blended Marketing ROI", fmtPct(aggregate.blendedMarketingROI)]
+				];
+				aggItems.forEach(function eachAgg(item) {
+					const box = document.createElement("div");
+					box.className = "agg-item";
+					box.innerHTML = "<div class=\"k\">" + item[0] + "</div><div class=\"v\">" + item[1] + "</div>";
+					refs.aggregateGrid.appendChild(box);
+				});
+			}
+
+			function renderBreakEvenBars(results, marketDemand) {
+				refs.breakBars.innerHTML = "";
+				const maxScale = Math.max(60, ...CHANNELS.map(ch => Math.max(results[ch].currentShare, results[ch].breakEvenShare) * 1.15));
+
+				CHANNELS.forEach(function eachChannel(ch) {
+					const res = results[ch];
+					const row = document.createElement("div");
+					row.className = "bar-wrap";
+
+					const title = document.createElement("div");
+					title.className = "bar-title";
+					title.textContent = ch;
+					row.appendChild(title);
+
+					const track = document.createElement("div");
+					track.className = "bar-track";
+
+					const breakSeg = document.createElement("span");
+					breakSeg.className = "bar-break";
+					breakSeg.style.width = Math.max(0, (res.breakEvenShare / maxScale) * 100) + "%";
+
+					const currentMarker = document.createElement("span");
+					currentMarker.className = "bar-marker";
+					currentMarker.style.left = Math.max(0, (res.currentShare / maxScale) * 100) + "%";
+
+					const delta = res.marginOfSafety;
+					if (delta >= 0) {
+						const safe = document.createElement("span");
+						safe.className = "bar-safe";
+						safe.style.left = Math.max(0, (res.breakEvenShare / maxScale) * 100) + "%";
+						safe.style.width = Math.max(0, (delta / maxScale) * 100) + "%";
+						track.appendChild(safe);
+					} else {
+						const deficit = document.createElement("span");
+						deficit.className = "bar-deficit";
+						deficit.style.left = Math.max(0, (res.currentShare / maxScale) * 100) + "%";
+						deficit.style.width = Math.max(0, (Math.abs(delta) / maxScale) * 100) + "%";
+						track.appendChild(deficit);
+					}
+
+					track.appendChild(breakSeg);
+					track.appendChild(currentMarker);
+					row.appendChild(track);
+
+					const meta = document.createElement("div");
+					meta.className = "bar-meta";
+					meta.innerHTML = [
+						"<span>Current Share: " + fmtPct(res.currentShare) + "</span>",
+						"<span>Break-even Share: " + fmtPct(res.breakEvenShare) + "</span>",
+						"<span>Margin of safety = " + fmtPct(res.marginOfSafety) + " pts</span>"
+					].join("");
+					row.appendChild(meta);
+
+					refs.breakBars.appendChild(row);
+				});
+			}
+
+			function renderChart(results) {
+				const datasets = CHANNELS.map(function mapChannel(ch, idx) {
+					const colors = ["#1e88e5", "#2ca25f", "#f39c12"];
+					return {
+						label: ch,
+						data: [{
+							x: results[ch].marketingROI,
+							y: results[ch].nmc,
+							channel: ch,
+							pocketPrice: results[ch].pocketPrice,
+							ros: results[ch].marketingROS,
+							msExpense: results[ch].msExpenseDollars
+						}],
+						pointBackgroundColor: colors[idx],
+						pointRadius: 7
+					};
+				});
+
+				if (roiNmcChart) {
+					roiNmcChart.data.datasets = datasets;
+					roiNmcChart.update();
+					return;
+				}
+
+				roiNmcChart = new Chart(document.getElementById("roi-nmc-chart"), {
+					type: "scatter",
+					data: { datasets },
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						scales: {
+							x: {
+								title: { display: true, text: "Marketing ROI %" }
+							},
+							y: {
+								title: { display: true, text: "NMC $" }
+							}
+						},
+						plugins: {
+							legend: { display: false },
+							tooltip: {
+								callbacks: {
+									label: function label(ctx) {
+										const p = ctx.raw;
+										return [
+											p.channel,
+											"Pocket price: " + fmtPocket(p.pocketPrice),
+											"NMC: " + fmtCurrency(p.y),
+											"ROI: " + fmtPct(p.x),
+											"ROS: " + fmtPct(p.ros),
+											"M&S expense: " + fmtCurrency(p.msExpense)
+										];
+									}
+								}
+							}
+						}
+					}
+				});
+			}
+
+			function validateCogs(results) {
+				CHANNELS.forEach(function eachChannel(ch) {
+					const warnEl = document.getElementById(ch + "-warning");
+					if (state[ch].cogs >= results[ch].pocketPrice) {
+						warnEl.textContent = "COGS must be less than pocket price for valid profitability metrics.";
+					} else {
+						warnEl.textContent = "";
+					}
+				});
+			}
+
+			function recalc() {
+				const marketDemand = Math.max(1, toNum(refs.marketDemand.value || state.marketDemand));
+				state.marketDemand = marketDemand;
+				refs.marketDemand.value = String(Math.round(marketDemand));
+
+				const results = {
+					Direct: calcChannel(state.Direct, marketDemand),
+					Mixed: calcChannel(state.Mixed, marketDemand),
+					Indirect: calcChannel(state.Indirect, marketDemand)
+				};
+
+				const totalVolume = CHANNELS.reduce((acc, ch) => acc + state[ch].volume, 0);
+				const weightedAvgPocketPrice = totalVolume === 0 ? 0 : CHANNELS.reduce((acc, ch) => acc + (results[ch].pocketPrice * state[ch].volume), 0) / totalVolume;
+				const totalNMC = CHANNELS.reduce((acc, ch) => acc + results[ch].nmc, 0);
+				const totalMSExpense = CHANNELS.reduce((acc, ch) => acc + results[ch].msExpenseDollars, 0);
+				const blendedMarketingROI = totalMSExpense === 0 ? 0 : (totalNMC / totalMSExpense) * 100;
+
+				const aggregate = {
+					totalVolume,
+					weightedAvgPocketPrice,
+					totalNMC,
+					totalMSExpense,
+					blendedMarketingROI
+				};
+
+				validateCogs(results);
+				renderWaterfall(results);
+				renderMetrics(results, aggregate);
+				renderBreakEvenBars(results, marketDemand);
+				renderChart(results);
+			}
+
+			refs.marketDemand.addEventListener("input", recalc);
+			refs.baseBtn.addEventListener("click", () => applyPreset("base"));
+			refs.shiftBtn.addEventListener("click", () => applyPreset("shift"));
+			refs.resetBtn.addEventListener("click", () => applyPreset("base"));
+			if (refs.focusModeBtn) {
+				refs.focusModeBtn.addEventListener("click", function onFocusToggle() {
+					const enabled = document.body.classList.toggle("focus-mode");
+					refs.focusModeBtn.textContent = enabled ? "Exit Focus Mode" : "Focus Mode";
+					refs.focusModeBtn.setAttribute("aria-pressed", String(enabled));
+				});
+			}
+
+			renderInputs();
+			refs.marketDemand.value = String(BASE_CASE.marketDemand);
+			recalc();
+		})();
+	</script>
+</body>
+</html>

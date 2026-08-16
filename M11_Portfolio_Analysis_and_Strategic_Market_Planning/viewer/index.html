@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MKT 472 · M11 · Portfolio Analysis & Strategic Market Planning</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@600;700;800&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#0D9B87;--teal-dk:#0D7A6B;--teal-lt:#E5F5F3;--teal-bd:#C8E8E4;
+  --navy:#0F2027;--white:#FFFFFF;--off:#F7FDFC;
+  --amber:#E6A800;--amb-lt:#FFF8E6;--amb-bd:#F5D78A;
+  --red:#C0392B;--red-lt:#FEF5F5;--red-bd:#F5BFBF;
+  --green-lt:#EDF7F3;--green-bd:#C8E8DA;--green-dk:#2D7A5E;
+  --text:#1A2E2C;--muted:#7A9896;--border:#E8F5F3;
+  --gray:#F2F4F3;--pos:#0D7A6B;--neg:#C0392B;
+}
+body{font-family:'Barlow',sans-serif;background:#F0F4F3;min-height:100vh;display:flex;flex-direction:column;}
+
+/* ── Header ── */
+.hdr{background:var(--navy);color:#fff;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--teal);}
+.hdr-left .mod{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:3px;}
+.hdr-left h1{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.02em;}
+.hdr-right{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:#5A8A8A;white-space:nowrap;}
+
+/* ── Progress ── */
+.progress{height:3px;background:var(--navy);position:relative;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),#1DC9B7);transition:width .3s ease;}
+
+/* ── Layout ── */
+.viewer{flex:1;display:grid;grid-template-columns:1fr 320px;gap:20px;max-width:1240px;width:100%;margin:0 auto;padding:20px 20px 12px;}
+
+/* ── Slide panel ── */
+.slide-panel{display:flex;flex-direction:column;gap:12px;}
+.slide-wrap{background:var(--white);border-radius:8px;overflow:hidden;position:relative;border:.5px solid var(--teal-bd);box-shadow:0 2px 16px rgba(0,0,0,.06);}
+.slide-inner{aspect-ratio:4/3;position:relative;overflow:hidden;}
+.slide-page{width:100%;height:100%;display:none;position:absolute;top:0;left:0;}
+.slide-page.active{display:flex;flex-direction:column;}
+
+/* ── Slide design system ── */
+.le-accent{position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--teal);z-index:2;}
+.le-bg-circle{position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:#F0FBFA;z-index:0;}
+.le-topbar{display:flex;align-items:center;justify-content:space-between;padding:7px 16px 6px 16px;border-bottom:.5px solid var(--border);flex-shrink:0;position:relative;z-index:1;}
+.le-tag{background:var(--teal);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;}
+.le-tag.amber{background:var(--amber);}
+.le-course{font-size:8px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;}
+.le-pagenum{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:#C8DEDB;}
+.le-titleblock{padding:8px 16px 4px 16px;flex-shrink:0;position:relative;z-index:1;}
+.le-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:var(--navy);line-height:1;}
+.le-title span{color:var(--teal);}
+.le-sub{font-size:8.5px;color:var(--muted);margin-top:2px;letter-spacing:.02em;}
+.le-body{flex:1;padding:6px 16px 8px 16px;position:relative;z-index:1;overflow:hidden;display:flex;flex-direction:column;}
+.le-footer{padding:5px 16px;border-top:.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;position:relative;z-index:1;}
+.le-lo-pills{display:flex;gap:3px;}
+.le-lo-pill{background:var(--teal-lt);color:var(--teal-dk);font-family:'Barlow Condensed',sans-serif;font-size:7px;font-weight:700;padding:2px 5px;border-radius:2px;letter-spacing:.04em;}
+.le-ch-note{background:var(--amb-lt);color:var(--amber);border:.5px solid var(--amb-bd);font-size:7px;padding:2px 6px;border-radius:2px;letter-spacing:.03em;}
+.le-gate-note{background:#EEF5FF;color:#1A5FA8;border:.5px solid #B8D4F5;font-size:7px;padding:2px 6px;border-radius:2px;letter-spacing:.03em;}
+.le-warn-note{background:#FFF3E0;color:#8A4500;border:.5px solid #F5C88A;font-size:7px;padding:2px 6px;border-radius:2px;letter-spacing:.03em;}
+
+/* ── Callout boxes ── */
+.callout{border-radius:3px;padding:7px 9px;position:relative;}
+.callout.teal{background:var(--teal-lt);border:.5px solid var(--teal-bd);}
+.callout.amber{background:var(--amb-lt);border:.5px solid var(--amb-bd);}
+.callout.red{background:var(--red-lt);border:.5px solid var(--red-bd);}
+.callout.navy{background:var(--navy);border:.5px solid var(--navy);}
+.callout.warn{background:#FFF3E0;border:.5px solid #F5C88A;}
+.callout::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:3px 0 0 3px;}
+.callout.teal::before{background:var(--teal);}
+.callout.amber::before{background:var(--amber);}
+.callout.red::before{background:var(--red);}
+.callout.navy::before{background:var(--teal);}
+.callout.warn::before{background:#E67E00;}
+.callout p{font-size:9.5px;color:var(--text);line-height:1.45;padding-left:4px;}
+.callout.teal p{color:var(--teal-dk);}
+.callout.amber p{color:#5C4200;}
+.callout.navy p{color:rgba(255,255,255,.75);}
+.callout.warn p{color:#5C3200;}
+.callout .callout-label{font-size:7.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding-left:4px;margin-bottom:3px;}
+.callout.teal .callout-label{color:var(--teal);}
+.callout.amber .callout-label{color:var(--amber);}
+.callout.navy .callout-label{color:var(--teal);}
+.callout.warn .callout-label{color:#E67E00;}
+
+/* ── Shared table styles ── */
+.data-tbl{width:100%;border-collapse:collapse;font-size:9px;}
+.data-tbl th{background:var(--navy);color:#fff;padding:4px 6px;font-size:8px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em;text-transform:uppercase;text-align:left;}
+.data-tbl th.r{text-align:right;}
+.data-tbl th.c{text-align:center;}
+.data-tbl td{padding:3.5px 6px;border-bottom:.5px solid var(--teal-lt);color:var(--text);vertical-align:middle;}
+.data-tbl td.r{text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:9px;}
+.data-tbl td.c{text-align:center;}
+.data-tbl td.mono{font-family:'Barlow Condensed',sans-serif;font-size:9px;}
+.data-tbl td.muted{color:var(--muted);font-size:8.5px;}
+.data-tbl td.pos{color:var(--pos);font-weight:700;}
+.data-tbl td.neg{color:var(--neg);font-weight:700;}
+.data-tbl td.teal{color:var(--teal-dk);font-weight:600;}
+.data-tbl td.amber{color:#8A6000;font-weight:600;}
+.data-tbl tr:nth-child(even) td{background:#FAFEFE;}
+.data-tbl tr.section-hd td{background:var(--teal-lt);color:var(--teal-dk);font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 6px;}
+.data-tbl tr.total-row td{background:var(--teal-lt)!important;font-weight:700;color:var(--teal-dk);border-top:1.5px solid var(--teal);}
+.data-tbl tr.highlight td{background:#FFF8E6!important;}
+.data-tbl tr.highlight-red td{background:var(--red-lt)!important;}
+
+/* ── Calculation layout ── */
+.calc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px;}
+.calc-box{background:var(--off);border:.5px solid var(--teal-bd);border-radius:4px;padding:7px 9px;}
+.calc-box-title{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-dk);margin-bottom:5px;padding-bottom:3px;border-bottom:.5px solid var(--teal-bd);}
+.calc-line{font-family:'Barlow Condensed',sans-serif;font-size:9.5px;color:var(--text);line-height:1.65;}
+.calc-line .op{color:var(--muted);}
+.calc-line .res{color:var(--teal-dk);font-weight:700;}
+.calc-line .final{color:var(--amber);font-weight:700;font-size:11px;}
+.calc-sep{border-top:.5px solid var(--teal-bd);margin:4px 0;}
+.calc-answer{background:var(--navy);border-radius:4px;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;}
+.calc-answer-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--amber);}
+.calc-answer-zone{font-size:9px;color:var(--teal);font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em;}
+
+/* ── Two-column panel ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.two-col.wide-l{grid-template-columns:3fr 2fr;}
+.panel{background:var(--off);border:.5px solid var(--teal-bd);border-radius:4px;padding:8px 10px;}
+.panel-title{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-dk);margin-bottom:6px;padding-bottom:4px;border-bottom:.5px solid var(--teal-bd);}
+
+/* ── Lists ── */
+ul.le-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+ul.le-list li{font-size:9.5px;color:var(--text);padding-left:12px;position:relative;line-height:1.4;}
+ul.le-list li::before{content:'·';position:absolute;left:0;color:var(--teal);font-weight:700;}
+ul.le-list.sm li{font-size:8.5px;}
+
+/* ── Flow boxes ── */
+.flow{display:flex;align-items:center;gap:0;}
+.flow-box{flex:1;background:var(--off);border:.5px solid var(--teal-bd);border-radius:3px;padding:8px 10px;text-align:center;font-size:9.5px;font-weight:500;color:var(--text);line-height:1.35;}
+.flow-box.accent{border-color:var(--teal);background:var(--teal-lt);color:var(--teal-dk);}
+.flow-arr{padding:0 6px;color:var(--muted);font-size:12px;flex-shrink:0;}
+
+/* ── Stat cards ── */
+.stat-row{display:flex;gap:7px;margin-bottom:7px;}
+.stat-card{flex:1;border-radius:4px;padding:7px 10px;display:flex;flex-direction:column;align-items:center;border:.5px solid var(--teal-bd);}
+.stat-card.teal{background:var(--teal-lt);}
+.stat-card.amber{background:var(--amb-lt);border-color:var(--amb-bd);}
+.stat-card.red{background:var(--red-lt);border-color:var(--red-bd);}
+.stat-num{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;line-height:1;}
+.stat-card.teal .stat-num{color:var(--teal-dk);}
+.stat-card.amber .stat-num{color:#B87800;}
+.stat-card.red .stat-num{color:var(--red);}
+.stat-label{font-size:7.5px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.04em;text-align:center;}
+
+/* ── Portfolio grid (9-cell) ── */
+.pg-wrap{display:flex;gap:8px;flex:1;}
+.pg-y-label{writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;justify-content:center;}
+.pg-main{flex:1;display:flex;flex-direction:column;gap:3px;}
+.pg-x-labels{display:grid;grid-template-columns:52px repeat(3,1fr);gap:3px;}
+.pg-x-lbl{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center;padding:2px 0;}
+.pg-grid{display:grid;grid-template-columns:52px repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3px;flex:1;}
+.pg-row-lbl{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;padding-right:5px;text-align:right;line-height:1.2;}
+.pg-cell{background:var(--off);border:.5px solid var(--teal-bd);border-radius:3px;padding:5px 7px;display:flex;flex-direction:column;gap:2px;}
+.pg-cell.offensive{background:var(--teal-lt);border-color:var(--teal);}
+.pg-cell.neutral{background:var(--amb-lt);border-color:var(--amb-bd);}
+.pg-cell.defensive{background:var(--gray);border-color:#D8E0DF;}
+.pg-cell.active{border:1.5px solid var(--amber);background:#FFFBEF;}
+.pg-strat{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;color:var(--text);line-height:1.25;}
+.pg-cell.offensive .pg-strat{color:var(--teal-dk);}
+.pg-cell.neutral .pg-strat{color:#8A6000;}
+.pg-cell.defensive .pg-strat{color:var(--muted);}
+.pg-legend{display:flex;flex-direction:column;gap:5px;justify-content:center;font-size:8px;}
+.pg-leg-item{display:flex;align-items:center;gap:5px;}
+.pg-leg-swatch{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+
+/* ── LO grid (objectives) ── */
+.lo-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;flex:1;}
+.lo-card{background:var(--off);border:.5px solid var(--teal-bd);border-left:3px solid var(--teal);border-radius:3px;padding:5px 8px;display:flex;gap:6px;align-items:flex-start;}
+.lo-n{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--teal);line-height:1;flex-shrink:0;margin-top:1px;}
+.lo-t{font-size:8.5px;color:var(--text);line-height:1.35;}
+.lo-level{font-family:'Barlow Condensed',sans-serif;font-size:7px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-bottom:1px;}
+
+/* ── Gate list ── */
+.gate-list{display:flex;flex-direction:column;gap:5px;flex:1;}
+.gate-item{display:flex;gap:8px;background:var(--off);border:.5px solid var(--teal-bd);border-radius:3px;padding:7px 10px;}
+.gate-num{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--amber);min-width:18px;line-height:1;margin-top:1px;}
+.gate-text{font-size:9px;color:var(--text);line-height:1.45;flex:1;}
+.gate-ref{font-family:'Barlow Condensed',sans-serif;font-size:8px;color:var(--muted);white-space:nowrap;padding-top:1px;}
+
+/* ── Misconception ── */
+.wrong-box{background:var(--red-lt);border:.5px solid var(--red-bd);border-radius:4px;padding:8px 10px;margin-bottom:6px;}
+.wrong-label{font-size:7.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:3px;}
+.wrong-text{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--red);text-transform:uppercase;line-height:1.1;}
+.correct-box{background:var(--teal-lt);border:.5px solid var(--teal-bd);border-radius:4px;padding:8px 10px;}
+.correct-label{font-size:7.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-dk);margin-bottom:3px;}
+.correct-text{font-size:9.5px;color:var(--teal-dk);line-height:1.45;font-weight:600;}
+
+/* ── Practice slot ── */
+.attempt-bar{background:var(--amber);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:2px;display:inline-flex;align-items:center;gap:5px;margin-bottom:6px;}
+.work-space{flex:1;min-height:48px;background:var(--gray);border:.5px dashed var(--teal-bd);border-radius:3px;display:flex;align-items:center;justify-content:center;}
+.work-space span{font-size:9px;color:var(--muted);font-style:italic;}
+
+/* ── Navigation ── */
+.nav-bar{display:flex;align-items:center;justify-content:space-between;padding:0 2px;}
+.dots{display:flex;gap:5px;flex-wrap:wrap;max-width:60%;justify-content:center;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--teal-bd);border:none;cursor:pointer;padding:0;transition:all .2s;flex-shrink:0;}
+.dot.on{background:var(--teal);width:20px;border-radius:3px;}
+.nav-btn{background:var(--white);border:.5px solid var(--teal-bd);border-radius:5px;padding:6px 16px;font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;transition:all .15s;}
+.nav-btn:hover:not(:disabled){background:var(--navy);color:#fff;border-color:var(--navy);}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed;}
+
+/* ── Sidebar ── */
+.sidebar{display:flex;flex-direction:column;gap:12px;}
+.sb-card{background:var(--white);border-radius:8px;border:.5px solid var(--teal-bd);overflow:hidden;}
+.sb-hdr{padding:8px 14px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
+.sb-hdr.navy{background:var(--navy);color:var(--teal);}
+.sb-hdr.teal{background:var(--teal-lt);color:var(--teal-dk);border-bottom:.5px solid var(--teal-bd);}
+.sb-hdr.amber{background:var(--amb-lt);color:#8A6000;border-bottom:.5px solid var(--amb-bd);}
+.sb-hdr.green{background:var(--green-lt);color:var(--green-dk);border-bottom:.5px solid var(--green-bd);}
+.sb-body{padding:12px 14px;font-size:12px;color:var(--text);line-height:1.55;}
+.sb-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.02em;color:var(--navy);margin-bottom:4px;}
+.sb-pagenum{font-size:10px;color:var(--muted);font-family:'Barlow Condensed',sans-serif;}
+.muted{color:var(--muted);font-style:italic;font-size:11px;}
+.lo-badge-row{display:flex;gap:4px;flex-wrap:wrap;}
+.lo-badge{background:var(--teal-lt);color:var(--teal-dk);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;padding:3px 9px;border-radius:3px;letter-spacing:.04em;}
+
+.kb-hint{text-align:center;font-size:10px;color:var(--muted);font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;padding:4px 0 8px;}
+
+@media(max-width:800px){.viewer{grid-template-columns:1fr;}.sidebar{order:2;}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="mod">M11 · Lecture Slides</div>
+    <h1>Portfolio Analysis &amp; Strategic Market Planning</h1>
+  </div>
+  <div class="hdr-right" id="hdr-counter">Slide 1 of 21</div>
+</div>
+<div class="progress"><div class="progress-fill" id="prog" style="width:4.76%"></div></div>
+
+<div class="viewer">
+  <div class="slide-panel">
+    <div class="slide-wrap">
+      <div class="slide-inner" id="slide-container">
+
+<!-- ============================================================ S1 — Title ============================================================ -->
+<div class="slide-page active" id="s1" style="background:#0F2027;font-family:'Barlow',sans-serif;position:relative;overflow:hidden;">
+  <div style="position:absolute;left:0;top:0;bottom:0;width:5px;background:#0D9B87;"></div>
+  <div style="position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:#0D2A35;"></div>
+  <div style="padding:0 40px;flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#0D9B87;margin-bottom:12px;">MKT 472 · Module 11</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:800;text-transform:uppercase;color:#fff;line-height:1;letter-spacing:.02em;">Portfolio Analysis &amp;</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:800;text-transform:uppercase;color:#0D9B87;line-height:1;letter-spacing:.02em;margin-bottom:18px;">Strategic Market Planning</div>
+    <div style="width:80px;height:4px;background:#E6A800;margin-bottom:14px;border-radius:2px;"></div>
+    <div style="font-size:12px;color:#A8C8D0;">Module 11 · Chapter 11</div>
+    <div style="font-size:11px;color:#5A8A8A;font-style:italic;margin-top:6px;">Read Chapter 11 before viewing this deck</div>
+  </div>
+</div>
+
+<!-- ============================================================ S2 — Learning Objectives ============================================================ -->
+<div class="slide-page" id="s2">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">M11</span><span class="le-course">MKT 472 · Portfolio Analysis &amp; Strategic Market Planning</span></div>
+    <span class="le-pagenum">02 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Learning <span>Objectives</span></div>
+    <div class="le-sub">After reading Ch. 11 and viewing this deck, you should be able to:</div>
+  </div>
+  <div class="le-body">
+    <div class="lo-grid">
+      <div class="lo-card"><div class="lo-n">1</div><div><div class="lo-level">Analysis</div><div class="lo-t">Evaluate portfolio balance across life-cycle stages; identify long-run revenue risk from mature-market concentration</div></div></div>
+      <div class="lo-card"><div class="lo-n">2</div><div><div class="lo-level">Analysis</div><div class="lo-t">Distinguish GE/McKinsey multi-factor model from single-factor analysis; classify strategic plan vs. marketing mix actions</div></div></div>
+      <div class="lo-card"><div class="lo-n">3</div><div><div class="lo-level">Application</div><div class="lo-t">Calculate Market Attractiveness Index using the 5-step weighted scoring method; interpret investment priority</div></div></div>
+      <div class="lo-card"><div class="lo-n">4</div><div><div class="lo-level">Application</div><div class="lo-t">Calculate Competitive Position Index; compute Share Development Index from market share and share potential inputs</div></div></div>
+      <div class="lo-card"><div class="lo-n">5</div><div><div class="lo-level">Evaluation</div><div class="lo-t">Place a product on the 9-cell grid using MAI/CPI scores and 0/33/67/100 thresholds; select and defend appropriate strategy</div></div></div>
+      <div class="lo-card"><div class="lo-n">6</div><div><div class="lo-level">Evaluation</div><div class="lo-t">Assess 3-year NMC, ROS, and ROI trade-offs between offensive and defensive strategies; explain the efficiency paradox</div></div></div>
+    </div>
+  </div>
+  <div class="le-footer">
+    <div class="le-lo-pills"><span class="le-lo-pill">LO1</span><span class="le-lo-pill">LO2</span><span class="le-lo-pill">LO3</span><span class="le-lo-pill">LO4</span><span class="le-lo-pill">LO5</span><span class="le-lo-pill">LO6</span></div>
+    <div></div>
+  </div>
+</div>
+
+<!-- ============================================================ S3 — Chapter Gate ============================================================ -->
+<div class="slide-page" id="s3">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag amber">Gate 1</span><span class="le-course">Chapter-Only Content</span></div>
+    <span class="le-pagenum">03 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">What Chapter 11 <span>Covers Beyond This Deck</span></div>
+    <div class="le-sub">Gate 1 tests these topics. They do not appear on slides.</div>
+  </div>
+  <div class="le-body">
+    <div class="gate-list">
+      <div class="gate-item">
+        <span class="gate-num">1</span>
+        <span class="gate-text"><strong>GE/McKinsey model</strong> — which two organizations developed the multi-factor portfolio matrix and what limitation of single-factor analysis it addresses</span>
+        <span class="gate-ref">p. 385</span>
+      </div>
+      <div class="gate-item">
+        <span class="gate-num">2</span>
+        <span class="gate-text"><strong>Share Development Index formula</strong> — SDI = (Market Share Index ÷ Share Potential Index) × 100; full derivation from the market share performance tree</span>
+        <span class="gate-ref">Fig. 11-5 · pp. 380–381</span>
+      </div>
+      <div class="gate-item">
+        <span class="gate-num">3</span>
+        <span class="gate-text"><strong>Relative market share</strong> — firm's share ÷ combined share of three largest competitors; how it differs from SDI as a competitive position measure</span>
+        <span class="gate-ref">pp. 378–379</span>
+      </div>
+      <div class="gate-item">
+        <span class="gate-num">4</span>
+        <span class="gate-text"><strong>Offensive vs. defensive 3-year NMC/ROS/ROI comparison</strong> — consumer electronics data; why offensive raises absolute NMC but lowers ROS and ROI</span>
+        <span class="gate-ref">Fig. 11-14 · p. 393</span>
+      </div>
+      <div class="gate-item">
+        <span class="gate-num">5</span>
+        <span class="gate-text"><strong>Portfolio diversification</strong> — two levels (product + market diversification); variance reduction: individual 42/17/57% → combined 6%</span>
+        <span class="gate-ref">Fig. 11-16 · pp. 395–397</span>
+      </div>
+    </div>
+  </div>
+  <div class="le-footer">
+    <div class="le-lo-pills"><span class="le-lo-pill">LO1</span><span class="le-lo-pill">LO2</span><span class="le-lo-pill">LO4</span><span class="le-lo-pill">LO5</span><span class="le-lo-pill">LO6</span></div>
+    <div><span class="le-gate-note">Gate 1 — 5 questions target this content</span></div>
+  </div>
+</div>
+
+<!-- ============================================================ S4 — Strategic Market Planning Process ============================================================ -->
+<div class="slide-page" id="s4">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO2</span><span class="le-course">Concept Definition</span></div>
+    <span class="le-pagenum">04 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Strategic <span>Market Planning</span></div>
+    <div class="le-sub">A forward-looking process for allocating resources across the product portfolio</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <p style="font-size:9.5px;color:var(--text);line-height:1.5;">A process in which firms develop marketing strategies for sustaining and improving short- and long-run performance across their portfolio of products and markets. Portfolio analysis drives it; strategy selection follows from it.</p>
+    <div>
+      <div style="font-size:7.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;">Process flow</div>
+      <div class="flow">
+        <div class="flow-box">Current Performance<br><span style="font-size:8px;color:var(--muted);">NMC · ROS · ROI · Share</span></div>
+        <div class="flow-arr">→</div>
+        <div class="flow-box accent">Portfolio Analysis<br><span style="font-size:8px;">MAI · CPI</span></div>
+        <div class="flow-arr">→</div>
+        <div class="flow-box">Strategy &amp; Performance Plan<br><span style="font-size:8px;color:var(--muted);">3–5 year horizon</span></div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top:2px;">
+      <div class="panel">
+        <div class="panel-title">Offensive output</div>
+        <ul class="le-list sm"><li>Grow sales — existing or new markets</li><li>Improve or build competitive position</li><li>Enter new attractive markets</li></ul>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Defensive output</div>
+        <ul class="le-list sm"><li>Protect or optimize market position</li><li>Monetize for maximum cash flow</li><li>Harvest share or divest</li></ul>
+      </div>
+    </div>
+    <div class="callout amber"><div class="callout-label">Rule</div><p>Without this process, resource allocation is intuition — not analysis. A firm cannot know which products to invest in and which to harvest without computing both dimensions.</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO2</span></div><div></div></div>
+</div>
+
+<!-- ============================================================ S5 — Performance Criteria ============================================================ -->
+<div class="slide-page" id="s5">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO1</span><span class="le-course">Classification</span></div>
+    <span class="le-pagenum">05 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Business <span>Performance Criteria</span> for Portfolio Review</div>
+    <div class="le-sub">Three categories — all required before portfolio analysis begins</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;flex:1;">
+      <div class="panel">
+        <div class="panel-title">Market Performance</div>
+        <ul class="le-list sm"><li>Market share position</li><li>Sales growth (unit volume)</li><li>Sales growth (dollar volume)</li><li>Customer satisfaction / retention</li></ul>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Marketing Profitability</div>
+        <ul class="le-list sm"><li>Net Marketing Contribution (NMC)</li><li>Marketing Return on Sales (ROS)</li><li>Marketing Return on Investment (ROI)</li><li>Gross profit by segment</li></ul>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Traditional Financial</div>
+        <ul class="le-list sm"><li>Total revenues</li><li>Gross profit</li><li>Operating profit</li><li>Operating profit %</li></ul>
+      </div>
+    </div>
+    <div class="callout teal"><div class="callout-label">Rule</div><p>Financial metrics alone are backward-looking — they report what happened. Market + marketing profitability metrics reveal competitive trajectory: where the firm is heading, not just where it has been.</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO1</span></div><div></div></div>
+</div>
+
+<!-- ============================================================ S6 — Portfolio Visualization Approaches ============================================================ -->
+<div class="slide-page" id="s6">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO1</span><span class="le-course">Contrast</span></div>
+    <span class="le-pagenum">06 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Two Approaches to <span>Portfolio Visualization</span></div>
+    <div class="le-sub">Both are inputs — neither alone determines strategy</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <div class="two-col" style="flex:1;">
+      <div class="panel" style="display:flex;flex-direction:column;gap:6px;">
+        <div class="panel-title">Price-Quality Portfolio</div>
+        <ul class="le-list sm"><li>Maps products by price point and quality / brand status</li><li>Reveals competitive white space and positioning gaps</li><li>Shows where the portfolio is concentrated or missing</li></ul>
+        <div style="margin-top:auto;padding-top:6px;border-top:.5px solid var(--teal-bd);">
+          <div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;">Example</div>
+          <p style="font-size:8.5px;color:var(--text);line-height:1.4;">Toyota: 3 models in low-price tier (1960s) → 18 models across 3 brands spanning the full price-quality curve (2010)</p>
+        </div>
+      </div>
+      <div class="panel" style="display:flex;flex-direction:column;gap:6px;">
+        <div class="panel-title">Product Life Cycle Portfolio</div>
+        <ul class="le-list sm"><li>Maps products by PLC stage and market growth rate</li><li>Circle size proportionate to current sales volume</li><li>Balanced = mix of emerging, growth, and mature stages</li><li>Unbalanced = products concentrated in mature/declining</li></ul>
+        <div style="margin-top:auto;padding-top:6px;border-top:.5px solid var(--teal-bd);">
+          <div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;">Risk signal</div>
+          <p style="font-size:8.5px;color:var(--text);line-height:1.4;">All products in mature stages looks stable today — but creates a revenue cliff in 3–5 years when markets decline and nothing replaces them</p>
+        </div>
+      </div>
+    </div>
+    <div class="callout teal"><div class="callout-label">Bottom takeaway</div><p>Both models are inputs to portfolio analysis — neither alone determines strategy. Life-cycle position informs market attractiveness; competitive position requires a separate index. Slides 12–17 build both.</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO1</span></div><div></div></div>
+</div>
+
+<!-- ============================================================ S7 — Portfolio Diagnostic ============================================================ -->
+<div class="slide-page" id="s7">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO1</span><span class="le-course">Diagnostic Data Table</span></div>
+    <span class="le-pagenum">07 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Meridian Industrial — <span>Portfolio Snapshot</span></div>
+    <div class="le-sub">What conclusions can we draw from this data alone?</div>
+  </div>
+  <div class="le-body" style="gap:8px;">
+    <table class="data-tbl">
+      <thead><tr><th>Product</th><th>Market Stage</th><th>Market Growth</th><th class="r">Sales ($M)</th><th class="r">% of Revenue</th></tr></thead>
+      <tbody>
+        <tr><td class="teal">Alpha</td><td>Mature</td><td>2%</td><td class="r">$180</td><td class="r">45%</td></tr>
+        <tr><td class="teal">Beta</td><td>Mature</td><td>1%</td><td class="r">$120</td><td class="r">30%</td></tr>
+        <tr><td class="teal">Gamma</td><td>Late Growth</td><td>8%</td><td class="r">$60</td><td class="r">15%</td></tr>
+        <tr><td class="teal">Delta</td><td>Mature</td><td>2%</td><td class="r">$30</td><td class="r">8%</td></tr>
+        <tr><td class="teal">Epsilon</td><td>Mature / Declining</td><td>−1%</td><td class="r">$10</td><td class="r">2%</td></tr>
+        <tr class="total-row"><td colspan="3"><strong>Total</strong></td><td class="r"><strong>$400</strong></td><td class="r"><strong>100%</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="callout amber">
+      <div class="callout-label">Stop &amp; Think</div>
+      <p>Before moving to the next slide — write down your prediction: what would you forecast for Meridian Industrial's revenue trajectory over the next 5 years based on this distribution alone?</p>
+    </div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO1</span></div><div><span class="le-gate-note">Attempt before advancing</span></div></div>
+</div>
+
+<!-- ============================================================ S8 — Portfolio Reveal ============================================================ -->
+<div class="slide-page" id="s8">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO1</span><span class="le-course">Reveal / Insight Slide</span></div>
+    <span class="le-pagenum">08 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Adding the Life Cycle <span>Changes Everything</span></div>
+    <div class="le-sub">A portfolio weighted to mature markets looks stable today — it is a revenue cliff in 3–5 years</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <table class="data-tbl">
+      <thead><tr><th>Product</th><th>Stage</th><th class="r">Sales ($M)</th><th class="r">% Revenue</th><th>Strategic Reality</th></tr></thead>
+      <tbody>
+        <tr><td class="teal">Alpha</td><td>Mature</td><td class="r">$180</td><td class="r">45%</td><td class="muted">Slow-declining market; margin protection priority</td></tr>
+        <tr><td class="teal">Beta</td><td>Mature</td><td class="r">$120</td><td class="r">30%</td><td class="muted">Near-zero growth; harvest candidate within 3 years</td></tr>
+        <tr><td class="teal">Gamma</td><td>Late Growth</td><td class="r">$60</td><td class="r">15%</td><td class="pos">Future profit engine — requires investment now</td></tr>
+        <tr><td class="teal">Delta</td><td>Mature</td><td class="r">$30</td><td class="r">8%</td><td class="muted">Optimize or harvest; limited upside</td></tr>
+        <tr><td class="teal">Epsilon</td><td>Declining</td><td class="r">$10</td><td class="r">2%</td><td class="neg">Exit candidate</td></tr>
+      </tbody>
+    </table>
+    <div class="callout red"><div class="callout-label">Key reveal</div><p>No products in Emerging or Early Growth stages. When Alpha and Beta decline, nothing replaces them. 75% of current revenue is in markets growing ≤ 2% annually.</p></div>
+    <div class="two-col" style="gap:6px;">
+      <div class="callout teal"><div class="callout-label">Takeaway</div><p>A balanced portfolio requires products at multiple life-cycle stages — not just profitable products today.</p></div>
+      <div class="callout amber"><div class="callout-label">⚑ Chapter-only</div><p>Diversification variance data (42%/17%/57% individual → 6% combined) quantifies stability benefit — Fig. 11-16, pp. 395–397. Gate 1 Q5.</p></div>
+    </div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO1</span></div><div><span class="le-ch-note">⚑ Chapter: Fig. 11-16 · Gate 1 Q5</span></div></div>
+</div>
+
+<!-- ============================================================ S9 — Single-Factor Diagnostic ============================================================ -->
+<div class="slide-page" id="s9">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO2 · LO3</span><span class="le-course">Diagnostic Data Table</span></div>
+    <span class="le-pagenum">09 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Five Product Lines — <span>Single-Factor Analysis</span></div>
+    <div class="le-sub">Attractiveness: Market Growth Rate · Competitive Position: Share Development Index</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <div class="two-col wide-l" style="margin-bottom:4px;">
+      <div class="panel" style="padding:6px 10px;">
+        <div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">SDI reminder</div>
+        <p style="font-size:8.5px;color:var(--text);line-height:1.4;">SDI = (Market Share Index ÷ Share Potential Index) × 100. Score of 100 = full share potential captured. Score of 32 = only ⅓ of potential reached.</p>
+      </div>
+      <div class="panel" style="padding:6px 10px;">
+        <div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;">SDI formula — chapter only</div>
+        <p style="font-size:8px;color:var(--muted);">See Fig. 11-5 · pp. 380–381 · Gate 1 Q2</p>
+      </div>
+    </div>
+    <table class="data-tbl">
+      <thead><tr><th>Product</th><th class="r">Market Growth</th><th class="r">SDI</th><th>Relative Sales Size</th></tr></thead>
+      <tbody>
+        <tr><td class="teal">A</td><td class="r">5%</td><td class="r">84</td><td><div style="background:var(--teal);height:7px;width:85%;border-radius:1px;opacity:.5;"></div></td></tr>
+        <tr><td class="teal">B</td><td class="r">0%</td><td class="r">65</td><td><div style="background:var(--teal);height:7px;width:44%;border-radius:1px;opacity:.5;"></div></td></tr>
+        <tr><td class="teal">C</td><td class="r">10%</td><td class="r">50</td><td><div style="background:var(--teal);height:7px;width:78%;border-radius:1px;opacity:.5;"></div></td></tr>
+        <tr><td class="teal">D</td><td class="r">20%</td><td class="r">32</td><td><div style="background:var(--teal);height:7px;width:22%;border-radius:1px;opacity:.5;"></div></td></tr>
+        <tr><td class="teal">E</td><td class="r">23%</td><td class="r">90</td><td><div style="background:var(--teal);height:7px;width:22%;border-radius:1px;opacity:.5;"></div></td></tr>
+      </tbody>
+    </table>
+    <div class="callout amber"><div class="callout-label">Stop &amp; Think — Attempt before advancing</div><p>Write a strategy recommendation for each product line. Products D and E are both in fast-growing markets but their SDI scores differ sharply — does that change your recommendation for each?</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO2</span><span class="le-lo-pill">LO3</span></div><div><span class="le-gate-note">Attempt before advancing</span></div></div>
+</div>
+
+<!-- ============================================================ S10 — Single-Factor Reveal ============================================================ -->
+<div class="slide-page" id="s10">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO2 · LO3</span><span class="le-course">Reveal / Insight Slide</span></div>
+    <span class="le-pagenum">10 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Five Product Lines — <span>Strategy Recommendations</span></div>
+    <div class="le-sub">Adding strategy logic to both dimensions changes the answer for Product E</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <table class="data-tbl">
+      <thead><tr><th>Product</th><th class="r">Growth</th><th class="r">SDI</th><th>Strategy</th><th>Rationale</th></tr></thead>
+      <tbody>
+        <tr><td class="teal">A</td><td class="r">5%</td><td class="r">84</td><td class="pos">Protect Position</td><td class="muted">Near share ceiling; manage margin, protect profitability</td></tr>
+        <tr><td class="teal">B</td><td class="r">0%</td><td class="r">65</td><td class="neg">Harvest Share</td><td class="muted">No growth; extract remaining profit, then exit</td></tr>
+        <tr><td class="teal">C</td><td class="r">10%</td><td class="r">50</td><td class="pos">Grow Share</td><td class="muted">Growth stage + 50% potential untapped — invest now</td></tr>
+        <tr><td class="teal">D</td><td class="r">20%</td><td class="r">32</td><td class="pos">Grow Share</td><td class="muted">High growth + 68% potential remaining = highest priority</td></tr>
+        <tr class="highlight"><td class="teal">E ⚑</td><td class="r">23%</td><td class="r">90</td><td class="amber">Hold Share</td><td style="font-size:8.5px;color:#8A6000;">Fast growth BUT 90% of potential captured — growing beyond this yields diminishing returns</td></tr>
+      </tbody>
+    </table>
+    <div class="callout red"><div class="callout-label">Key reveal</div><p>Product E (fastest-growing market) → Hold Share, not Grow Share. SDI = 90 means share potential is nearly exhausted. Growth rate alone would recommend "Invest to Grow" for E — and be wrong.</p></div>
+    <div class="callout teal"><div class="callout-label">Takeaway</div><p>Two factors determine strategy. A single-factor model misclassifies Product E and misallocates investment. This is why multi-factor analysis exists.</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO2</span><span class="le-lo-pill">LO3</span></div><div></div></div>
+</div>
+
+<!-- ============================================================ S11 — Misconception ============================================================ -->
+<div class="slide-page" id="s11">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO2</span><span class="le-course">Misconception / Trap</span></div>
+    <span class="le-pagenum">11 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">"High Growth Rate = <span>Attractive Market</span>"</div>
+    <div class="le-sub">Why this intuition is wrong — and what the correct rule is</div>
+  </div>
+  <div class="le-body" style="gap:6px;">
+    <div class="wrong-box"><div class="wrong-label">Common but wrong</div><div class="wrong-text">"If the market is growing fast, it must be attractive — invest."</div></div>
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-title">Why it seems correct</div>
+        <ul class="le-list sm"><li>Growth → rising demand → more sales opportunity</li><li>Product D (20% growth) clearly warrants more attention than Product B (0%)</li><li>Fast-growing markets produce the biggest future profit pools</li></ul>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Why it is wrong</div>
+        <ul class="le-list sm"><li>Ignores <strong>market size</strong> — 20% growth on $10M &lt; 5% growth on $5B</li><li>Ignores <strong>competitive intensity</strong> — high growth attracts entrants, compressing margin</li><li>Ignores <strong>market access</strong> — distribution barriers make growth unreachable</li></ul>
+      </div>
+    </div>
+    <div class="correct-box"><div class="correct-label">Correct rule</div><div class="correct-text">Market attractiveness requires a multi-factor index across market forces, competitive environment, and market access. Growth rate is one of nine inputs — not the answer.</div></div>
+    <div class="callout amber"><div class="callout-label">⚑ Chapter-only</div><p>The GE/McKinsey model (p. 385) formalizes this. Gate 1 Q1 tests who developed it and what limitation it addresses — answer is in the chapter, not these slides.</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO2</span></div><div><span class="le-ch-note">⚑ GE/McKinsey name — p. 385 · Gate 1 Q1</span></div></div>
+</div>
+
+<!-- ============================================================ S12 — MAI Factors ============================================================ -->
+<div class="slide-page" id="s12">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO3</span><span class="le-course">Classification</span></div>
+    <span class="le-pagenum">12 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Market Attractiveness — <span>Three Dimensions, Nine Factors</span></div>
+    <div class="le-sub">Figure 11-9, p. 387 — example weights shown; actual weights vary by industry</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;flex:1;">
+      <div class="panel"><div class="panel-title">Market Forces <span style="color:var(--amber);font-size:8px;">(Example: 30%)</span></div><ul class="le-list sm"><li>Market Size</li><li>Growth Rate</li><li>Buyer Power</li></ul></div>
+      <div class="panel"><div class="panel-title">Competitive Environment <span style="color:var(--amber);font-size:8px;">(Example: 40%)</span></div><ul class="le-list sm"><li>Price Rivalry</li><li>Ease of Competitor Entry</li><li>Number of Competitors</li></ul></div>
+      <div class="panel"><div class="panel-title">Market Access <span style="color:var(--amber);font-size:8px;">(Example: 30%)</span></div><ul class="le-list sm"><li>Customer Familiarity</li><li>Channel Access</li><li>Sales Requirements</li></ul></div>
+    </div>
+    <div class="panel">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+        <div><div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;">Dimension weights</div><p style="font-size:9px;color:var(--text);">Must sum to 100%</p></div>
+        <div><div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;">Metric weights within each dimension</div><p style="font-size:9px;color:var(--text);">Must sum to 100% per dimension</p></div>
+        <div><div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;">Attractiveness rating scale</div><p style="font-size:9px;color:var(--text);">0 = Very Unattractive → 100 = Very Attractive</p></div>
+      </div>
+    </div>
+    <p style="font-size:8.5px;color:var(--muted);font-style:italic;">Weights shown are the Chapter 11 worked example (Fig. 11-10). The structure — not the specific weights — is the method. Next slide: full worked calculation.</p>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO3</span></div><div><span class="le-gate-note">Gate 2 Q1 — MAI calculation</span></div></div>
+</div>
+
+<!-- ============================================================ S13 — MAI Setup ============================================================ -->
+<div class="slide-page" id="s13">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO3</span><span class="le-course">Worked Example — Setup</span></div>
+    <span class="le-pagenum">13 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Market Attractiveness Index — <span>Attempt Before Advancing</span></div>
+    <div class="le-sub">Chapter 11, Fig. 11-10 · Calculate Q1 metric scores · Q2 dimension scores · Q3 overall MAI</div>
+  </div>
+  <div class="le-body" style="gap:5px;">
+    <div class="attempt-bar">✏ Attempt before advancing</div>
+    <table class="data-tbl" style="font-size:8.5px;">
+      <thead><tr><th>Dimension &amp; Metric</th><th class="c">Dim. Wt.</th><th class="c">Metric Rel. Imp.</th><th class="c">Attract. Rating</th><th class="c">Score</th></tr></thead>
+      <tbody>
+        <tr class="section-hd"><td colspan="5">Market Forces</td></tr>
+        <tr><td style="padding-left:14px;">Market Size</td><td class="c">30%</td><td class="c">40%</td><td class="c">80</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Growth Rate</td><td class="c">30%</td><td class="c">30%</td><td class="c">60</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Buyer Power</td><td class="c">30%</td><td class="c">30%</td><td class="c">40</td><td class="c muted">?</td></tr>
+        <tr style="background:var(--teal-lt);"><td style="padding-left:14px;font-weight:600;color:var(--teal-dk);">Dimension Score →</td><td colspan="3"></td><td class="c muted">?</td></tr>
+        <tr class="section-hd"><td colspan="5">Competitive Environment</td></tr>
+        <tr><td style="padding-left:14px;">Price Rivalry</td><td class="c">40%</td><td class="c">50%</td><td class="c">40</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Ease of Entry</td><td class="c">40%</td><td class="c">30%</td><td class="c">40</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;"># of Competitors</td><td class="c">40%</td><td class="c">20%</td><td class="c">60</td><td class="c muted">?</td></tr>
+        <tr style="background:var(--teal-lt);"><td style="padding-left:14px;font-weight:600;color:var(--teal-dk);">Dimension Score →</td><td colspan="3"></td><td class="c muted">?</td></tr>
+        <tr class="section-hd"><td colspan="5">Market Access</td></tr>
+        <tr><td style="padding-left:14px;">Customer Familiarity</td><td class="c">30%</td><td class="c">40%</td><td class="c">80</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Channel Access</td><td class="c">30%</td><td class="c">40%</td><td class="c">100</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Sales Requirements</td><td class="c">30%</td><td class="c">20%</td><td class="c">60</td><td class="c muted">?</td></tr>
+        <tr style="background:var(--teal-lt);"><td style="padding-left:14px;font-weight:600;color:var(--teal-dk);">Dimension Score →</td><td colspan="3"></td><td class="c muted">?</td></tr>
+      </tbody>
+    </table>
+    <div style="display:flex;gap:6px;">
+      <div class="panel" style="flex:1;padding:5px 9px;"><div class="panel-title">Formula</div><p style="font-size:9px;color:var(--text);">MAI = Σ (Dimension Weight × Dimension Score)</p><p style="font-size:8px;color:var(--muted);">Each metric score = Rel. Importance × Attractiveness Rating</p></div>
+      <div class="work-space" style="flex:1;"><span>Your working space</span></div>
+    </div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO3</span></div><div><span class="le-gate-note">Gate 2 Q1 — numeric entry</span></div></div>
+</div>
+
+<!-- ============================================================ S14 — MAI Solution ============================================================ -->
+<div class="slide-page" id="s14">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO3</span><span class="le-course">Worked Example — Solution</span></div>
+    <span class="le-pagenum">14 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Market Attractiveness Index — <span>Solution</span></div>
+    <div class="le-sub">Chapter 11, Fig. 11-10</div>
+  </div>
+  <div class="le-body" style="gap:6px;">
+    <div class="calc-grid">
+      <div class="calc-box"><div class="calc-box-title">Market Forces (30%)</div>
+        <div class="calc-line"><span class="op">Market Size:  </span>40%×80 = <span class="res">32</span></div>
+        <div class="calc-line"><span class="op">Growth Rate:  </span>30%×60 = <span class="res">18</span></div>
+        <div class="calc-line"><span class="op">Buyer Power:  </span>30%×40 = <span class="res">12</span></div>
+        <div class="calc-sep"></div>
+        <div class="calc-line"><span class="op">Dim. Score: </span><span class="res">62</span></div>
+        <div class="calc-line"><span class="op">30%×62 = </span><span class="final">18.6</span></div>
+      </div>
+      <div class="calc-box"><div class="calc-box-title">Competitive Env. (40%)</div>
+        <div class="calc-line"><span class="op">Price Rivalry: </span>50%×40 = <span class="res">20</span></div>
+        <div class="calc-line"><span class="op">Ease of Entry: </span>30%×40 = <span class="res">12</span></div>
+        <div class="calc-line"><span class="op"># Competitors: </span>20%×60 = <span class="res">12</span></div>
+        <div class="calc-sep"></div>
+        <div class="calc-line"><span class="op">Dim. Score: </span><span class="res">44</span></div>
+        <div class="calc-line"><span class="op">40%×44 = </span><span class="final">17.6</span></div>
+      </div>
+      <div class="calc-box"><div class="calc-box-title">Market Access (30%)</div>
+        <div class="calc-line"><span class="op">Cust. Fam.: </span>40%×80 = <span class="res">32</span></div>
+        <div class="calc-line"><span class="op">Channel:    </span>40%×100 = <span class="res">40</span></div>
+        <div class="calc-line"><span class="op">Sales Req.: </span>20%×60 = <span class="res">12</span></div>
+        <div class="calc-sep"></div>
+        <div class="calc-line"><span class="op">Dim. Score: </span><span class="res">84</span></div>
+        <div class="calc-line"><span class="op">30%×84 = </span><span class="final">25.2</span></div>
+      </div>
+    </div>
+    <div class="calc-answer">
+      <div><div style="font-size:8px;color:var(--teal);font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">MAI = 18.6 + 17.6 + 25.2</div><div class="calc-answer-val">MAI = 61</div></div>
+      <div class="calc-answer-zone">Moderate attractiveness zone · 34–67</div>
+    </div>
+    <div class="callout teal"><div class="callout-label">Key takeaway</div><p>Competitive Environment scored only 44 — the weakest dimension. High price rivalry and easy competitor entry drag the index down despite strong market access (84). A manager reading only growth rate would have rated this market "attractive" and missed the competitive threat entirely.</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO3</span></div><div></div></div>
+</div>
+
+<!-- ============================================================ S15 — CPI Factors ============================================================ -->
+<div class="slide-page" id="s15">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO4</span><span class="le-course">Classification</span></div>
+    <span class="le-pagenum">15 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Competitive Position — <span>Three Dimensions, Nine Factors</span></div>
+    <div class="le-sub">Figure 11-11, p. 388 — rating scale differs from MAI</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+      <div class="panel"><div class="panel-title">Differentiation Advantage <span style="color:var(--amber);font-size:8px;">(Example: 40%)</span></div><ul class="le-list sm"><li>Product Quality</li><li>Service Quality</li><li>Brand Image / Reputation</li></ul></div>
+      <div class="panel"><div class="panel-title">Cost Advantage <span style="color:var(--amber);font-size:8px;">(Example: 40%)</span></div><ul class="le-list sm"><li>Cost of Goods Sold</li><li>Marketing &amp; Sales Expenses</li><li>Overhead Expenses</li></ul></div>
+      <div class="panel"><div class="panel-title">Marketing Advantage <span style="color:var(--amber);font-size:8px;">(Example: 20%)</span></div><ul class="le-list sm"><li>Market Share</li><li>Brand Awareness</li><li>Distribution</li></ul></div>
+    </div>
+    <div class="callout warn">
+      <div class="callout-label">⚠ Critical — most common calculation error</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px;">
+        <div><div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#E67E00;margin-bottom:3px;">MAI Rating Scale</div><p>0 = <strong>Very Unattractive</strong> market · 100 = <strong>Very Attractive</strong> market<br><span style="font-size:8px;color:var(--muted);">Measures quality of the market</span></p></div>
+        <div><div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#E67E00;margin-bottom:3px;">CPI Rating Scale</div><p>0 = <strong>Considerably Behind</strong> competitors · 100 = <strong>Considerably Ahead</strong><br><span style="font-size:8px;color:var(--muted);">Measures standing vs. rivals</span></p></div>
+      </div>
+      <p style="margin-top:7px;font-weight:600;">Same 0–100 range. Completely different meaning. A rating of 40 in MAI ≠ a rating of 40 in CPI.</p>
+    </div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO4</span></div><div><span class="le-warn-note">⚠ Rating scale differs from MAI</span></div></div>
+</div>
+
+<!-- ============================================================ S16 — CPI Setup ============================================================ -->
+<div class="slide-page" id="s16">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO4</span><span class="le-course">Worked Example — Setup</span></div>
+    <span class="le-pagenum">16 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Competitive Position Index — <span>Attempt Before Advancing</span></div>
+    <div class="le-sub">Chapter 11, Fig. 11-12 · Rating scale: 0 = behind competitors · 100 = ahead</div>
+  </div>
+  <div class="le-body" style="gap:5px;">
+    <div class="attempt-bar">✏ Attempt before advancing</div>
+    <table class="data-tbl" style="font-size:8.5px;">
+      <thead><tr><th>Dimension &amp; Metric</th><th class="c">Dim. Wt.</th><th class="c">Metric Rel. Imp.</th><th class="c">Rating (vs. rivals)</th><th class="c">Score</th></tr></thead>
+      <tbody>
+        <tr class="section-hd"><td colspan="5">Differentiation Advantage</td></tr>
+        <tr><td style="padding-left:14px;">Product Quality</td><td class="c">40%</td><td class="c">40%</td><td class="c">80</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Service Quality</td><td class="c">40%</td><td class="c">30%</td><td class="c">60</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Brand Image</td><td class="c">40%</td><td class="c">30%</td><td class="c">80</td><td class="c muted">?</td></tr>
+        <tr style="background:var(--teal-lt);"><td style="padding-left:14px;font-weight:600;color:var(--teal-dk);">Dimension Score →</td><td colspan="3"></td><td class="c muted">?</td></tr>
+        <tr class="section-hd"><td colspan="5">Cost Advantage</td></tr>
+        <tr><td style="padding-left:14px;">Cost of Goods Sold</td><td class="c">40%</td><td class="c">70%</td><td class="c">40</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Mktg &amp; Sales Expenses</td><td class="c">40%</td><td class="c">20%</td><td class="c">60</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Overhead Expenses</td><td class="c">40%</td><td class="c">10%</td><td class="c">60</td><td class="c muted">?</td></tr>
+        <tr style="background:var(--teal-lt);"><td style="padding-left:14px;font-weight:600;color:var(--teal-dk);">Dimension Score →</td><td colspan="3"></td><td class="c muted">?</td></tr>
+        <tr class="section-hd"><td colspan="5">Marketing Advantage</td></tr>
+        <tr><td style="padding-left:14px;">Market Share</td><td class="c">20%</td><td class="c">40%</td><td class="c">40</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Brand Awareness</td><td class="c">20%</td><td class="c">30%</td><td class="c">40</td><td class="c muted">?</td></tr>
+        <tr><td style="padding-left:14px;">Distribution</td><td class="c">20%</td><td class="c">30%</td><td class="c">20</td><td class="c muted">?</td></tr>
+        <tr style="background:var(--teal-lt);"><td style="padding-left:14px;font-weight:600;color:var(--teal-dk);">Dimension Score →</td><td colspan="3"></td><td class="c muted">?</td></tr>
+      </tbody>
+    </table>
+    <div style="display:flex;gap:6px;">
+      <div class="panel" style="flex:1;padding:5px 9px;"><div class="panel-title">Formula</div><p style="font-size:9px;color:var(--text);">CPI = Σ (Dimension Weight × Dimension Score)</p></div>
+      <div class="work-space" style="flex:1;"><span>Your working space</span></div>
+    </div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO4</span></div><div><span class="le-gate-note">Gate 2 Q2 — numeric entry</span></div></div>
+</div>
+
+<!-- ============================================================ S17 — CPI Solution ============================================================ -->
+<div class="slide-page" id="s17">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO4</span><span class="le-course">Worked Example — Solution</span></div>
+    <span class="le-pagenum">17 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Competitive Position Index — <span>Solution</span></div>
+    <div class="le-sub">Chapter 11, Fig. 11-12</div>
+  </div>
+  <div class="le-body" style="gap:6px;">
+    <div class="calc-grid">
+      <div class="calc-box"><div class="calc-box-title">Differentiation Adv. (40%)</div>
+        <div class="calc-line"><span class="op">Prod. Quality: </span>40%×80 = <span class="res">32</span></div>
+        <div class="calc-line"><span class="op">Svc. Quality:  </span>30%×60 = <span class="res">18</span></div>
+        <div class="calc-line"><span class="op">Brand Image:   </span>30%×80 = <span class="res">24</span></div>
+        <div class="calc-sep"></div>
+        <div class="calc-line"><span class="op">Dim. Score: </span><span class="res">74</span></div>
+        <div class="calc-line"><span class="op">40%×74 = </span><span class="final">29.6</span></div>
+      </div>
+      <div class="calc-box"><div class="calc-box-title">Cost Advantage (40%)</div>
+        <div class="calc-line"><span class="op">COGS:       </span>70%×40 = <span class="res">28</span></div>
+        <div class="calc-line"><span class="op">Mktg Exp:   </span>20%×60 = <span class="res">12</span></div>
+        <div class="calc-line"><span class="op">Overhead:   </span>10%×60 = <span class="res">6</span></div>
+        <div class="calc-sep"></div>
+        <div class="calc-line"><span class="op">Dim. Score: </span><span class="res">46</span></div>
+        <div class="calc-line"><span class="op">40%×46 = </span><span class="final">18.4</span></div>
+      </div>
+      <div class="calc-box" style="border-color:var(--red-bd);background:var(--red-lt);"><div class="calc-box-title" style="color:var(--neg);border-color:var(--red-bd);">Marketing Advantage (20%) ⚑</div>
+        <div class="calc-line"><span class="op">Mkt Share:   </span>40%×40 = <span class="res" style="color:var(--neg);">16</span></div>
+        <div class="calc-line"><span class="op">Brand Aware: </span>30%×40 = <span class="res" style="color:var(--neg);">12</span></div>
+        <div class="calc-line"><span class="op">Distribution:</span>30%×<strong style="color:var(--neg);">20</strong> = <span class="res" style="color:var(--neg);">6</span></div>
+        <div class="calc-sep"></div>
+        <div class="calc-line"><span class="op">Dim. Score: </span><span class="res" style="color:var(--neg);">34</span></div>
+        <div class="calc-line"><span class="op">20%×34 = </span><span class="final" style="color:var(--neg);">6.8</span></div>
+      </div>
+    </div>
+    <div class="calc-answer">
+      <div><div style="font-size:8px;color:var(--teal);font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;">CPI = 29.6 + 18.4 + 6.8</div><div class="calc-answer-val">CPI = 55</div></div>
+      <div class="calc-answer-zone">Moderate competitive position · 34–67</div>
+    </div>
+    <div class="callout teal"><div class="callout-label">Key takeaway</div><p>Strong differentiation (74) nearly offset by weak marketing advantage (34). Distribution score of 20 — lowest metric in the table — is the single largest drag. Improving distribution = highest CPI leverage point for this brand.</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO4</span></div><div></div></div>
+</div>
+
+<!-- ============================================================ S18 — Portfolio Grid ============================================================ -->
+<div class="slide-page" id="s18">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO5</span><span class="le-course">Portfolio / Matrix</span></div>
+    <span class="le-pagenum">18 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">GE/McKinsey Portfolio Grid — <span>Strategy Selection</span></div>
+    <div class="le-sub">Thresholds: Low = 0–33 · Medium = 34–67 · High = 68–100 (both axes)</div>
+  </div>
+  <div class="le-body" style="gap:6px;">
+    <div class="pg-wrap" style="flex:1;">
+      <div class="pg-y-label">Market Attractiveness (MAI) →</div>
+      <div class="pg-main">
+        <div class="pg-x-labels">
+          <div class="pg-x-lbl"></div>
+          <div class="pg-x-lbl">Low CPI<br>0–33</div>
+          <div class="pg-x-lbl">Medium CPI<br>34–67</div>
+          <div class="pg-x-lbl">High CPI<br>68–100</div>
+        </div>
+        <div class="pg-grid">
+          <div class="pg-row-lbl">High MAI<br>68–100</div>
+          <div class="pg-cell offensive"><div class="pg-strat">New Market Entry</div><div class="pg-strat">Improve Position</div></div>
+          <div class="pg-cell offensive"><div class="pg-strat">Invest to Grow</div><div class="pg-strat">Improve Position</div></div>
+          <div class="pg-cell offensive"><div class="pg-strat">Invest to Grow</div><div class="pg-strat">Protect Position</div></div>
+          <div class="pg-row-lbl">Medium MAI<br>34–67</div>
+          <div class="pg-cell neutral"><div class="pg-strat">Improve Position</div><div class="pg-strat">Optimize Position</div></div>
+          <div class="pg-cell active"><div class="pg-strat">Improve Position</div><div class="pg-strat">Optimize Position</div></div>
+          <div class="pg-cell neutral"><div class="pg-strat">Protect Position</div><div class="pg-strat">Optimize Position</div></div>
+          <div class="pg-row-lbl">Low MAI<br>0–33</div>
+          <div class="pg-cell defensive"><div class="pg-strat">Monetize</div><div class="pg-strat">Harvest / Divest</div></div>
+          <div class="pg-cell defensive"><div class="pg-strat">Monetize</div><div class="pg-strat">Harvest / Divest</div></div>
+          <div class="pg-cell defensive"><div class="pg-strat">Optimize Position</div><div class="pg-strat">Monetize / Harvest</div></div>
+        </div>
+        <div style="text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:3px;">Competitive Position (CPI) →</div>
+      </div>
+      <div class="pg-legend">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:7px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;">Legend</div>
+        <div class="pg-leg-item"><div class="pg-leg-swatch" style="background:var(--teal-lt);border:.5px solid var(--teal);"></div><span style="font-size:8px;color:var(--teal-dk);">Offensive</span></div>
+        <div class="pg-leg-item"><div class="pg-leg-swatch" style="background:var(--amb-lt);border:.5px solid var(--amb-bd);"></div><span style="font-size:8px;color:#8A6000;">Judgment zone</span></div>
+        <div class="pg-leg-item"><div class="pg-leg-swatch" style="background:var(--gray);border:.5px solid #D8E0DF;"></div><span style="font-size:8px;color:var(--muted);">Defensive</span></div>
+        <div class="pg-leg-item"><div class="pg-leg-swatch" style="border:1.5px solid var(--amber);background:#FFFBEF;"></div><span style="font-size:8px;color:var(--amber);">S19 placement</span></div>
+      </div>
+    </div>
+    <div class="callout amber"><div class="callout-label">Bottom rule</div><p>Offensive strategies occupy top-right zones (attractive markets + strong/improvable position). Defensive strategies occupy bottom-left zones. Center cells require judgment based on life-cycle stage and competitive trend.</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO5</span></div><div><span class="le-gate-note">Gate 2 Q3 — thresholds from Fig. 11-18</span></div></div>
+</div>
+
+<!-- ============================================================ S19 — Grid Practice ============================================================ -->
+<div class="slide-page" id="s19">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO5</span><span class="le-course">Practice / Missing Values</span></div>
+    <span class="le-pagenum">19 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Where Does This Brand <span>Belong?</span></div>
+    <div class="le-sub">Use your calculated scores from Slides 13–17 — attempt before advancing</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <div class="attempt-bar">✏ Attempt before advancing</div>
+    <div class="two-col">
+      <div>
+        <div class="panel" style="margin-bottom:6px;">
+          <div class="panel-title">From your worked examples</div>
+          <div style="display:flex;gap:20px;align-items:center;padding-top:4px;">
+            <div><div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:1px;">MAI (Slides 13–14)</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;color:var(--teal-dk);">61</div></div>
+            <div><div style="font-size:7.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:1px;">CPI (Slides 16–17)</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;color:var(--amber);">55</div></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Mini grid — mark your answer</div>
+          <div style="display:grid;grid-template-columns:38px repeat(3,1fr);grid-template-rows:18px repeat(3,36px);gap:2px;">
+            <div></div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:7px;color:var(--muted);text-align:center;">Low</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:7px;color:var(--teal-dk);text-align:center;font-weight:700;">Med CPI</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:7px;color:var(--muted);text-align:center;">High</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:7px;color:var(--muted);text-align:right;padding-right:3px;display:flex;align-items:center;justify-content:flex-end;">High</div>
+            <div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:2px;"></div><div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:2px;"></div><div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:2px;"></div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:7px;color:var(--teal-dk);text-align:right;padding-right:3px;display:flex;align-items:center;justify-content:flex-end;font-weight:700;">Med</div>
+            <div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:2px;"></div>
+            <div style="background:var(--amb-lt);border:1.5px solid var(--amber);border-radius:2px;display:flex;align-items:center;justify-content:center;"><span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--amber);">?</span></div>
+            <div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:2px;"></div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:7px;color:var(--muted);text-align:right;padding-right:3px;display:flex;align-items:center;justify-content:flex-end;">Low</div>
+            <div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:2px;"></div><div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:2px;"></div><div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:2px;"></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div class="panel"><div class="panel-title">Q1 — Threshold classification</div><p style="font-size:9px;color:var(--text);line-height:1.4;">Which zone does MAI = 61 fall in? Which zone does CPI = 55 fall in? Apply the 0/33/67/100 thresholds from Slide 18.</p></div>
+        <div class="panel"><div class="panel-title">Q2 — Strategy identification</div><p style="font-size:9px;color:var(--text);line-height:1.4;">Name the applicable strategies from the cell where MAI = 61 and CPI = 55 intersect.</p></div>
+        <div class="panel"><div class="panel-title">Q3 — Classify each strategy</div><p style="font-size:9px;color:var(--text);line-height:1.4;">For each strategy identified, classify it as offensive or defensive.</p></div>
+        <div class="panel" style="border-color:var(--amb-bd);background:var(--amb-lt);"><div class="panel-title" style="color:#8A6000;">Q4 — Recommendation</div><p style="font-size:9px;color:var(--text);line-height:1.4;">Which strategy would you recommend — and what additional information would you need to choose between the options in this cell?</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO5</span></div><div><span class="le-gate-note">Gate 2 Q3 practice</span></div></div>
+</div>
+
+<!-- ============================================================ S20 — Strategic Plan vs. Mix ============================================================ -->
+<div class="slide-page" id="s20">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO2</span><span class="le-course">Contrast / Distinction</span></div>
+    <span class="le-pagenum">20 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Strategic Market Plan <span>vs.</span> Marketing Mix Strategy</div>
+    <div class="le-sub">Time horizon and performance objective are the primary discriminators</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <div class="two-col" style="flex:1;">
+      <div class="panel" style="display:flex;flex-direction:column;gap:5px;">
+        <div class="panel-title">Strategic Market Plan</div>
+        <table class="data-tbl"><tbody>
+          <tr><td class="muted" style="width:90px;">Time horizon</td><td>3–5 years</td></tr>
+          <tr><td class="muted">Sets objectives for</td><td>Market share position · Sales growth · Long-run NMC</td></tr>
+          <tr><td class="muted">Review cycle</td><td>Annually against long-run trajectory</td></tr>
+          <tr><td class="muted">Resource scope</td><td>Full portfolio investment allocation</td></tr>
+        </tbody></table>
+        <div class="callout teal" style="margin-top:auto;"><div class="callout-label">Example</div><p>"Grow Beta's market share from 10% to 16% and raise NMC from $12.8M to $24M over 3 years through an Improve Position strategy."</p></div>
+      </div>
+      <div class="panel" style="display:flex;flex-direction:column;gap:5px;">
+        <div class="panel-title">Marketing Mix Strategy</div>
+        <table class="data-tbl"><tbody>
+          <tr><td class="muted" style="width:90px;">Time horizon</td><td>1 year</td></tr>
+          <tr><td class="muted">Specifies tactics for</td><td>Product positioning · Pricing · Communications · Channels</td></tr>
+          <tr><td class="muted">Review cycle</td><td>Quarterly; adjusted as market conditions change</td></tr>
+          <tr><td class="muted">Resource scope</td><td>Annual marketing and sales budget for one product</td></tr>
+        </tbody></table>
+        <div class="callout amber" style="margin-top:auto;"><div class="callout-label">Example</div><p>"Reduce Beta's price 5% and increase digital ad spend by $400K in Q1 to accelerate trial in the B2B segment."</p></div>
+      </div>
+    </div>
+    <div class="callout teal"><div class="callout-label">Bottom takeaway</div><p>Strategy sets the destination — market share and NMC targets 3–5 years out. Marketing mix is how you navigate to it, adjusted year-by-year. The wrong strategic plan cannot be rescued by a brilliant mix.</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO2</span></div><div><span class="le-gate-note">Gate 2 Q7 — classification</span></div></div>
+</div>
+
+<!-- ============================================================ S21 — Strategy Taxonomy ============================================================ -->
+<div class="slide-page" id="s21">
+  <div class="le-accent"></div><div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;"><span class="le-tag">LO5 · LO6</span><span class="le-course">Classification</span></div>
+    <span class="le-pagenum">21 / 21</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">Strategic Market Plans — <span>Seven Strategies</span></div>
+    <div class="le-sub">Three offensive · Four defensive</div>
+  </div>
+  <div class="le-body" style="gap:7px;">
+    <div class="two-col" style="flex:1;">
+      <div class="panel" style="border-color:var(--teal);display:flex;flex-direction:column;gap:5px;">
+        <div class="panel-title" style="color:var(--teal-dk);">Offensive — Attractive markets / Improvable position</div>
+        <table class="data-tbl"><tbody>
+          <tr><td class="pos" style="width:120px;vertical-align:top;padding-top:7px;">Invest to Grow</td><td style="font-size:8.5px;">Invest marketing and sales resources to grow market demand or grow market share in an expanding market</td></tr>
+          <tr><td class="pos" style="vertical-align:top;padding-top:7px;">Improve Position</td><td style="font-size:8.5px;">Strengthen competitive position in an attractive segment where the firm is currently below its potential</td></tr>
+          <tr><td class="pos" style="vertical-align:top;padding-top:7px;">New Market Entry</td><td style="font-size:8.5px;">Enter new attractive markets or develop new product-markets; requires large upfront investment, operates at a loss until break-even</td></tr>
+        </tbody></table>
+      </div>
+      <div class="panel" style="display:flex;flex-direction:column;gap:5px;">
+        <div class="panel-title">Defensive — Mature markets / Established position</div>
+        <table class="data-tbl"><tbody>
+          <tr><td style="width:120px;font-weight:600;vertical-align:top;padding-top:7px;">Protect Position</td><td style="font-size:8.5px;">Protect market share and competitive advantage in a market the firm dominates; invest to hold, not to grow</td></tr>
+          <tr><td style="font-weight:600;vertical-align:top;padding-top:7px;">Optimize Position</td><td style="font-size:8.5px;">Maximize marketing profit at late-growth or mature stage; optimize price-volume mix, reduce unnecessary spend</td></tr>
+          <tr><td class="amber" style="vertical-align:top;padding-top:7px;">Monetize</td><td style="font-size:8.5px;">Manage for maximum cash flow in a less attractive market; limit investment while remaining in market</td></tr>
+          <tr><td class="neg" style="vertical-align:top;padding-top:7px;">Harvest / Divest</td><td style="font-size:8.5px;">Extract short-run profit while exiting (harvest = managed exit; divest = sell or close immediately)</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="callout amber"><div class="callout-label">⚑ Chapter-only</div><p>Operational mechanics of Monetize, Harvest, and Divest (pricing decisions, payment terms, exit conditions) — pp. 391–392. Gate 1 V4 Q4 tests the Zi-Tech Acoustics harvest mechanism for Product Line D specifically.</p></div>
+  </div>
+  <div class="le-footer"><div class="le-lo-pills"><span class="le-lo-pill">LO5</span><span class="le-lo-pill">LO6</span></div><div><span class="le-ch-note">⚑ Monetize/Harvest/Divest mechanics — pp. 391–392</span></div></div>
+</div>
+
+      </div><!-- slide-inner -->
+    </div><!-- slide-wrap -->
+
+    <!-- Navigation -->
+    <div class="nav-bar">
+      <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Previous</button>
+      <div class="dots" id="dotNav"></div>
+      <button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button>
+    </div>
+  </div><!-- slide-panel -->
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sb-card">
+      <div class="sb-hdr navy">📋 Current Slide</div>
+      <div class="sb-body">
+        <div class="sb-title" id="sb-title">Portfolio Analysis &amp; Strategic Market Planning</div>
+        <div class="sb-pagenum" id="sb-page">Slide 1 of 21</div>
+      </div>
+    </div>
+    <div class="sb-card">
+      <div class="sb-hdr teal">🎯 Gate Focus</div>
+      <div class="sb-body" id="sb-focus"><span class="muted">No specific gate target for this slide.</span></div>
+    </div>
+    <div class="sb-card">
+      <div class="sb-hdr amber">📖 Chapter Connection</div>
+      <div class="sb-body" id="sb-reading"><span class="muted">See Chapter 11.</span></div>
+    </div>
+    <div class="sb-card">
+      <div class="sb-hdr green">🎓 Learning Objectives</div>
+      <div class="sb-body"><div class="lo-badge-row" id="sb-lo"><span class="muted">See slide for LO coverage</span></div></div>
+    </div>
+  </div>
+
+</div><!-- viewer -->
+
+<div class="kb-hint">← → Arrow keys to navigate</div>
+
+<script>
+const TOTAL = 21;
+const sidebarData = [
+  {"title":"Portfolio Analysis & Strategic Market Planning","lo":[],"focus":null,"reading":null},
+  {"title":"Learning Objectives","lo":["LO1","LO2","LO3","LO4","LO5","LO6"],"focus":"No specific gate target — use this slide to orient your reading of Chapter 11.","reading":"All six objectives are addressed in Chapter 11. This deck covers each — but the chapter provides depth, examples, and additional frameworks not in the slides."},
+  {"title":"What Chapter 11 Covers Beyond This Deck","lo":["LO1","LO2","LO4","LO5","LO6"],"focus":"Gate 1 tests all five topics listed here. None appear on slides. Read Chapter 11 before Gate 1.","reading":"Topics 1–5 are exclusively in Chapter 11. Topic 2 (SDI formula) is in Figure 11-5, pp. 380–381. Topic 4 (offensive vs. defensive NMC trade-off) is in Figure 11-14, p. 393."},
+  {"title":"Strategic Market Planning","lo":["LO2"],"focus":"No specific gate target — understand the three-step process flow and the distinction between offensive and defensive output strategies.","reading":"Chapter 11 opens with this process framework (Figure 11-3, p. 379). The chapter adds detail on how performance assessment feeds into portfolio analysis and then into strategy selection."},
+  {"title":"Business Performance Criteria for Portfolio Review","lo":["LO1"],"focus":"No specific gate target — be able to classify any performance metric as market performance, marketing profitability, or traditional financial.","reading":"Chapter 11 pp. 377–378 discuss how these performance dimensions interact. The backward vs. forward-looking distinction is implicit throughout Chapter 11."},
+  {"title":"Two Approaches to Portfolio Visualization","lo":["LO1"],"focus":"No specific gate target — understand that both models are inputs, not outputs. Neither alone determines strategy.","reading":"Figures 11-1 and 11-2 in Chapter 11 illustrate these two approaches with Toyota and the balanced vs. unbalanced portfolio examples. Review both figures."},
+  {"title":"Meridian Industrial — Portfolio Snapshot","lo":["LO1"],"focus":"Stop and predict before advancing. What does a portfolio concentrated in mature markets imply about 5-year revenue trajectory?","reading":"Figure 11-2 Portfolio A in Chapter 11 shows a similar pattern. The chapter explains the long-run performance risk of an unbalanced portfolio."},
+  {"title":"Meridian Industrial — Life Cycle Changes Everything","lo":["LO1"],"focus":"Gate 1 Q5 target: Chapter 11 quantifies portfolio stability benefit using variance data (Figure 11-16). Individual product-market variance: 42%, 17%, 57%. Combined portfolio: 6%.","reading":"Figure 11-16 (pp. 395–397) is the chapter-exclusive source for the variance data. The chapter also distinguishes product diversification from market diversification — both are Gate 1 Q5 targets."},
+  {"title":"Five Product Lines — Single-Factor Analysis","lo":["LO2","LO3"],"focus":"Write your strategy recommendation for each product line before advancing. Pay attention to Products D and E — both are in fast-growing markets but their SDI scores differ sharply.","reading":"This analysis uses Figures 11-6 and 11-7 from Chapter 11. The SDI formula (Gate 1 Q2 target) is derived in Figure 11-5, pp. 380–381 — exclusively in the chapter."},
+  {"title":"Five Product Lines — Strategy Recommendations","lo":["LO2","LO3"],"focus":"Gate 2 Q5 target: given SDI = X and market growth rate = Y, classify competitive position and identify the appropriate strategy direction.","reading":"Chapter 11 pp. 384–385 discuss Product A and Product D strategies in detail. The key insight — that SDI near 90 signals a share ceiling, not opportunity — is supported by the chapter's NMC calculations."},
+  {"title":"Misconception: High Growth Rate = Attractive Market","lo":["LO2"],"focus":"Gate 1 Q1 target: the GE/McKinsey model name and which two organizations developed it appear only in Chapter 11, p. 385. This slide establishes why the model is needed — the chapter names it.","reading":"Chapter 11 p. 385 introduces the GE/McKinsey multi-factor portfolio matrix by name. The three dimensions of market attractiveness (Figure 11-9) address each of the three limitations described on this slide."},
+  {"title":"Market Attractiveness — Three Dimensions, Nine Factors","lo":["LO3"],"focus":"Gate 2 Q1 target: given one MAI dimension with metric weights and attractiveness ratings, calculate the dimension score and its weighted contribution to the overall MAI.","reading":"Figure 11-9 (p. 387) shows this three-dimension structure. Figure 11-10 (p. 387) provides the full worked example with all nine factors. Study both before Gate 2."},
+  {"title":"Market Attractiveness Index — Attempt Before Advancing","lo":["LO3"],"focus":"Gate 2 Q1 target (numeric): calculate MAI from the inputs shown. All values come from Chapter 11 Figure 11-10. Work through all three steps before advancing.","reading":"Figure 11-10 (p. 387) is the source for this calculation. Check your dimension scores: Market Forces = 62, Competitive Environment = 44, Market Access = 84."},
+  {"title":"Market Attractiveness Index — Solution","lo":["LO3"],"focus":"Gate 2 Q1 answer: MAI = 61. If your answer differs, check whether you applied the dimension weight to the dimension score (not to individual metric scores). This is the most common error.","reading":"Figure 11-10 confirms MAI = 61. The chapter's prose (p. 388) explains that industry forces differ across industries — the factors shown are illustrative, not universal."},
+  {"title":"Competitive Position — Three Dimensions, Nine Factors","lo":["LO4"],"focus":"Critical: the CPI rating scale differs from the MAI. In CPI, 0 = considerably behind competitors, 100 = considerably ahead. In MAI, 0 = very unattractive market. Same range, completely different anchors.","reading":"Figure 11-11 (p. 388) shows the CPI dimension structure. Figure 11-12 (p. 389) provides the full worked example. Gate 1 Q1 (V4) asks about both CPI dimensions and the scale difference."},
+  {"title":"Competitive Position Index — Attempt Before Advancing","lo":["LO4"],"focus":"Gate 2 Q2 target (numeric): calculate CPI from the inputs shown. Parallel structure to the MAI calculation. Work through all three dimensions before advancing.","reading":"Figure 11-12 (p. 389) is the source. Check your dimension scores: Differentiation = 74, Cost Advantage = 46, Marketing Advantage = 34. The low Marketing Advantage score matters strategically."},
+  {"title":"Competitive Position Index — Solution","lo":["LO4"],"focus":"Gate 2 Q2 answer: CPI = 55. Distribution score of 20 is the single largest drag. Identify the highest-leverage CPI improvement target before the case analysis — you will need it for Part 2.","reading":"Figure 11-12 confirms CPI = 55. The chapter notes that the business's weighted score for marketing advantage is a weak 6.8 (p. 389)."},
+  {"title":"GE/McKinsey Portfolio Grid — Strategy Selection","lo":["LO5"],"focus":"Gate 2 Q3 target: given MAI = X and CPI = Y, identify the correct grid cell using 0/33/67/100 thresholds and name the strategy. The threshold values come from Figure 11-18 (Zi-Tech, p. 399) — chapter-exclusive.","reading":"Figure 11-13 (p. 390) is the full 9-cell grid with all seven strategies. The 0/33/67/100 zone thresholds are visible in Figure 11-18 (p. 399). Both are required reading before Gate 2."},
+  {"title":"Where Does This Brand Belong? — Practice","lo":["LO5"],"focus":"Gate 2 Q3 practice: MAI = 61 falls in medium zone (34–67). CPI = 55 falls in medium zone (34–67). Center cell strategies: Improve Position and Optimize Position. Choice depends on life-cycle stage.","reading":"Figure 11-13 (p. 390) maps the center cell strategies. The Zi-Tech case (Figure 11-18, p. 399) shows how to choose between them based on market growth rate."},
+  {"title":"Strategic Market Plan vs. Marketing Mix Strategy","lo":["LO2"],"focus":"Gate 2 Q7 target: classify a list of management actions as strategic market plan or marketing mix strategy. Time horizon and performance objective are the primary discriminators.","reading":"Chapter 11 pp. 397–398 define both concepts with examples. The Intel example (p. 398) illustrates how one strategic plan can require different marketing mix strategies for different product-markets."},
+  {"title":"Strategic Market Plans — Seven Strategies","lo":["LO5","LO6"],"focus":"Gate 1 (V4 Q4) target: operational mechanics of Monetize, Harvest, and Divest are chapter-only (pp. 391–392). Slides show labels only. The Zi-Tech harvest mechanism (Product D) is specifically tested.","reading":"Chapter 11 pp. 391–392 define all seven strategies with operational detail. Figure 11-15 (p. 395) provides the offensive/defensive summary. The Zi-Tech case (pp. 397–400) applies all four strategies."}
+];
+
+let cur = 0;
+
+function buildDots() {
+  const nav = document.getElementById('dotNav');
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' on' : '');
+    d.setAttribute('aria-label', 'Slide ' + (i+1));
+    d.onclick = (()=>{ const idx=i; return ()=>goTo(idx); })();
+    nav.appendChild(d);
+  }
+}
+
+function goTo(i) {
+  if (i < 0 || i >= TOTAL) return;
+  document.getElementById('s'+(cur+1)).classList.remove('active');
+  document.querySelectorAll('.dot')[cur].classList.remove('on');
+  cur = i;
+  document.getElementById('s'+(cur+1)).classList.add('active');
+  document.querySelectorAll('.dot')[cur].classList.add('on');
+  document.getElementById('prog').style.width = ((cur+1)/TOTAL*100) + '%';
+  document.getElementById('hdr-counter').textContent = 'Slide ' + (cur+1) + ' of ' + TOTAL;
+  const sd = sidebarData[cur];
+  document.getElementById('sb-title').textContent = sd.title;
+  document.getElementById('sb-page').textContent = 'Slide ' + (cur+1) + ' of ' + TOTAL;
+  document.getElementById('sb-focus').innerHTML = sd.focus
+    ? '<span>' + sd.focus + '</span>'
+    : '<span class="muted">No specific gate target for this slide.</span>';
+  document.getElementById('sb-reading').innerHTML = sd.reading
+    ? '<span>' + sd.reading + '</span>'
+    : '<span class="muted">See Chapter 11.</span>';
+  const loDiv = document.getElementById('sb-lo');
+  loDiv.innerHTML = sd.lo.length
+    ? sd.lo.map(l => '<span class="lo-badge">'+l+'</span>').join('')
+    : '<span class="muted">Overview slide</span>';
+  document.getElementById('prevBtn').disabled = cur === 0;
+  document.getElementById('nextBtn').disabled = cur === TOTAL-1;
+}
+
+function navigate(d) { goTo(cur + d); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+});
+
+buildDots();
+goTo(0);
+</script>
+</body>
+</html>

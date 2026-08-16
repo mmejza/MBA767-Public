@@ -1,0 +1,44 @@
+<section class="slide-page" data-title="CLV Period-by-Period: Attempt First" data-lo="LO6" data-notes="LO6 period-by-period PV method setup. Credit card example: M=$61/yr, r=80%, i=10%, AC=$51. Answer: CLV=$111.70. The period-by-period method builds the same result as the formula by explicitly discounting each year's expected profit and summing. Students should try applying both methods before the solution slide. Key check: M × r/(1+i-r) - AC = 61 × 0.80/0.30 - 51 = 61 × 2.667 - 51 = 162.67 - 51 = 111.67 ≈ $111.70.">
+  <div class="le-accent"></div>
+  <div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;">
+      <span class="le-tag">LO6</span>
+      <span class="le-course">MKT 472 · Module 01</span>
+    </div>
+    <span class="le-pagenum">18 / 23</span>
+  </div>
+  <div class="le-titleblock">
+    <div class="le-title">CLV Period-by-Period: <span>Attempt First</span></div>
+    <div class="le-sub">Credit card customer — calculate CLV using both methods before the next slide</div>
+  </div>
+  <div class="le-body" style="gap:9px;">
+    <div style="background:var(--navy);border-radius:4px;padding:8px 13px;margin-bottom:2px;">
+      <div class="slide-small" style="color:#e8f8f8;line-height:1.6"><strong style="color:var(--teal);">Given:</strong> Credit card customer · Margin per year = $61 · Retention rate = 80% per year · Discount rate = 10% per year · Acquisition cost = $51</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:4px;padding:9px 12px;">
+        <div class="gate-source" style="font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Method 1 — Formula</div>
+        <div class="slide-copy" style="color:var(--text);line-height:1.7">CLV = [M × (r ÷ (1 + i − r))] − AC<br><br>CLV = [$61 × (0.80 ÷ (1 + 0.10 − 0.80))] − $51<br><br>CLV = [$61 × (0.80 ÷ ?)] − $51 = <strong style="color:var(--red);">?</strong></div>
+      </div>
+      <div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:4px;padding:9px 12px;">
+        <div class="gate-source" style="font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Method 2 — Period-by-Period PV</div>
+        <div class="slide-copy" style="color:var(--text);line-height:1.7">Year 1: P(stay) = 1.0 → Profit = $61 → PV = $61 ÷ 1.10 = <strong style="color:var(--red);">?</strong><br>Year 2: P(stay) = 0.80 → Profit = $48.80 → PV = <strong style="color:var(--red);">?</strong><br>Year 3: P(stay) = 0.64 → Profit = $39.04 → PV = <strong style="color:var(--red);">?</strong><br>Sum to ∞ − AC = <strong style="color:var(--red);">CLV = ?</strong></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+      <div style="background:var(--off);border:.5px solid var(--teal-bd);border-radius:3px;padding:7px 10px;">
+        <div class="gate-source" style="font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Period-by-Period Rule</div>
+        <div class="slide-small" style="color:var(--text);line-height:1.6">Expected profit in year t = M × r^(t−1)<br>PV of year t = Expected profit ÷ (1 + i)^t<br>CLV = Σ PV of all years − AC</div>
+      </div>
+      <div class="callout amber">
+        <div class="callout-label">Both Methods Should Agree</div>
+        <p>The formula method and the period-by-period method produce the same result — the formula is the closed-form solution to the infinite sum. Use this as a check.</p>
+      </div>
+    </div>
+  </div>
+  <div class="le-footer">
+    <div class="le-lo-pills"><span class="le-lo-pill">LO6</span></div>
+    <div><span class="le-ch-note">Ch. 1 · Solution on next slide</span></div>
+  </div>
+</section>

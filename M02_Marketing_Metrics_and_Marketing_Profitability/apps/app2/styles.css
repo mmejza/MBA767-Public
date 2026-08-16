@@ -1,0 +1,594 @@
+/* ─── RESET & BASE ─────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  color: #1a1a2e;
+  background: #f5f7fa;
+  padding: 0;
+  max-width: none;
+  margin: 0 auto;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: -999px;
+  background: #0d1b4b;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  left: 10px;
+  top: 10px;
+}
+
+.app-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.app-header,
+.info-card,
+.required-callout,
+.how-to,
+.interactive-app,
+.results-dashboard,
+.app-footer {
+  background: #fff;
+  border: 1px solid #d9deea;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.app-header {
+  padding: 14px 16px;
+}
+
+.module-id {
+  margin: 0 0 3px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #5a6478;
+}
+
+/* ─── TITLE & INSTRUCTIONS ──────────────────────────────────────────────────── */
+
+#appTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #0d1b4b;
+}
+
+#instructions {
+  color: #444;
+  margin-bottom: 0;
+  line-height: 1.5;
+  max-width: 740px;
+}
+
+.info-card {
+  padding: 14px 16px;
+}
+
+.info-card h2,
+.interactive-head h2,
+.results-dashboard h2 {
+  margin: 0 0 8px;
+  font-size: 1.18rem;
+}
+
+.info-card p,
+.info-card li,
+.required-callout p,
+.how-to li {
+  font-size: 0.93rem;
+}
+
+.info-card ol,
+.how-to ol {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+}
+
+.required-callout {
+  padding: 12px 16px;
+  border-left: 4px solid #0d1b4b;
+}
+
+.required-label {
+  margin: 0 0 3px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0d1b4b;
+}
+
+.required-callout p {
+  margin: 0;
+}
+
+.how-to {
+  padding: 12px 16px;
+}
+
+.how-to summary {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.how-to[open] summary {
+  margin-bottom: 8px;
+}
+
+.interactive-app {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.interactive-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.focus-btn {
+  border: 1px solid #0d1b4b;
+  background: #fff;
+  color: #0d1b4b;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.quiz-workflow-banner {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #0d1b4b;
+  border-radius: 6px;
+  background: #e9eefb;
+  color: #0d1b4b;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+body.focus-mode [data-focus-hide] {
+  display: none;
+}
+
+/* ─── APP CONTAINER ─────────────────────────────────────────────────────────── */
+
+#appContainer {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+/* ─── VIEW TOGGLE ────────────────────────────────────────────────────────────── */
+
+.view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.view-toggle-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+}
+
+.view-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1.5px solid #c5cce8;
+  border-radius: 6px;
+  background: #f0f3fc;
+  color: #0d1b4b;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.view-btn:hover {
+  background: #dce3f8;
+  border-color: #8098e0;
+}
+
+.view-btn:focus-visible,
+#resetBtn:focus-visible,
+.focus-btn:focus-visible,
+.how-to summary:focus-visible,
+.drop-btn:focus-visible,
+.ws-input-row input[type="number"]:focus-visible {
+  outline: 3px solid #1f6fb8;
+  outline-offset: 2px;
+}
+
+.view-btn.active {
+  background: #0d1b4b;
+  border-color: #0d1b4b;
+  color: #fff;
+}
+
+/* ─── PRODUCT-LINE TABLE ────────────────────────────────────────────────────── */
+
+#tableWrapper {
+  overflow-x: auto;
+  margin-bottom: 1.75rem;
+}
+
+.pl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.pl-table th,
+.pl-table td {
+  padding: 0.55rem 0.75rem;
+  text-align: right;
+  border-bottom: 1px solid #e8ecf5;
+  white-space: nowrap;
+}
+
+.pl-table th {
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.82rem;
+  background: #f0f3fc;
+  color: #0d1b4b;
+  letter-spacing: 0.02em;
+}
+
+.pl-table .metric-col,
+.pl-table .metric-label {
+  text-align: left;
+  font-weight: 500;
+  color: #333;
+  min-width: 180px;
+}
+
+.pl-table .total-col {
+  font-weight: 700;
+  background: #f7f9ff;
+  border-left: 2px solid #c5cce8;
+}
+
+.pl-table .ctrl-cell {
+  text-align: center;
+  padding: 0.4rem 0.5rem;
+}
+
+/* ─── DROP / RESTORE BUTTON ─────────────────────────────────────────────────── */
+
+.drop-btn {
+  padding: 0.3rem 0.75rem;
+  border: 1.5px solid #c5cce8;
+  border-radius: 5px;
+  background: #fff;
+  color: #555;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.drop-btn:hover {
+  background: #fdecea;
+  border-color: #c0392b;
+  color: #c0392b;
+}
+
+.drop-btn.restore {
+  background: #f0f3fc;
+  border-color: #8098e0;
+  color: #0d1b4b;
+}
+
+.drop-btn.restore:hover {
+  background: #dce3f8;
+}
+
+/* ─── DROPPED STATE ──────────────────────────────────────────────────────────── */
+
+.pl-table td.dropped,
+.pl-table th.dropped {
+  opacity: 0.35;
+  text-decoration: line-through;
+  background: #f9f9fb;
+}
+
+.pl-table td.ctrl-cell.dropped {
+  text-decoration: none;
+  opacity: 1;
+  background: #f9f9fb;
+}
+
+/* ─── CELL COLORS ────────────────────────────────────────────────────────────── */
+
+.cell-positive {
+  color: #1a7a4a;
+  font-weight: 700;
+}
+
+.cell-negative {
+  color: #c0392b;
+  font-weight: 700;
+}
+
+/* ─── VIEW EMPHASIS ──────────────────────────────────────────────────────────── */
+
+/* Financial View: highlight Net Profit rows */
+.pl-table.view-financial .metric-label.emph-financial,
+.pl-table.view-financial td.emph-financial,
+.pl-table.view-financial .total-col.emph-financial {
+  background: #fffbe6;
+  font-weight: 700;
+}
+
+/* Marketing View: highlight NMC rows */
+.pl-table.view-marketing .metric-label.emph-marketing,
+.pl-table.view-marketing td.emph-marketing,
+.pl-table.view-marketing .total-col.emph-marketing {
+  background: #eaf4ff;
+  font-weight: 700;
+}
+
+/* ─── OPERATING INCOME PANEL ─────────────────────────────────────────────────── */
+
+#oiPanel {
+  margin-bottom: 2rem;
+  padding: 1rem 1.25rem;
+  background: #f7f9ff;
+  border: 1px solid #d0d8f0;
+  border-radius: 8px;
+}
+
+#oiPanel h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0d1b4b;
+  margin-bottom: 0.75rem;
+}
+
+.oi-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 480px;
+}
+
+.oi-table td {
+  padding: 0.45rem 0.5rem;
+  font-size: 0.88rem;
+}
+
+.oi-label {
+  color: #444;
+  text-align: left;
+}
+
+.oi-cell {
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  min-width: 90px;
+}
+
+.oi-note {
+  font-size: 0.75rem;
+  color: #888;
+  font-weight: 400;
+}
+
+.oi-row {
+  border-top: 2px solid #c5cce8;
+}
+
+.oi-result-label {
+  font-weight: 700;
+  color: #0d1b4b;
+}
+
+.oi-value.positive {
+  color: #1a7a4a;
+  font-size: 1.1rem;
+}
+
+.oi-value.warn {
+  color: #c0392b;
+  font-size: 1.1rem;
+}
+
+.oi-row.warn td {
+  background: #fdecea;
+  border-radius: 4px;
+}
+
+/* ─── ADD-LINE WORKSHEET ─────────────────────────────────────────────────────── */
+
+#worksheetSection {
+  border-top: 1px solid #e0e4ef;
+  padding-top: 1.5rem;
+}
+
+#worksheetSection h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0d1b4b;
+  margin-bottom: 0.35rem;
+}
+
+.ws-note {
+  font-size: 0.82rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.ws-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.ws-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ws-input-row label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ws-input-row input[type="number"] {
+  padding: 0.45rem 0.6rem;
+  border: 1.5px solid #c5cce8;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  color: #0d1b4b;
+  background: #fff;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+
+.ws-input-row input[type="number"]:focus {
+  outline: none;
+  border-color: #8098e0;
+}
+
+.ws-outputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.5rem;
+  max-width: 600px;
+}
+
+.ws-output-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: #f0f3fc;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.ws-output-row.warn {
+  background: #fdecea;
+}
+
+.ws-output-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.ws-output-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.results-dashboard {
+  padding: 12px;
+}
+
+/* ─── RESET BUTTON ──────────────────────────────────────────────────────────── */
+
+#resetBtn {
+  padding: 0.55rem 1.4rem;
+  border: none;
+  border-radius: 6px;
+  background: #6c757d;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.app-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
+.canvas-reminder {
+  margin: 0;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #5a6478;
+}
+
+#resetBtn:hover {
+  background: #545b62;
+}
+
+/* ─── TOTAL HIGHLIGHT ────────────────────────────────────────────────────────── */
+
+.total-highlight {
+  border-top: 1px solid #8098e0;
+}
+
+/* ─── RESPONSIVE ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 12px;
+  }
+
+  .view-toggle {
+    flex-wrap: wrap;
+  }
+
+  .ws-inputs {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .app-header,
+  .info-card,
+  .required-callout,
+  .how-to,
+  .interactive-app,
+  .results-dashboard,
+  .app-footer {
+    padding: 12px;
+  }
+}

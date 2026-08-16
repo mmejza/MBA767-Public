@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>M07 App 1 - Positioning Mapper</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+	<main class="app-shell">
+		<header class="app-header">
+			<p class="module-label">MKT 472 · Module 7 · App 1</p>
+			<h1>Positioning Mapper</h1>
+			<p>Classify Customer Value Hierarchy (CVH) and analyze POPs/PODs for two brands.</p>
+		</header>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Learning Goal</h2>
+			<p>Classify product attributes within the Customer Value Hierarchy and compare brand positioning using POP/POD analysis. Distinguish baseline category requirements from differentiating claims. Use the outputs to explain how brand position is built and defended.</p>
+		</section>
+
+		<section class="quiz-card" data-focus-hide>
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Read the Canvas quiz question first.</li>
+				<li>Follow the preset, scenario, or modifications specified in the question.</li>
+				<li>Use this app to perform the required calculations and analysis.</li>
+				<li>Enter your answers in the Canvas quiz.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="required-callout" data-focus-hide>
+			<p class="required-label">Required for Quiz</p>
+			<p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Electric Vehicle.</p>
+		</section>
+
+		<details class="how-to" data-focus-hide>
+			<summary>How to Use This App</summary>
+			<ol>
+				<li>Choose a product preset and classify attributes into CVH levels by dragging or selecting levels.</li>
+				<li>Click Check My Classification to evaluate accepted CVH assignments and explanations.</li>
+				<li>Switch to the POP/POD tab and enter brand names with three attributes per brand.</li>
+				<li>Run analysis to view Venn outputs and refine the editable positioning-gap summary.</li>
+			</ol>
+		</details>
+
+		<section class="interactive-app" id="interactiveApp">
+			<div class="interactive-head">
+				<h2>Interactive App</h2>
+				<button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+			</div>
+			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+		<nav class="tabs" aria-label="App tabs">
+			<button class="tab-btn active" data-tab="cvh" type="button" aria-controls="tab-cvh" aria-selected="true">Tab A - CVH Classifier</button>
+			<button class="tab-btn" data-tab="pops" type="button" aria-controls="tab-pops" aria-selected="false">Tab B - POP/POD Analyzer</button>
+		</nav>
+
+		<section id="tab-cvh" class="tab-panel" aria-labelledby="Tab A">
+			<div class="panel-head">
+				<h2>Customer Value Hierarchy Classifier</h2>
+				<label for="preset-select">
+					Product Preset
+					<select id="preset-select">
+						<option value="electric-vehicle">Electric Vehicle</option>
+						<option value="athletic-shoe">Athletic Shoe</option>
+						<option value="streaming-service">Streaming Service</option>
+						<option value="smartphone">Smartphone</option>
+						<option value="coffee-shop">Coffee Shop</option>
+						<option value="raincoat">Raincoat Instructor Example</option>
+					</select>
+				</label>
+			</div>
+
+			<div class="cvh-layout">
+				<section class="attribute-bank" aria-label="Attributes to classify">
+					<h3>Attributes</h3>
+					<p class="hint">Drag cards into CVH levels or use the "Assign level" dropdown on each card.</p>
+					<div id="attribute-cards" class="card-list"></div>
+				</section>
+
+				<section class="pyramid-wrap" aria-label="CVH pyramid">
+					<h3>CVH Pyramid</h3>
+					<div class="pyramid" id="pyramid">
+						<div class="drop-zone level-5" data-level="Potential Product">
+							<h4>5. Potential Product</h4>
+							<ul class="assigned-list" id="list-potential"></ul>
+						</div>
+						<div class="drop-zone level-4" data-level="Augmented Product">
+							<h4>4. Augmented Product</h4>
+							<ul class="assigned-list" id="list-augmented"></ul>
+						</div>
+						<div class="drop-zone level-3" data-level="Expected Product">
+							<h4>3. Expected Product</h4>
+							<ul class="assigned-list" id="list-expected"></ul>
+						</div>
+						<div class="drop-zone level-2" data-level="Generic Product">
+							<h4>2. Generic Product</h4>
+							<ul class="assigned-list" id="list-generic"></ul>
+						</div>
+						<div class="drop-zone level-1" data-level="Core Benefit">
+							<h4>1. Core Benefit</h4>
+							<ul class="assigned-list" id="list-core"></ul>
+						</div>
+					</div>
+				</section>
+			</div>
+
+			<div class="action-row">
+				<button id="check-cvh" type="button">Check My Classification</button>
+				<button id="reset-cvh" type="button" class="secondary">Reset Current Preset</button>
+			</div>
+
+			<p id="cvh-message" class="message" role="status" aria-live="polite"></p>
+			<div id="cvh-results" class="results" aria-live="polite"></div>
+		</section>
+
+		<section id="tab-pops" class="tab-panel" hidden aria-labelledby="Tab B">
+			<h2>POPs / PODs Analyzer</h2>
+			<div class="pop-inputs">
+				<section>
+					<label for="brand-a-name">Brand A name</label>
+					<input id="brand-a-name" type="text" placeholder="Brand A">
+					<label for="brand-a-1">Brand A attribute 1</label>
+					<input id="brand-a-1" type="text">
+					<label for="brand-a-2">Brand A attribute 2</label>
+					<input id="brand-a-2" type="text">
+					<label for="brand-a-3">Brand A attribute 3</label>
+					<input id="brand-a-3" type="text">
+				</section>
+				<section>
+					<label for="brand-b-name">Brand B name</label>
+					<input id="brand-b-name" type="text" placeholder="Brand B">
+					<label for="brand-b-1">Brand B attribute 1</label>
+					<input id="brand-b-1" type="text">
+					<label for="brand-b-2">Brand B attribute 2</label>
+					<input id="brand-b-2" type="text">
+					<label for="brand-b-3">Brand B attribute 3</label>
+					<input id="brand-b-3" type="text">
+				</section>
+			</div>
+
+			<div class="action-row">
+				<button id="analyze-pop" type="button">Analyze POPs and PODs</button>
+			</div>
+
+			<p id="pops-message" class="message" role="status" aria-live="polite"></p>
+
+			<div class="venn-wrap">
+				<svg id="venn" viewBox="0 0 760 360" role="img" aria-label="Venn diagram for POP and POD analysis">
+					<circle cx="280" cy="180" r="120" class="circle-a"></circle>
+					<circle cx="480" cy="180" r="120" class="circle-b"></circle>
+					<text x="205" y="52" class="venn-label" id="label-a">Brand A PODs</text>
+					<text x="438" y="52" class="venn-label" id="label-b">Brand B PODs</text>
+					<text x="350" y="84" class="venn-label">POPs</text>
+					<text x="170" y="110" id="pod-a-text" class="venn-items"></text>
+					<text x="450" y="110" id="pod-b-text" class="venn-items"></text>
+					<text x="330" y="120" id="pop-text" class="venn-items"></text>
+				</svg>
+			</div>
+
+			<label for="gap-summary">Positioning-gap summary (editable)</label>
+			<textarea id="gap-summary" rows="4"></textarea>
+		</section>
+		</section>
+
+		<section class="results-dashboard" aria-label="Results Dashboard">
+			<h2>Results / Dashboard</h2>
+			<p>Use CVH check results, POP/POD outputs, and the positioning-gap summary to complete answers in Canvas.</p>
+		</section>
+
+		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>

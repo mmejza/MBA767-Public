@@ -1,0 +1,424 @@
+:root {
+	--teal: #0d9b87;
+	--navy: #0f2027;
+	--amber: #e6a800;
+	--light-gray: #f2f4f5;
+	--text: #111827;
+	--muted: #5b6670;
+	--line: #ccd4d9;
+	--danger: #b42318;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--text);
+	font-family: system-ui, "Barlow", sans-serif;
+}
+
+.app-shell {
+	width: min(1100px, 96vw);
+	margin: 1rem auto;
+	display: grid;
+	gap: 0.9rem;
+}
+
+.skip-link {
+	position: absolute;
+	left: -999px;
+	top: -999px;
+	background: #0f2027;
+	color: #fff;
+	padding: 0.45rem 0.7rem;
+	border-radius: 8px;
+	z-index: 1000;
+}
+
+.skip-link:focus {
+	left: 0.7rem;
+	top: 0.7rem;
+}
+
+.app-header,
+.tabs,
+.tab-panel {
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	background: #fff;
+}
+
+.app-header {
+	padding: 0.95rem;
+	background: linear-gradient(130deg, #eefaf8, #f7f9fb);
+}
+
+.app-header h1 {
+	margin: 0;
+	color: var(--navy);
+	font-size: clamp(1.3rem, 2vw, 1.6rem);
+}
+
+.module-label {
+	margin: 0 0 0.2rem;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--teal);
+}
+
+.app-header p {
+	margin: 0.35rem 0 0;
+	color: var(--muted);
+}
+
+.quiz-card,
+.required-callout,
+.how-to,
+.interactive-app,
+.results-dashboard,
+.canvas-reminder {
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	background: #fff;
+	padding: 0.95rem;
+	box-shadow: 0 6px 14px rgba(17, 24, 39, 0.05);
+}
+
+.quiz-card h2,
+.interactive-head h2,
+.results-dashboard h2 {
+	margin: 0 0 0.5rem;
+	font-size: 1.2rem;
+}
+
+.quiz-card ol,
+.how-to ol {
+	margin: 0;
+	padding-left: 1.2rem;
+	display: grid;
+	gap: 0.2rem;
+}
+
+.required-callout {
+	border-left: 4px solid var(--teal);
+}
+
+.required-label {
+	margin: 0 0 0.2rem;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--teal);
+}
+
+.how-to summary {
+	cursor: pointer;
+	font-weight: 700;
+}
+
+.how-to[open] summary {
+	margin-bottom: 0.45rem;
+}
+
+.interactive-app {
+	display: grid;
+	gap: 0.85rem;
+}
+
+.interactive-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.6rem;
+	flex-wrap: wrap;
+}
+
+.focus-btn {
+	border: 1px solid #aab4bc;
+	border-radius: 8px;
+	padding: 0.38rem 0.65rem;
+	color: var(--navy);
+	background: #fff;
+	cursor: pointer;
+}
+
+.quiz-workflow-banner {
+	margin: 0;
+	border: 1px solid #aab4bc;
+	border-radius: 10px;
+	background: #f2f4f5;
+	padding: 0.5rem 0.65rem;
+	font-size: 0.92rem;
+	font-weight: 700;
+	color: #1f2937;
+}
+
+.results-dashboard p {
+	margin: 0;
+	color: var(--muted);
+	font-size: 0.9rem;
+}
+
+.canvas-reminder {
+	padding-top: 0.6rem;
+	padding-bottom: 0.6rem;
+	text-align: center;
+	font-size: 0.82rem;
+	color: var(--muted);
+}
+
+body.focus-mode [data-focus-hide] {
+	display: none;
+}
+
+.tabs {
+	display: flex;
+	gap: 0.25rem;
+	padding: 0.3rem;
+	background: var(--light-gray);
+}
+
+.tab-btn {
+	flex: 1;
+	border: 0;
+	border-bottom: 3px solid transparent;
+	border-radius: 9px;
+	background: #d8dde0;
+	color: #42505a;
+	padding: 0.55rem;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.tab-btn.active {
+	background: #fff;
+	color: var(--navy);
+	border-bottom-color: var(--teal);
+}
+
+.tab-panel {
+	padding: 0.95rem;
+}
+
+.panel-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+	gap: 0.7rem;
+	flex-wrap: wrap;
+}
+
+h2,
+h3 {
+	margin: 0;
+	color: var(--navy);
+}
+
+label {
+	display: grid;
+	gap: 0.2rem;
+	font-size: 0.92rem;
+}
+
+select,
+input {
+	font: inherit;
+	border: 1px solid #aab4bc;
+	border-radius: 8px;
+	padding: 0.38rem 0.5rem;
+	background: #fff;
+}
+
+input:focus,
+select:focus,
+button:focus,
+summary:focus {
+	outline: 2px solid #2e83b4;
+	outline-offset: 1px;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+	outline: 3px solid #1f6fb8;
+	outline-offset: 2px;
+}
+
+.roa-grid,
+.strategy-grid {
+	margin-top: 0.7rem;
+	display: grid;
+	grid-template-columns: repeat(3, minmax(220px, 1fr));
+	gap: 0.8rem;
+}
+
+.strategy-grid {
+	grid-template-columns: 1.2fr 1fr;
+}
+
+.control-card,
+.result-card,
+.table-card,
+.examples-card {
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: #fcfdfd;
+	padding: 0.65rem;
+	display: grid;
+	gap: 0.4rem;
+}
+
+.results-grid {
+	margin-top: 0.8rem;
+	display: grid;
+	grid-template-columns: repeat(4, minmax(160px, 1fr));
+	gap: 0.6rem;
+}
+
+.big {
+	margin: 0.25rem 0 0;
+	font-size: 2rem;
+	line-height: 1;
+	color: var(--teal);
+	font-weight: 700;
+}
+
+.big.negative {
+	color: var(--danger);
+}
+
+.note {
+	margin: 0.65rem 0 0;
+	color: var(--muted);
+	font-size: 0.9rem;
+}
+
+.danger {
+	margin: 0.55rem 0 0;
+	border: 1px solid #e6b3ad;
+	border-radius: 8px;
+	background: #fff1ef;
+	color: #7a271a;
+	padding: 0.45rem 0.55rem;
+	font-weight: 600;
+}
+
+.message {
+	margin: 0.55rem 0 0;
+	color: var(--navy);
+	font-size: 0.9rem;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 0.4rem;
+	font-size: 0.9rem;
+}
+
+th,
+td {
+	border: 1px solid var(--line);
+	padding: 0.4rem 0.45rem;
+	text-align: left;
+}
+
+table {
+	overflow-x: auto;
+	display: block;
+	max-width: 100%;
+	max-height: 320px;
+}
+
+thead th {
+	background: #f1f5f8;
+}
+
+.red-emphasis {
+	color: var(--danger);
+	font-weight: 700;
+	background: #fff1ef;
+}
+
+.strategy-result p {
+	margin: 0.15rem 0;
+}
+
+#strategy-output {
+	font-size: 1.15rem;
+	font-weight: 700;
+}
+
+.amber {
+	border: 1px solid #e7b64f;
+	border-radius: 8px;
+	background: #fff7e6;
+	color: #6b4800;
+	padding: 0.45rem 0.5rem;
+	font-size: 0.88rem;
+	font-weight: 600;
+}
+
+.examples-card ul {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.qa-inline {
+	margin-top: 0.7rem;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: #fcfdfd;
+	padding: 0.65rem;
+}
+
+.qa-inline ul {
+	margin: 0.45rem 0 0;
+	padding-left: 1rem;
+	font-size: 0.9rem;
+}
+
+@media (max-width: 1024px) {
+	.roa-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.results-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.strategy-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.quiz-card,
+	.required-callout,
+	.how-to,
+	.interactive-app,
+	.results-dashboard,
+	.canvas-reminder {
+		padding: 0.9rem;
+	}
+}
+
+@media (max-width: 800px) {
+	.tabs {
+		flex-direction: column;
+	}
+
+	.tab-btn {
+		flex: none;
+	}
+
+	.roa-grid,
+	.results-grid {
+		grid-template-columns: 1fr;
+	}
+}

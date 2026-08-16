@@ -1,0 +1,423 @@
+:root {
+	--teal: #0d9b87;
+	--navy: #0f2027;
+	--amber: #e6a800;
+	--light-gray: #f2f4f5;
+	--text: #111827;
+	--muted: #5f6c76;
+	--line: #cfd6dc;
+	--good: #1e8f58;
+	--bad: #b42318;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background: #fff;
+	color: var(--text);
+	font-family: system-ui, "Barlow", sans-serif;
+}
+
+.app-shell {
+	width: min(1100px, 96vw);
+	margin: 1rem auto;
+	display: grid;
+	gap: 0.85rem;
+}
+
+.skip-link {
+	position: absolute;
+	left: -999px;
+	top: -999px;
+	background: #0f2027;
+	color: #fff;
+	padding: 0.45rem 0.7rem;
+	border-radius: 8px;
+	z-index: 1000;
+}
+
+.skip-link:focus {
+	left: 0.7rem;
+	top: 0.7rem;
+}
+
+.app-header,
+.quiz-card,
+.required-callout,
+.how-to,
+.interactive-app,
+.results-dashboard,
+.canvas-reminder {
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	background: #fff;
+	padding: 0.85rem;
+	box-shadow: 0 6px 14px rgba(17, 24, 39, 0.05);
+}
+
+.module-label {
+	margin: 0 0 0.2rem;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--teal);
+}
+
+.quiz-card h2,
+.interactive-head h2,
+.results-dashboard h2 {
+	font-size: 1.2rem;
+	margin: 0 0 0.45rem;
+	color: var(--navy);
+}
+
+.quiz-card ol,
+.how-to ol {
+	margin: 0;
+	padding-left: 1.2rem;
+	display: grid;
+	gap: 0.2rem;
+}
+
+.required-callout {
+	border-left: 4px solid var(--teal);
+}
+
+.required-label {
+	margin: 0 0 0.2rem;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--teal);
+}
+
+.how-to summary {
+	cursor: pointer;
+	font-weight: 700;
+}
+
+.how-to[open] summary {
+	margin-bottom: 0.45rem;
+}
+
+.interactive-app {
+	display: grid;
+	gap: 0.85rem;
+}
+
+.interactive-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.6rem;
+	flex-wrap: wrap;
+}
+
+.focus-btn {
+	border: 1px solid #77a59e;
+	border-radius: 8px;
+	background: #fff;
+	color: var(--navy);
+	padding: 0.38rem 0.6rem;
+	cursor: pointer;
+}
+
+.quiz-workflow-banner {
+	margin: 0;
+	border: 1px solid #aeb9c1;
+	border-radius: 10px;
+	background: var(--light-gray);
+	padding: 0.5rem 0.65rem;
+	font-size: 0.92rem;
+	font-weight: 700;
+	color: #1f2937;
+}
+
+.app-grid {
+	display: grid;
+	grid-template-columns: 1.25fr 1.45fr 1.1fr;
+	gap: 0.85rem;
+}
+
+.results-dashboard p {
+	margin: 0;
+	color: var(--muted);
+	font-size: 0.9rem;
+}
+
+.canvas-reminder {
+	padding-top: 0.6rem;
+	padding-bottom: 0.6rem;
+	text-align: center;
+	font-size: 0.82rem;
+	color: var(--muted);
+}
+
+body.focus-mode [data-focus-hide] {
+	display: none;
+}
+
+.col {
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	background: #fff;
+	padding: 0.85rem;
+}
+
+h1,
+h2,
+h3 {
+	margin: 0;
+	color: var(--navy);
+}
+
+h1 {
+	font-size: clamp(1.3rem, 2vw, 1.6rem);
+}
+
+.intro,
+.chart-note,
+.message {
+	margin: 0.35rem 0 0;
+	color: var(--muted);
+	font-size: 0.9rem;
+}
+
+.preset-row {
+	margin-top: 0.65rem;
+	display: flex;
+	gap: 0.45rem;
+	flex-wrap: wrap;
+}
+
+button,
+input {
+	font: inherit;
+}
+
+input:focus,
+button:focus,
+summary:focus {
+	outline: 2px solid #2e83b4;
+	outline-offset: 1px;
+}
+
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+	outline: 3px solid #1f6fb8;
+	outline-offset: 2px;
+}
+
+button {
+	border: 1px solid #77a59e;
+	border-radius: 8px;
+	background: var(--teal);
+	color: #fff;
+	padding: 0.38rem 0.6rem;
+	cursor: pointer;
+}
+
+button.secondary {
+	background: #fff;
+	color: var(--navy);
+	border-color: #aeb9c1;
+}
+
+fieldset {
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	margin: 0.65rem 0 0;
+	padding: 0.5rem;
+	display: grid;
+	gap: 0.3rem;
+	background: #fcfdfd;
+}
+
+legend {
+	color: var(--navy);
+	font-weight: 700;
+	padding: 0 0.25rem;
+}
+
+label {
+	font-size: 0.86rem;
+}
+
+input {
+	border: 1px solid #b0bcc6;
+	border-radius: 8px;
+	padding: 0.35rem 0.45rem;
+}
+
+.table-wrap {
+	margin-top: 0.55rem;
+	overflow-x: auto;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	min-width: 580px;
+	font-size: 0.88rem;
+}
+
+th,
+td {
+	border: 1px solid var(--line);
+	padding: 0.36rem 0.4rem;
+	text-align: right;
+}
+
+th:first-child,
+td:first-child {
+	text-align: left;
+}
+
+thead th {
+	background: var(--light-gray);
+}
+
+.metrics {
+	margin-top: 0.75rem;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: #fcfdfd;
+	padding: 0.55rem;
+}
+
+dl {
+	margin: 0.45rem 0 0;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 0.35rem 0.5rem;
+}
+
+dt {
+	color: var(--muted);
+	font-size: 0.88rem;
+}
+
+dd {
+	margin: 0;
+	font-weight: 700;
+}
+
+.verdict {
+	margin-top: 0.75rem;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: #fcfdfd;
+	padding: 0.55rem;
+}
+
+.badge {
+	display: inline-block;
+	margin: 0.45rem 0 0;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	border-radius: 999px;
+	padding: 0.25rem 0.65rem;
+}
+
+.badge.good {
+	background: #e8f8ef;
+	border: 1px solid #8ec7a9;
+	color: #125737;
+}
+
+.badge.bad {
+	background: #fff1ef;
+	border: 1px solid #e3a8a1;
+	color: #7c271c;
+}
+
+.stack-chart {
+	margin-top: 0.6rem;
+	display: grid;
+	gap: 0.65rem;
+	max-height: 320px;
+}
+
+.stack-row {
+	display: grid;
+	gap: 0.25rem;
+}
+
+.stack-label {
+	font-size: 0.88rem;
+	color: var(--navy);
+	font-weight: 700;
+}
+
+.stack-track {
+	width: 100%;
+	height: 24px;
+	border-radius: 8px;
+	overflow: hidden;
+	display: flex;
+	background: #e8edf0;
+	border: 1px solid #c8d1d8;
+}
+
+.seg {
+	height: 100%;
+	min-width: 1px;
+}
+
+.legend {
+	margin-top: 0.65rem;
+	display: grid;
+	gap: 0.3rem;
+	font-size: 0.85rem;
+}
+
+.legend-item {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.swatch {
+	width: 14px;
+	height: 14px;
+	border-radius: 3px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1280px) {
+	.app-grid {
+		grid-template-columns: 1.1fr 1.35fr 1fr;
+	}
+}
+
+@media (max-width: 1024px) {
+	.app-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.quiz-card,
+	.required-callout,
+	.how-to,
+	.interactive-app,
+	.results-dashboard,
+	.canvas-reminder,
+	.app-header {
+		padding: 0.9rem;
+	}
+}
+
+@media (max-width: 800px) {
+	table {
+		min-width: 520px;
+	}
+
+	.preset-row {
+		flex-direction: column;
+	}
+}

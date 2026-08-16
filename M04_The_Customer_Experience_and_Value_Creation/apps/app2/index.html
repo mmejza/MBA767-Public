@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>MKT 472 Module 4 - PCV Index Builder</title>
+	<link rel="stylesheet" href="styles.css" />
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+	<script src="script.js" defer></script>
+</head>
+<body>
+	<main class="app-shell" aria-labelledby="app-title">
+		<header class="app-header card compact-header">
+			<div>
+				<p class="module-kicker">MKT 472 Module 4</p>
+				<h1 id="app-title">Perceived Customer Value Index Builder</h1>
+				<p class="purpose-line">Use the sequential PCV calculator to compare performance, cost, and final perceived customer value.</p>
+			</div>
+			<div class="focus-controls">
+				<button id="focus-mode-btn" type="button" aria-label="Enter focus mode">Focus Mode</button>
+				<p id="focus-mode-status" class="focus-status" role="status" aria-live="polite">Focus mode off</p>
+			</div>
+		</header>
+
+		<section class="card learning-goal-card instructional-panel" aria-label="Learning goal">
+			<h2>Learning Goal</h2>
+			<p>
+				Trace the full PCV chain from performance and brand inputs through cost and final value zone. Use the model to see how strong operating performance can still be offset by cost disadvantages.
+			</p>
+		</section>
+
+		<section class="card quiz-instructions instructional-panel" aria-label="Worksheet quiz instructions">
+			<h2>Worksheet Quiz Instructions</h2>
+			<ol>
+				<li>Use this app to perform the required calculations.</li>
+				<li>Follow the required preset or scenario.</li>
+				<li>Record your final answers in the Canvas quiz questions below.</li>
+				<li>Answers are submitted through Canvas, not through this app.</li>
+			</ol>
+		</section>
+
+		<section class="card required-quiz-callout instructional-panel" aria-label="Required for quiz">
+			<h2>Required for Quiz</h2>
+			<p>Begin with the default scenario before making modifications.</p>
+		</section>
+
+		<section class="card instructional-panel" aria-label="How to use this app">
+			<details id="how-to-panel" class="how-to-details">
+				<summary aria-label="How to use this app">How to Use This App</summary>
+				<ol>
+					<li>Complete the tabs in order by correcting weights and reviewing each sub-index.</li>
+					<li>Use Tab C to combine PPI, SQI, and BRI into OPI with valid OPI weights.</li>
+					<li>Complete Tab D carefully and review the sign-check message before interpreting CPI.</li>
+					<li>Use the summary dashboard and value map to confirm the final PCV result.</li>
+				</ol>
+			</details>
+		</section>
+
+		<section class="main-interactive" aria-label="Interactive app">
+			<section class="card" aria-label="Calculation tabs">
+				<div class="tablist" role="tablist" aria-label="PCV builder tabs">
+					<button id="tab-a" class="tab-button is-active" role="tab" aria-selected="true" aria-controls="panel-a" data-tab="A" type="button">
+						A - Product Performance
+					</button>
+					<button id="tab-b" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-b" data-tab="B" type="button" disabled aria-disabled="true">
+						B - Service Quality
+					</button>
+					<button id="tab-c" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-c" data-tab="C" type="button" disabled aria-disabled="true">
+						C - Brand Reputation + OPI Weights
+					</button>
+					<button id="tab-d" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-d" data-tab="D" type="button" disabled aria-disabled="true">
+						D - Cost of Purchase + Sign Check
+					</button>
+				</div>
+				<p id="tab-lock-message" class="lock-message" role="status" aria-live="polite"></p>
+			</section>
+
+		<section id="panel-a" class="tabpanel card" role="tabpanel" aria-labelledby="tab-a">
+			<h2>Tab A: Product Performance</h2>
+			<p class="section-note">Importance total: <strong id="a-total">0</strong> / 100</p>
+			<div id="a-validation" class="validation hidden" role="alert" aria-live="assertive"></div>
+			<div class="table-wrap">
+				<table class="data-table">
+					<thead>
+						<tr>
+							<th scope="col">Attribute</th>
+							<th scope="col">Importance</th>
+							<th scope="col">Business</th>
+							<th scope="col">Comp A</th>
+							<th scope="col">Comp B</th>
+							<th scope="col">Comp C</th>
+							<th scope="col">RA</th>
+						</tr>
+					</thead>
+					<tbody id="tbody-a"></tbody>
+				</table>
+			</div>
+			<div class="output-row">
+				<article class="metric-card" id="ppi-card" aria-live="polite">
+					<h3>PPI</h3>
+					<p id="ppi-value">-</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="panel-b" class="tabpanel card hidden" role="tabpanel" aria-labelledby="tab-b" hidden>
+			<h2>Tab B: Service Quality</h2>
+			<p class="section-note">Default values calibrated to produce SQI = 90.</p>
+			<p class="section-note">Importance total: <strong id="b-total">0</strong> / 100</p>
+			<div id="b-validation" class="validation hidden" role="alert" aria-live="assertive"></div>
+			<div class="table-wrap">
+				<table class="data-table">
+					<thead>
+						<tr>
+							<th scope="col">Attribute</th>
+							<th scope="col">Importance</th>
+							<th scope="col">Business</th>
+							<th scope="col">Comp A</th>
+							<th scope="col">Comp B</th>
+							<th scope="col">Comp C</th>
+							<th scope="col">RA</th>
+						</tr>
+					</thead>
+					<tbody id="tbody-b"></tbody>
+				</table>
+			</div>
+			<div class="output-row">
+				<article class="metric-card" id="sqi-card" aria-live="polite">
+					<h3>SQI</h3>
+					<p id="sqi-value">-</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="panel-c" class="tabpanel card hidden" role="tabpanel" aria-labelledby="tab-c" hidden>
+			<h2>Tab C: Brand Reputation + OPI Weights</h2>
+			<p class="section-note">Default values calibrated to produce BRI = 140.</p>
+			<p class="section-note">Importance total: <strong id="c-total">0</strong> / 100</p>
+			<div id="c-validation" class="validation hidden" role="alert" aria-live="assertive"></div>
+			<div class="table-wrap">
+				<table class="data-table">
+					<thead>
+						<tr>
+							<th scope="col">Attribute</th>
+							<th scope="col">Importance</th>
+							<th scope="col">Business</th>
+							<th scope="col">Comp A</th>
+							<th scope="col">Comp B</th>
+							<th scope="col">Comp C</th>
+							<th scope="col">RA</th>
+						</tr>
+					</thead>
+					<tbody id="tbody-c"></tbody>
+				</table>
+			</div>
+
+			<div class="weights-grid">
+				<article class="card inner-card">
+					<h3>OPI Weights</h3>
+					<div class="weights-row">
+						<label for="weight-product">Product</label>
+						<input id="weight-product" type="number" min="0" max="1" step="0.01" value="0.60" aria-label="OPI product weight input" />
+					</div>
+					<div class="weights-row">
+						<label for="weight-service">Service</label>
+						<input id="weight-service" type="number" min="0" max="1" step="0.01" value="0.30" aria-label="OPI service weight input" />
+					</div>
+					<div class="weights-row">
+						<label for="weight-brand">Brand</label>
+						<input id="weight-brand" type="number" min="0" max="1" step="0.01" value="0.10" aria-label="OPI brand weight input" />
+					</div>
+					<div id="opi-validation" class="validation hidden" role="alert" aria-live="assertive"></div>
+				</article>
+
+				<article class="metric-card" id="bri-card" aria-live="polite">
+					<h3>BRI</h3>
+					<p id="bri-value">-</p>
+				</article>
+
+				<article class="metric-card" id="opi-card" aria-live="polite">
+					<h3>OPI</h3>
+					<p id="opi-value">-</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="panel-d" class="tabpanel card hidden" role="tabpanel" aria-labelledby="tab-d" hidden>
+			<h2>Tab D: Cost of Purchase + Sign Check</h2>
+			<p class="section-note">Importance total: <strong id="d-total">0</strong> / 100</p>
+			<div id="d-validation" class="validation hidden" role="alert" aria-live="assertive"></div>
+			<div class="table-wrap">
+				<table class="data-table">
+					<thead>
+						<tr>
+							<th scope="col">Attribute</th>
+							<th scope="col">Importance</th>
+							<th scope="col">Business</th>
+							<th scope="col">Comp A</th>
+							<th scope="col">Comp B</th>
+							<th scope="col">Comp C</th>
+							<th scope="col">RA</th>
+						</tr>
+					</thead>
+					<tbody id="tbody-d"></tbody>
+				</table>
+			</div>
+
+			<div id="sign-check-panel" class="sign-check hidden" role="alert" aria-live="assertive" aria-label="Sign check warning panel">
+				<p>
+					SIGN CHECK: You have a positive relative advantage score on a cost component. For cost components, the sign runs in the OPPOSITE direction from the performance index: a HIGHER cost rating means your product costs MORE than competitors - which is a competitive DISADVANTAGE on that dimension, not an advantage.
+				</p>
+				<p>
+					Purchase Price RA = +27 does NOT mean you are 27% better on price. It means customers rate your price as HIGHER than competitors.
+				</p>
+				<p>Confirm you understand this before viewing your Cost of Purchase Index.</p>
+				<button id="ack-sign-btn" class="ack-btn" type="button" aria-label="I understand show my results button">
+					I understand - show my results
+				</button>
+			</div>
+
+			<div id="sign-badge" class="badge hidden" aria-live="polite">Review sign rule before case.</div>
+
+			<div id="tabd-output-row" class="output-row">
+				<article class="metric-card" id="cpi-card" aria-live="polite">
+					<h3>CPI</h3>
+					<p id="cpi-value">-</p>
+				</article>
+				<article class="metric-card" id="pcv-card" aria-live="polite">
+					<h3>PCV Index</h3>
+					<p id="pcv-value">-</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="card">
+			<h2>Summary Dashboard</h2>
+			<div class="summary-grid">
+				<article class="metric-card"><h3>PPI</h3><p id="sum-ppi">-</p></article>
+				<article class="metric-card"><h3>SQI</h3><p id="sum-sqi">-</p></article>
+				<article class="metric-card"><h3>BRI</h3><p id="sum-bri">-</p></article>
+				<article class="metric-card"><h3>OPI</h3><p id="sum-opi">-</p></article>
+				<article class="metric-card"><h3>CPI</h3><p id="sum-cpi">-</p></article>
+				<article class="metric-card"><h3>PCV</h3><p id="sum-pcv">-</p></article>
+			</div>
+			<div class="summary-text">
+				<p><strong>Zone:</strong> <span id="zone-value">-</span></p>
+				<p id="inference-text">PCV Index of - -> - value zone -> - average profitability expected.</p>
+			</div>
+		</section>
+
+		<section class="card">
+			<h2>Value Map</h2>
+			<p class="section-note">Fair value reference line: OPI = CPI.</p>
+			<div class="chart-wrap" aria-label="Value map chart area">
+				<canvas id="value-map-chart" aria-label="Scatter chart with CPI on x axis and OPI on y axis"></canvas>
+				<div class="zone-label zone-superior" aria-hidden="true">Superior Value Zone (OPI &gt; CPI)</div>
+				<div class="zone-label zone-inferior" aria-hidden="true">Inferior Value Zone (OPI &lt; CPI)</div>
+			</div>
+		</section>
+		</section>
+
+		<section class="card canvas-reminder instructional-panel" aria-label="Canvas submission reminder">
+			<p>Submit final answers through the Canvas quiz questions below the app.</p>
+		</section>
+	</main>
+</body>
+</html>

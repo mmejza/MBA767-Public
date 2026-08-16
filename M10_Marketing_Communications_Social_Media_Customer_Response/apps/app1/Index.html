@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>M10 App 1 - CRI and Media Planner</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --navy: #0F2A4A;
+      --blue: #1D6FA4;
+      --gold: #C8932A;
+      --bg: #F3F7FB;
+      --panel: #FFFFFF;
+      --line: #DCE7F3;
+      --text: #14324F;
+      --muted: #4E6780;
+      --good: #1F8A4D;
+      --warn: #C8932A;
+      --bad: #C23C3C;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .app {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #F8FBFF 0%, #FFFFFF 100%);
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      display: grid;
+      gap: 14px;
+      padding-bottom: 10px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: -999px;
+      background: #12222d;
+      color: #fff;
+      padding: 0.45rem 0.7rem;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+
+    .skip-link:focus {
+      left: 0.7rem;
+      top: 0.7rem;
+    }
+
+    .quiz-card,
+    .required-callout,
+    .how-to,
+    .interactive-app,
+    .results-dashboard,
+    .canvas-reminder,
+    .compact-header {
+      margin: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 14px;
+      box-shadow: 0 6px 14px rgba(15, 42, 74, 0.06);
+    }
+
+    .compact-header h1 {
+      margin: 0;
+      font-size: clamp(1.45rem, 2.1vw, 1.58rem);
+      line-height: 1.2;
+      color: var(--navy);
+    }
+
+    .compact-header .module-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .compact-header p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .quiz-card h2,
+    .interactive-head h2,
+    .results-dashboard h2,
+    .how-to summary {
+      margin: 0 0 6px;
+      font-size: 1.2rem;
+      color: var(--blue);
+    }
+
+    .quiz-card p,
+    .required-callout p,
+    .how-to li,
+    .results-dashboard p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .quiz-card ol,
+    .how-to ol {
+      margin: 0;
+      padding-left: 1.2rem;
+      display: grid;
+      gap: 0.15rem;
+    }
+
+    .required-callout {
+      border-left: 4px solid var(--gold);
+    }
+
+    .required-label {
+      margin: 0 0 4px;
+      color: #8a651d;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+
+    .how-to summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .how-to[open] summary {
+      margin-bottom: 8px;
+    }
+
+    .interactive-app {
+      display: grid;
+      gap: 12px;
+      padding: 14px 0 0;
+      overflow: hidden;
+    }
+
+    .interactive-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 0 14px;
+    }
+
+    .focus-btn {
+      border: 1px solid #BFD5E8;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--blue);
+      padding: 7px 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .quiz-workflow-banner {
+      margin: 0 14px;
+      border: 1px solid #C9DBEB;
+      border-radius: 10px;
+      background: #EEF6FD;
+      color: var(--navy);
+      padding: 10px 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .results-dashboard p {
+      color: var(--muted);
+    }
+
+    .canvas-reminder {
+      text-align: center;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    body.focus-mode [data-focus-hide] {
+      display: none;
+    }
+
+    .topbar {
+      background: var(--navy);
+      color: #fff;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      border-bottom: 3px solid var(--blue);
+    }
+
+    .title-wrap {
+      display: grid;
+      gap: 2px;
+    }
+
+    .module-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #A9CBE4;
+      font-weight: 600;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .preset-controls {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: var(--blue);
+      color: #fff;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      background: #165a86;
+      outline: none;
+    }
+
+    .btn.secondary {
+      background: #fff;
+      color: var(--blue);
+      border-color: #BFD5E8;
+    }
+
+    .btn.secondary:hover,
+    .btn.secondary:focus-visible {
+      background: #EEF6FD;
+    }
+
+    button:focus,
+    input:focus,
+    select:focus,
+    summary:focus,
+    .tab-btn:focus {
+      outline: 2px solid #1D6FA4;
+      outline-offset: 1px;
+    }
+
+    .banner {
+      margin: 0 14px;
+      border: 1px solid #C9DBEB;
+      border-radius: 10px;
+      background: #EEF6FD;
+      color: var(--navy);
+      padding: 10px 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 2px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      padding: 0 14px;
+    }
+
+    .tab-btn {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 12px 10px;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      flex: 1;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+    }
+
+    .panel {
+      display: none;
+      padding: 0 14px 14px;
+    }
+
+    .panel.active { display: block; }
+
+    .layout {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: var(--blue);
+    }
+
+    .field {
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+      margin-top: 8px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .field:first-child {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .field-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: baseline;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .val {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    input[type="range"],
+    input[type="number"] {
+      width: 100%;
+      accent-color: var(--blue);
+      font-family: inherit;
+    }
+
+    input[type="number"] {
+      border: 1px solid #BFD5E8;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 14px;
+      color: var(--text);
+      background: #fff;
+    }
+
+    .fixed {
+      padding: 8px 10px;
+      border: 1px dashed #BFD5E8;
+      border-radius: 8px;
+      background: #F7FBFF;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .kpi-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .kpi {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #FBFDFF;
+      padding: 10px;
+      display: grid;
+      gap: 4px;
+      align-content: start;
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .kpi-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      word-break: break-word;
+    }
+
+    .kpi-value.big {
+      font-size: 34px;
+      line-height: 1;
+      min-height: 32px;
+    }
+
+    .bars {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 46px;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .bar-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #E7F0F9;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--navy);
+    }
+
+    .bar-fill.weak {
+      background: var(--gold);
+    }
+
+    .bar-val {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .benchmark {
+      margin-top: 10px;
+      border: 1px solid #D6E6F3;
+      background: #F7FBFF;
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    @media (min-width: 840px) {
+      .layout {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+
+      .preset-controls {
+        justify-content: flex-start;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bar-row {
+        grid-template-columns: 86px 1fr 40px;
+      }
+
+      .compact-header,
+      .quiz-card,
+      .required-callout,
+      .how-to,
+      .interactive-app,
+      .results-dashboard,
+      .canvas-reminder {
+        margin: 0 8px;
+        padding: 12px;
+      }
+
+      .interactive-head,
+      .quiz-workflow-banner,
+      .banner,
+      .tabs,
+      .panel {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#interactiveApp">Skip to interactive app</a>
+  <div class="app">
+    <section class="compact-header">
+      <div class="module-label">MKT 472 · Module 10 · App 1</div>
+      <h1>CRI &amp; Media Planner</h1>
+      <p>Compare funnel conversion efficiency and media delivery intensity to evaluate why higher GRP may not produce higher CRI outcomes.</p>
+    </section>
+
+    <section class="quiz-card" data-focus-hide>
+      <h2>Learning Goal</h2>
+      <p>Use CRI and media-mix metrics to compare campaign outcomes under different presets and manual input changes. Identify how stage bottlenecks can lower CRI even when GRP increases.</p>
+    </section>
+
+    <section class="quiz-card" data-focus-hide>
+      <h2>Worksheet Quiz Instructions</h2>
+      <ol>
+        <li>Read the Canvas quiz question first.</li>
+        <li>Follow the preset, scenario, or modifications specified in the question.</li>
+        <li>Use this app to perform the required calculations and analysis.</li>
+        <li>Enter your answers in the Canvas quiz.</li>
+        <li>Answers are submitted through Canvas, not through this app.</li>
+      </ol>
+    </section>
+
+    <section class="required-callout" data-focus-hide>
+      <p class="required-label">Required for Quiz</p>
+      <p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Baseline Campaign.</p>
+    </section>
+
+    <details class="how-to" data-focus-hide>
+      <summary>How to Use This App</summary>
+      <ol>
+        <li>Select a preset or manually adjust CRI and media input controls.</li>
+        <li>Use tab navigation to review both CRI Calculator and Media Mix outputs.</li>
+        <li>Check the persistent comparison banner to track current CRI and GRP together.</li>
+        <li>Review weakest stage and KPI outputs before entering answers in Canvas.</li>
+      </ol>
+    </details>
+
+    <section class="interactive-app" id="interactiveApp">
+      <div class="interactive-head">
+        <h2>Interactive App</h2>
+        <button id="focusModeBtn" class="focus-btn" type="button" aria-pressed="false">Focus Mode</button>
+      </div>
+      <p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
+
+      <header class="topbar">
+        <div class="title-wrap">
+          <div class="module-label">MKT 472 · Module 10</div>
+          <h3 class="title">CRI &amp; Media Planner</h3>
+        </div>
+        <div class="preset-controls">
+          <button class="btn" id="presetBaseline" type="button">Baseline Campaign</button>
+          <button class="btn" id="presetTrap" type="button">High GRP / Low Comprehension</button>
+          <button class="btn secondary" id="presetReset" type="button">Reset</button>
+        </div>
+      </header>
+
+      <div class="banner" id="comparisonBanner">CRI = -- | GRP = --</div>
+
+      <nav class="tabs" aria-label="Tabs">
+        <button class="tab-btn active" type="button" data-tab="cri">CRI Calculator</button>
+        <button class="tab-btn" type="button" data-tab="media">Media Mix Calculator</button>
+      </nav>
+
+      <section class="panel active" id="tab-cri">
+        <div class="layout">
+          <article class="card">
+            <h3>CRI Calculator Inputs</h3>
+
+            <div class="field">
+              <div class="field-head">
+                <label for="exposure">Exposure %</label>
+                <span class="val" id="exposureVal">75%</span>
+              </div>
+              <input id="exposure" type="range" min="0" max="100" step="1" value="75" />
+            </div>
+
+            <div class="field">
+              <div class="field-head">
+                <label for="awareness">Awareness %</label>
+                <span class="val" id="awarenessVal">68%</span>
+              </div>
+              <input id="awareness" type="range" min="0" max="100" step="1" value="68" />
+            </div>
+
+            <div class="field">
+              <div class="field-head">
+                <label for="comprehension">Comprehension %</label>
+                <span class="val" id="comprehensionVal">43%</span>
+              </div>
+              <input id="comprehension" type="range" min="0" max="100" step="1" value="43" />
+            </div>
+
+            <div class="field">
+              <div class="field-head">
+                <label for="intention">Intention %</label>
+                <span class="val" id="intentionVal">33%</span>
+              </div>
+              <input id="intention" type="range" min="0" max="100" step="1" value="33" />
+            </div>
+
+            <div class="field">
+              <div class="field-head">
+                <label for="purchase">Purchase %</label>
+                <span class="val" id="purchaseVal">61%</span>
+              </div>
+              <input id="purchase" type="range" min="0" max="100" step="1" value="61" />
+            </div>
+
+            <div class="field">
+              <div class="field-head"><label>Target Market</label></div>
+              <div class="fixed" id="criTarget">500,000 households</div>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>CRI Calculator Output</h3>
+            <div class="kpi-grid">
+              <div class="kpi">
+                <div class="kpi-label">CRI</div>
+                <div class="kpi-value big" id="criValue">--</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Estimated Buyers</div>
+                <div class="kpi-value" id="buyersValue">--</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Weakest Stage</div>
+                <div class="kpi-value" id="weakStage">--</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Weakest Rate</div>
+                <div class="kpi-value" id="weakRate">--</div>
+              </div>
+            </div>
+
+            <div class="bars" id="stageBars"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="tab-media">
+        <div class="layout">
+          <article class="card">
+            <h3>Media Mix Calculator Inputs</h3>
+
+            <div class="field">
+              <div class="field-head">
+                <label for="reach">Reach %</label>
+                <span class="val" id="reachVal">60%</span>
+              </div>
+              <input id="reach" type="range" min="1" max="100" step="1" value="60" />
+            </div>
+
+            <div class="field">
+              <div class="field-head">
+                <label for="frequency">Frequency</label>
+                <span class="val" id="frequencyVal">4.0</span>
+              </div>
+              <input id="frequency" type="number" min="0.5" max="10" step="0.5" value="4.0" />
+            </div>
+
+            <div class="field">
+              <div class="field-head">
+                <label for="cpm">CPM Rate</label>
+                <span class="val" id="cpmVal">$18.00</span>
+              </div>
+              <input id="cpm" type="number" min="1" max="200" step="0.01" value="18.00" />
+            </div>
+
+            <div class="field">
+              <div class="field-head"><label>Target Market</label></div>
+              <div class="fixed" id="mediaTarget">500,000 households</div>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Media Mix Calculator Output</h3>
+            <div class="kpi-grid">
+              <div class="kpi">
+                <div class="kpi-label">GRP</div>
+                <div class="kpi-value big" id="grpValue">--</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Total Impressions</div>
+                <div class="kpi-value" id="impressionsValue">--</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Total Media Cost</div>
+                <div class="kpi-value" id="costValue">--</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Cost per GRP</div>
+                <div class="kpi-value" id="costPerGrpValue">--</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Reach Households</div>
+                <div class="kpi-value" id="reachHhValue">--</div>
+              </div>
+            </div>
+
+            <div class="benchmark">Industry CPM benchmark: $5-$25 consumer media; $50-$150 B2B media.</div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <section class="results-dashboard" aria-label="Results Dashboard">
+      <h2>Results / Dashboard</h2>
+      <p>Use CRI, GRP, weakest-stage, and media cost outputs to complete the Canvas quiz responses.</p>
+    </section>
+
+    <p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
+  </div>
+
+  <script>
+    const TARGET_MARKET = 500000;
+
+    const PRESETS = {
+      baseline: {
+        cri: { exposure: 75, awareness: 68, comprehension: 43, intention: 33, purchase: 61 },
+        media: { reach: 60, frequency: 4.0, cpm: 18.0 }
+      },
+      trap: {
+        cri: { exposure: 90, awareness: 75, comprehension: 28, intention: 33, purchase: 61 },
+        media: { reach: 75, frequency: 5.0, cpm: 18.0 }
+      }
+    };
+
+    const state = {
+      activeTab: 'cri',
+      cri: { exposure: 75, awareness: 68, comprehension: 43, intention: 33, purchase: 61 },
+      media: { reach: 60, frequency: 4.0, cpm: 18.0 }
+    };
+
+    function clamp(n, min, max) {
+      return Math.min(max, Math.max(min, n));
+    }
+
+    function formatInt(n) {
+      return Math.round(n).toLocaleString('en-US');
+    }
+
+    function formatDollar(n, decimals = 0) {
+      return `$${n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+    }
+
+    function getCriResult() {
+      const s = state.cri;
+      const values = [s.exposure, s.awareness, s.comprehension, s.intention, s.purchase];
+      const decimalProduct = values.reduce((acc, v) => acc * (v / 100), 1);
+      const criPct = decimalProduct * 100;
+      const buyers = Math.floor(TARGET_MARKET * decimalProduct);
+
+      const stageEntries = [
+        ['Exposure', s.exposure],
+        ['Awareness', s.awareness],
+        ['Comprehension', s.comprehension],
+        ['Intention', s.intention],
+        ['Purchase', s.purchase]
+      ];
+
+      let weakest = stageEntries[0];
+      stageEntries.forEach((entry) => {
+        if (entry[1] < weakest[1]) weakest = entry;
+      });
+
+      return {
+        criPct,
+        buyers,
+        weakestStage: weakest[0],
+        weakestRate: weakest[1],
+        stages: stageEntries
+      };
+    }
+
+    function getMediaResult() {
+      const m = state.media;
+      const grp = m.reach * m.frequency;
+      const impressions = TARGET_MARKET * (m.reach / 100) * m.frequency;
+      const totalCost = (impressions / 1000) * m.cpm;
+      const costPerGrp = grp === 0 ? 0 : totalCost / grp;
+      const reachHouseholds = TARGET_MARKET * (m.reach / 100);
+      return { grp, impressions, totalCost, costPerGrp, reachHouseholds };
+    }
+
+    function criColorClass(criPct) {
+      if (criPct > 4) return 'var(--good)';
+      if (criPct >= 2) return 'var(--warn)';
+      return 'var(--bad)';
+    }
+
+    function renderBanner() {
+      const cri = getCriResult();
+      const media = getMediaResult();
+      document.getElementById('comparisonBanner').textContent = `CRI = ${cri.criPct.toFixed(2)}% | GRP = ${media.grp.toFixed(media.grp % 1 === 0 ? 0 : 1)}`;
+    }
+
+    function renderCri() {
+      const cri = getCriResult();
+
+      const ids = ['exposure', 'awareness', 'comprehension', 'intention', 'purchase'];
+      ids.forEach((id) => {
+        document.getElementById(`${id}Val`).textContent = `${state.cri[id]}%`;
+      });
+
+      const criEl = document.getElementById('criValue');
+      criEl.textContent = `${cri.criPct.toFixed(2)}%`;
+      criEl.style.color = criColorClass(cri.criPct);
+
+      document.getElementById('buyersValue').textContent = formatInt(cri.buyers);
+      document.getElementById('weakStage').textContent = cri.weakestStage;
+      document.getElementById('weakRate').textContent = `${cri.weakestRate}%`;
+
+      const barRoot = document.getElementById('stageBars');
+      barRoot.innerHTML = '';
+      cri.stages.forEach(([name, val]) => {
+        const row = document.createElement('div');
+        row.className = 'bar-row';
+
+        const label = document.createElement('div');
+        label.className = 'bar-label';
+        label.textContent = name;
+
+        const track = document.createElement('div');
+        track.className = 'bar-track';
+
+        const fill = document.createElement('div');
+        fill.className = `bar-fill${name === cri.weakestStage ? ' weak' : ''}`;
+        fill.style.width = `${val}%`;
+
+        const value = document.createElement('div');
+        value.className = 'bar-val';
+        value.textContent = `${val}%`;
+
+        track.appendChild(fill);
+        row.appendChild(label);
+        row.appendChild(track);
+        row.appendChild(value);
+        barRoot.appendChild(row);
+      });
+    }
+
+    function renderMedia() {
+      const m = getMediaResult();
+      document.getElementById('reachVal').textContent = `${state.media.reach}%`;
+      document.getElementById('frequencyVal').textContent = state.media.frequency.toFixed(1);
+      document.getElementById('cpmVal').textContent = formatDollar(state.media.cpm, 2);
+
+      document.getElementById('grpValue').textContent = m.grp.toFixed(m.grp % 1 === 0 ? 0 : 1);
+      document.getElementById('impressionsValue').textContent = formatInt(m.impressions);
+      document.getElementById('costValue').textContent = formatDollar(Math.round(m.totalCost), 0);
+      document.getElementById('costPerGrpValue').textContent = formatDollar(m.costPerGrp, 2);
+      document.getElementById('reachHhValue').textContent = formatInt(m.reachHouseholds);
+    }
+
+    function renderAll() {
+      renderCri();
+      renderMedia();
+      renderBanner();
+    }
+
+    function applyPreset(name) {
+      const preset = name === 'trap' ? PRESETS.trap : PRESETS.baseline;
+      state.cri = { ...preset.cri };
+      state.media = { ...preset.media };
+
+      document.getElementById('exposure').value = state.cri.exposure;
+      document.getElementById('awareness').value = state.cri.awareness;
+      document.getElementById('comprehension').value = state.cri.comprehension;
+      document.getElementById('intention').value = state.cri.intention;
+      document.getElementById('purchase').value = state.cri.purchase;
+      document.getElementById('reach').value = state.media.reach;
+      document.getElementById('frequency').value = state.media.frequency.toFixed(1);
+      document.getElementById('cpm').value = state.media.cpm.toFixed(2);
+
+      renderAll();
+    }
+
+    function wireTabs() {
+      document.querySelectorAll('.tab-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.activeTab = btn.dataset.tab;
+          document.querySelectorAll('.tab-btn').forEach((b) => b.classList.toggle('active', b.dataset.tab === state.activeTab));
+          document.querySelectorAll('.panel').forEach((p) => p.classList.toggle('active', p.id === `tab-${state.activeTab}`));
+        });
+      });
+    }
+
+    function wireInputs() {
+      ['exposure', 'awareness', 'comprehension', 'intention', 'purchase'].forEach((id) => {
+        const el = document.getElementById(id);
+        el.addEventListener('input', (event) => {
+          state.cri[id] = clamp(parseInt(event.currentTarget.value, 10) || 0, 0, 100);
+          event.currentTarget.value = state.cri[id];
+          renderAll();
+        });
+      });
+
+      document.getElementById('reach').addEventListener('input', (event) => {
+        state.media.reach = clamp(parseInt(event.currentTarget.value, 10) || 1, 1, 100);
+        event.currentTarget.value = state.media.reach;
+        renderAll();
+      });
+
+      document.getElementById('frequency').addEventListener('input', (event) => {
+        const raw = parseFloat(event.currentTarget.value);
+        const normalized = clamp(Math.round((raw || 0.5) * 2) / 2, 0.5, 10);
+        state.media.frequency = normalized;
+        event.currentTarget.value = normalized.toFixed(1);
+        renderAll();
+      });
+
+      document.getElementById('cpm').addEventListener('input', (event) => {
+        const raw = parseFloat(event.currentTarget.value);
+        const normalized = clamp(raw || 1, 1, 200);
+        state.media.cpm = Math.round(normalized * 100) / 100;
+        event.currentTarget.value = state.media.cpm.toFixed(2);
+        renderAll();
+      });
+    }
+
+    function wirePresets() {
+      document.getElementById('presetBaseline').addEventListener('click', () => applyPreset('baseline'));
+      document.getElementById('presetTrap').addEventListener('click', () => applyPreset('trap'));
+      document.getElementById('presetReset').addEventListener('click', () => applyPreset('baseline'));
+    }
+
+    function runAcceptanceChecks() {
+      const eq = (a, b, tol = 0.01) => Math.abs(a - b) <= tol;
+
+      applyPreset('baseline');
+      const bCri = getCriResult().criPct;
+      const bGrp = getMediaResult().grp;
+      if (!eq(bCri, 4.41, 0.01)) console.error(`Baseline CRI mismatch: ${bCri}`);
+      if (!eq(bGrp, 240, 0.001)) console.error(`Baseline GRP mismatch: ${bGrp}`);
+
+      applyPreset('trap');
+      const tCri = getCriResult().criPct;
+      const tGrp = getMediaResult().grp;
+      if (!eq(tCri, 3.80, 0.01)) console.error(`Trap CRI mismatch: ${tCri}`);
+      if (!eq(tGrp, 375, 0.001)) console.error(`Trap GRP mismatch: ${tGrp}`);
+
+      const banner = document.getElementById('comparisonBanner').textContent;
+      if (!banner.includes('CRI =') || !banner.includes('GRP =')) {
+        console.error('Banner missing CRI/GRP comparison display');
+      }
+
+      applyPreset('baseline');
+    }
+
+    function init() {
+      wireTabs();
+      wireInputs();
+      wirePresets();
+      const focusModeBtn = document.getElementById('focusModeBtn');
+      if (focusModeBtn) {
+        focusModeBtn.addEventListener('click', () => {
+          const enabled = document.body.classList.toggle('focus-mode');
+          focusModeBtn.textContent = enabled ? 'Exit Focus Mode' : 'Focus Mode';
+          focusModeBtn.setAttribute('aria-pressed', String(enabled));
+        });
+      }
+      applyPreset('baseline');
+      runAcceptanceChecks();
+    }
+
+    init();
+  </script>
+</body>
+</html>

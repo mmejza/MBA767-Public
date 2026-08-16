@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MKT 472 · Module 03 · Study Focus Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0D9B87;
+    --teal-dk: #0a7a6b;
+    --teal-lt: #e6f7f5;
+    --teal-mid: #b3e4de;
+    --navy: #0F2027;
+    --navy-mid: #1a3340;
+    --amber: #E6A800;
+    --amber-lt: #fff8e1;
+    --amber-dk: #b37f00;
+    --gray-lt: #F2F4F5;
+    --gray-mid: #D0D5D8;
+    --gray-dk: #6b7280;
+    --white: #ffffff;
+    --text: #1a2630;
+    --text-soft: #4a5568;
+
+    --font-head: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+    --font-body: 'Barlow', Arial, sans-serif;
+
+    --radius: 8px;
+    --radius-sm: 5px;
+    --shadow: 0 2px 8px rgba(15,32,39,0.10);
+    --shadow-md: 0 4px 16px rgba(15,32,39,0.13);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    background: var(--gray-lt);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+  }
+
+  .page-header {
+    background: var(--navy);
+    padding: 36px 40px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 6px;
+    background: var(--teal);
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    right: 40px;
+    height: 1px;
+    background: rgba(13,155,135,0.35);
+  }
+  .eyebrow {
+    font-family: var(--font-head);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .header-subtitle {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--teal-mid);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .badge {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border-right: 1px solid var(--gray-mid);
+  }
+  .badge:last-child { border-right: none; }
+  .badge-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .badge-label {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--gray-dk);
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .badge-value {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .purpose-block {
+    padding: 28px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+    border-left: 5px solid var(--teal);
+    background: var(--teal-lt);
+  }
+  .purpose-block p {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .purpose-block p:last-child { margin-bottom: 0; }
+  .purpose-block strong { color: var(--navy); font-weight: 600; }
+
+  .gate-section {
+    padding: 32px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .section-label {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-dk);
+    margin-bottom: 16px;
+  }
+  .gate-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .gate-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .gate-card-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .gate-card--g1 .gate-card-header { background: var(--teal); }
+  .gate-card--g2 .gate-card-header { background: var(--navy); }
+  .gate-card-title {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .gate-badge {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .gate-card--g1 .gate-badge {
+    background: rgba(255,255,255,0.25);
+    color: var(--white);
+  }
+  .gate-card--g2 .gate-badge {
+    background: var(--teal);
+    color: var(--white);
+  }
+  .gate-card-body {
+    padding: 16px 20px;
+    background: var(--white);
+    border: 1px solid var(--gray-mid);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+  .gate-spec {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray-lt);
+    font-size: 13.5px;
+  }
+  .gate-spec:last-child { border-bottom: none; padding-bottom: 0; }
+  .gate-spec-key {
+    color: var(--gray-dk);
+    font-weight: 500;
+  }
+  .gate-spec-val {
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 14px;
+    text-align: right;
+  }
+  .gate-spec-val--teal { color: var(--teal); }
+  .gate-spec-val--amber { color: var(--amber-dk); }
+
+  .tips-section {
+    padding: 32px 40px;
+    background: var(--gray-lt);
+    border-bottom: 2px solid var(--gray-mid);
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .tip-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    border: 1px solid var(--gray-mid);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .tip-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .tip-title {
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .tip-body {
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.55;
+  }
+
+  .questions-section {
+    padding: 32px 40px;
+    border-bottom: 2px solid var(--gray-lt);
+  }
+  .questions-section > .section-label { margin-bottom: 24px; }
+  .q-block {
+    margin-bottom: 22px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .q-block:last-child { margin-bottom: 0; }
+  .q-block--g1 { border-left: 5px solid var(--teal); }
+  .q-block--g2 { border-left: 5px solid var(--navy); }
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-lt);
+  }
+  .q-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .q-block--g1 .q-num { background: var(--teal); }
+  .q-block--g2 .q-num { background: var(--navy); }
+  .q-meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .q-topic {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+  .q-tag-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .q-tag {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .q-tag--g1 { background: var(--teal-lt); color: var(--teal-dk); }
+  .q-tag--g2 { background: #e8ecf0; color: var(--navy); }
+  .q-tag--warn {
+    background: #fff3cd;
+    color: var(--amber-dk);
+    font-size: 11px;
+  }
+  .q-loc {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-dk);
+    background: var(--gray-lt);
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .q-body {
+    padding: 18px 20px;
+    background: var(--white);
+  }
+  .q-text {
+    font-size: 14.5px;
+    line-height: 1.68;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .q-hint {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 10px 14px;
+    background: var(--gray-lt);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--gray-dk);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .q-hint::before {
+    content: '→';
+    font-style: normal;
+    color: var(--teal);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .gate-divider {
+    margin: 28px 0 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .gate-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--gray-mid);
+  }
+  .gate-divider-label {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    padding: 6px 14px;
+    background: #e8ecf0;
+    border-radius: 20px;
+  }
+
+  .callout-amber {
+    margin: 0 40px;
+    border-radius: var(--radius);
+    border: 2px solid var(--amber);
+    background: var(--amber-lt);
+    padding: 22px 26px;
+  }
+  .callout-amber-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .callout-amber-icon {
+    font-size: 22px;
+  }
+  .callout-amber-title {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--amber-dk);
+  }
+  .callout-amber-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .callout-amber-body strong {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .callout-amber-list {
+    margin-top: 10px;
+    padding-left: 18px;
+  }
+  .callout-amber-list li {
+    margin-bottom: 6px;
+    font-size: 13.5px;
+    color: var(--text);
+  }
+  .callout-amber-list li strong {
+    color: var(--navy);
+  }
+
+  .seq-footer {
+    padding: 28px 40px;
+    background: var(--navy);
+    margin-top: 28px;
+  }
+  .seq-label {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+  .seq-track {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .seq-item {
+    flex: 1;
+    min-width: 120px;
+    position: relative;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+  }
+  .seq-item--done {
+    background: rgba(13,155,135,0.12);
+    border: 1px solid rgba(13,155,135,0.3);
+  }
+  .seq-item--current {
+    background: var(--teal);
+    border: 1px solid var(--teal);
+  }
+  .seq-item--next {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .seq-item--next-hot {
+    background: rgba(230,168,0,0.15);
+    border: 1px solid rgba(230,168,0,0.4);
+  }
+  .seq-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    color: rgba(255,255,255,0.3);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .seq-step-label {
+    font-family: var(--font-head);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .seq-item--done .seq-step-label { color: var(--teal); }
+  .seq-item--current .seq-step-label { color: rgba(255,255,255,0.8); }
+  .seq-item--next .seq-step-label { color: rgba(255,255,255,0.4); }
+  .seq-item--next-hot .seq-step-label { color: var(--amber); }
+  .seq-step-name {
+    font-family: var(--font-head);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .seq-item--done .seq-step-name { color: rgba(255,255,255,0.7); }
+  .seq-item--current .seq-step-name { color: var(--white); }
+  .seq-item--next .seq-step-name { color: rgba(255,255,255,0.5); }
+  .seq-item--next-hot .seq-step-name { color: rgba(255,255,255,0.85); }
+
+  @media (max-width: 600px) {
+    .page-header { padding: 24px 20px 20px; }
+    .badge-row { flex-direction: column; }
+    .badge { border-right: none; border-bottom: 1px solid var(--gray-mid); }
+    .gate-cards { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .purpose-block,
+    .gate-section,
+    .tips-section,
+    .questions-section { padding: 20px; }
+    .q-header { flex-wrap: wrap; }
+    .q-loc { white-space: normal; }
+    .callout-amber { margin: 0 20px; }
+    .seq-footer { padding: 20px; }
+    .header-title { font-size: 26px; }
+    .seq-track { flex-direction: column; gap: 8px; }
+    .seq-arrow { transform: rotate(90deg); align-self: center; }
+    .gate-divider { flex-direction: column; gap: 8px; }
+    .gate-divider-line { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="page-header">
+    <div class="eyebrow">MKT 472 &nbsp;·&nbsp; Module 03 &nbsp;·&nbsp; Chapter 3 Reading</div>
+    <h1 class="header-title">Study Focus Guide</h1>
+    <p class="header-subtitle"><em>Market Potential, Market Demand, and Market Share</em> &nbsp;·&nbsp; Eight questions to answer while you read &nbsp;·&nbsp; Est. 70–80 min</p>
+  </header>
+
+  <div class="badge-row">
+    <div class="badge">
+      <div class="badge-icon">📖</div>
+      <div>
+        <div class="badge-label">Chapter pages</div>
+        <div class="badge-value">pp. 81–109</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">⏱</div>
+      <div>
+        <div class="badge-label">Reading time</div>
+        <div class="badge-value">70–80 min</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">✏️</div>
+      <div>
+        <div class="badge-label">Focus questions</div>
+        <div class="badge-value">8 questions</div>
+      </div>
+    </div>
+    <div class="badge">
+      <div class="badge-icon">🔓</div>
+      <div>
+        <div class="badge-label">Unlocks</div>
+        <div class="badge-value">Gate 1 → Slides</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="purpose-block">
+    <p>This guide identifies exactly what to look for as you read Chapter 3. <strong>Gate 1</strong> tests five chapter-only topics, including Levitt's marketing myopia concept, Red Bull's narrow-market numbers, innovation types, the seven market-development constraints, and the chapter's product life cycle logic. <strong>Gate 2</strong> tests chapter-plus-slide synthesis and calculation fluency across market potential, MDI, MSI, SPI, SDI, and portfolio interpretation.</p>
+    <p>Answer these questions in your own words while you read, not after. The guide itself is not graded. Gate 1 and Gate 2 are.</p>
+  </div>
+
+  <div class="gate-section">
+    <div class="section-label">Gate Specifications</div>
+    <div class="gate-cards">
+      <div class="gate-card gate-card--g1">
+        <div class="gate-card-header">
+          <span class="gate-card-title">Gate 1 — Basic Reading Check</span>
+          <span class="gate-badge">Chapter Only</span>
+        </div>
+        <div class="gate-card-body">
+          <div class="gate-spec">
+            <span class="gate-spec-key">Questions</span>
+            <span class="gate-spec-val">5</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Threshold to pass</span>
+            <span class="gate-spec-val gate-spec-val--teal">80% (4 of 5)</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Attempts</span>
+            <span class="gate-spec-val">2</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Point value</span>
+            <span class="gate-spec-val">0 pts — access only</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Feedback</span>
+            <span class="gate-spec-val">Per-answer with page refs</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Unlocks</span>
+            <span class="gate-spec-val gate-spec-val--teal">Slide Deck Viewer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="gate-card gate-card--g2">
+        <div class="gate-card-header">
+          <span class="gate-card-title">Gate 2 — Applied Reading Check</span>
+          <span class="gate-badge">Chapter + Slides</span>
+        </div>
+        <div class="gate-card-body">
+          <div class="gate-spec">
+            <span class="gate-spec-key">Questions</span>
+            <span class="gate-spec-val">8</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Threshold to pass</span>
+            <span class="gate-spec-val">None — graded as submitted</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Attempts</span>
+            <span class="gate-spec-val gate-spec-val--amber">1</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Point value</span>
+            <span class="gate-spec-val gate-spec-val--teal">20 pts — 10% of module</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Feedback</span>
+            <span class="gate-spec-val">Correct / Incorrect only</span>
+          </div>
+          <div class="gate-spec">
+            <span class="gate-spec-key">Unlocks</span>
+            <span class="gate-spec-val gate-spec-val--teal">Lecture Video</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-section">
+    <div class="section-label">Reading Strategy for Chapter 3</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">📌</div>
+        <div>
+          <div class="tip-title">Mark what stays in the chapter</div>
+          <div class="tip-body">Gate 1 depends on chapter-only details the slides omit: Levitt's wording, Red Bull's market-share numbers, the seven market-development forces, and the IBM estimate. Flag those passages as you read.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🗂️</div>
+        <div>
+          <div class="tip-title">Build exact term lists</div>
+          <div class="tip-body">Chapter 3 includes sets that must be memorized precisely: three innovation types, seven constraints on market development, and the product life cycle stages tied to NMC. Write each list cleanly instead of relying on gist.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🧮</div>
+        <div>
+          <div class="tip-title">Practice the formulas by hand</div>
+          <div class="tip-body">Questions 6–8 are not recognition tasks. Work through market potential, MDI, MSI leakage, SPI, and SDI step by step so the Gate 2 numeric entries feel procedural rather than novel.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⚠️</div>
+        <div>
+          <div class="tip-title">Do not confuse related indexes</div>
+          <div class="tip-body">MDI, MSI, SPI, and SDI all look similar but answer different questions. As you read, write what each ratio measures and what managerial conclusion it supports so you do not mix them up later.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="questions-section">
+    <div class="section-label">Eight Focus Questions — Answer These While You Read</div>
+
+    <div class="q-block q-block--g1">
+      <div class="q-header">
+        <div class="q-num">1</div>
+        <div class="q-meta">
+          <div class="q-topic">Marketing Myopia</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g1">Gate 1 · Chapter Only</span>
+          </div>
+        </div>
+        <div class="q-loc">pp. 81–82</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">Theodore Levitt introduced the concept of marketing myopia to describe a common strategic failure. In your own words, what does marketing myopia mean, what causes it, and what is the primary consequence for a business that suffers from it?</div>
+        <div class="q-hint">Look for the chapter's emphasis on narrow definition, product-focused thinking, and missed market opportunity. Gate 1 tests examples of myopic behavior, not just the term itself.</div>
+      </div>
+    </div>
+
+    <div class="q-block q-block--g1">
+      <div class="q-header">
+        <div class="q-num">2</div>
+        <div class="q-meta">
+          <div class="q-topic">Red Bull's Deliberate Narrow-Market Strategy</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g1">Gate 1 · Chapter Only</span>
+          </div>
+        </div>
+        <div class="q-loc">pp. 84–85</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">Chapter 3 uses Red Bull as an example of a deliberate narrow-market strategy rather than a blind spot. What is Red Bull's worldwide share of the energy drink market, what is its share of the broader worldwide nonalcoholic beverage market, and which major competitors entered the energy drink market with named brands?</div>
+        <div class="q-hint">Record the exact share figures and the competitor-brand pairings. The chapter uses these specifics to distinguish strategic focus from market blindness.</div>
+      </div>
+    </div>
+
+    <div class="q-block q-block--g1">
+      <div class="q-header">
+        <div class="q-num">3</div>
+        <div class="q-meta">
+          <div class="q-topic">Three Innovation Types</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g1">Gate 1 · Chapter Only</span>
+          </div>
+        </div>
+        <div class="q-loc">pp. 88–89</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">Chapter 3 defines three distinct types of innovation and explains how each affects market potential differently. For each type, what is the name, how does the chapter define it, and which historical example does the chapter use to illustrate it?</div>
+        <div class="q-hint">Match the chapter's examples, including the ballpoint pen, microcomputer, and digital photography, to the correct innovation type. Gate 1 tests both definitions and examples.</div>
+      </div>
+    </div>
+
+    <div class="q-block q-block--g1">
+      <div class="q-header">
+        <div class="q-num">4</div>
+        <div class="q-meta">
+          <div class="q-topic">Seven Forces Restricting Market Development</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g1">Gate 1 · Chapter Only</span>
+          </div>
+        </div>
+        <div class="q-loc">pp. 92–94</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">Chapter 3 names seven specific forces that prevent markets from reaching their full potential. What are all seven forces, and how does the chapter distinguish insufficient infrastructure from unavailability?</div>
+        <div class="q-hint">Write all seven by name, then tie the high-speed train and early-PC technical support examples to the right force. Gate 1 uses scenario matching here, not just list recall.</div>
+      </div>
+    </div>
+
+    <div class="q-block q-block--g1">
+      <div class="q-header">
+        <div class="q-num">5</div>
+        <div class="q-meta">
+          <div class="q-topic">NMC Across the Product Life Cycle</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g1">Gate 1 · Chapter Only</span>
+          </div>
+        </div>
+        <div class="q-loc">pp. 97–98, 102</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">Chapter 3 traces how Net Marketing Contribution changes across each stage of the product life cycle. At what stage is NMC negative and why, at what stage does NMC peak, is that the same stage in which market demand peaks, and what did IBM estimate as the total market potential for computers in the 1950s?</div>
+        <div class="q-hint">Use Figure 3-10 and the IBM example together. The chapter is explicit that NMC peak and demand peak are not the same thing, and Gate 1 tests that distinction.</div>
+      </div>
+    </div>
+
+    <div class="gate-divider">
+      <div class="gate-divider-line"></div>
+      <div class="gate-divider-label">Gate 2 · Chapter + Slides Synthesis</div>
+      <div class="gate-divider-line"></div>
+    </div>
+
+    <div class="q-block q-block--g2">
+      <div class="q-header">
+        <div class="q-num">6</div>
+        <div class="q-meta">
+          <div class="q-topic">Market Potential Formula and MDI</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g2">Gate 2 · Chapter + Slides</span>
+          </div>
+        </div>
+        <div class="q-loc">pp. 86–90</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">Write the complete market potential formula showing all five inputs. Then explain the MDI formula and what an MDI of 40 tells a manager compared to an MDI of 75.</div>
+        <div class="q-hint">As you read, distinguish market potential in units from market potential in dollars, then connect MDI to how fully the market has been developed. Gate 2 will require both numeric calculation and interpretation.</div>
+      </div>
+    </div>
+
+    <div class="q-block q-block--g2">
+      <div class="q-header">
+        <div class="q-num">7</div>
+        <div class="q-meta">
+          <div class="q-topic">MSI and Leakage Analysis</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g2">Gate 2 · Chapter + Slides</span>
+          </div>
+        </div>
+        <div class="q-loc">pp. 104–106</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">Using the chapter's five share-performance percentages for awareness, attractiveness, price acceptability, intentions, and purchase, how do you calculate MSI, how do you calculate leakage at each node, and which node creates the greatest leakage?</div>
+        <div class="q-hint">Work the chain multiplicatively, not additively. The largest leakage node is the managerial priority, and Gate 2 asks you to compute both the final MSI and specific leakages exactly.</div>
+      </div>
+    </div>
+
+    <div class="q-block q-block--g2">
+      <div class="q-header">
+        <div class="q-num">8</div>
+        <div class="q-meta">
+          <div class="q-topic">SPI, SDI, and the Growth Opportunity Portfolio</div>
+          <div class="q-tag-row">
+            <span class="q-tag q-tag--g2">Gate 2 · Chapter + Slides</span>
+          </div>
+        </div>
+        <div class="q-loc">pp. 106–109</div>
+      </div>
+      <div class="q-body">
+        <div class="q-text">Using the chapter's desired-performance levels, how do you calculate Share Potential Index, how do you calculate SDI from MSI and SPI, and how do MDI and SDI together determine the correct quadrant and strategy in the Growth Opportunity Portfolio?</div>
+        <div class="q-hint">Treat this as the last link in the analytical chain: MSI leads to SPI and SDI, and MDI plus SDI together determine the portfolio recommendation. Gate 2 tests both the math and the strategic prescription.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout-amber">
+    <div class="callout-amber-header">
+      <div class="callout-amber-icon">⚠️</div>
+      <div class="callout-amber-title">High-Risk Reading Traps</div>
+    </div>
+    <div class="callout-amber-body">Three Chapter 3 ideas consistently create confusion unless you write out the logic:</div>
+    <ul class="callout-amber-list">
+      <li><strong>Narrow focus is not always myopia:</strong> the chapter uses Red Bull to show that a narrow market definition can be deliberate strategy rather than blindness, depending on intent and awareness.</li>
+      <li><strong>Do not collapse the indexes into one measure:</strong> MDI, MSI, SPI, and SDI each diagnose a different problem, so mixing them up produces the wrong managerial conclusion.</li>
+      <li><strong>NMC does not peak when demand peaks:</strong> the product life cycle discussion is explicit that marketing contribution and total market demand crest at different stages, and the IBM example shows how badly firms can underestimate true potential.</li>
+    </ul>
+  </div>
+
+  <div class="seq-footer">
+    <div class="seq-label">Where This Fits in the Module 03 Sequence</div>
+    <div class="seq-track">
+      <div class="seq-item seq-item--done">
+        <div class="seq-step-label">Step 1</div>
+        <div class="seq-step-name">Read Chapter</div>
+      </div>
+      <div class="seq-arrow">›</div>
+      <div class="seq-item seq-item--current">
+        <div class="seq-step-label">Step 2</div>
+        <div class="seq-step-name">Study Focus Guide</div>
+      </div>
+      <div class="seq-arrow">›</div>
+      <div class="seq-item seq-item--next-hot">
+        <div class="seq-step-label">Step 3</div>
+        <div class="seq-step-name">Gate 1</div>
+      </div>
+      <div class="seq-arrow">›</div>
+      <div class="seq-item seq-item--next">
+        <div class="seq-step-label">Step 4</div>
+        <div class="seq-step-name">Slide Deck Viewer</div>
+      </div>
+      <div class="seq-arrow">›</div>
+      <div class="seq-item seq-item--next">
+        <div class="seq-step-label">Step 5</div>
+        <div class="seq-step-name">Gate 2</div>
+      </div>
+      <div class="seq-arrow">›</div>
+      <div class="seq-item seq-item--next">
+        <div class="seq-step-label">Step 6</div>
+        <div class="seq-step-name">Lecture Video / Application Work</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
