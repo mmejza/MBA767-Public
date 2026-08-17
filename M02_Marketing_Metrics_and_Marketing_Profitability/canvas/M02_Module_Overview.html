@@ -244,7 +244,7 @@ strong { color: var(--ink); font-weight: 600; }
   color: var(--teal);
   margin-bottom: 3px;
 }
-.lo-text { font-size: 13px; line-height: 1.5; color: var(--text); }
+.lo-text { font-size: 13px; line-height: 1.5; color: var(--ink-mid); }
 
 .gate-grid {
   display: grid;
@@ -256,7 +256,7 @@ strong { color: var(--ink); font-weight: 600; }
 .gate-card {
   border-radius: 6px;
   padding: 16px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
 }
 .gate-card.gate1 { background: #f0faf8; border-top: 3px solid var(--teal); }
 .gate-card.gate2 { background: #f5f3ff; border-top: 3px solid #7c5ccc; }
@@ -273,14 +273,14 @@ strong { color: var(--ink); font-weight: 600; }
 .gate-specs { list-style: none; }
 .gate-specs li {
   font-size: 12.5px;
-  color: var(--muted);
+  color: var(--ink-soft);
   padding: 3px 0;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--rule);
 }
 .gate-specs li:last-child { border-bottom: none; }
-.gate-specs li span:last-child { font-weight: 600; color: var(--text); }
+.gate-specs li span:last-child { font-weight: 600; color: var(--ink); }
 
 .exclusive-list { list-style: none; margin: 4px 0; }
 .exclusive-list li {
@@ -290,7 +290,7 @@ strong { color: var(--ink); font-weight: 600; }
   border-radius: 5px;
   background: var(--surface);
   margin-bottom: 6px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
   font-size: 13.5px;
   align-items: flex-start;
 }
@@ -310,7 +310,7 @@ strong { color: var(--ink); font-weight: 600; }
 }
 .excl-body { flex: 1; }
 .excl-title { font-weight: 700; color: var(--ink); margin-bottom: 2px; }
-.excl-ref { font-size: 11.5px; color: var(--muted); }
+.excl-ref { font-size: 11.5px; color: var(--ink-soft); }
 
 .trap-grid {
   display: grid;
@@ -321,7 +321,7 @@ strong { color: var(--ink); font-weight: 600; }
 @media (max-width: 620px) { .trap-grid { grid-template-columns: 1fr; } }
 .trap-card {
   border-radius: 8px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
   padding: 14px 16px;
   box-shadow: var(--shadow-sm);
 }
@@ -361,7 +361,7 @@ strong { color: var(--ink); font-weight: 600; }
   display: inline-flex; align-items: center; justify-content: center;
 }
 .seq-num.gate-item { background: var(--gold); color: var(--ink); }
-.seq-num.locked { background: var(--muted); }
+.seq-num.locked { background: var(--ink-soft); }
 .seq-time { font-family: var(--mono); font-size: .78rem; color: var(--teal); white-space: nowrap; }
 .seq-item-name { font-weight: 600; color: var(--ink); display: block; margin-bottom: 2px; }
 .seq-item-note { font-size: .8rem; color: var(--ink-soft); line-height: 1.45; }
@@ -388,7 +388,7 @@ strong { color: var(--ink); font-weight: 600; }
 }
 .grade-table td {
   padding: 9px 12px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--rule);
   vertical-align: middle;
 }
 .grade-table tr:nth-child(even) td { background: var(--surface); }
@@ -409,12 +409,12 @@ strong { color: var(--ink); font-weight: 600; }
   min-width: 36px;
   text-align: center;
 }
-.pts-badge.zero { background: var(--muted); }
+.pts-badge.zero { background: var(--ink-soft); }
 .pts-badge.large { background: var(--ink); }
 
 .tips-box {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
   border-radius: 6px;
   padding: 16px 18px;
   margin: 6px 0;
@@ -489,15 +489,9 @@ strong { color: var(--ink); font-weight: 600; }
       <span class="badge">MBA 767</span>
       <span class="badge">Module 02</span>
       <span class="badge badge-gold">Chapter 2</span>
-      <span class="badge badge-teal">4.4-5.6 hours total</span>
     </div>
     <h1 class="header-title">Marketing Metrics and Marketing Profitability</h1>
     <p class="header-sub">Can a company triple its profits and simultaneously destroy $41 million it never knew it was losing?</p>
-    <div class="header-meta">
-      <span class="badge">Part I - Marketing Performance</span>
-      <span class="badge">195 points</span>
-      <span class="badge">Two-Gate Accountability</span>
-    </div>
   </div>
 </header>
 
@@ -511,7 +505,7 @@ strong { color: var(--ink); font-weight: 600; }
       <div class="cq-text">Can a company triple its profits and simultaneously destroy $41 million it never knew it was losing?</div>
       <p class="cq-follow">This module introduces the metrics framework that underlies every subsequent module in MBA 767. You will learn that conventional financial metrics - net profit, revenue growth, earnings per share - systematically conceal the most important marketing failures. A company can triple its profits over three years and simultaneously forfeit $41 million in value it never knew it was losing. That is the BioTronics paradox, and it is not unusual.</p>
       <p class="cq-follow">The solution the chapter introduces is <strong>Net Marketing Contribution (NMC)</strong> - a metric designed to make marketing's contribution to profit visible, measurable, and defensible. NMC is not an accounting construct; it is a strategic tool. Every calculation in this course - from segment targeting in M05 to competitive position in M06 - depends on fluency with NMC.</p>
-      <p class="cq-follow">The central intellectual challenge is the <strong>product-line drop paradox</strong>: a product line with negative net profit that, if eliminated, makes the company worse off. The chapter shows exactly why this happens and how NMC reveals what net profit conceals. App 2 and Case Part 3 test whether you can apply this reasoning under realistic conditions.</p>
+      <p class="cq-follow">The central intellectual challenge is the <strong>product-line drop paradox</strong>: a product line with negative net profit that, if eliminated, makes the company worse off. The chapter shows exactly why this happens and how NMC reveals what net profit conceals. App 2 and the case quiz both test whether you can apply this reasoning under realistic conditions.</p>
     </div>
     <div class="callout warn" style="margin-top:20px;">
       <span class="callout-icon">!</span>
@@ -534,7 +528,7 @@ strong { color: var(--ink); font-weight: 600; }
       </div>
       <div class="param-cell">
         <span class="p-label">Estimated Time</span>
-        <span class="p-val"><strong>4.4-5.6 hours</strong> across all activities</span>
+        <span class="p-val"><strong>4–5 hours</strong> across all activities</span>
       </div>
       <div class="param-cell">
         <span class="p-label">Lecture Video</span>
@@ -545,12 +539,12 @@ strong { color: var(--ink); font-weight: 600; }
         <span class="p-val"><strong>3 apps</strong> with worksheets (~55-70 min combined)</span>
       </div>
       <div class="param-cell">
-        <span class="p-label">Case Analysis</span>
+        <span class="p-label">Case Analysis Quiz</span>
         <span class="p-val"><strong>Vantage Fitness</strong> - ~55-65 min</span>
       </div>
       <div class="param-cell">
         <span class="p-label">Total Points</span>
-        <span class="p-val"><strong>195 pts</strong> — Gate 2 (20) · Apps (30) · Discussion (20) · Case (125)</span>
+        <span class="p-val"><strong>190 pts</strong> — Gate 2 (20) · Apps (30) · Discussion (20) · Case (120)</span>
       </div>
     </div>
   </section>
@@ -563,18 +557,11 @@ strong { color: var(--ink); font-weight: 600; }
     <div class="tips-box">
       <ul>
         <li><strong>Read Chapter 2 actively.</strong> The slide deck and lecture video deliberately leave out five topics that Gate 1 tests - including the $41 million figure, the CEO credibility gap statistic, and the four criteria for a valid metric. Find all five before you take Gate 1.</li>
-        <li><strong>Do not skip the product-line drop section.</strong> Pages 54-56 contain the counterintuitive result that Gate 1, App 2, and Case Part 3 all test. Students who skim this section consistently miss the key insight.</li>
-        <li><strong>Complete the apps before the case.</strong> App 2 (Product-Line Drop Simulator) is a direct preview of Case Part 3. App 3 (NMC Strategy Scenario Builder) previews Case Part 4. Run both scenarios before opening the case.</li>
-        <li><strong>Complete Apps 1–3 before writing the discussion.</strong> The discussion is due Day 3 (Jun 13, 11:59pm) — after the apps, not before. The calculations you run in Apps 1, 2, and 3 are the evidence base for your argument. The position you take on the line-drop and MROI questions seeds the analysis required for Case Parts 2, 3, and 4.</li>
-        <li><strong>Show your calculation steps.</strong> The case rubric awards partial credit only when intermediate steps are visible - Revenue, Variable Cost, Gross Profit, M&amp;S Expense, NMC, then ROS and ROI. A final number without a work trail earns reduced credit regardless of accuracy.</li>
+        <li><strong>Do not skip the product-line drop section.</strong> Pages 54-56 contain the counterintuitive result that Gate 1, App 2, and the case quiz all test. Students who skim this section consistently miss the key insight.</li>
+        <li><strong>Complete the apps before the case.</strong> App 2 (Product-Line Drop Simulator) is a direct preview of the case's product-line question. App 3 (NMC Strategy Scenario Builder) previews the case's MROI floor-vs-average question. Run both scenarios before opening the case.</li>
+        <li><strong>Complete Apps 1–3 before writing the discussion.</strong> The discussion is due after the apps, not before. The calculations you run in Apps 1, 2, and 3 are the evidence base for your argument. The position you take on the line-drop and MROI questions seeds the analysis required across the case quiz.</li>
+        <li><strong>Enter each numeric answer in the exact format specified.</strong> Every auto-graded quiz in this module — Gate 2, the App worksheets, and the case — enforces a strict numeric-entry format: no percent signs, dollar signs, commas, or stray characters. A correctly-reasoned answer submitted in the wrong format is marked wrong, and no regrade requests are accepted for formatting errors.</li>
       </ul>
-    </div>
-    <div class="callout key">
-      <span class="callout-icon">i</span>
-      <div>
-        <div class="callout-label">Foundation reminder</div>
-        <p>This is the first quantitative module in MBA 767. If you are not comfortable with the basic income statement structure, review revenue, variable cost, gross profit, and operating expense terms before taking Gate 1.</p>
-      </div>
     </div>
   </section>
 
@@ -710,32 +697,10 @@ strong { color: var(--ink); font-weight: 600; }
 
   <div class="divider"></div>
 
-  <!-- 8. Two Traps to Watch For -->
-  <section class="section">
-    <span class="section-label">Two Traps to Watch For</span>
-    <p>This module contains two specific calculation errors that students make frequently. Both are addressed explicitly in the lecture video and the apps. Know them before you start.</p>
-    <div class="trap-grid">
-      <article class="trap-card warn">
-        <div class="trap-title">Trap 1 - Trusting Net Profit by Itself</div>
-        <p>Conventional financial metrics - net profit, revenue growth, earnings per share - systematically conceal the most important marketing failures.</p>
-        <p>A company can triple its profits over three years and simultaneously forfeit $41 million in value it never knew it was losing.</p>
-        <p><strong>Where to find it:</strong> The opening chapter discussion and the BioTronics example show why net profit alone is not enough.</p>
-      </article>
-      <article class="trap-card risk">
-        <div class="trap-title">Trap 2 - Dropping a Negative Net-Profit Line</div>
-        <p>The product-line drop paradox is central: a product line with negative net profit can still have positive NMC and support overall profitability.</p>
-        <p>App 2 and Case Part 3 test whether you can apply this logic under realistic conditions.</p>
-        <p><strong>Where to find it:</strong> The product-line drop section, App 2, and Case Part 3 all force you to evaluate the line using NMC instead of net profit alone.</p>
-      </article>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
   <!-- 9. Module Sequence -->
   <section class="section">
     <span class="section-label">Module Sequence</span>
-    <p>Complete each item before the next unlocks. Estimated total: 4.4-5.6 hours.</p>
+    <p>Estimated total: 4–5 hours.</p>
 
     <table class="sequence-table" aria-label="Module sequence table">
       <thead>
@@ -831,30 +796,30 @@ strong { color: var(--ink); font-weight: 600; }
           <td><span class="seq-num">10</span></td>
           <td>
             <span class="seq-item-name">Discussion: "The VP of Finance Has Three Ideas"</span>
-            <span class="seq-item-note">Due Day 3 (Jun 13, 11:59pm). Part 1: position, 150–200 words. Part 2: devil's advocate, 100–150 words.</span>
+            <span class="seq-item-note">Part 1: position, 150–200 words. Part 2: devil's advocate, 100–150 words.</span>
           </td>
           <td class="seq-time">20–25 min</td>
-          <td class="seq-pts">20 pts</td>
+          <td class="seq-pts">15 pts</td>
         </tr>
         <tr>
-          <td><span class="seq-num locked">11</span></td>
+          <td><span class="seq-num">11</span></td>
           <td>
-            <span class="seq-item-name">Case Draft — Parts 1–3</span>
-            <span class="seq-item-note">Day 4 — advisory only. No grade; no unlock dependency. Complete Parts 1–3 calculations before Day 5. Run the module self-check if below 80%.</span>
+            <span class="seq-item-name">Discussion Evidence Check Quiz</span>
+            <span class="seq-item-note">1 question. 1 attempt only.</span>
           </td>
-          <td class="seq-time">60–70 min</td>
-          <td class="seq-pts zero">0 pts</td>
+          <td class="seq-time">5 min</td>
+          <td class="seq-pts">5 pts</td>
         </tr>
         <tr>
           <td><span class="seq-num">12</span></td>
           <td>
-            <span class="seq-item-name">Case Analysis — Final Submission: Vantage Fitness</span>
-            <span class="seq-item-note">Due Day 5 (Jun 15, 11:59pm). 300–500 words + calculations; 4 parts; individual submission.</span>
+            <span class="seq-item-name">Case Analysis Quiz: Vantage Fitness</span>
+            <span class="seq-item-note">15 questions (10 numeric + 4 multiple choice + 1 reasoning). 1 attempt.</span>
           </td>
           <td class="seq-time">55–65 min</td>
-          <td class="seq-pts">125 pts</td>
+          <td class="seq-pts">120 pts</td>
         </tr>
-       
+
       </tbody>
     </table>
   </section>
@@ -863,15 +828,14 @@ strong { color: var(--ink); font-weight: 600; }
 
   <!-- 10. Grading Summary -->
   <section class="section">
-    <span class="section-label">Grading Summary — 195 Points Total</span>
+    <span class="section-label">Grading Summary</span>
 
-    <table class="grade-table">
+    <table class="grade-table" aria-label="Grading summary table">
       <thead>
         <tr>
           <th>Assessment</th>
           <th>Points</th>
           <th>% of Module</th>
-          <th>Grading</th>
         </tr>
       </thead>
       <tbody>
@@ -879,37 +843,31 @@ strong { color: var(--ink); font-weight: 600; }
           <td>Gate 1: Basic Reading Check</td>
           <td><span class="pts-badge zero">0</span></td>
           <td>Access control only</td>
-          <td>Auto - 80% threshold</td>
         </tr>
         <tr>
           <td>Gate 2: Applied Reading Check</td>
           <td><span class="pts-badge">20</span></td>
-          <td>10%</td>
-          <td>Auto-graded</td>
+          <td>11%</td>
         </tr>
         <tr>
           <td>App Worksheets (3 x 10 pts)</td>
           <td><span class="pts-badge">30</span></td>
-          <td>15%</td>
-          <td>Auto-graded</td>
+          <td>16%</td>
         </tr>
         <tr>
           <td>Discussion: "The VP of Finance Has Three Ideas"</td>
           <td><span class="pts-badge">20</span></td>
-          <td>10%</td>
-          <td>Rubric</td>
+          <td>11%</td>
         </tr>
         <tr>
-          <td>Case Analysis: Vantage Fitness</td>
-          <td><span class="pts-badge large">125</span></td>
-          <td>64%</td>
-          <td>Rubric</td>
+          <td>Case Analysis Quiz: Vantage Fitness</td>
+          <td><span class="pts-badge large">120</span></td>
+          <td>63%</td>
         </tr>
         <tr class="total-row">
           <td>Total</td>
-          <td><span class="pts-badge large">195</span></td>
+          <td><span class="pts-badge large">190</span></td>
           <td>100%</td>
-          <td></td>
         </tr>
       </tbody>
     </table>
@@ -920,7 +878,7 @@ strong { color: var(--ink); font-weight: 600; }
   <!-- 11. Pacing in the Summer Session -->
   <section class="section">
     <span class="section-label">Pacing in the Summer Session</span>
-    <p>This module opens Jun 11 and runs for 5 days. Discussion is due Jun 13 at 11:59pm. Gates are due Jun 14 at 11:59pm. Case is due Jun 15 at 11:59pm. Total estimated time is 4.4–5.6 hours across the full window.</p>
+    <p>This module runs across 5 days. See Canvas for exact due dates. Total estimated time is 4–5 hours across the full window.</p>
     <table class="pacing-table" aria-label="Pacing in the summer session table">
       <thead>
         <tr>
@@ -939,15 +897,15 @@ strong { color: var(--ink); font-weight: 600; }
         </tr>
         <tr>
           <td>Day 3</td>
-          <td>Write your discussion post — position and devil's advocate (20–25 min). ~25 min total.</td>
+          <td>Write your discussion post — position and devil's advocate (20–25 min). Complete the Discussion Evidence Check Quiz (5 min). ~30 min total.</td>
         </tr>
         <tr>
           <td>Day 4</td>
-          <td>Begin case analysis. Complete Parts 1–3 calculations. Run the module self-check if below 80%. ~60–70 min total.</td>
+          <td>Work through the case narrative and numeric calculations (Q1–Q10). ~60–70 min total.</td>
         </tr>
         <tr>
           <td>Day 5</td>
-          <td>Write Part 4 strategic recommendation. Review calculations. Submit case. ~30–40 min total.</td>
+          <td>Work through the multiple-choice and reasoning items (Q11–Q15) and submit the case (1 attempt). ~30–40 min total.</td>
         </tr>
       </tbody>
     </table>
@@ -955,7 +913,7 @@ strong { color: var(--ink); font-weight: 600; }
       <span class="callout-icon">i</span>
       <div>
         <div class="callout-label">Pacing reminder</div>
-        <p>The discussion is due on Day 3 — after the apps, not before. The calculations you run in Apps 1–3 are the evidence base for your argument. Do not post your discussion before completing the apps. The case splits across Days 4 and 5: use Day 4 for the quantitative work and Day 5 for the strategic recommendation.</p>
+        <p>The discussion is due on Day 3 — after the apps, not before. The calculations you run in Apps 1–3 are the evidence base for your argument. Do not post your discussion before completing the apps. The case is a single 15-question quiz (1 attempt): use Day 4 to work through the numeric calculations and Day 5 to finish the multiple-choice and reasoning items before submitting.</p>
       </div>
     </div>
   </section>
