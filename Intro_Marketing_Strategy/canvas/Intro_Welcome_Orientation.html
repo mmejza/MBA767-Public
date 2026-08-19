@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome &amp; Course Orientation | MBA 767</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------------
+   CANVAS-FRIENDLY WELCOME / ORIENTATION PAGE
+   Intro module — built to match M01_Module_Overview.html's canonical
+   token system (docs/decision-log.md D77) for visual consistency with
+   the rest of the course. Placeholder file prefix "Intro_" pending the
+   module identifier decision (it isn't M01–M11; M12/M13 are reserved).
+------------------------------------------------------------------- */
+:root {
+  --ink: #0f1923;
+  --ink-mid: #2d3f52;
+  --ink-soft: #5a6f82;
+  --rule: #d4dce4;
+  --surface: #f7f9fb;
+  --white: #ffffff;
+
+  --teal: #0a7c6e;
+  --teal-lt: #e0f4f1;
+  --teal-mid: #c2ece7;
+  --gold: #c9860a;
+  --gold-lt: #fdf3e0;
+  --gold-mid: #f9dfa0;
+  --red: #b92b27;
+  --red-lt: #fdecea;
+  --blue: #1a56a0;
+  --blue-lt: #e6effa;
+  --blue-mid: #c3d9f5;
+
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+  --mono: 'DM Mono', 'Courier New', monospace;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+
+  --shadow-sm: 0 1px 3px rgba(15,25,35,.07), 0 1px 2px rgba(15,25,35,.05);
+  --shadow-md: 0 4px 12px rgba(15,25,35,.09), 0 2px 4px rgba(15,25,35,.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--surface); }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--surface);
+  line-height: 1.6;
+  padding-bottom: 80px;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--teal); }
+p { margin-bottom: 12px; font-size: .92rem; color: var(--ink-mid); line-height: 1.65; }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); font-weight: 600; }
+
+.page-header {
+  background: var(--ink);
+  color: var(--white);
+  padding: 48px 40px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-55deg, transparent, transparent 28px, rgba(255,255,255,.022) 28px, rgba(255,255,255,.022) 29px);
+  pointer-events: none;
+}
+.page-header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--teal);
+}
+.container { max-width: 880px; margin: 0 auto; padding: 0 32px; }
+.header-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 20px; }
+.badge {
+  display: inline-flex; align-items: center;
+  font-family: var(--mono); font-size: .69rem; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 11px; border-radius: 100px;
+  background: rgba(255,255,255,.1); color: rgba(255,255,255,.8);
+}
+.badge-teal { background: rgba(10,124,110,.3); color: #7de8dc; }
+.badge-gold { background: rgba(201,134,10,.3); color: #f9d87a; }
+.header-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 2.85rem);
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  color: var(--white);
+  max-width: 700px;
+  margin-bottom: 8px;
+}
+.header-sub {
+  font-size: .95rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.58);
+  max-width: 680px;
+  line-height: 1.6;
+}
+
+.section { margin-top: 48px; }
+.section-label {
+  font-family: var(--mono);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: block;
+  margin-bottom: 14px;
+}
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rule) 20%, var(--rule) 80%, transparent);
+  margin: 44px 0;
+}
+
+.central-question {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 var(--r-lg) var(--r-lg) 0;
+  padding: 28px 32px;
+  box-shadow: var(--shadow-md);
+}
+.central-question .cq-label {
+  font-family: var(--mono); font-size: .66rem; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--teal);
+  margin-bottom: 12px; display: block;
+}
+.central-question .cq-text {
+  font-family: var(--serif);
+  font-size: 1.3rem; line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.central-question .cq-follow {
+  margin-top: 14px;
+  font-size: .91rem; color: var(--ink-mid); line-height: 1.6;
+}
+
+.callout {
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: .88rem;
+  line-height: 1.65;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+.callout.info { background: var(--blue-lt); border: 1px solid var(--blue-mid); color: var(--blue); }
+.callout.key { background: var(--teal-lt); border: 1px solid var(--teal-mid); color: #005446; }
+.callout.warn { background: var(--gold-lt); border: 1px solid var(--gold-mid); color: #7a4e00; }
+.callout .callout-label {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+@media (max-width: 680px) { .map-grid { grid-template-columns: repeat(2, 1fr); } }
+.map-cell {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-sm);
+}
+.map-cell .m-num {
+  font-family: var(--mono); font-size: .68rem; font-weight: 500;
+  color: var(--teal); margin-bottom: 4px; display: block;
+}
+.map-cell .m-name { font-size: .82rem; color: var(--ink); font-weight: 600; line-height: 1.35; }
+.map-cell.here { background: var(--teal); border-color: var(--teal); }
+.map-cell.here .m-num, .map-cell.here .m-name { color: #fff; }
+
+.sequence-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  border: 1px solid var(--rule); border-radius: var(--r-lg);
+  overflow: hidden; box-shadow: var(--shadow-sm);
+  margin-top: 20px; font-size: .85rem;
+}
+.sequence-table th {
+  background: var(--ink-mid); color: rgba(255,255,255,.8);
+  font-family: var(--mono); font-size: .64rem; font-weight: 500;
+  letter-spacing: .07em; text-transform: uppercase;
+  padding: 11px 16px; text-align: left;
+}
+.sequence-table td {
+  padding: 11px 16px; border-bottom: 1px solid var(--rule);
+  vertical-align: top; line-height: 1.5;
+  background: var(--white); color: var(--ink-mid);
+}
+.sequence-table tr:last-child td { border-bottom: none; }
+.sequence-table tr:nth-child(even) td { background: var(--surface); }
+.seq-num {
+  font-family: var(--mono); font-size: .78rem; font-weight: 500;
+  color: var(--white); background: var(--ink);
+  width: 24px; height: 24px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.seq-time { font-family: var(--mono); font-size: .78rem; color: var(--teal); white-space: nowrap; }
+.seq-item-name { font-weight: 600; color: var(--ink); display: block; margin-bottom: 2px; }
+.seq-item-note { font-size: .8rem; color: var(--ink-soft); line-height: 1.45; }
+.seq-stakes { font-family: var(--mono); font-size: .72rem; color: var(--ink-soft); white-space: nowrap; }
+
+.tips-box {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 16px 18px;
+  margin: 6px 0;
+}
+.tips-box ul { padding-left: 18px; margin: 0; }
+.tips-box li { font-size: 13.5px; padding: 3px 0; line-height: 1.55; color: var(--ink-mid); }
+.tips-box li strong { color: var(--ink); }
+
+.page-footer {
+  margin-top: 40px;
+  padding: 16px 36px;
+  background: var(--ink);
+  font-size: 11.5px;
+  color: #6a8a9a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.page-footer span { color: var(--teal); font-weight: 600; }
+
+@media (max-width: 720px) {
+  .page-header, .page-footer, .container { padding-left: 18px; padding-right: 18px; }
+}
+@media (max-width: 620px) {
+  .header-title { font-size: 2rem; }
+  .central-question .cq-text { font-size: 1.1rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="container">
+    <div class="header-eyebrow">
+      <span class="badge">MBA 767</span>
+      <span class="badge badge-teal">Before Module 1</span>
+      <span class="badge badge-gold">Ungraded Orientation</span>
+    </div>
+    <h1 class="header-title">Welcome to Marketing Strategy</h1>
+    <p class="header-sub">A map of the course before you meet any one piece of it in depth &mdash; about 84 minutes total, nothing here needs to be memorized.</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="section">
+    <span class="section-label">From Your Instructor</span>
+    <div class="central-question">
+      <span class="cq-label">Welcome</span>
+      <div class="cq-text">[Instructor introduces themselves here &mdash; background, how they teach, how to reach them.]</div>
+      <p class="cq-follow">Module 1 opens this week. Before it does, take about 84 minutes for this orientation. It won't count toward your grade beyond a small participation post, and nothing here needs to be memorized &mdash; treat it as a map, not the territory.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <span class="section-label">Why This Exists</span>
+    <p>Every module in this course builds toward the same underlying structure: a <strong>5C situation analysis</strong>, a <strong>Segmentation&ndash;Targeting&ndash;Positioning (STP)</strong> decision, and a <strong>4Ps action plan</strong>. You'll see this structure in Module 1 already, and you'll spend real time with individual pieces of it later in the course.</p>
+    <p>This orientation shows you the whole structure once, briefly, before you meet any one piece of it in depth.</p>
+
+    <div class="map-grid">
+      <div class="map-cell here"><span class="m-num">NOW</span><span class="m-name">Orientation &mdash; the whole map</span></div>
+      <div class="map-cell"><span class="m-num">M05</span><span class="m-name">Segmentation</span></div>
+      <div class="map-cell"><span class="m-num">M06</span><span class="m-name">Competitive Position</span></div>
+      <div class="map-cell"><span class="m-num">M07</span><span class="m-name">Positioning &amp; Branding</span></div>
+      <div class="map-cell"><span class="m-num">M08</span><span class="m-name">Pricing</span></div>
+      <div class="map-cell"><span class="m-num">M09</span><span class="m-name">Channels</span></div>
+      <div class="map-cell"><span class="m-num">M10</span><span class="m-name">Communications</span></div>
+      <div class="map-cell"><span class="m-num">M11</span><span class="m-name">Portfolio Strategy</span></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <span class="section-label">Sequence</span>
+    <p>Work through these in order &mdash; each unlocks the next.</p>
+    <table class="sequence-table" aria-label="Week 1 sequence">
+      <thead>
+        <tr><th style="width:36px;">#</th><th>Item</th><th style="width:80px;">Time</th><th style="width:100px;">Stakes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="seq-num">1</span></td><td><span class="seq-item-name">Welcome &amp; Course Orientation (this page)</span></td><td class="seq-time">5 min</td><td class="seq-stakes">&mdash;</td></tr>
+        <tr><td><span class="seq-num">2</span></td><td><span class="seq-item-name">Video &mdash; Role of Marketing &amp; the Value Equation</span></td><td class="seq-time">6:48</td><td class="seq-stakes">&mdash;</td></tr>
+        <tr><td><span class="seq-num">3</span></td><td><span class="seq-item-name">Video &mdash; The 5C&middot;STP&middot;4P Strategy Map</span></td><td class="seq-time">15:12</td><td class="seq-stakes">&mdash;</td></tr>
+        <tr><td><span class="seq-num">4</span></td><td><span class="seq-item-name">Video &mdash; Action Plan, the 4Ps &amp; Retention</span></td><td class="seq-time">7:02</td><td class="seq-stakes">&mdash;</td></tr>
+        <tr><td><span class="seq-num">5</span></td><td><span class="seq-item-name">Framework Map Self-Check</span><span class="seq-item-note">Practice Quiz, 6 items</span></td><td class="seq-time">~10 min</td><td class="seq-stakes">practice only</td></tr>
+        <tr><td><span class="seq-num">6</span></td><td><span class="seq-item-name">Practice: Applying the Framework</span><span class="seq-item-note">Practice Quiz, 4 items</span></td><td class="seq-time">~12 min</td><td class="seq-stakes">practice only</td></tr>
+        <tr><td><span class="seq-num">7</span></td><td><span class="seq-item-name">Welcome Discussion</span><span class="seq-item-note">1 post + 2 replies</span></td><td class="seq-time">~23 min</td><td class="seq-stakes">participation</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <span class="section-label">Before You Begin</span>
+    <div class="tips-box">
+      <ul>
+        <li><strong>You're not expected to master anything here.</strong> Every framework you see this week gets its own full module later &mdash; this is a first look, not a test of retention.</li>
+        <li><strong>The two practice quizzes are ungraded and unlimited-attempt.</strong> Feedback shows immediately. Use them to check your own thinking, not to chase a score.</li>
+        <li><strong>The Welcome Discussion asks you to go past the quiz options.</strong> Its third part specifically wants a need or a claim you came up with yourself &mdash; not just the ones you selected.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <span class="section-label">What Comes After</span>
+    <div class="callout info">
+      <span class="callout-icon">&#8594;</span>
+      <div>
+        <span class="callout-label">Module 1, starting next</span>
+        Module 1 follows the reading &rarr; Gate 1 &rarr; slides &rarr; Gate 2 &rarr; video &rarr; apps &rarr; discussion &rarr; case sequence you'll use for the rest of the course. The HBS Core Curriculum reading that pairs with this orientation is assigned alongside Module 1, not here.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="page-footer">
+  <span>MBA 767 &middot; Orientation</span>
+  <span>Welcome to Marketing Strategy</span>
+</div>
+
+</body>
+</html>
