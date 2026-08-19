@@ -244,7 +244,7 @@ strong { color: var(--ink); font-weight: 600; }
   color: var(--teal);
   margin-bottom: 3px;
 }
-.lo-text { font-size: 13px; line-height: 1.5; color: var(--text); }
+.lo-text { font-size: 13px; line-height: 1.5; color: var(--ink-mid); }
 
 .gate-grid {
   display: grid;
@@ -256,7 +256,7 @@ strong { color: var(--ink); font-weight: 600; }
 .gate-card {
   border-radius: 6px;
   padding: 16px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
 }
 .gate-card.gate1 { background: #f0faf8; border-top: 3px solid var(--teal); }
 .gate-card.gate2 { background: #f5f3ff; border-top: 3px solid #7c5ccc; }
@@ -273,14 +273,14 @@ strong { color: var(--ink); font-weight: 600; }
 .gate-specs { list-style: none; }
 .gate-specs li {
   font-size: 12.5px;
-  color: var(--muted);
+  color: var(--ink-soft);
   padding: 3px 0;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--rule);
 }
 .gate-specs li:last-child { border-bottom: none; }
-.gate-specs li span:last-child { font-weight: 600; color: var(--text); }
+.gate-specs li span:last-child { font-weight: 600; color: var(--ink-mid); }
 
 .exclusive-list { list-style: none; margin: 4px 0; }
 .exclusive-list li {
@@ -290,7 +290,7 @@ strong { color: var(--ink); font-weight: 600; }
   border-radius: 5px;
   background: var(--surface);
   margin-bottom: 6px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
   font-size: 13.5px;
   align-items: flex-start;
 }
@@ -310,7 +310,7 @@ strong { color: var(--ink); font-weight: 600; }
 }
 .excl-body { flex: 1; }
 .excl-title { font-weight: 700; color: var(--ink); margin-bottom: 2px; }
-.excl-ref { font-size: 11.5px; color: var(--muted); }
+.excl-ref { font-size: 11.5px; color: var(--ink-soft); }
 
 .trap-grid {
   display: grid;
@@ -321,7 +321,7 @@ strong { color: var(--ink); font-weight: 600; }
 @media (max-width: 620px) { .trap-grid { grid-template-columns: 1fr; } }
 .trap-card {
   border-radius: 8px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
   padding: 14px 16px;
   box-shadow: var(--shadow-sm);
 }
@@ -361,7 +361,7 @@ strong { color: var(--ink); font-weight: 600; }
   display: inline-flex; align-items: center; justify-content: center;
 }
 .seq-num.gate-item { background: var(--gold); color: var(--ink); }
-.seq-num.locked { background: var(--muted); }
+.seq-num.locked { background: var(--ink-soft); }
 .seq-time { font-family: var(--mono); font-size: .78rem; color: var(--teal); white-space: nowrap; }
 .seq-item-name { font-weight: 600; color: var(--ink); display: block; margin-bottom: 2px; }
 .seq-item-note { font-size: .8rem; color: var(--ink-soft); line-height: 1.45; }
@@ -388,7 +388,7 @@ strong { color: var(--ink); font-weight: 600; }
 }
 .grade-table td {
   padding: 9px 12px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--rule);
   vertical-align: middle;
 }
 .grade-table tr:nth-child(even) td { background: var(--surface); }
@@ -409,12 +409,12 @@ strong { color: var(--ink); font-weight: 600; }
   min-width: 36px;
   text-align: center;
 }
-.pts-badge.zero { background: var(--muted); }
+.pts-badge.zero { background: var(--ink-soft); }
 .pts-badge.large { background: var(--ink); }
 
 .tips-box {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
   border-radius: 6px;
   padding: 16px 18px;
   margin: 6px 0;
@@ -489,15 +489,9 @@ strong { color: var(--ink); font-weight: 600; }
       <span class="badge">MBA 767</span>
       <span class="badge">Module 03</span>
       <span class="badge badge-gold">Chapter 3</span>
-      <span class="badge badge-teal">4.3-5.5 hours total</span>
     </div>
     <h1 class="header-title">Market Potential, Market Demand and Market Share</h1>
     <p class="header-sub">How you define your market determines what you can see — and what you cannot see cannot be managed.</p>
-    <div class="header-meta">
-      <span class="badge">Part II · Market Analysis</span>
-      <span class="badge">195 points</span>
-      <span class="badge">Two-Gate Accountability</span>
-    </div>
   </div>
 </header>
 
@@ -534,7 +528,7 @@ strong { color: var(--ink); font-weight: 600; }
       </div>
       <div class="param-cell">
         <span class="p-label">Estimated Time</span>
-        <span class="p-val"><strong>4.3-5.5 hours</strong> across all activities</span>
+        <span class="p-val"><strong>4–5 hours</strong> across all activities</span>
       </div>
       <div class="param-cell">
         <span class="p-label">Lecture Video</span>
@@ -553,10 +547,6 @@ strong { color: var(--ink); font-weight: 600; }
         <span class="p-val">M02 NMC familiarity helpful, but formulas here are self-contained</span>
       </div>
       <div class="param-cell">
-        <span class="p-label">Pacing</span>
-        <span class="p-val">Plan for a 5-day window at <strong>90–120 minutes per day</strong></span>
-      </div>
-      <div class="param-cell">
         <span class="p-label">Total Points</span>
         <span class="p-val"><strong>195 pts</strong> — Gate 2 (20) · Apps (30) · Discussion (20) · Case (125)</span>
       </div>
@@ -573,16 +563,9 @@ strong { color: var(--ink); font-weight: 600; }
         <li><strong>Read Chapter 3 actively.</strong> The slide deck and lecture video deliberately leave out five topics that Gate 1 tests — including the Levitt marketing myopia definition, Red Bull's exact share figures, and the seven forces restricting market development. Find all five before you take Gate 1.</li>
         <li><strong>The three-index analysis is the core skill.</strong> MDI alone is insufficient — SDI is what reveals the opportunity. Students who calculate only one or two of the three indexes consistently make the wrong strategic recommendation in the case.</li>
         <li><strong>Complete App 3 before the case.</strong> The Market Share Performance Tree scenario in App 3 mirrors the Vantara Outdoors structure. Run it fully before opening the case.</li>
-        <li><strong>Show your calculation steps.</strong> The case rubric awards partial credit only when intermediate steps are visible. Show the formula, your inputs, and the resulting index value — not just the final number.</li>
         <li><strong>Ask how the market is defined before you trust any market share figure.</strong> The 53% share question in the framing above is the exact trap the case sets. Before you accept any market share figure as meaningful, identify the market definition used to calculate it.</li>
+        <li><strong>Enter each numeric answer in the exact format specified.</strong> Every auto-graded quiz in this module — Gate 2, the App worksheets, and the case — enforces a strict numeric-entry format: no percent signs, dollar signs, commas, or stray characters. A correctly-reasoned answer submitted in the wrong format is marked wrong, and no regrade requests are accepted for formatting errors.</li>
       </ul>
-    </div>
-    <div class="callout key">
-      <span class="callout-icon">i</span>
-      <div>
-        <div class="callout-label">Prerequisite reminder</div>
-        <p>Gate 1 is chapter-only. Gate 2 requires both the chapter and the slide deck. Use the Study Guide as you read so the five chapter-exclusive topics are already familiar before you take Gate 1.</p>
-      </div>
     </div>
   </section>
 
@@ -668,13 +651,6 @@ strong { color: var(--ink); font-weight: 600; }
         </ul>
       </div>
     </div>
-    <div class="callout info" style="margin-top:16px;">
-      <span class="callout-icon">i</span>
-      <div>
-        <div class="callout-label">Why two gates?</div>
-        <p>Gate 1 tests five chapter-exclusive topics that do not appear on the slides. Gate 2 requires you to synthesize the chapter and slides so the lecture becomes a bridge rather than a substitute.</p>
-      </div>
-    </div>
   </section>
 
   <div class="divider"></div>
@@ -725,32 +701,10 @@ strong { color: var(--ink); font-weight: 600; }
 
   <div class="divider"></div>
 
-  <!-- 8. Two Traps to Watch For -->
-  <section class="section">
-    <span class="section-label">Two Traps to Watch For</span>
-    <p>This module contains two specific calculation errors and strategic misunderstandings that students make frequently. Both are addressed explicitly in the lecture video and the apps. Know them before you start.</p>
-    <div class="trap-grid">
-      <article class="trap-card warn">
-        <div class="trap-title">Trap 1 - Trusting a Market Share Figure Without Checking Market Definition</div>
-        <p>The same sales figure can represent dominant share in one market definition and negligible share in another.</p>
-        <p>Red Bull is the example: 41.7% of the energy drink market versus 0.7% of the broader nonalcoholic beverage market. The 53% share question in the framing above is the exact trap the case sets.</p>
-        <p><strong>Where to find it:</strong> Chapter 3's broad-vs-narrow definition discussion, the Red Bull example, and the case framing.</p>
-      </article>
-      <article class="trap-card risk">
-        <div class="trap-title">Trap 2 - Treating MDI Alone as the Strategic Answer</div>
-        <p>MDI alone is insufficient — SDI is what reveals the opportunity. Students who calculate only one or two of the three indexes consistently make the wrong strategic recommendation in the case.</p>
-        <p>The three-index analysis is the core skill. The wrong shortcut is to stop at one number and assume the strategy is obvious.</p>
-        <p><strong>Where to find it:</strong> The study tips, App 3, and the Vantara Outdoors case all force the full MDI/MSI/SDI analysis.</p>
-      </article>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
   <!-- 9. Module Sequence -->
   <section class="section">
     <span class="section-label">Module Sequence</span>
-    <p>Estimated total: 4.3-5.5 hours.</p>
+    <p>Estimated total: 4–5 hours.</p>
 
     <table class="sequence-table" aria-label="Module sequence table">
       <thead>
@@ -846,30 +800,30 @@ strong { color: var(--ink); font-weight: 600; }
           <td><span class="seq-num">10</span></td>
           <td>
             <span class="seq-item-name">Discussion: "The VP of Sales vs. the CMO"</span>
-            <span class="seq-item-note">Due Day 3 (Jun 17, 11:59pm). Part 1: position, 150–200 words. Part 2: devil's advocate, 100–150 words.</span>
+            <span class="seq-item-note">Part 1: position, 150–200 words. Part 2: devil's advocate, 100–150 words.</span>
           </td>
           <td class="seq-time">20–25 min</td>
-          <td class="seq-pts">20 pts</td>
+          <td class="seq-pts">15 pts</td>
         </tr>
         <tr>
-          <td><span class="seq-num locked">11</span></td>
+          <td><span class="seq-num">11</span></td>
           <td>
-            <span class="seq-item-name">Case Draft — Parts 1–3</span>
-            <span class="seq-item-note">Day 4 — advisory only. No grade; no unlock dependency. Complete Parts 1–3 calculations before Day 5. Run the module self-check if below 80%.</span>
+            <span class="seq-item-name">Discussion Evidence Check Quiz</span>
+            <span class="seq-item-note">1 question. 1 attempt only.</span>
           </td>
-          <td class="seq-time">60–70 min</td>
-          <td class="seq-pts zero">0 pts</td>
+          <td class="seq-time">5 min</td>
+          <td class="seq-pts">5 pts</td>
         </tr>
         <tr>
           <td><span class="seq-num">12</span></td>
           <td>
-            <span class="seq-item-name">Case Analysis — Final Submission: Vantara Outdoors</span>
-            <span class="seq-item-note">Due Day 5 (Jun 19, 11:59pm). 300–500 words + calculations; 4 parts; individual submission.</span>
+            <span class="seq-item-name">Case Analysis Quiz: Vantara Outdoors</span>
+            <span class="seq-item-note">15 questions (10 numeric + 4 multiple choice + 1 reasoning). 1 attempt.</span>
           </td>
           <td class="seq-time">55–65 min</td>
           <td class="seq-pts">125 pts</td>
         </tr>
-        
+
       </tbody>
     </table>
   </section>
@@ -885,7 +839,6 @@ strong { color: var(--ink); font-weight: 600; }
           <th>Assessment</th>
           <th>Points</th>
           <th>% of Module</th>
-          <th>Grading</th>
         </tr>
       </thead>
       <tbody>
@@ -893,92 +846,40 @@ strong { color: var(--ink); font-weight: 600; }
           <td>Gate 1: Basic Reading Check</td>
           <td><span class="pts-badge zero">0</span></td>
           <td>Access control only</td>
-          <td>Auto · 80% threshold</td>
         </tr>
         <tr>
           <td>Gate 2: Applied Reading Check</td>
           <td><span class="pts-badge">20</span></td>
           <td>10%</td>
-          <td>Auto-graded</td>
         </tr>
         <tr>
           <td>App Worksheets (3 × 10 pts)</td>
           <td><span class="pts-badge">30</span></td>
           <td>15%</td>
-          <td>Auto-graded</td>
         </tr>
         <tr>
           <td>Discussion: "The VP of Sales vs. the CMO"</td>
           <td><span class="pts-badge">20</span></td>
           <td>10%</td>
-          <td>Rubric</td>
         </tr>
         <tr>
-          <td>Case Analysis: Vantara Outdoors</td>
+          <td>Case Analysis Quiz: Vantara Outdoors</td>
           <td><span class="pts-badge large">125</span></td>
           <td>64%</td>
-          <td>Rubric</td>
         </tr>
         <tr class="total-row">
           <td>Total</td>
           <td><span class="pts-badge large">195</span></td>
           <td>100%</td>
-          <td></td>
         </tr>
       </tbody>
     </table>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- 11. Pacing in the Summer Session -->
-  <section class="section">
-    <span class="section-label">Pacing in the Summer Session</span>
-    <p>This module opens Jun 15 and runs for 5 days. Discussion is due Jun 17 at 11:59pm. Gates are due Jun 18 at 11:59pm. Case is due Jun 19 at 11:59pm. Total estimated time is 4.3–5.5 hours across the full window.</p>
-    <table class="pacing-table" aria-label="Pacing in the summer session table">
-      <thead>
-        <tr>
-          <th style="width: 90px;">Day</th>
-          <th>Suggested Work</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Day 1</td>
-          <td>Read Chapter 3 with the Study Guide (70–80 min). Complete Gate 1. View the slide deck (15–20 min). Complete Gate 2. ~120 min total.</td>
-        </tr>
-        <tr>
-          <td>Day 2</td>
-          <td>Watch the lecture video (~30 min). Complete Apps 1, 2, and 3 with worksheets (~55–70 min). ~90 min total.</td>
-        </tr>
-        <tr>
-          <td>Day 3</td>
-          <td>Write your discussion post — position and devil's advocate (20–25 min). ~25 min total.</td>
-        </tr>
-        <tr>
-          <td>Day 4</td>
-          <td>Begin case analysis. Complete Parts 1–3 calculations. Run the module self-check if below 80%. ~60–70 min total.</td>
-        </tr>
-        <tr>
-          <td>Day 5</td>
-          <td>Write Part 4 strategic recommendation. Review calculations. Submit case. ~30–40 min total.</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="callout info" style="margin-top:16px;">
-      <span class="callout-icon">i</span>
-      <div>
-        <div class="callout-label">Pacing reminder</div>
-        <p>The discussion is due on Day 3 — after the apps, not before. The calculations you run in Apps 1–3 are the evidence base for your argument. Do not post your discussion before completing the apps. The case splits across Days 4 and 5: use Day 4 for the quantitative work and Day 5 for the strategic recommendation.</p>
-      </div>
-    </div>
   </section>
 
   <div class="divider"></div>
 
   <!-- 12. Footer -->
   <section class="section">
-    <span class="section-label">Footer</span>
     <div class="page-footer">
       <span>MBA 767 · Module 03 · Chapter 3</span>
       <span>Market Potential, Market Demand and Market Share · Part II: Market Analysis</span>
