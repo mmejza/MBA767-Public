@@ -28,7 +28,8 @@ strong { color: var(--ink); font-weight: 600; }
 .badge-teal { background: rgba(10,124,110,.3); color: #7de8dc; }
 .header-title { font-family: var(--serif); font-size: clamp(1.7rem, 3.5vw, 2.2rem); line-height: 1.2; color: var(--white); margin-top: 16px; }
 .section { margin-top: 32px; }
-.video-frame { background: var(--ink); border-radius: 10px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.4); font-family: var(--mono); font-size: .8rem; text-align: center; padding: 20px; }
+.video-frame { background: var(--ink); border-radius: 10px; aspect-ratio: 16/9; overflow: hidden; }
+.video-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
 .callout { background: var(--teal-lt); border: 1px solid var(--teal-mid); border-radius: 8px; padding: 14px 18px; margin-top: 18px; font-size: .88rem; color: #005446; }
 .map-strip { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 .map-chip { font-family: var(--mono); font-size: .68rem; padding: 4px 10px; border-radius: 100px; background: var(--white); border: 1px solid var(--rule); color: var(--ink-soft); }
@@ -55,7 +56,9 @@ strong { color: var(--ink); font-weight: 600; }
 
   <div class="section">
     <div class="video-frame">
-      &lt;-- Replace with the embedded video after uploading<br>Segment2_5C_STP_4P_FrameworkMap.mp4 --&gt;
+      <!-- TODO: upload Segment2_5C_STP_4P_FrameworkMap.mp4 to Canvas Studio,
+           then replace the src below with its embed URL. -->
+      <iframe src="REPLACE_WITH_CANVAS_STUDIO_EMBED_URL" title="Video 2: The 5C&middot;STP&middot;4P Strategy Map" allow="fullscreen" allowfullscreen></iframe>
     </div>
   </div>
 
