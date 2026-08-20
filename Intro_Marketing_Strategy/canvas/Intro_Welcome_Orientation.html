@@ -239,6 +239,33 @@ strong { color: var(--ink); font-weight: 600; }
 .tips-box li { font-size: 13.5px; padding: 3px 0; line-height: 1.55; color: var(--ink-mid); }
 .tips-box li strong { color: var(--ink); }
 
+.optional-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 16px;
+}
+@media (max-width: 680px) { .optional-grid { grid-template-columns: 1fr; } }
+.optional-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+}
+.optional-card .o-badge {
+  display: inline-block;
+  font-family: var(--mono); font-size: .62rem; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: #7a4e00; background: var(--gold-lt);
+  padding: 2px 9px; border-radius: 100px; margin-bottom: 9px;
+}
+.optional-card h3 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: 1.05rem; color: var(--ink); margin-bottom: 6px;
+}
+.optional-card p { font-size: .83rem; margin: 0; }
+
 .page-footer {
   margin-top: 40px;
   padding: 16px 36px;
@@ -272,7 +299,7 @@ strong { color: var(--ink); font-weight: 600; }
       <span class="badge badge-gold">Ungraded Orientation</span>
     </div>
     <h1 class="header-title">Welcome to Marketing Strategy</h1>
-    <p class="header-sub">A map of the course before you meet any one piece of it in depth &mdash; about 84 minutes total, nothing here needs to be memorized.</p>
+    <p class="header-sub">A map of the course before you meet any one piece of it in depth &mdash; about 84 minutes total, nothing here needs to be memorized. Three optional extras below if you want more.</p>
   </div>
 </header>
 
@@ -330,12 +357,37 @@ strong { color: var(--ink); font-weight: 600; }
   <div class="divider"></div>
 
   <section class="section">
+    <span class="section-label">Optional &mdash; If You Want More</span>
+    <p>Three short, playful, completely optional apps. Not required, not counted in the 84 minutes above, not part of the unlock sequence &mdash; just here if you want a lighter way to sit with this week's ideas.</p>
+    <div class="optional-grid">
+      <div class="optional-card">
+        <span class="o-badge">Optional</span>
+        <h3>Marketing Archetype Quiz</h3>
+        <p>Six playful either/or questions, no right answers. Ends with one of four archetypes &mdash; a reminder that marketing is several mindsets, not one skill.</p>
+      </div>
+      <div class="optional-card">
+        <span class="o-badge">Optional</span>
+        <h3>Value Equation Slider</h3>
+        <p>Drag benefits and costs across six real (and not-so-real) products and watch the value score move &mdash; a tactile rerun of Segment 1's equation.</p>
+      </div>
+      <div class="optional-card">
+        <span class="o-badge">Optional</span>
+        <h3>Needs Generator</h3>
+        <p>Generate an absurd random product, then argue for the real need it satisfies &mdash; proving any product maps to a real need.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
     <span class="section-label">Before You Begin</span>
     <div class="tips-box">
       <ul>
         <li><strong>You're not expected to master anything here.</strong> Every framework you see this week gets its own full module later &mdash; this is a first look, not a test of retention.</li>
         <li><strong>The two practice quizzes are ungraded and unlimited-attempt.</strong> Feedback shows immediately. Use them to check your own thinking, not to chase a score.</li>
         <li><strong>The Welcome Discussion asks you to go past the quiz options.</strong> Its third part specifically wants a need or a claim you came up with yourself &mdash; not just the ones you selected.</li>
+        <li><strong>The three apps above are extra, not essential.</strong> Skip them entirely and you've still done everything this week asks.</li>
       </ul>
     </div>
   </section>
