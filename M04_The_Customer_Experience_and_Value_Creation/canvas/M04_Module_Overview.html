@@ -319,6 +319,66 @@ strong { color: var(--ink); font-weight: 600; }
   margin: 4px 0;
 }
 
+/* M01-parity additions (D141): params-grid replaces glance-table for
+   Module at a Glance; lo-badge/lo-content/lo-bloom replace lo-num for
+   Learning Objectives; seq-num/seq-item-name/seq-item-note replace
+   seq-id for Module Sequence; pts-badge for Grading Summary. */
+.params-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+@media (max-width: 540px) { .params-grid { grid-template-columns: 1fr; } }
+.param-cell {
+  background: var(--white);
+  padding: 14px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.param-cell .p-label {
+  font-family: var(--mono); font-size: .67rem; font-weight: 500;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink-soft); flex-shrink: 0; min-width: 130px;
+  margin-top: 2px;
+}
+.param-cell .p-val { font-size: .9rem; color: var(--ink-mid); line-height: 1.5; }
+.param-cell .p-val strong { color: var(--ink); font-weight: 600; }
+
+.lo-badge {
+  flex-shrink: 0; width: 30px; height: 30px; border-radius: 4px;
+  background: var(--teal); color: var(--white); font-family: var(--mono);
+  font-size: .72rem; display: flex; align-items: center; justify-content: center;
+}
+.lo-content { flex: 1; }
+.lo-bloom {
+  font-size: .68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--teal); margin-bottom: 3px;
+}
+
+.seq-num {
+  font-family: var(--mono); font-size: .78rem; font-weight: 500;
+  color: var(--white); background: var(--ink);
+  width: 24px; height: 24px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.seq-num.gate-item { background: var(--gold); color: var(--ink); }
+.seq-item-name { font-weight: 600; color: var(--ink); display: block; margin-bottom: 2px; }
+.seq-item-note { font-size: .8rem; color: var(--ink-soft); line-height: 1.45; }
+
+.pts-badge {
+  display: inline-block; background: var(--teal); color: #fff;
+  border-radius: 4px; padding: 1px 8px; font-size: 12px; font-weight: 700;
+  min-width: 36px; text-align: center;
+}
+.pts-badge.zero { background: var(--ink-soft); }
+.pts-badge.large { background: var(--ink); }
+
 .lo-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -389,8 +449,11 @@ strong { color: var(--ink); font-weight: 600; }
   color: var(--ink-mid);
   padding: 3px 0;
   border-bottom: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
 }
 .gate-specs li:last-child { border-bottom: none; }
+.gate-specs li span:last-child { font-weight: 600; color: var(--ink); }
 
 .exclusive-list {
   list-style: none;
@@ -597,15 +660,9 @@ strong { color: var(--ink); font-weight: 600; }
       <span class="badge">MBA 767</span>
       <span class="badge">Module 04</span>
       <span class="badge badge-gold">Chapter 4</span>
-      <span class="badge badge-teal">4.3-5.5 hours total</span>
     </div>
     <h1 class="header-title">The Customer Experience and Value Creation</h1>
-    <p class="header-sub">Module Overview Page · Canvas Page</p>
-    <div class="header-meta">
-      <span class="badge">Two-Gate Accountability</span>
-      <span class="badge">Apex Industrial Case</span>
-      <span class="badge">Summer Session</span>
-    </div>
+    <p class="header-sub">This module gives you four measurement tools &mdash; economic value, relative performance value, perceived value, and emotional value &mdash; to determine whether a company's pricing captures the value it actually creates for customers.</p>
   </div>
 </div>
 
@@ -613,27 +670,13 @@ strong { color: var(--ink); font-weight: 600; }
 
 <!-- 2. Central Question -->
 <section class="section">
-  <span class="section-label">The Central Question</span>
+  <span class="section-label">Central Question</span>
 
   <div class="central-question">
     <span class="cq-label">What this module asks you to figure out</span>
     <div class="cq-text">Is Apex Industrial's FilterPro X7 correctly priced — or is the firm either leaving money on the table or asking customers to pay more than the product is worth?</div>
     <p class="cq-follow">This module gives you four measurement tools to close that gap: economic value, relative performance value, perceived value, and emotional value. Each one reveals something the others miss. Your case analysis will answer that question with calculations. This page prepares you for the work ahead.</p>
-  </div>
-
-  <div class="trap-card">
-    <div class="trap-scenario">
-      <div class="trap-box before">
-        <span class="t-label">Customer Reality</span>
-        <p class="t-claim">Only <strong>8% of customers</strong> describe their experience as superior.</p>
-      </div>
-      <div class="trap-arrow">→</div>
-      <div class="trap-box after">
-        <span class="t-label">Company Belief</span>
-        <p class="t-claim"><strong>80% of companies</strong> believe they deliver a superior experience.</p>
-      </div>
-    </div>
-    <div class="trap-reveal"><strong>What this means:</strong> That gap is not primarily an execution failure. It is a measurement failure. Companies are not evaluating what customers actually experience — they are evaluating what they believe they deliver.</div>
+    <p class="cq-follow">That gap is real at the industry level too: only 8% of customers describe their experience as superior, yet 80% of companies believe they deliver one. That gap is not primarily an execution failure — it is a measurement failure. Companies are not evaluating what customers actually experience; they are evaluating what they believe they deliver.</p>
   </div>
 </section>
 
@@ -642,77 +685,32 @@ strong { color: var(--ink); font-weight: 600; }
 <!-- 3. Module at a Glance -->
 <section class="section">
   <span class="section-label">Module at a Glance</span>
-  <table class="glance-table" aria-label="Module 4 at a glance table">
-    <thead>
-      <tr>
-        <th style="width: 35%;">Item</th>
-        <th style="width: 16%;">Est. Time</th>
-        <th>What You Are Doing</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Chapter 4 Reading</td>
-        <td class="col-time">70-80 min</td>
-        <td>Building the foundation. Eight study focus questions will guide you.</td>
-      </tr>
-      <tr>
-        <td>Gate 1: Basic Reading Check</td>
-        <td class="col-time">10-12 min</td>
-        <td>5 questions drawn from chapter-exclusive content. 80% threshold to proceed.</td>
-      </tr>
-      <tr>
-        <td>Slide Deck (29 slides)</td>
-        <td class="col-time">15-20 min</td>
-        <td>Formulas, worked examples, and the two traps to watch for.</td>
-      </tr>
-      <tr>
-        <td>Gate 2: Applied Reading Check</td>
-        <td class="col-time">20-23 min</td>
-        <td>8 questions combining chapter and slides. Graded. 1 attempt.</td>
-      </tr>
-      <tr>
-        <td>Lecture Video (2 segments)</td>
-        <td class="col-time">~30 min</td>
-        <td>Segment 1: strategic reasoning. Segment 2: worked calculations with the sign trap demonstrated.</td>
-      </tr>
-      <tr>
-        <td>App 1 + Worksheet</td>
-        <td class="col-time">20-25 min</td>
-        <td>Lifecycle cost builder — find the indifference price.</td>
-      </tr>
-      <tr>
-        <td>App 2 + Worksheet</td>
-        <td class="col-time">20-25 min</td>
-        <td>PCV Index chain — encounter the sign trap live.</td>
-      </tr>
-      <tr>
-        <td>App 3 + Worksheet</td>
-        <td class="col-time">15-20 min</td>
-        <td>Conjoint CVI simulator — resolve the CVI vs. profit question.</td>
-      </tr>
-      <tr>
-        <td>Discussion: single post (Part 1 + Part 2)</td>
-        <td class="col-time">20-25 min</td>
-        <td>Side with the Product Manager or the Pricing Analyst. Part 2: devil's advocate.</td>
-      </tr>
-      <tr>
-        <td>Case Analysis: Apex Industrial</td>
-        <td class="col-time">55-65 min</td>
-        <td>4 parts, 125 points. Apply all three tools to a filtration manufacturer.</td>
-      </tr>
-      <tr>
-        <td>Module Self-Check (optional)</td>
-        <td class="col-time">10 min</td>
-        <td>Ungraded practice. Recommended before submitting the case.</td>
-      </tr>
-      <tr>
-        <td>TOTAL</td>
-        <td class="col-time">4.3-5.5 hours</td>
-        <td>Plan accordingly — this is a dense module.</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="params-grid">
+    <div class="param-cell">
+      <span class="p-label">Textbook</span>
+      <span class="p-val"><strong>Chapter 4</strong> — The Customer Experience and Value Creation</span>
+    </div>
+    <div class="param-cell">
+      <span class="p-label">Estimated Time</span>
+      <span class="p-val"><strong>4–5 hours</strong> across all activities</span>
+    </div>
+    <div class="param-cell">
+      <span class="p-label">Lecture Video</span>
+      <span class="p-val"><strong>~30 minutes</strong>, 2 segments</span>
+    </div>
+    <div class="param-cell">
+      <span class="p-label">Interactive Apps</span>
+      <span class="p-val"><strong>3 apps</strong> with worksheets (55–70 min combined)</span>
+    </div>
+    <div class="param-cell">
+      <span class="p-label">Case Analysis Quiz</span>
+      <span class="p-val"><strong>Apex Industrial</strong> — 55–65 min</span>
+    </div>
+    <div class="param-cell">
+      <span class="p-label">Total Points</span>
+      <span class="p-val"><strong>195 pts</strong> — Gate 2 (20) · Apps (30) · Discussion (20) · Case (125)</span>
+    </div>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -730,22 +728,6 @@ strong { color: var(--ink); font-weight: 600; }
       <li><strong>Complete Apps 1–3 before posting your discussion.</strong> The apps produce the specific index values (PCV Index, OPI, CPI) that your discussion post must cite. The discussion is due after the apps, not before.</li>
     </ul>
   </div>
-
-  <div class="callout key">
-    <span class="callout-icon">📖</span>
-    <div>
-      <div class="callout-label">Chapter-exclusive logic</div>
-      Tests content present in Chapter 4 but absent from slides and script. If you rely on slides alone, you will not pass Gate 1.
-    </div>
-  </div>
-
-  <div class="callout warn">
-    <span class="callout-icon">!</span>
-    <div>
-      <div class="callout-label">Prerequisite-chain reminder</div>
-      Gate 1 and the Slide Deck Viewer are the only Canvas-enforced prerequisites in this module: Gate 1's score threshold unlocks the Slide Deck Viewer, and viewing the deck unlocks Gate 2. The rest of the sequence below is the recommended order, not a technically enforced chain.
-    </div>
-  </div>
 </section>
 
 <div class="divider"></div>
@@ -756,20 +738,32 @@ strong { color: var(--ink); font-weight: 600; }
   <p>This module gives you four measurement tools to close the 8%/80% gap: economic value, relative performance value, perceived value, and emotional value.</p>
   <div class="lo-grid">
     <div class="lo-card">
-      <div class="lo-num">LO1</div>
-      <div class="lo-text">Evaluate the 8%/80% perception gap and explain why it is primarily a measurement failure rather than an execution failure.</div>
+      <div class="lo-badge">LO1</div>
+      <div class="lo-content">
+        <div class="lo-bloom">Evaluation</div>
+        <div class="lo-text">Evaluate the 8%/80% perception gap and explain why it is primarily a measurement failure rather than an execution failure.</div>
+      </div>
     </div>
     <div class="lo-card">
-      <div class="lo-num">LO2</div>
-      <div class="lo-text">Calculate and interpret economic value for Apex Industrial's FilterPro X7 pricing decision.</div>
+      <div class="lo-badge">LO2</div>
+      <div class="lo-content">
+        <div class="lo-bloom">Application</div>
+        <div class="lo-text">Calculate and interpret economic value for Apex Industrial's FilterPro X7 pricing decision.</div>
+      </div>
     </div>
     <div class="lo-card">
-      <div class="lo-num">LO3</div>
-      <div class="lo-text">Apply relative performance value and perceived value logic to identify whether the firm is leaving money on the table or overpricing.</div>
+      <div class="lo-badge">LO3</div>
+      <div class="lo-content">
+        <div class="lo-bloom">Application</div>
+        <div class="lo-text">Apply relative performance value and perceived value logic to identify whether the firm is leaving money on the table or overpricing.</div>
+      </div>
     </div>
     <div class="lo-card">
-      <div class="lo-num">LO4</div>
-      <div class="lo-text">Use emotional value and conjoint CVI evidence while distinguishing customer value from firm profit.</div>
+      <div class="lo-badge">LO4</div>
+      <div class="lo-content">
+        <div class="lo-bloom">Analysis</div>
+        <div class="lo-text">Use emotional value and conjoint CVI evidence while distinguishing customer value from firm profit.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -778,32 +772,32 @@ strong { color: var(--ink); font-weight: 600; }
 
 <!-- 6. Two-Gate Model -->
 <section class="section">
-  <span class="section-label">The Two-Gate Model</span>
-  <p>This module uses a two-gate reading accountability system. Here is how it works and why.</p>
+  <span class="section-label">Two-Gate Model</span>
+  <p>Every module uses a two-gate reading accountability structure. Gate 1 certifies you read before viewing slides. Gate 2 certifies you synthesized reading with slides before watching the lecture. You cannot game both gates — Gate 2 requires both sources.</p>
   <div class="gate-grid">
     <article class="gate-card gate1">
       <div class="gate-label">Gate 1</div>
       <div class="gate-title">Basic Reading Check</div>
       <ul class="gate-specs">
-        <li>Unlocks: Slide Deck Viewer</li>
-        <li>5 questions · Chapter only · 80% threshold · 2 attempts · 0 points</li>
-        <li>Tests content present in Chapter 4 but absent from slides and script.</li>
-        <li>If you rely on slides alone, you will not pass Gate 1.</li>
+        <li><span>Unlocks</span><span>Slide Deck Viewer</span></li>
+        <li><span>Questions</span><span>5 (chapter-only)</span></li>
+        <li><span>Threshold</span><span>80% to proceed</span></li>
+        <li><span>Attempts</span><span>2</span></li>
+        <li><span>Feedback</span><span>Per-answer + page ref</span></li>
+        <li><span>Points</span><span>0 (access control only)</span></li>
       </ul>
     </article>
     <article class="gate-card gate2">
       <div class="gate-label">Gate 2</div>
       <div class="gate-title">Applied Reading Check</div>
       <ul class="gate-specs">
-        <li>8 questions · Chapter + slides · 1 attempt · 20 points</li>
-        <li>Requires synthesis: you need both the chapter and the slide deck.</li>
-        <li>Numeric questions use parameterized inputs — no two versions share the same correct answer.</li>
+        <li><span>Questions</span><span>8 (chapter + slides)</span></li>
+        <li><span>Threshold</span><span>Graded as submitted</span></li>
+        <li><span>Attempts</span><span>1</span></li>
+        <li><span>Feedback</span><span>Correct/Incorrect only</span></li>
+        <li><span>Points</span><span>20 pts · 10% of module</span></li>
       </ul>
     </article>
-  </div>
-  <div class="callout warn">
-    <span class="callout-icon">!</span>
-    <div><strong>Why two gates?</strong> A single gate before the lecture creates one gap: students who score just above the threshold proceed without genuine chapter internalization. Gate 1 certifies you read before viewing slides. Gate 2 certifies you connected the reading to the slides before watching the lecture. Students who game Gate 1 cannot game Gate 2 — the applied questions require both sources.</div>
   </div>
 </section>
 
@@ -813,7 +807,7 @@ strong { color: var(--ink); font-weight: 600; }
 <section class="section">
   <span class="section-label">Chapter-Exclusive Content</span>
   <p>The slide deck covers formulas, worked examples, and calculation procedures. It does not cover everything. Gate 1 tests the following five topics, which appear only in Chapter 4. Use the Study Guide in the Chapter Reading item to find them.</p>
-  <ol class="exclusive-list">
+  <ul class="exclusive-list">
     <li>
       <div class="excl-num">1</div>
       <div>
@@ -854,29 +848,7 @@ strong { color: var(--ink); font-weight: 600; }
         <div class="excl-ref">Fig 4-27, pp. 143-144</div>
       </div>
     </li>
-  </ol>
-</section>
-
-<div class="divider"></div>
-
-<!-- 8. Two Traps to Watch For -->
-<section class="section">
-  <span class="section-label">Two Traps to Watch For</span>
-  <p>This module contains two specific calculation errors that students make frequently. Both are addressed explicitly in the lecture video and the apps. Know them before you start.</p>
-  <div class="trap-compare">
-    <article class="trap-pane warn">
-      <div class="trap-title">Trap 1 — The Cost of Purchase Index Sign</div>
-      <p>The Cost of Purchase Index uses the same calculation method as the product performance indexes — same threshold rule, same averaging. But the sign runs in the OPPOSITE direction.</p>
-      <p>A relative advantage score of +27 on Purchase Price means customers rate your price as HIGHER than competitors. That is a competitive DISadvantage — not an advantage.</p>
-      <p><strong>Where to find it:</strong> Lecture Segment 2 catches this error on screen. App 2 triggers a SIGN CHECK alert when you make it.</p>
-    </article>
-    <article class="trap-pane risk">
-      <div class="trap-title">Trap 2 — CVI Does Not Equal Profit</div>
-      <p>The conjoint analysis produces a Customer Value Index (CVI) for each strategy. A higher CVI means more customer value. It does not mean more profit.</p>
-      <p>The strategy that charges more may generate a lower CVI (because buyers prefer lower prices) but more firm profit (because the premium exceeds the customer value gap).</p>
-      <p><strong>Where to find it:</strong> Lecture Segment 1 plants this question. Segment 2 resolves it. App 3 surfaces it after you calculate both CVIs.</p>
-    </article>
-  </div>
+  </ul>
 </section>
 
 <div class="divider"></div>
@@ -884,94 +856,121 @@ strong { color: var(--ink); font-weight: 600; }
 <!-- 9. Module Sequence -->
 <section class="section">
   <span class="section-label">Module Sequence</span>
-  <p>Estimated total: 4.3–5.5 hours.</p>
+  <p>Estimated total: 4–5 hours.</p>
   <table class="sequence-table" aria-label="Module sequence table">
     <thead>
       <tr>
-        <th style="width: 48px;">#</th>
+        <th style="width: 36px;">#</th>
         <th>Item</th>
-        <th style="width: 88px;">Time</th>
-        <th style="width: 90px;">Points</th>
+        <th style="width: 92px;">Time</th>
+        <th style="width: 100px;">Points</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="seq-id">1</td>
-        <td>Module Overview &amp; Orientation</td>
+        <td><span class="seq-num">1</span></td>
+        <td><span class="seq-item-name">Module Overview &amp; Orientation (this page)</span></td>
         <td class="seq-time">5 min</td>
-        <td class="seq-pts">-</td>
+        <td class="seq-pts zero">—</td>
       </tr>
       <tr>
-        <td class="seq-id">2</td>
-        <td>Chapter 4 Reading</td>
-        <td class="seq-time">70-80 min</td>
-        <td class="seq-pts">-</td>
+        <td><span class="seq-num">2</span></td>
+        <td>
+          <span class="seq-item-name">Chapter 4 Reading + Study Guide</span>
+          <span class="seq-item-note">Study guide maps the five Gate 1 targets to page locations.</span>
+        </td>
+        <td class="seq-time">70–80 min</td>
+        <td class="seq-pts zero">—</td>
       </tr>
       <tr>
-        <td class="seq-id">3</td>
-        <td>Gate 1: Basic Reading Check</td>
-        <td class="seq-time">10-12 min</td>
-        <td class="seq-pts">0</td>
+        <td><span class="seq-num gate-item">3</span></td>
+        <td>
+          <span class="seq-item-name">Gate 1: Basic Reading Check</span>
+          <span class="seq-item-note">Unlocks Slide Deck. 5 chapter-exclusive questions; 80% threshold; 2 attempts.</span>
+        </td>
+        <td class="seq-time">10–12 min</td>
+        <td class="seq-pts zero">0 pts</td>
       </tr>
       <tr>
-        <td class="seq-id">4</td>
-        <td>Slide Deck Viewer</td>
-        <td class="seq-time">15-20 min</td>
-        <td class="seq-pts">-</td>
+        <td><span class="seq-num">4</span></td>
+        <td>
+          <span class="seq-item-name">Slide Deck Viewer</span>
+          <span class="seq-item-note">Unlocks Gate 2. 29 slides.</span>
+        </td>
+        <td class="seq-time">15–20 min</td>
+        <td class="seq-pts zero">—</td>
       </tr>
       <tr>
-        <td class="seq-id">5</td>
-        <td>Gate 2: Applied Reading Check</td>
-        <td class="seq-time">20-23 min</td>
-        <td class="seq-pts">20</td>
-      </tr>
-      <tr>
-        <td class="seq-id">6</td>
-        <td>Lecture Video (2 segments)</td>
-        <td class="seq-time">~30 min</td>
-        <td class="seq-pts">—</td>
-      </tr>
-      <tr>
-        <td class="seq-id">7</td>
-        <td>App 1 + Worksheet</td>
-        <td class="seq-time">20-25 min</td>
-        <td class="seq-pts">10</td>
-      </tr>
-      <tr>
-        <td class="seq-id">8</td>
-        <td>App 2 + Worksheet</td>
-        <td class="seq-time">20-25 min</td>
-        <td class="seq-pts">10</td>
-      </tr>
-      <tr>
-        <td class="seq-id">9</td>
-        <td>App 3 + Worksheet</td>
-        <td class="seq-time">15-20 min</td>
-        <td class="seq-pts">10</td>
-      </tr>
-      <tr>
-        <td class="seq-id">10</td>
-        <td>Discussion: "The Product Manager vs. the Pricing Analyst"<br><small style="color:var(--ink-soft);font-size:.78rem;">Part 1: position 150–200 words · Part 2: devil's advocate 100–150 words</small></td>
-        <td class="seq-time">20-25 min</td>
+        <td><span class="seq-num gate-item">5</span></td>
+        <td>
+          <span class="seq-item-name">Gate 2: Applied Reading Check</span>
+          <span class="seq-item-note">8 questions; chapter + slides synthesis; 1 attempt only.</span>
+        </td>
+        <td class="seq-time">20–23 min</td>
         <td class="seq-pts">20 pts</td>
       </tr>
       <tr>
-        <td class="seq-id">11</td>
-        <td>Case Draft — Parts 1–3<br><small style="color:var(--ink-soft);font-size:.78rem;">Day 4 — advisory only · No grade; no unlock dependency · Complete calculations before Day 5</small></td>
-        <td class="seq-time">30-40 min</td>
-        <td class="seq-pts">0</td>
+        <td><span class="seq-num">6</span></td>
+        <td>
+          <span class="seq-item-name">Lecture Video (2 segments)</span>
+          <span class="seq-item-note">Segment 1: strategic reasoning. Segment 2: worked calculations with the sign trap demonstrated.</span>
+        </td>
+        <td class="seq-time">~30 min</td>
+        <td class="seq-pts zero">—</td>
       </tr>
       <tr>
-        <td class="seq-id">12</td>
-        <td>Case Analysis: Apex Industrial — Final Submission<br><small style="color:var(--ink-soft);font-size:.78rem;">4 parts · individual submission</small></td>
-        <td class="seq-time">55-65 min</td>
-        <td class="seq-pts">125</td>
+        <td><span class="seq-num">7</span></td>
+        <td>
+          <span class="seq-item-name">App 1 Worksheet Quiz: Lifecycle Cost &amp; Economic Value Calculator</span>
+          <span class="seq-item-note">10 questions; 1 attempt only.</span>
+        </td>
+        <td class="seq-time">20–25 min</td>
+        <td class="seq-pts">10 pts</td>
       </tr>
       <tr>
-        <td class="seq-id">13</td>
-        <td>Module Self-Check (optional)</td>
-        <td class="seq-time">10 min</td>
-        <td class="seq-pts">0</td>
+        <td><span class="seq-num">8</span></td>
+        <td>
+          <span class="seq-item-name">App 2 Worksheet Quiz: PCV Index Builder</span>
+          <span class="seq-item-note">10 questions; 1 attempt only.</span>
+        </td>
+        <td class="seq-time">20–25 min</td>
+        <td class="seq-pts">10 pts</td>
+      </tr>
+      <tr>
+        <td><span class="seq-num">9</span></td>
+        <td>
+          <span class="seq-item-name">App 3 Worksheet Quiz: Conjoint CVI Simulator</span>
+          <span class="seq-item-note">10 questions; 1 attempt only.</span>
+        </td>
+        <td class="seq-time">15–20 min</td>
+        <td class="seq-pts">10 pts</td>
+      </tr>
+      <tr>
+        <td><span class="seq-num">10</span></td>
+        <td>
+          <span class="seq-item-name">Discussion: "The Product Manager vs. the Pricing Analyst"</span>
+          <span class="seq-item-note">Part 1: position 150–200 words · Part 2: devil's advocate 100–150 words.</span>
+        </td>
+        <td class="seq-time">20–25 min</td>
+        <td class="seq-pts">15 pts</td>
+      </tr>
+      <tr>
+        <td><span class="seq-num">11</span></td>
+        <td>
+          <span class="seq-item-name">Discussion Evidence Check Quiz</span>
+          <span class="seq-item-note">1 question. 1 attempt only. Independent scenario.</span>
+        </td>
+        <td class="seq-time">5 min</td>
+        <td class="seq-pts">5 pts</td>
+      </tr>
+      <tr>
+        <td><span class="seq-num">12</span></td>
+        <td>
+          <span class="seq-item-name">Case Analysis Quiz: Apex Industrial</span>
+          <span class="seq-item-note">14 items, individualized. 1 attempt.</span>
+        </td>
+        <td class="seq-time">55–65 min</td>
+        <td class="seq-pts">125 pts</td>
       </tr>
     </tbody>
   </table>
@@ -986,54 +985,43 @@ strong { color: var(--ink); font-weight: 600; }
     <thead>
       <tr>
         <th>Assessment</th>
-        <th style="width: 90px;">Points</th>
-        <th style="width: 110px;">% of Module</th>
-        <th>Grading</th>
+        <th>Points</th>
+        <th>% of Module</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>Gate 1: Basic Reading Check</td>
-        <td>0</td>
-        <td>-</td>
-        <td>Auto-graded · access control only</td>
+        <td><span class="pts-badge zero">0</span></td>
+        <td>Access control only</td>
       </tr>
       <tr>
         <td>Gate 2: Applied Reading Check</td>
-        <td>20</td>
+        <td><span class="pts-badge">20</span></td>
         <td>10%</td>
-        <td>Auto-graded</td>
       </tr>
       <tr>
-        <td>App Worksheets (3 × 10 pts)</td>
-        <td>30</td>
+        <td>App Worksheet Quizzes (3 × 10 pts)</td>
+        <td><span class="pts-badge">30</span></td>
         <td>15%</td>
-        <td>Auto-graded short answer</td>
       </tr>
       <tr>
         <td>Discussion: "The Product Manager vs. the Pricing Analyst"</td>
-        <td>20</td>
+        <td><span class="pts-badge">20</span></td>
         <td>10%</td>
-        <td>Rubric</td>
       </tr>
       <tr>
-        <td>Case Analysis: Apex Industrial</td>
-        <td>125</td>
+        <td>Case Analysis Quiz: Apex Industrial</td>
+        <td><span class="pts-badge large">125</span></td>
         <td>64%</td>
-        <td>Rubric</td>
       </tr>
       <tr class="grade-total">
-        <td>TOTAL</td>
-        <td>195</td>
+        <td>Total</td>
+        <td><span class="pts-badge large">195</span></td>
         <td>100%</td>
-        <td></td>
       </tr>
     </tbody>
   </table>
-  <div class="callout warn">
-    <span class="callout-icon">!</span>
-    <div>The case analysis is 62% of your module grade. It requires calculations from all three measurement tools (economic value, PCV Index, conjoint CVI). The apps and discussion are designed to prepare you for those calculations before you attempt the case. Do not skip ahead.</div>
-  </div>
 </section>
 
 <div class="divider"></div>

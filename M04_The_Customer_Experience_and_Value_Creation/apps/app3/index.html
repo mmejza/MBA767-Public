@@ -34,7 +34,7 @@
 			<details id="how-to-panel" class="how-to-details">
 				<summary aria-label="How to use this app">How to Use This App</summary>
 				<ol>
-					<li>Confirm the Silent Floor preset, then review each attribute’s preference levels.</li>
+					<li>Select a preset (Silent Floor is the lecture's own worked example; the other five are Worksheet Quiz scenarios) and click Apply Preset, then review each attribute's preference levels.</li>
 					<li>Select levels for Strategy A and Strategy B and set each strategy price premium.</li>
 					<li>Read CVI values, value drivers, and the comparison flag in the dashboard.</li>
 					<li>Use preference and CVI charts to visualize why one strategy ranks higher.</li>
@@ -54,7 +54,7 @@
 
 		<section class="card required-quiz-callout instructional-panel" aria-label="Required for quiz">
 			<h2>Required for Quiz</h2>
-			<p>Load the Silent Floor preset and begin with the default scenario before making modifications.</p>
+			<p>Select your assigned scenario (named in your Worksheet Quiz) from the Preset dropdown and click Apply Preset before making modifications.</p>
 		</section>
 
 		<section class="main-interactive" aria-label="Main interactive app">
@@ -63,7 +63,12 @@
 				<div class="preset-row">
 					<label for="preset-select">Preset</label>
 					<select id="preset-select" aria-label="Preset selection">
-						<option value="silent-floor">Silent Floor</option>
+						<option value="silent-floor">Silent Floor (lecture example)</option>
+						<option value="fairview">Fairview Equipment Rentals</option>
+						<option value="bayshore">Bayshore Logistics Fleet Services</option>
+						<option value="crestline">Crestline Manufacturing Solutions</option>
+						<option value="ashgrove">Ashgrove Industrial Supply</option>
+						<option value="palmetto">Palmetto Equipment Partners</option>
 					</select>
 					<button id="apply-preset-btn" type="button" aria-label="Apply selected preset">Apply Preset</button>
 					<button id="reset-btn" type="button" aria-label="Reset simulator">Reset</button>

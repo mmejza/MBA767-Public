@@ -141,7 +141,13 @@ const DEFAULTS = {
   company:    { purchase: 375, installation: 100, usage: 400, financing: 0, maintenance: 0, disposal: 0 },
 };
 
-/** Named presets. */
+/** Named presets. `telecom`/`indiff` are the lecture's own worked example
+ * (see viewer/slides/s08-telecom-switch-setup.html and
+ * s09-telecom-switch-solution.html) — never remove or rename these. The
+ * five below are the Worksheet Quiz's own assigned scenarios (one per
+ * Canvas Section, decision-log D136/D137), added so every student can
+ * load their assigned scenario by name instead of typing six slider
+ * values by hand. */
 const PRESETS = {
   telecom: {
     competitor: { purchase: 300, installation: 200, usage: 500, financing: 0, maintenance: 0, disposal: 0 },
@@ -150,6 +156,26 @@ const PRESETS = {
   indiff: {
     competitor: { purchase: 300, installation: 200, usage: 500, financing: 0, maintenance: 0, disposal: 0 },
     company:    { purchase: 500, installation: 100, usage: 400, financing: 0, maintenance: 0, disposal: 0 },
+  },
+  waterPump: {
+    competitor: { purchase: 800, installation: 150, usage: 650, financing: 0, maintenance: 0, disposal: 0 },
+    company:    { purchase: 950, installation: 100, usage: 450, financing: 0, maintenance: 0, disposal: 0 },
+  },
+  hvacUnit: {
+    competitor: { purchase: 2200, installation: 450, usage: 1300, financing: 0, maintenance: 0, disposal: 0 },
+    company:    { purchase: 2650, installation: 250, usage: 900, financing: 0, maintenance: 0, disposal: 0 },
+  },
+  forklift: {
+    competitor: { purchase: 4000, installation: 350, usage: 1700, financing: 0, maintenance: 0, disposal: 0 },
+    company:    { purchase: 4600, installation: 150, usage: 1100, financing: 0, maintenance: 0, disposal: 0 },
+  },
+  avSystem: {
+    competitor: { purchase: 1500, installation: 400, usage: 900, financing: 0, maintenance: 0, disposal: 0 },
+    company:    { purchase: 1850, installation: 200, usage: 500, financing: 0, maintenance: 0, disposal: 0 },
+  },
+  upsUnit: {
+    competitor: { purchase: 3200, installation: 550, usage: 1650, financing: 0, maintenance: 0, disposal: 0 },
+    company:    { purchase: 3750, installation: 300, usage: 1050, financing: 0, maintenance: 0, disposal: 0 },
   },
 };
 

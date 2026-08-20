@@ -250,6 +250,23 @@ FILES
     strategyBPrice: 20
   };
 
+  /* Per-preset Strategy A/B selections and price premiums, keyed by the
+   * #preset-select option value. The attribute/level table itself (the
+   * chapter's own Silent Floor preference values, silentFloorPreset.
+   * attributes above) is shared reference data across every preset --
+   * only which level each strategy selects varies. "silent-floor" is the
+   * textbook's own worked example (Fig. 4-29/4-30, canvas/
+   * M04_Study_Guide.html); the other five are the Worksheet Quiz's own
+   * assigned scenarios (one per Canvas Section, decision-log D136/D137). */
+  var STRATEGY_PRESETS = {
+    "silent-floor": { strategyASelections: [2, 2, 3, 0], strategyBSelections: [2, 1, 1, 0], strategyAPrice: 40, strategyBPrice: 20 },
+    "fairview": { strategyASelections: [2, 1, 3, 1], strategyBSelections: [1, 2, 1, 0], strategyAPrice: 40, strategyBPrice: 20 },
+    "bayshore": { strategyASelections: [2, 2, 2, 1], strategyBSelections: [2, 0, 3, 0], strategyAPrice: 30, strategyBPrice: 40 },
+    "crestline": { strategyASelections: [1, 2, 3, 0], strategyBSelections: [2, 1, 0, 1], strategyAPrice: 40, strategyBPrice: 0 },
+    "ashgrove": { strategyASelections: [2, 0, 2, 0], strategyBSelections: [1, 1, 3, 1], strategyAPrice: 30, strategyBPrice: 40 },
+    "palmetto": { strategyASelections: [2, 2, 3, 2], strategyBSelections: [2, 1, 1, 1], strategyAPrice: 40, strategyBPrice: 20 }
+  };
+
   document.addEventListener("DOMContentLoaded", init);
 
   function init() {
@@ -297,11 +314,15 @@ FILES
   }
 
   function applyPreset() {
+    var select = document.getElementById("preset-select");
+    var key = select && STRATEGY_PRESETS[select.value] ? select.value : "silent-floor";
+    var preset = STRATEGY_PRESETS[key];
+
     state.attributes = deepCopyPresetAttributes();
-    state.strategyA.selections = silentFloorPreset.strategyASelections.slice();
-    state.strategyB.selections = silentFloorPreset.strategyBSelections.slice();
-    state.strategyA.pricePremium = silentFloorPreset.strategyAPrice;
-    state.strategyB.pricePremium = silentFloorPreset.strategyBPrice;
+    state.strategyA.selections = preset.strategyASelections.slice();
+    state.strategyB.selections = preset.strategyBSelections.slice();
+    state.strategyA.pricePremium = preset.strategyAPrice;
+    state.strategyB.pricePremium = preset.strategyBPrice;
   }
 
   function bindPresetControls() {
@@ -317,6 +338,10 @@ FILES
     });
 
     resetBtn.addEventListener("click", function () {
+      var select = document.getElementById("preset-select");
+      if (select) {
+        select.value = "silent-floor";
+      }
       applyPreset();
       buildEditor();
       buildStrategyControls();

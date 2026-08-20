@@ -45,7 +45,7 @@
 
     <section class="required-callout" data-focus-hide aria-label="Required for Quiz">
       <p class="required-callout__label">Required for Quiz</p>
-      <p>Start with the Telecom Switch preset before making any modifications.</p>
+      <p>Load your assigned scenario preset (named in your Worksheet Quiz) before making any modifications.</p>
     </section>
 
     <details class="how-to" data-focus-hide>
@@ -70,12 +70,25 @@
          PRESET SELECTOR
     ═══════════════════════════════════════ -->
     <section class="preset-bar" aria-label="Preset scenarios">
-      <span class="preset-bar__label" id="preset-label">Load a preset:</span>
+      <span class="preset-bar__label" id="preset-label">Lecture example:</span>
       <div class="preset-bar__buttons" role="group" aria-labelledby="preset-label">
         <button class="btn btn--preset" id="btn-telecom" aria-pressed="false"
                 data-preset="telecom">Telecom Switch</button>
         <button class="btn btn--preset" id="btn-indiff" aria-pressed="false"
                 data-preset="indiff">Indifference Zone</button>
+      </div>
+      <span class="preset-bar__label" id="preset-label-quiz">Worksheet Quiz scenarios:</span>
+      <div class="preset-bar__buttons" role="group" aria-labelledby="preset-label-quiz">
+        <button class="btn btn--preset" id="btn-waterPump" aria-pressed="false"
+                data-preset="waterPump">Industrial Water Pump</button>
+        <button class="btn btn--preset" id="btn-hvacUnit" aria-pressed="false"
+                data-preset="hvacUnit">Commercial HVAC Unit</button>
+        <button class="btn btn--preset" id="btn-forklift" aria-pressed="false"
+                data-preset="forklift">Warehouse Forklift</button>
+        <button class="btn btn--preset" id="btn-avSystem" aria-pressed="false"
+                data-preset="avSystem">Conference Room AV System</button>
+        <button class="btn btn--preset" id="btn-upsUnit" aria-pressed="false"
+                data-preset="upsUnit">Data Center UPS Unit</button>
         <button class="btn btn--reset" id="btn-reset">Reset</button>
       </div>
     </section>
