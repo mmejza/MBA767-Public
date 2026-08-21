@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Up: Modules 1 &amp; 2 | MBA 767</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------------
+   COMING UP: MODULES 1 & 2 — Intro module, Item 8 (final)
+   Built on Intro_Welcome_Orientation.html's token system, which itself
+   matches M01_Module_Overview.html's canonical tokens (D77). Content —
+   central questions, case names, tool names, points — is quoted from
+   M01_Module_Overview.html and M02_Module_Overview.html, not invented.
+------------------------------------------------------------------- */
+:root {
+  --ink: #0f1923;
+  --ink-mid: #2d3f52;
+  --ink-soft: #5a6f82;
+  --rule: #d4dce4;
+  --surface: #f7f9fb;
+  --white: #ffffff;
+
+  --teal: #0a7c6e;
+  --teal-lt: #e0f4f1;
+  --teal-mid: #c2ece7;
+  --gold: #c9860a;
+  --gold-lt: #fdf3e0;
+  --gold-mid: #f9dfa0;
+  --red: #b92b27;
+  --red-lt: #fdecea;
+  --blue: #1a56a0;
+  --blue-lt: #e6effa;
+  --blue-mid: #c3d9f5;
+
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+  --mono: 'DM Mono', 'Courier New', monospace;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+
+  --shadow-sm: 0 1px 3px rgba(15,25,35,.07), 0 1px 2px rgba(15,25,35,.05);
+  --shadow-md: 0 4px 12px rgba(15,25,35,.09), 0 2px 4px rgba(15,25,35,.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--surface); }
+body { font-family: var(--sans); color: var(--ink); background: var(--surface); line-height: 1.6; padding-bottom: 80px; }
+p { margin-bottom: 12px; font-size: .92rem; color: var(--ink-mid); line-height: 1.65; }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); font-weight: 600; }
+
+.page-header { background: var(--ink); color: var(--white); padding: 48px 40px 40px; position: relative; overflow: hidden; }
+.page-header::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-55deg, transparent, transparent 28px, rgba(255,255,255,.022) 28px, rgba(255,255,255,.022) 29px); pointer-events: none; }
+.page-header::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--teal); }
+.container { max-width: 880px; margin: 0 auto; padding: 0 32px; }
+.header-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 20px; }
+.badge { display: inline-flex; align-items: center; font-family: var(--mono); font-size: .69rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: 100px; background: rgba(255,255,255,.1); color: rgba(255,255,255,.8); }
+.badge-teal { background: rgba(10,124,110,.3); color: #7de8dc; }
+.badge-gold { background: rgba(201,134,10,.3); color: #f9d87a; }
+.header-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.85rem); line-height: 1.12; letter-spacing: -.01em; color: var(--white); max-width: 700px; margin-bottom: 8px; }
+.header-sub { font-size: .95rem; font-weight: 300; color: rgba(255,255,255,.58); max-width: 660px; line-height: 1.6; }
+
+.section { margin-top: 48px; }
+.section-label { font-family: var(--mono); font-size: .7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 14px; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--rule) 20%, var(--rule) 80%, transparent); margin: 44px 0; }
+
+.callout { border-radius: var(--r-md); padding: 14px 18px; margin: 16px 0; font-size: .88rem; line-height: 1.65; display: flex; gap: 12px; align-items: flex-start; }
+.callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+.callout.info { background: var(--blue-lt); border: 1px solid var(--blue-mid); color: var(--blue); }
+.callout.key { background: var(--teal-lt); border: 1px solid var(--teal-mid); color: #005446; }
+.callout.warn { background: var(--gold-lt); border: 1px solid var(--gold-mid); color: #7a4e00; }
+.callout .callout-label { display: inline-block; font-family: var(--mono); font-size: .66rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 5px; }
+
+/* Module preview cards */
+.module-card { background: var(--white); border: 1px solid var(--rule); border-radius: var(--r-lg); box-shadow: var(--shadow-md); overflow: hidden; margin-top: 16px; }
+.module-card-head { padding: 22px 26px 18px; border-bottom: 1px solid var(--rule); }
+.module-card.m01 .module-card-head { border-top: 4px solid var(--teal); }
+.module-card.m02 .module-card-head { border-top: 4px solid var(--blue); }
+.module-card-eyebrow { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+.tag { font-family: var(--mono); font-size: .64rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+.module-card.m01 .tag.num { background: var(--teal-lt); color: #005446; }
+.module-card.m02 .tag.num { background: var(--blue-lt); color: var(--blue); }
+.tag.chapter { background: var(--surface); color: var(--ink-soft); border: 1px solid var(--rule); }
+.module-card-title { font-family: var(--serif); font-size: 1.4rem; color: var(--ink); line-height: 1.25; }
+.module-card-body { padding: 22px 26px 26px; }
+.mc-question-label { font-family: var(--mono); font-size: .66rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; display: block; }
+.mc-question { font-family: var(--serif); font-size: 1.12rem; line-height: 1.4; color: var(--ink); margin-bottom: 14px; font-style: italic; }
+.mc-desc { font-size: .89rem; color: var(--ink-mid); margin-bottom: 16px; }
+
+.tool-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 16px; }
+.tool-pill { font-family: var(--mono); font-size: .74rem; font-weight: 500; color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-sm); padding: 5px 11px; }
+
+.mc-meta { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 4px; padding-top: 16px; border-top: 1px dashed var(--rule); }
+.mc-meta-item { font-size: .82rem; color: var(--ink-soft); }
+.mc-meta-item strong { color: var(--ink); }
+
+/* Flow steps */
+.flow-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 18px; }
+.flow-step { font-family: var(--mono); font-size: .74rem; font-weight: 500; color: var(--ink-mid); background: var(--white); border: 1px solid var(--rule); border-radius: 100px; padding: 7px 14px; box-shadow: var(--shadow-sm); white-space: nowrap; }
+.flow-arrow { color: var(--rule); font-size: .85rem; }
+@media (max-width: 680px) { .flow-steps { gap: 8px 4px; } }
+
+.page-footer { margin-top: 40px; padding: 16px 36px; background: var(--ink); font-size: 11.5px; color: #6a8a9a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.page-footer span { color: var(--teal); font-weight: 600; }
+
+@media (max-width: 720px) { .page-header, .page-footer, .container { padding-left: 18px; padding-right: 18px; } }
+@media (max-width: 620px) { .header-title { font-size: 1.9rem; } .mc-question { font-size: 1.02rem; } }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="container">
+    <div class="header-eyebrow">
+      <span class="badge">MBA 767</span>
+      <span class="badge badge-teal">Orientation &middot; Item 8</span>
+      <span class="badge badge-gold">Preview &mdash; Ungraded</span>
+    </div>
+    <h1 class="header-title">Coming Up: Modules 1 &amp; 2</h1>
+    <p class="header-sub">Two modules, two numbers that don't behave the way intuition predicts &mdash; a satisfaction score that improves while profit falls, and a profit that triples while $41 million quietly disappears.</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="section">
+    <span class="section-label">Why This Page Exists</span>
+    <p>The framework map from the first part of this orientation &mdash; 5C &middot; STP &middot; 4P &mdash; was the shape of the whole course, seen once, briefly. This page is narrower: a look at the two modules you'll actually open first, so the jump from "orientation" to "Module 1" isn't a cold start.</p>
+    <p>There's nothing to do here. No prep, no reading, no quiz. Just two previews.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <span class="section-label">Module 1</span>
+
+    <div class="module-card m01">
+      <div class="module-card-head">
+        <div class="module-card-eyebrow">
+          <span class="tag num">Module 01</span>
+          <span class="tag chapter">Chapter 1</span>
+        </div>
+        <h2 class="module-card-title">Market Orientation &amp; Customer Lifetime Value</h2>
+      </div>
+      <div class="module-card-body">
+        <span class="mc-question-label">Central Question</span>
+        <p class="mc-question">"If eliminating your most dissatisfied customers improves your average satisfaction score, does it also improve your firm's profitability?"</p>
+        <p class="mc-desc">The module builds toward what it calls the <strong>distributions-versus-averages problem</strong>: removing a segment from a distribution changes the average, but not always in the direction you'd bet on. You're led to a specific prediction, then shown data that contradicts it &mdash; deliberately.</p>
+
+        <div class="tool-row">
+          <span class="tool-pill">Customer Satisfaction Index</span>
+          <span class="tool-pill">Complaint-Resolution Economics</span>
+          <span class="tool-pill">Customer Lifetime Value (two methods)</span>
+        </div>
+
+        <div class="mc-meta">
+          <span class="mc-meta-item">Case &middot; <strong>Meridian Mobile</strong></span>
+          <span class="mc-meta-item">Lecture &middot; <strong>~30 min</strong>, 2 segments</span>
+          <span class="mc-meta-item">Total &middot; <strong>~4&ndash;5 hrs</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <span class="section-label">Module 2</span>
+
+    <div class="module-card m02">
+      <div class="module-card-head">
+        <div class="module-card-eyebrow">
+          <span class="tag num">Module 02</span>
+          <span class="tag chapter">Chapter 2</span>
+        </div>
+        <h2 class="module-card-title">Marketing Metrics and Marketing Profitability</h2>
+      </div>
+      <div class="module-card-body">
+        <span class="mc-question-label">Central Question</span>
+        <p class="mc-question">"Can a company triple its profits and simultaneously destroy $41 million it never knew it was losing?"</p>
+        <p class="mc-desc">This is the module that answers "how do you actually know?" for everything M01 raised. Conventional metrics &mdash; net profit, revenue growth, earnings per share &mdash; can conceal a firm's most important marketing failures. The module works through what it calls the <strong>product-line drop paradox</strong>: a line with negative net profit whose removal would make the company worse off, not better.</p>
+
+        <div class="tool-row">
+          <span class="tool-pill">Net Marketing Contribution (NMC)</span>
+        </div>
+
+        <div class="callout warn" style="margin-top:0;">
+          <span class="callout-icon">!</span>
+          <div>
+            <span class="callout-label">Foundation module</span>
+            No prior exposure to NMC is assumed &mdash; but come in comfortable with basic income statement structure (revenue, cost of goods sold, gross profit, operating expenses).
+          </div>
+        </div>
+
+        <div class="mc-meta">
+          <span class="mc-meta-item">Case &middot; <strong>Vantage Fitness</strong></span>
+          <span class="mc-meta-item">Lecture &middot; <strong>~30 min</strong>, 2 segments</span>
+          <span class="mc-meta-item">Total &middot; <strong>~4&ndash;5 hrs</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <span class="section-label">One Thread Running Through Both</span>
+    <div class="callout key">
+      <span class="callout-icon">&#8594;</span>
+      <div>
+        Module 1 asks whether a given customer is worth keeping. Module 2 hands you the instrument for answering that with a number instead of an instinct: <strong>NMC becomes the metric every later module leans on</strong> &mdash; from segment targeting in M05 to competitive position in M06 &mdash; so the fluency you build here compounds.
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <span class="section-label">The Shape of Every Module</span>
+    <p>M01 through M10 all run the same eight-step sequence. You'll feel it as routine by the end of Module 2:</p>
+    <div class="flow-steps">
+      <span class="flow-step">Reading</span><span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">Gate 1</span><span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">Slides</span><span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">Gate 2</span><span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">Lecture Video</span><span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">Apps</span><span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">Discussion</span><span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">Case</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="callout info">
+      <span class="callout-icon">&#8594;</span>
+      <div>
+        <span class="callout-label">Nothing to do yet</span>
+        Module 1 opens on its own schedule, separately from this orientation. This page is just the map getting a little less abstract before you get there.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="page-footer">
+  <span>MBA 767 &middot; Orientation</span>
+  <span>Coming Up: Modules 1 &amp; 2</span>
+</div>
+
+</body>
+</html>
