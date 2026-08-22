@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBA 767 — Course Overview</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #f5f5f3;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: #0F2027;
+    border-radius: 12px;
+    padding: 2rem 2.25rem 1.75rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: #E6A800;
+  }
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #7ABFCC;
+    margin-bottom: 6px;
+  }
+  .hero-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: #A8C8D0;
+    margin-bottom: 1.25rem;
+    max-width: 580px;
+    line-height: 1.6;
+  }
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .pill {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.2);
+    color: #A8C8D0;
+    background: rgba(255,255,255,.07);
+  }
+
+  /* ── Section heading ── */
+  .sec-head {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 10px;
+  }
+
+  .divider {
+    height: 1px;
+    background: #e0e0dc;
+    margin: 1.5rem 0;
+  }
+
+  /* ── Textbook Card ── */
+  .textbook-card {
+    background: #fff;
+    border: 1px solid #e8e8e4;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 1.5rem;
+  }
+  .textbook-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #8B1E1E;
+    margin-bottom: 10px;
+  }
+  .textbook-meta {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+  }
+  .textbook-note {
+    font-size: 12px;
+    color: #777;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0ec;
+  }
+  .flag-note {
+    font-size: 12px;
+    color: #7a4e00;
+    background: #fff3cd;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin-top: 10px;
+  }
+  /* ── Course challenge card ── */
+  .challenge-card {
+    background: #fff;
+    border: 1px solid #e8e8e4;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 1.5rem;
+  }
+  .challenge-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0F2027;
+    margin-bottom: 10px;
+  }
+  .challenge-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  .challenge-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── Time cards ── */
+  .time-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+  .time-card {
+    background: #fff;
+    border: 1px solid #e8e8e4;
+    border-radius: 8px;
+    padding: 10px 14px;
+    flex: 1;
+    min-width: 100px;
+  }
+  .time-val {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0F2027;
+    line-height: 1.1;
+    margin-bottom: 2px;
+  }
+  .time-lbl {
+    font-size: 11px;
+    color: #888;
+  }
+
+  /* ── How it works ── */
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+  .how-card {
+    background: #fff;
+    border: 1px solid #e8e8e4;
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .how-step {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #0D9B87;
+    margin-bottom: 5px;
+  }
+  .how-text {
+    font-size: 12px;
+    line-height: 1.55;
+    color: #444;
+  }
+
+  /* ── Gate cards ── */
+  .gate-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 500px) { .gate-row { grid-template-columns: 1fr; } }
+  .gate-card {
+    background: #fff;
+    border: 1px solid #e8e8e4;
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .gate-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 8px;
+  }
+  .gate-label.g1 { color: #185FA5; }
+  .gate-label.g2 { color: #3B6D11; }
+  .gate-item {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 3px;
+  }
+  .gate-item b { color: #1a1a1a; font-weight: 500; }
+
+  /* ── Part label ── */
+  .part-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: 10px 0 8px;
+    border-bottom: 1px solid #e0e0dc;
+    margin-bottom: 8px;
+  }
+
+  /* ── Module accordion ── */
+  .mod-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 1.25rem;
+  }
+  .mod {
+    background: #fff;
+    border: 1px solid #e8e8e4;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .mod-hdr {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+  }
+  .mod-hdr:hover { background: #f9f9f7; }
+  .badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    min-width: 72px;
+    text-align: center;
+    flex-shrink: 0;
+    letter-spacing: .02em;
+  }
+  .b-built {
+    background: #E6F1FB;
+    color: #185FA5;
+    border: 1px solid #B5D4F4;
+  }
+  .b-soon {
+    background: #f2f2f0;
+    color: #999;
+    border: 1px solid #ddd;
+  }
+  .b-new {
+    background: #F3E9FF;
+    color: #6B3FA0;
+    border: 1px solid #DABEF2;
+  }
+  .mod-title {
+    font-size: 14px;
+    font-weight: 500;
+    flex: 1;
+    color: #1a1a1a;
+  }
+  .mod-chap {
+    font-size: 11px;
+    color: #aaa;
+    flex-shrink: 0;
+  }
+  .chev {
+    font-size: 10px;
+    color: #bbb;
+    transition: transform .2s;
+    flex-shrink: 0;
+    margin-left: 4px;
+  }
+  .chev.open { transform: rotate(90deg); }
+
+  .mod-body {
+    border-top: 1px solid #f0f0ec;
+    padding: 12px 16px 14px;
+    display: none;
+  }
+  .mod-body.open { display: block; }
+
+  .mod-desc {
+    font-size: 13px;
+    line-height: 1.65;
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  .lo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .lo-item {
+    display: flex;
+    gap: 10px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #333;
+  }
+  .lo-n {
+    font-size: 10px;
+    font-weight: 600;
+    color: #0D9B87;
+    min-width: 32px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .coming-note {
+    font-size: 13px;
+    color: #aaa;
+    font-style: italic;
+    padding: 4px 0;
+  }
+
+  .rollout-note {
+    background: #eef7ff;
+    border: 1px solid #b8d8f5;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 1.5rem;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #1f2933;
+  }
+  .rollout-note strong { color: #0F2027; }
+  .legend-row { display: flex; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #555; }
+
+  /* ── Footer note ── */
+  .footer-note {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    padding-top: 1rem;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <p class="hero-label">MBA 767 &nbsp;·&nbsp; Fall 2026 &nbsp;·&nbsp; Aug 24–Dec 9</p>
+    <h1 class="hero-title">Market Planning & Analysis</h1>
+    <p class="hero-sub">An analytically rigorous, textbook-driven, asynchronous online course covering the full arc of market-based strategy — from measuring customer value and market potential through competitive positioning, pricing, communications, and portfolio planning — culminating in a term-long Marketing Plan Project.</p>
+    <div class="pills">
+      <span class="pill">11 modules · 11 chapters · 1 capstone</span>
+      <span class="pill">~5 hrs per module</span>
+    </div>
+  </div>
+  <!-- Course Challenge / Expectations -->
+  <p class="sec-head">What makes this course different</p>
+  <div class="challenge-card">
+    <div class="challenge-title">Marketing Is More Analytical Than Most People Realize</div>
+    <p>One of the goals of MBA 767 is to challenge the common misconception that marketing is primarily creative or promotional.</p>
+    <p>Effective marketing decisions depend on rigorous analysis. Throughout this course, you will learn how managers use customer data, market metrics, financial measures, forecasting tools, competitive assessments, and strategic frameworks to make better decisions.</p>
+    <p>Because this course emphasizes analysis rather than memorization, the textbook is essential. The slide viewer, lecture videos, apps, and cases are designed to reinforce and apply the chapter material--not replace it. Students who attempt to rely only on videos or slides typically struggle because many concepts, formulas, frameworks, and examples appear only in the textbook. </p>
+    <p>You will be asked to move beyond memorization and develop the ability to analyze situations, interpret evidence, evaluate alternatives, and justify recommendations. For many students, this is the first marketing course that combines quantitative analysis with strategic decision-making at this level.</p>
+    <p>The course is designed to be demanding, engaging, and highly practical. The skills developed here mirror the kinds of analytical thinking expected in professional marketing and business environments. The final four weeks put that thinking to work directly: you'll build an original Marketing Plan Project for a company of your choosing, using the frameworks from every module before it.</p>
+    <p><strong>Bottom line:</strong> This is a textbook-driven course. The videos, slide viewer, apps, and case analyses assume you have already completed the assigned reading.</p>
+  </div>
+  <!-- Required Textbook -->
+  <p class="sec-head">Required textbook</p>
+  <div class="textbook-card">
+    <div class="textbook-title">Market-Based Management</div>
+    <div class="textbook-meta">
+      <div><strong>Author:</strong> Roger J. Best</div>
+      <div><strong>Edition:</strong> 6th Edition</div>
+      <div><strong>Publisher:</strong> Pearson</div>
+      <div><strong>ISBN-13:</strong> 9780130387752</div>
+    </div>
+    <p class="textbook-note">Students are responsible for obtaining the required textbook. Course slides, videos, and apps supplement the textbook; they do not replace it.</p>
+  </div>
+
+
+  <!-- Time per module -->
+  <p class="sec-head">Estimated time per module</p>
+  <div class="time-row">
+    <div class="time-card"><div class="time-val">60–75</div><div class="time-lbl">min · chapter reading</div></div>
+    <div class="time-card"><div class="time-val">10–12</div><div class="time-lbl">min · Gate 1</div></div>
+    <div class="time-card"><div class="time-val">15–20</div><div class="time-lbl">min · slide viewer</div></div>
+    <div class="time-card"><div class="time-val">20–30</div><div class="time-lbl">min · Gate 2</div></div>
+    <div class="time-card"><div class="time-val">25–30</div><div class="time-lbl">min · lecture video</div></div>
+    <div class="time-card"><div class="time-val">60–90</div><div class="time-lbl">min · apps + discussion + case</div></div>
+  </div>
+
+  <!-- How it works -->
+  <p class="sec-head">How each module works</p>
+  <div class="how-grid">
+    <div class="how-card"><p class="how-step">Step 1</p><p class="how-text">Read the chapter. All modules require the textbook first — slides and video are supplements, not replacements.</p></div>
+    <div class="how-card"><p class="how-step">Step 2</p><p class="how-text">Pass Gate 1 (chapter-only questions) to unlock the interactive slide viewer.</p></div>
+    <div class="how-card"><p class="how-step">Step 3</p><p class="how-text">Work through the HTML slide viewer. Opening it is what unlocks Gate 2.</p></div>
+    <div class="how-card"><p class="how-step">Step 4</p><p class="how-text">Pass Gate 2 (chapter + slides synthesis) — nothing further is technically locked, but the lecture video comes next.</p></div>
+    <div class="how-card"><p class="how-step">Step 5</p><p class="how-text">Watch the lecture video, complete the three App Worksheet Quizzes, then the discussion and the Case Analysis Quiz.</p></div>
+  </div>
+
+  <!-- Two-gate model -->
+  <p class="sec-head">Two-gate reading accountability model</p>
+  <div class="gate-row">
+    <div class="gate-card">
+      <p class="gate-label g1">Gate 1 — Basic reading check</p>
+      <p class="gate-item"><b>Unlocks:</b> slide deck viewer</p>
+      <p class="gate-item"><b>Questions:</b> 5 · chapter-exclusive content only</p>
+      <p class="gate-item"><b>Threshold:</b> 80% · 3 attempts</p>
+      <p class="gate-item"><b>Points:</b> 0 (access control only)</p>
+      <p class="gate-item"><b>Time target:</b> 10–12 minutes</p>
+    </div>
+    <div class="gate-card">
+      <p class="gate-label g2">Gate 2 — Applied reading check</p>
+      <p class="gate-item"><b>Unlocks:</b> nothing further is technically locked</p>
+      <p class="gate-item"><b>Questions:</b> 8 (Module 3: 13) · chapter + slides synthesis</p>
+      <p class="gate-item"><b>Threshold:</b> none — graded as submitted, 1 attempt</p>
+      <p class="gate-item"><b>Points:</b> 20 pts (~10% of module grade)</p>
+      <p class="gate-item"><b>Time limit:</b> 20 min (Module 3: 30 min, 13 items)</p>
+      <p class="gate-item"><b>Book policy:</b> Open-book, open-note</p>
+    </div>
+  </div>
+  <p style="font-size:12px; color:#888; margin-top:-8px; margin-bottom:1.5rem;">The Case Analysis Quiz is also open-book, open-note — 45 min (Modules 1, 4) or 50 min (Modules 2, 3), depending on item count. Exact numbers for Modules 5&ndash;11 are still being finalized; check each module's own Gate 2 and Case pages once it publishes.</p>
+
+  <div class="divider"></div>
+
+  <div class="rollout-note">
+    <strong>Modules open on a rolling basis.</strong> Intro and Modules 1&ndash;4 are fully built and live now. Modules 5&ndash;11 are still being finalized in Canvas and will publish on a rolling basis over the next few weeks &mdash; each one well before its scheduled week (see the Course Roadmap &amp; Key Dates page). The topics and learning objectives below are accurate for every module; what's still in progress is the Canvas build itself, not the content.
+    <div class="legend-row">
+      <span class="legend-item"><span class="badge b-built" style="min-width:0; padding:2px 8px;">M01</span> live now</span>
+      <span class="legend-item"><span class="badge b-soon" style="min-width:0; padding:2px 8px;">M05</span> publishing soon</span>
+    </div>
+  </div>
+
+  <!-- ── PART I ── -->
+  <p class="part-label">Part I — Market Orientation &amp; Performance Metrics &nbsp;(M01–M02)</p>
+  <div class="mod-list">
+
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-built">M01</span>
+        <span class="mod-title">Market Orientation &amp; Customer Lifetime Value</span>
+        <span class="mod-chap">Ch. 1</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Establishes that firm profitability depends on how well a company satisfies and retains customers over time. The central challenge — the distributions-versus-averages problem — leads students to a counterintuitive insight: eliminating dissatisfied customers often reduces average profit rather than raising it.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Trace the causal chain from insufficient customer focus through declining satisfaction to diminished shareholder value.</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Calculate and interpret a weighted-average Customer Satisfaction Index (CSI).</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Assess the financial case for investing in a complaint-resolution program.</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Distinguish customer retention from loyalty; classify customers; calculate a Customer Loyalty Index.</li>
+          <li class="lo-item"><span class="lo-n">LO5</span>Calculate customer life expectancy from a retention rate using N = 1 ÷ (1 − r).</li>
+          <li class="lo-item"><span class="lo-n">LO6</span>Compute CLV using the closed-form formula and the period-by-period present value method.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-built">M02</span>
+        <span class="mod-title">Marketing Metrics &amp; Marketing Profitability</span>
+        <span class="mod-chap">Ch. 2</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Builds the financial vocabulary of marketing strategy. The central counterintuitive result: dropping a product line with negative net profit often reduces total company profit — a direct consequence of how net marketing contribution (NMC) isolates marketing's contribution from shared overhead.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Distinguish financial (internal) performance metrics from marketing (external) performance metrics.</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Classify the four categories of marketing metrics and explain the forward/backward-looking distinction.</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Calculate net marketing contribution (NMC) and explain how it differs from net profit.</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Calculate marketing ROS and marketing ROI; benchmark against Fortune 500 averages.</li>
+          <li class="lo-item"><span class="lo-n">LO5</span>Use NMC decomposition to plan and evaluate alternative marketing strategies.</li>
+          <li class="lo-item"><span class="lo-n">LO6</span>Apply the market size growth formula and interpret NMC product/customer line management insights.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── PART II ── -->
+  <p class="part-label">Part II — Market Analysis &nbsp;(M03–M05)</p>
+  <div class="mod-list">
+
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-built">M03</span>
+        <span class="mod-title">Market Potential, Market Demand &amp; Market Share</span>
+        <span class="mod-chap">Ch. 3</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Establishes the measurement vocabulary for sizing and tracking markets — how to calculate market potential, measure development stage, apply the product life cycle, and diagnose a company's share position relative to its potential.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Distinguish generic, product category, and product form markets; construct examples of each.</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Define market potential and apply the formula to calculate unit and dollar potential.</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Calculate and interpret the Market Development Index (MDI).</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Identify the seven forces that prevent markets from reaching full potential and the adoption forces.</li>
+          <li class="lo-item"><span class="lo-n">LO5</span>Describe the four PLC stages and explain how demand, profit, pricing, and strategy differ across them.</li>
+          <li class="lo-item"><span class="lo-n">LO6</span>Calculate market share; construct and interpret a market share performance tree and MSI.</li>
+          <li class="lo-item"><span class="lo-n">LO7</span>Calculate SDI; use the MDI × SDI growth opportunity portfolio to classify growth strategies.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-built">M04</span>
+        <span class="mod-title">Customer Value &amp; the Customer Experience</span>
+        <span class="mod-chap">Ch. 4</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Moves from market-level metrics to the individual customer — how companies quantify the value their products deliver across four distinct dimensions and use customer experience insights to drive product and service improvements.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Define economic value and explain how lifecycle costs determine it (EV = Competitor LC Cost − Our LC Cost).</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Describe three ways a business can create more economic value.</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Explain why willingness-to-pay cannot be assumed from economic value alone.</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Calculate relative performance value using the fair price line and price-performance ratio.</li>
+          <li class="lo-item"><span class="lo-n">LO5</span>Calculate perceived value using importance-performance analysis and interpret the value map.</li>
+          <li class="lo-item"><span class="lo-n">LO6</span>Explain conjoint analysis (CVI) and emotional value / brand personality.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-soon">M05</span>
+        <span class="mod-title">Market Segmentation &amp; Segmentation Strategies</span>
+        <span class="mod-chap">Ch. 5</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Segmentation is not a labeling exercise. It is a resource allocation decision: who gets the offer, who gets the budget, and who the firm intentionally walks away from. The module turns that choice into a method by showing how needs-based segments are formed, how attractiveness is scored, and how targeting strategy must fit firm resources and competitive position.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Explain why segmentation begins with needs rather than demographics, and distinguish between core needs and differentiating benefits in a market segment.</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Build a needs-based segmentation map from customer characteristics and identify which benefit differentiates each segment.</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Assess segment attractiveness by scoring market demand, competitive intensity, and market access; explain why a firm with high share in an unattractive segment should consider exiting it.</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Calculate NMC, Marketing ROS, and Marketing ROI across segments; identify which segment combination maximizes total return under a resource constraint.</li>
+          <li class="lo-item"><span class="lo-n">LO5</span>Distinguish among mass-market, large-segment, adjacent, multi-segment, niche, and subsegment targeting strategies; select the right strategy given resource level and competitive position.</li>
+          <li class="lo-item"><span class="lo-n">LO6</span>Construct a complete 4-element positioning statement (target market, competitive set, value proposition, reasons to believe); evaluate statements for completeness and strategic alignment.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── PART III ── -->
+  <p class="part-label">Part III — Competitive Strategy &nbsp;(M06–M08)</p>
+  <div class="mod-list">
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-soon">M06</span>
+        <span class="mod-title">Competitive Position &amp; Sources of Advantage</span>
+        <span class="mod-chap">Ch. 6</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Competitive position is treated as a measurable choice, not a list of options. The module compares cost, differentiation, and marketing advantage using explicit indices, then uses the Prisoner&#8217;s Dilemma and industry attractiveness to show why disciplined choice matters.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Assess a firm's most defensible source of competitive advantage given its cost structure, product performance, and market position; explain why pursuing all three sources simultaneously undermines competitive clarity.</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Calculate a Variable Cost Advantage Index, a Differentiation Advantage score using importance-performance analysis, and a Relative Market Share index; interpret each metric's strategic implication.</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Distinguish the three sub-types of marketing advantage (market share, product line, channel); compute Relative Market Share; explain the mechanism linking market dominance to profitability.</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Analyze the Prisoner&#8217;s Dilemma payoff structure; identify the Nash equilibrium outcome; explain why mutual price-cutting destroys industry profit even though it is individually rational for each firm.</li>
+          <li class="lo-item"><span class="lo-n">LO5</span>Classify competitor behaviors as signals of financial distress or marketing leadership failure; distinguish competitive benchmarking (outside industry) from competitor benchmarking; describe the three-step benchmarking process.</li>
+          <li class="lo-item"><span class="lo-n">LO6</span>Score industry attractiveness across six Porter forces; compute an Industry Attractiveness Index; predict profit potential and recommend whether to enter, hold, or exit a competitive environment.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-soon">M07</span>
+        <span class="mod-title">Product Positioning, Branding &amp; Product Line Strategies</span>
+        <span class="mod-chap">Ch. 7</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Product positioning and brand strategy are linked through the customer value hierarchy, parity and differentiation choices, and brand equity scorecards. The module shows why superior products can still lose share and how product line decisions can either build or erode brand value.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Trace the causal chain from weak product positioning through margin erosion, share loss, and declining brand equity; identify where differentiation investment interrupts that chain.</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Apply the Customer Value Hierarchy to classify product attributes as Core Benefit, Expected, Augmented, or Potential; distinguish Points of Parity from Points of Differentiation for a given competitive set.</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Calculate a Brand Assets Score and Brand Liabilities Score using the weighted scorecard (20% per dimension, 0&#8211;100 scale); compute Brand Equity and interpret the strategic implication of the assets-to-liabilities ratio.</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Classify brand growth strategies (line extension, brand extension, fighter brand, new brand) given a scenario; evaluate the conditions under which each strategy builds versus erodes brand equity.</li>
+          <li class="lo-item"><span class="lo-n">LO5</span>Assess a product line breadth decision by applying the ROA-by-lifecycle-stage data from Figure&nbsp;7-24; identify when broad lines outperform narrow lines and when the advantage reverses at the Mature stage.</li>
+          <li class="lo-item"><span class="lo-n">LO6</span>Construct a repositioning recommendation that integrates differentiation source, brand encoding strategy, product line implications, and financial justification; ground the recommendation in case-specific data, not generic marketing language.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-soon">M08</span>
+        <span class="mod-title">Value-Based Pricing &amp; Pricing Strategies</span>
+        <span class="mod-chap">Ch. 8</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Pricing is a value capture decision, not a cost-plus exercise. The module uses economic value, performance value, and break-even analysis to test whether a price move actually improves profit under different market conditions.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Explain why cost-based pricing often leads to underpricing or overpricing; identify when market-based pricing provides superior profit outcomes.</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Calculate economic value (value-in-use) by comparing total cost of ownership; determine the maximum justified premium over the competitor price.</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Compute performance-based value scores from conjoint weights; compare company versus competitor value across customer segments.</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Classify a market situation into the correct product life-cycle pricing strategy; justify why that strategy fits the market conditions.</li>
+          <li class="lo-item"><span class="lo-n">LO5</span>Apply the break-even percentage formula to price increases and decreases; interpret break-even market share versus break-even volume risk.</li>
+          <li class="lo-item"><span class="lo-n">LO6</span>Evaluate price direction under elasticity conditions and synthesize economic value, performance value, and break-even outputs into a recommendation.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PART IV ── -->
+  <p class="part-label">Part IV — Go-to-Market Execution &nbsp;(M09–M10)</p>
+  <div class="mod-list">
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-soon">M09</span>
+        <span class="mod-title">Marketing Channels &amp; Channel Mapping</span>
+        <span class="mod-chap">Ch. 9</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Channel structure determines what the firm actually receives after discounts, commissions, and transaction costs. The module compares direct, indirect, and mixed systems using pocket price, NMC, and ROI to show why the highest-margin channel can still be the wrong choice.</p>
+        <p style="font-size: 12px; color: #8B1E1E; font-weight: 600; margin-bottom: 10px;">Reduced-workload module: App 3 not included.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Compute pocket price across a multi-tier channel by tracing the full waterfall of discounts, commissions, and transaction costs.</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Calculate NMC, Marketing ROS, and Marketing ROI; explain why the highest-margin channel can have the lowest ROI.</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Evaluate whether a channel strategy switch is justified by computing break-even market share and comparing it to current share.</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Distinguish direct, indirect, and mixed channel systems by cost structure, control, and profitability profile.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-soon">M10</span>
+        <span class="mod-title">Marketing Communications, Social Media &amp; Customer Response</span>
+        <span class="mod-chap">Ch. 10</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Communications performance has to be diagnosed before budget is reallocated. The module uses CRI, carryover, and three-month gross profit to separate weak response, underestimated advertising, and trade-promotion profit traps.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Compute CRI from staged response rates and identify which stage improvement creates the largest marginal CRI gain.</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Calculate GRP and weighted average message frequency, then evaluate whether media intensity solves the diagnosed CRI bottleneck.</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Apply advertising carryover formulas to compare short-run ROI with total-impact ROI and interpret the strategic implications.</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Evaluate a trade promotion using three-month supplier gross profit and distinguish forward-buying from true demand growth.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PART V ── -->
+  <p class="part-label">Part V — Strategic Portfolio Planning &nbsp;(M11)</p>
+  <div class="mod-list">
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-soon">M11</span>
+        <span class="mod-title">Portfolio Analysis &amp; Strategic Market Planning</span>
+        <span class="mod-chap">Ch. 11</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">Asks whether current performance should determine where a firm invests next. The module uses the GE/McKinsey grid to translate a Market Attractiveness Index and Competitive Position Index into a defensible offensive-versus-defensive strategy choice — the same portfolio logic you'll apply to your own company in the Marketing Plan Project.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">LO1</span>Evaluate portfolio balance across life-cycle stages; identify long-run revenue risk from mature-market concentration.</li>
+          <li class="lo-item"><span class="lo-n">LO2</span>Distinguish the GE/McKinsey multi-factor model from single-factor analysis; classify strategic-plan versus marketing-mix actions.</li>
+          <li class="lo-item"><span class="lo-n">LO3</span>Calculate a Market Attractiveness Index using the five-step weighted scoring method; interpret investment priority from the result.</li>
+          <li class="lo-item"><span class="lo-n">LO4</span>Calculate a Competitive Position Index; compute a Share Development Index from market share and share potential inputs.</li>
+          <li class="lo-item"><span class="lo-n">LO5</span>Place a product on the 9-cell portfolio grid using MAI/CPI scores and zone thresholds; select and defend the appropriate strategy.</li>
+          <li class="lo-item"><span class="lo-n">LO6</span>Assess 3-year NMC, ROS, and ROI trade-offs between offensive and defensive strategies; explain the efficiency paradox.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PART VI ── -->
+  <p class="part-label">Part VI — Applied Capstone &nbsp;(Weeks 13–16)</p>
+  <div class="mod-list">
+    <div class="mod">
+      <div class="mod-hdr" onclick="tog(this)">
+        <span class="badge b-new">NEW</span>
+        <span class="mod-title">Marketing Plan Project</span>
+        <span class="mod-chap">Ch. 14</span>
+        <span class="chev">&#9654;</span>
+      </div>
+      <div class="mod-body">
+        <p class="mod-desc">A four-week, cumulative capstone built specifically for MBA 767 — not carried over from the undergraduate course. You select a company and topic, complete a situation analysis, produce a full draft with peer review, then submit a final marketing plan that integrates the analytical frameworks from M01–M11 into a single original recommendation.</p>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-n">Wk 13</span>Select a company and topic; state objectives.</li>
+          <li class="lo-item"><span class="lo-n">Wk 14</span>Complete a situation analysis grounded in course frameworks.</li>
+          <li class="lo-item"><span class="lo-n">Wk 15</span>Produce a full draft, complete peer review, and submit the final plan.</li>
+          <li class="lo-item"><span class="lo-n">Wk 16</span>Wrap-up — no new deliverables due.</li>
+        </ul>
+        <p class="flag-note">This card's learning objectives are provisional — the project doesn't have a formal LO list, grading weight, or rubric yet. Finalize before publishing.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">MBA 767 · Market-Based Strategic Management · Course Overview</div>
+
+</div>
+
+<script>
+function tog(hdr) {
+  var body = hdr.nextElementSibling;
+  var chev = hdr.querySelector('.chev');
+  if (!body) return;
+  var isOpen = body.classList.toggle('open');
+  chev.classList.toggle('open', isOpen);
+}
+</script>
+</body>
+</html>
