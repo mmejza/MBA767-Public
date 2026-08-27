@@ -19,9 +19,6 @@
   --rule: #d4dce4;
   --surface: #f7f9fb;
   --white: #ffffff;
-  --muted: #5a6f82;
-  --text: #0f1923;
-  --border: #d4dce4;
 
   --teal: #0a7c6e;
   --teal-lt: #e0f4f1;
@@ -247,7 +244,7 @@ strong { color: var(--ink); font-weight: 600; }
   color: var(--teal);
   margin-bottom: 3px;
 }
-.lo-text { font-size: 13px; line-height: 1.5; color: var(--text); }
+.lo-text { font-size: 13px; line-height: 1.5; color: var(--ink-mid); }
 
 .gate-grid {
   display: grid;
@@ -259,7 +256,7 @@ strong { color: var(--ink); font-weight: 600; }
 .gate-card {
   border-radius: 6px;
   padding: 16px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
 }
 .gate-card.gate1 { background: #f0faf8; border-top: 3px solid var(--teal); }
 .gate-card.gate2 { background: #f5f3ff; border-top: 3px solid #7c5ccc; }
@@ -276,14 +273,14 @@ strong { color: var(--ink); font-weight: 600; }
 .gate-specs { list-style: none; }
 .gate-specs li {
   font-size: 12.5px;
-  color: var(--muted);
+  color: var(--ink-soft);
   padding: 3px 0;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--rule);
 }
 .gate-specs li:last-child { border-bottom: none; }
-.gate-specs li span:last-child { font-weight: 600; color: var(--text); }
+.gate-specs li span:last-child { font-weight: 600; color: var(--ink); }
 
 .exclusive-list { list-style: none; margin: 4px 0; }
 .exclusive-list li {
@@ -293,7 +290,7 @@ strong { color: var(--ink); font-weight: 600; }
   border-radius: 5px;
   background: var(--surface);
   margin-bottom: 6px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
   font-size: 13.5px;
   align-items: flex-start;
 }
@@ -313,7 +310,7 @@ strong { color: var(--ink); font-weight: 600; }
 }
 .excl-body { flex: 1; }
 .excl-title { font-weight: 700; color: var(--ink); margin-bottom: 2px; }
-.excl-ref { font-size: 11.5px; color: var(--muted); }
+.excl-ref { font-size: 11.5px; color: var(--ink-soft); }
 
 .trap-grid {
   display: grid;
@@ -324,7 +321,7 @@ strong { color: var(--ink); font-weight: 600; }
 @media (max-width: 620px) { .trap-grid { grid-template-columns: 1fr; } }
 .trap-card {
   border-radius: 8px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
   padding: 14px 16px;
   box-shadow: var(--shadow-sm);
 }
@@ -364,7 +361,7 @@ strong { color: var(--ink); font-weight: 600; }
   display: inline-flex; align-items: center; justify-content: center;
 }
 .seq-num.gate-item { background: var(--gold); color: var(--ink); }
-.seq-num.locked { background: var(--muted); }
+.seq-num.locked { background: var(--ink-soft); }
 .seq-time { font-family: var(--mono); font-size: .78rem; color: var(--teal); white-space: nowrap; }
 .seq-item-name { font-weight: 600; color: var(--ink); display: block; margin-bottom: 2px; }
 .seq-item-note { font-size: .8rem; color: var(--ink-soft); line-height: 1.45; }
@@ -391,7 +388,7 @@ strong { color: var(--ink); font-weight: 600; }
 }
 .grade-table td {
   padding: 9px 12px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--rule);
   vertical-align: middle;
 }
 .grade-table tr:nth-child(even) td { background: var(--surface); }
@@ -412,12 +409,12 @@ strong { color: var(--ink); font-weight: 600; }
   min-width: 36px;
   text-align: center;
 }
-.pts-badge.zero { background: var(--muted); }
+.pts-badge.zero { background: var(--ink-soft); }
 .pts-badge.large { background: var(--ink); }
 
 .tips-box {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
   border-radius: 6px;
   padding: 16px 18px;
   margin: 6px 0;
@@ -492,15 +489,9 @@ strong { color: var(--ink); font-weight: 600; }
       <span class="badge">MBA 767</span>
       <span class="badge">Module 06</span>
       <span class="badge badge-gold">Chapter 6</span>
-      <span class="badge badge-teal">4.4-5.6 hours total</span>
     </div>
     <h1 class="header-title">Competitive Position and Sources of Advantage</h1>
     <p class="header-sub">Which advantage is actually yours - and what happens when you refuse to choose?</p>
-    <div class="header-meta">
-      <span class="badge">Part III · Competitive Strategy</span>
-      <span class="badge">195 points</span>
-      <span class="badge">Two-Gate Accountability</span>
-    </div>
   </div>
 </header>
 
@@ -514,13 +505,6 @@ strong { color: var(--ink); font-weight: 600; }
       <div class="cq-text">Which advantage is actually yours - and what happens when you refuse to choose?</div>
       <p class="cq-follow">This module develops the capacity to analyze competitive position analytically - not as a list of strategic options, but as measurable, quantifiable advantages with predictable profit implications. Every claim in a competitive strategy must be grounded in a number: a Variable Cost Advantage Index, a Differentiation Advantage score, a Relative Market Share ratio, an Industry Attractiveness Index.</p>
       <p class="cq-follow">The central intellectual challenge is the <strong>advantage selection problem</strong>: three legitimate sources of competitive advantage exist - cost, differentiation, and marketing. Choosing the wrong one, or pursuing all three simultaneously, produces worse outcomes than focused commitment. The Prisoner's Dilemma in Chapter 6 makes this concrete and mathematical.</p>
-    </div>
-    <div class="callout info" style="margin-top:20px;">
-      <span class="callout-icon">i</span>
-      <div>
-        <div class="callout-label">Why this matters</div>
-        <p>Sustainable competitive advantage requires clarity and commitment. Unfocused strategies fail not because they lack merit individually, but because pursuing all three sources simultaneously creates ambiguity about how to compete and what customers should expect.</p>
-      </div>
     </div>
   </section>
 
@@ -536,7 +520,7 @@ strong { color: var(--ink); font-weight: 600; }
       </div>
       <div class="param-cell">
         <span class="p-label">Estimated Time</span>
-        <span class="p-val"><strong>4.4-5.6 hours</strong> across all activities</span>
+        <span class="p-val"><strong>4–5 hours</strong> across all activities</span>
       </div>
       <div class="param-cell">
         <span class="p-label">Lecture Video</span>
@@ -556,7 +540,7 @@ strong { color: var(--ink); font-weight: 600; }
       </div>
       <div class="param-cell">
         <span class="p-label">Total Points</span>
-        <span class="p-val"><strong>195 pts</strong> — Gate 2 (20) · Apps (20) · Discussion (20) · Case (135)</span>
+        <span class="p-val"><strong>185 pts</strong> — Gate 2 (20) · Apps (20) · Discussion (20) · Case (125)</span>
       </div>
     </div>
   </section>
@@ -571,16 +555,9 @@ strong { color: var(--ink); font-weight: 600; }
         <li><strong>Read Chapter 6 actively.</strong> The slide deck and lecture video deliberately leave out five topics that Gate 1 tests - including the Customer Value Map, the Prisoner's Dilemma payoff structure, and the two-list competitor intelligence framework. Find all five before you take Gate 1.</li>
         <li><strong>The advantage selection problem is not theoretical.</strong> The case data will point to one source clearly if you run the numbers. Students who arrive at the case without completed VCAI and Differentiation Index calculations from App 1 cannot make a defensible recommendation.</li>
         <li><strong>Complete App 1 before App 2.</strong> The VCAI and Differentiation Index outputs from App 1 feed directly into the competitive position framing in App 2's Industry Attractiveness analysis.</li>
-        <li><strong>Show your calculation steps.</strong> The case rubric requires the VCAI formula with inputs, the importance-performance table for the Differentiation Index, and the IAI scoring grid - not just final numbers.</li>
+        <li><strong>Work the full calculation chain before entering an answer.</strong> The Case Quiz auto-grades each numeric item against your own assigned Exhibit data - VCAI, the three differentiation benefit scores, the Differentiation Index, RMS, and IAI. There is no partial credit for a numeric item, so verify each intermediate step before submitting.</li>
         <li><strong>One result in the Vantage Industrial case will surprise you.</strong> The lecture warns you this is coming. When you see it, go back to the Prisoner's Dilemma logic in LO4 - the surprise is explained there.</li>
       </ul>
-    </div>
-    <div class="callout key" style="margin-top:16px;">
-      <span class="callout-icon">i</span>
-      <div>
-        <div class="callout-label">Prerequisite reminder</div>
-        <p>This module is analytically demanding. The Industry Attractiveness Index is structurally parallel to the Segment Attractiveness Scorer from M05 - six forces, weighted scoring, index interpretation. If you have not completed M03-M05, review the key metrics before starting Gate 2.</p>
-      </div>
     </div>
   </section>
 
@@ -664,14 +641,6 @@ strong { color: var(--ink); font-weight: 600; }
           <li><span>Feedback</span><span>Correct/Incorrect only</span></li>
           <li><span>Points</span><span>20 pts - 10% of module</span></li>
         </ul>
-        <p style="font-size:11.5px;color:var(--ink-soft);margin-top:8px;font-style:italic;">Requires calculation - VCAI, Differentiation Index, RMS, IAI - using numbers from the slides you just viewed. Chapter alone is not sufficient.</p>
-      </div>
-    </div>
-    <div class="callout info" style="margin-top:16px;">
-      <span class="callout-icon">i</span>
-      <div>
-        <div class="callout-label">Why two gates?</div>
-        <p>Gate 1 tests five chapter-exclusive topics that do not appear on the slides. Gate 2 requires you to synthesize the chapter and slides with calculation, so the lecture becomes a bridge rather than a substitute.</p>
       </div>
     </div>
   </section>
@@ -719,33 +688,6 @@ strong { color: var(--ink); font-weight: 600; }
         </div>
       </li>
     </ul>
-    <div class="callout key" style="margin-top:16px;">
-      <span class="callout-icon">p</span>
-      <div>
-        <div class="callout-label">Read these sections before Gate 1</div>
-        <p>These five chapter-only items are the reading targets Gate 1 checks. If you cannot point to them in Chapter 6, you are not ready for the gate.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- 8. Two Traps to Watch For -->
-  <section class="section">
-    <span class="section-label">Two Traps to Watch For</span>
-    <p>This module contains two recurring calculation and strategy errors that students make when moving too quickly from competitive theory to implementation. Both are visible in the chapter material and are reinforced by the apps and case.</p>
-    <div class="trap-grid">
-      <div class="trap-card warn">
-        <div class="trap-title">Pursuing all three advantage sources simultaneously</div>
-        <p>The advantage selection problem is real. Choosing cost leadership, differentiation, and marketing advantage all at once creates unfocused operations, confused customer positioning, and conflicting resource priorities.</p>
-        <p><strong>Where to find it:</strong> Chapter 6 pp. 203-206; the Prisoner's Dilemma payoff structure; Vantage Industrial case framing.</p>
-      </div>
-      <div class="trap-card risk">
-        <div class="trap-title">Trusting market share or position without validating competitive advantage</div>
-        <p>High share without clarity on cost, differentiation, or marketing advantage is fragile. The Prisoner's Dilemma shows why dominant position can be eroded by mutual competitive pressure if the advantage is not actively maintained.</p>
-        <p><strong>Where to find it:</strong> Competitor intelligence signals, sustainable advantage erosion cases (GM, NBC, Sears), and Vantage Industrial's competitive environment.</p>
-      </div>
-    </div>
   </section>
 
   <div class="divider"></div>
@@ -753,7 +695,7 @@ strong { color: var(--ink); font-weight: 600; }
   <!-- 9. Module Sequence -->
   <section class="section">
     <span class="section-label">Module Sequence</span>
-    <p>Estimated total: 4.4-5.6 hours.</p>
+    <p>Estimated total: 4–5 hours.</p>
     <table class="sequence-table" aria-label="Module sequence table">
       <thead>
         <tr>
@@ -814,21 +756,33 @@ strong { color: var(--ink); font-weight: 600; }
         </tr>
         <tr>
           <td><span class="seq-num">9</span></td>
-          <td><span class="seq-item-name">Discussion: Hold or Fold? The Price War Trap</span><span class="seq-item-note">Part 1: position, 150–200 words. Part 2: devil's advocate, 100–150 words.</span></td>
+          <td><span class="seq-item-name">Discussion: Hold or Fold? The Price War Trap</span><span class="seq-item-note">Part 1: position, 150–200 words. Part 2: devil's advocate, 100–150 words. Graded on completion.</span></td>
           <td class="seq-time">20–25 min</td>
-          <td class="seq-pts">20 pts</td>
+          <td class="seq-pts">15 pts</td>
         </tr>
         <tr>
-          <td><span class="seq-num locked">10</span></td>
-          <td><span class="seq-item-name">Case Draft — Parts 1–3</span><span class="seq-item-note">Day 4 — advisory only. No grade; no unlock dependency. Complete Parts 1–3 calculations before Day 5.</span></td>
+          <td><span class="seq-num">10</span></td>
+          <td><span class="seq-item-name">Discussion Evidence Check Quiz</span><span class="seq-item-note">Auto-graded, 1 attempt, independent scenario. Does not require the Discussion post to be finished first.</span></td>
+          <td class="seq-time">3–5 min</td>
+          <td class="seq-pts">5 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num">11</span></td>
+          <td><span class="seq-item-name">Case Prep — Review Exhibits and Draft Calculations</span><span class="seq-item-note">Day 4 — advisory only. No grade; no unlock dependency. Work through VCAI, differentiation, RMS, and IAI by hand before opening the graded quiz on Day 5.</span></td>
           <td class="seq-time">60–70 min</td>
           <td class="seq-pts zero">0 pts</td>
         </tr>
         <tr>
-          <td><span class="seq-num">11</span></td>
-          <td><span class="seq-item-name">Case Analysis — Final Submission: Vantage Industrial</span><span class="seq-item-note">300–500 words + calculations; 4 parts; individual submission.</span></td>
+          <td><span class="seq-num">12</span></td>
+          <td><span class="seq-item-name">Case Analysis Quiz: Vantage Industrial</span><span class="seq-item-note">12 items (7 numeric + 4 MC + 1 reflection); individual, auto-graded except the reflection item.</span></td>
           <td class="seq-time">55–65 min</td>
-          <td class="seq-pts">135 pts</td>
+          <td class="seq-pts">125 pts</td>
+        </tr>
+        <tr>
+          <td><span class="seq-num locked">13</span></td>
+          <td><span class="seq-item-name">Module Self-Check (optional)</span><span class="seq-item-note">Formative only.</span></td>
+          <td class="seq-time">10 min</td>
+          <td class="seq-pts zero">0 pts</td>
         </tr>
       </tbody>
     </table>
@@ -845,7 +799,6 @@ strong { color: var(--ink); font-weight: 600; }
           <th>Assessment</th>
           <th>Points</th>
           <th>% of Module</th>
-          <th>Grading</th>
         </tr>
       </thead>
       <tbody>
@@ -853,37 +806,31 @@ strong { color: var(--ink); font-weight: 600; }
           <td>Gate 1: Basic Reading Check</td>
           <td><span class="pts-badge zero">0</span></td>
           <td>Access control only</td>
-          <td>Auto · 80% threshold</td>
         </tr>
         <tr>
           <td>Gate 2: Applied Reading Check</td>
           <td><span class="pts-badge">20</span></td>
-          <td>10%</td>
-          <td>Auto-graded</td>
+          <td>11%</td>
         </tr>
         <tr>
           <td>App Worksheets (2 × 10 pts)</td>
           <td><span class="pts-badge">20</span></td>
-          <td>10%</td>
-          <td>Auto-graded</td>
+          <td>11%</td>
         </tr>
         <tr>
           <td>Discussion: Hold or Fold? The Price War Trap</td>
           <td><span class="pts-badge">20</span></td>
-          <td>10%</td>
-          <td>Rubric</td>
+          <td>11%</td>
         </tr>
         <tr>
-          <td>Case Analysis: Vantage Industrial</td>
-          <td><span class="pts-badge large">135</span></td>
-          <td>69%</td>
-          <td>Rubric</td>
+          <td>Case Analysis Quiz: Vantage Industrial</td>
+          <td><span class="pts-badge large">125</span></td>
+          <td>68%</td>
         </tr>
         <tr class="total-row">
           <td>Total</td>
-          <td><span class="pts-badge large">195</span></td>
+          <td><span class="pts-badge large">185</span></td>
           <td>100%</td>
-          <td></td>
         </tr>
       </tbody>
     </table>
