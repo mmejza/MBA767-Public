@@ -410,9 +410,9 @@ END SOURCE OF TRUTH
     popsMessage: document.querySelector("#pops-message"),
     vennLabelA: document.querySelector("#label-a"),
     vennLabelB: document.querySelector("#label-b"),
-    popText: document.querySelector("#pop-text"),
-    podAText: document.querySelector("#pod-a-text"),
-    podBText: document.querySelector("#pod-b-text"),
+    popBox: document.querySelector("#pop-box"),
+    podABox: document.querySelector("#pod-a-box"),
+    podBBox: document.querySelector("#pod-b-box"),
     gapSummary: document.querySelector("#gap-summary")
   };
 
@@ -605,17 +605,15 @@ END SOURCE OF TRUTH
     els.cvhMessage.textContent = "You matched " + correctCount + " out of " + preset.attributes.length + " attributes.";
   }
 
-  function multilineText(lines, x, y, node) {
-    while (node.firstChild) {
-      node.removeChild(node.firstChild);
-    }
-    lines.forEach(function each(line, idx) {
-      const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-      tspan.setAttribute("x", String(x));
-      tspan.setAttribute("dy", idx === 0 ? "0" : "18");
-      tspan.textContent = line;
-      node.appendChild(tspan);
+  function renderZoneList(lines, node) {
+    node.innerHTML = "";
+    const ul = document.createElement("ul");
+    lines.forEach(function each(line) {
+      const li = document.createElement("li");
+      li.textContent = line;
+      ul.appendChild(li);
     });
+    node.appendChild(ul);
   }
 
   function analyzePopsPods() {
@@ -656,9 +654,9 @@ END SOURCE OF TRUTH
       els.vennLabelA.textContent = brandA + " PODs";
       els.vennLabelB.textContent = brandB + " PODs";
 
-      multilineText(podA.length ? podA : ["None"], 170, 110, els.podAText);
-      multilineText(podB.length ? podB : ["None"], 450, 110, els.podBText);
-      multilineText(pops.length ? pops : ["No clear POPs"], 330, 120, els.popText);
+      renderZoneList(podA.length ? podA : ["None"], els.podABox);
+      renderZoneList(podB.length ? podB : ["None"], els.podBBox);
+      renderZoneList(pops.length ? pops : ["No clear POPs"], els.popBox);
 
       const summary =
         "" + brandA + " differentiates on " + (podA.length ? podA.join(", ") : "no clear unique attribute") + ". " +

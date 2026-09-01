@@ -398,7 +398,8 @@ button.secondary {
 #venn {
 	width: 100%;
 	height: auto;
-	max-height: 320px;
+	max-height: 480px;
+	display: block;
 }
 
 .circle-a {
@@ -419,9 +420,80 @@ button.secondary {
 	font-weight: 700;
 }
 
-.venn-items {
-	fill: #1f2937;
-	font-size: 14px;
+.venn-label-box {
+	position: absolute;
+	box-sizing: border-box;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	text-align: center;
+	color: var(--navy);
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.2;
+	padding: 0 2px;
+	overflow: hidden;
+}
+
+.venn-label-pop {
+	align-items: center;
+}
+
+.venn-stage {
+	position: relative;
+}
+
+.venn-zone-box {
+	position: absolute;
+	overflow-y: auto;
+	overflow-x: hidden;
+	font-family: system-ui, "Barlow", sans-serif;
+	font-size: 13px;
+	line-height: 1.34;
+	color: #1f2937;
+	text-align: center;
+	padding: 4px 6px;
+	box-sizing: border-box;
+}
+
+.venn-zone-box ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.venn-zone-box li {
+	margin-bottom: 3px;
+	overflow-wrap: break-word;
+}
+
+.venn-zone-pop {
+	font-weight: 600;
+}
+
+.attribute-ideas {
+	margin-top: 0.7rem;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: #fcfdfd;
+	padding: 0.65rem 0.8rem;
+}
+
+.attribute-ideas h3 {
+	margin: 0 0 0.3rem;
+	color: var(--navy);
+	font-size: 0.95rem;
+}
+
+.idea-grid {
+	display: grid;
+	gap: 0.35rem;
+	font-size: 0.85rem;
+	color: var(--muted);
+}
+
+.idea-grid strong {
+	color: var(--text);
 }
 
 textarea {

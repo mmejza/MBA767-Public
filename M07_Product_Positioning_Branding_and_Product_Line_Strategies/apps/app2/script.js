@@ -238,6 +238,41 @@ END SOURCE OF TRUTH
 		100: "Very High"
 	};
 
+	// Named presets. "andersen" uses a hardcoded Assets override (78, not a
+	// multiple of 5 and therefore not reachable by any combination of
+	// 0/25/50/75/100 sliders) to preserve its historical verification
+	// numbers (Liabilities 20, Equity +58; QP->100/PF->75 spike => +28).
+	// The four newer presets are ordinary slider-derived scenarios, added
+	// so Andersen is one of five illustrative examples rather than the
+	// app's only scenario.
+	const PRESETS = {
+		andersen: {
+			label: "Arthur Andersen Pre-Enron (Historical Case Study)",
+			assetsOverride: 78,
+			liabilities: { "Customer Dissatisfaction": 25, "Product/Service Failures": 25, "Questionable Practices": 0, "Poor Record on Social Issues": 25, "Negative Associations": 25 }
+		},
+		patagonia: {
+			label: "Patagonia",
+			assets: { "Brand Awareness": 100, "Emotional Connectedness": 100, "Brand Loyalty": 75, "Product Line Extensions": 75, "Price Premium": 75 },
+			liabilities: { "Customer Dissatisfaction": 0, "Product/Service Failures": 0, "Questionable Practices": 25, "Poor Record on Social Issues": 25, "Negative Associations": 0 }
+		},
+		wellsfargo: {
+			label: "Wells Fargo Fake-Accounts Scandal",
+			assets: { "Brand Awareness": 75, "Emotional Connectedness": 50, "Brand Loyalty": 50, "Product Line Extensions": 75, "Price Premium": 50 },
+			liabilities: { "Customer Dissatisfaction": 100, "Product/Service Failures": 50, "Questionable Practices": 100, "Poor Record on Social Issues": 75, "Negative Associations": 75 }
+		},
+		peloton: {
+			label: "Peloton Post-Pandemic Reset",
+			assets: { "Brand Awareness": 50, "Emotional Connectedness": 50, "Brand Loyalty": 25, "Product Line Extensions": 25, "Price Premium": 50 },
+			liabilities: { "Customer Dissatisfaction": 25, "Product/Service Failures": 50, "Questionable Practices": 25, "Poor Record on Social Issues": 0, "Negative Associations": 25 }
+		},
+		southwest: {
+			label: "Southwest Airlines Holiday Meltdown",
+			assets: { "Brand Awareness": 75, "Emotional Connectedness": 75, "Brand Loyalty": 50, "Product Line Extensions": 50, "Price Premium": 75 },
+			liabilities: { "Customer Dissatisfaction": 75, "Product/Service Failures": 100, "Questionable Practices": 50, "Poor Record on Social Issues": 25, "Negative Associations": 50 }
+		}
+	};
+
 	const state = {
 		assets: {
 			"Brand Awareness": 50,
@@ -253,9 +288,14 @@ END SOURCE OF TRUTH
 			"Poor Record on Social Issues": 50,
 			"Negative Associations": 50
 		},
-		andersenMode: false,
-		spikeOverrideMap: null
+		assetsOverride: null,
+		spikeOverrideMap: null,
+		assetsRevealed: false,
+		liabilitiesRevealed: false,
+		equityRevealed: false
 	};
+
+	const CHECK_TOLERANCE = 0.5;
 
 	const els = {
 		focusModeBtn: document.querySelector("#focusModeBtn"),
@@ -274,13 +314,20 @@ END SOURCE OF TRUTH
 		equityAssets: document.querySelector("#equity-assets"),
 		equityLiabilities: document.querySelector("#equity-liabilities"),
 		equityTotal: document.querySelector("#equity-total"),
+		assetsGuess: document.querySelector("#assets-guess"),
+		checkAssets: document.querySelector("#check-assets"),
+		assetsFeedback: document.querySelector("#assets-feedback"),
+		liabilitiesGuess: document.querySelector("#liabilities-guess"),
+		checkLiabilities: document.querySelector("#check-liabilities"),
+		liabilitiesFeedback: document.querySelector("#liabilities-feedback"),
+		equityGuess: document.querySelector("#equity-guess"),
+		checkEquity: document.querySelector("#check-equity"),
+		equityFeedback: document.querySelector("#equity-feedback"),
 		spikeDimension: document.querySelector("#spike-dimension"),
 		runSpike: document.querySelector("#run-spike"),
 		resetSpike: document.querySelector("#reset-spike"),
-		spikeOriginal: document.querySelector("#spike-original"),
-		spikePost: document.querySelector("#spike-post"),
-		spikeChange: document.querySelector("#spike-change"),
-		loadAndersen: document.querySelector("#load-andersen"),
+		presetSelect: document.querySelector("#preset-select"),
+		loadPreset: document.querySelector("#load-preset"),
 		resetAll: document.querySelector("#reset-all"),
 		message: document.querySelector("#message")
 	};
@@ -309,14 +356,10 @@ END SOURCE OF TRUTH
 	}
 
 	function currentAssetsScore() {
-		if (state.andersenMode) {
-			return 78;
+		if (state.assetsOverride !== null) {
+			return state.assetsOverride;
 		}
 		return weightedTotal(state.assets);
-	}
-
-	function baseLiabilitiesScore() {
-		return weightedTotal(state.liabilities);
 	}
 
 	function displayLiabilitiesScore() {
@@ -378,10 +421,14 @@ END SOURCE OF TRUTH
 			event.target.value = String(snapped);
 			if (type === "assets") {
 				state.assets[dimension] = snapped;
+				state.assetsOverride = null;
+				state.assetsRevealed = false;
 			} else {
 				state.liabilities[dimension] = snapped;
+				state.spikeOverrideMap = null;
+				state.liabilitiesRevealed = false;
 			}
-			state.spikeOverrideMap = null;
+			state.equityRevealed = false;
 			renderAll();
 		});
 
@@ -458,28 +505,70 @@ END SOURCE OF TRUTH
 		const liabilities = displayLiabilitiesScore();
 		const equity = assets - liabilities;
 
-		els.assetsTotal.textContent = formatOne(assets);
-		els.liabilitiesTotal.textContent = formatOne(liabilities);
-		els.equityAssets.textContent = formatOne(assets);
-		els.equityLiabilities.textContent = formatOne(liabilities);
-		els.equityTotal.textContent = formatOne(equity);
+		els.assetsTotal.classList.toggle("hidden-total", !state.assetsRevealed);
+		els.assetsTotal.textContent = state.assetsRevealed ? formatOne(assets) : "?";
 
+		els.liabilitiesTotal.classList.toggle("hidden-total", !state.liabilitiesRevealed);
+		els.liabilitiesTotal.textContent = state.liabilitiesRevealed ? formatOne(liabilities) : "?";
+
+		els.equityAssets.classList.toggle("hidden-total", !state.assetsRevealed);
+		els.equityAssets.textContent = state.assetsRevealed ? formatOne(assets) : "?";
+
+		els.equityLiabilities.classList.toggle("hidden-total", !state.liabilitiesRevealed);
+		els.equityLiabilities.textContent = state.liabilitiesRevealed ? formatOne(liabilities) : "?";
+
+		els.equityTotal.classList.toggle("hidden-total", !state.equityRevealed);
 		els.equityTotal.classList.remove("equity-positive", "equity-negative", "equity-zero");
-		if (equity > 0) {
-			els.equityTotal.classList.add("equity-positive");
-		} else if (equity < 0) {
-			els.equityTotal.classList.add("equity-negative");
-		} else {
+		if (!state.equityRevealed) {
+			els.equityTotal.textContent = "?";
 			els.equityTotal.classList.add("equity-zero");
+		} else {
+			els.equityTotal.textContent = formatOne(equity);
+			if (equity > 0) {
+				els.equityTotal.classList.add("equity-positive");
+			} else if (equity < 0) {
+				els.equityTotal.classList.add("equity-negative");
+			} else {
+				els.equityTotal.classList.add("equity-zero");
+			}
 		}
+	}
 
-		const originalEquity = currentAssetsScore() - baseLiabilitiesScore();
-		const postEquity = currentEquityScore();
-		const delta = postEquity - originalEquity;
+	function checkGuess(guessInput, feedbackEl, actualValue, revealFlagSetter) {
+		const guess = Number(guessInput.value);
+		if (guessInput.value.trim() === "" || !Number.isFinite(guess)) {
+			feedbackEl.textContent = "Enter a number first.";
+			feedbackEl.className = "check-feedback incorrect";
+			return;
+		}
+		const correct = Math.abs(guess - actualValue) <= CHECK_TOLERANCE;
+		revealFlagSetter(correct);
+		if (correct) {
+			feedbackEl.textContent = "Correct.";
+			feedbackEl.className = "check-feedback correct";
+		} else {
+			feedbackEl.textContent = "Not quite -- check your calculation and try again.";
+			feedbackEl.className = "check-feedback incorrect";
+		}
+		renderTotals();
+	}
 
-		els.spikeOriginal.textContent = formatOne(originalEquity);
-		els.spikePost.textContent = formatOne(postEquity);
-		els.spikeChange.textContent = formatOne(delta);
+	function checkAssetsGuess() {
+		checkGuess(els.assetsGuess, els.assetsFeedback, currentAssetsScore(), function set(v) {
+			state.assetsRevealed = v;
+		});
+	}
+
+	function checkLiabilitiesGuess() {
+		checkGuess(els.liabilitiesGuess, els.liabilitiesFeedback, displayLiabilitiesScore(), function set(v) {
+			state.liabilitiesRevealed = v;
+		});
+	}
+
+	function checkEquityGuess() {
+		checkGuess(els.equityGuess, els.equityFeedback, currentEquityScore(), function set(v) {
+			state.equityRevealed = v;
+		});
 	}
 
 	function renderSpikeOptions() {
@@ -496,27 +585,37 @@ END SOURCE OF TRUTH
 		}
 	}
 
-	function loadAndersenPreset() {
-		state.andersenMode = true;
-		state.spikeOverrideMap = null;
+	function loadPreset(key) {
+		const preset = PRESETS[key];
+		if (!preset) {
+			return;
+		}
 
-		ASSET_DIMENSIONS.forEach(function each(name) {
-			state.assets[name] = 75;
+		state.spikeOverrideMap = null;
+		state.assetsRevealed = false;
+		state.liabilitiesRevealed = false;
+		state.equityRevealed = false;
+		state.assetsOverride = typeof preset.assetsOverride === "number" ? preset.assetsOverride : null;
+
+		if (preset.assets) {
+			ASSET_DIMENSIONS.forEach(function each(name) {
+				state.assets[name] = preset.assets[name];
+			});
+		}
+		LIABILITY_DIMENSIONS.forEach(function each(name) {
+			state.liabilities[name] = preset.liabilities[name];
 		});
 
-		state.liabilities["Customer Dissatisfaction"] = 25;
-		state.liabilities["Product/Service Failures"] = 25;
-		state.liabilities["Questionable Practices"] = 0;
-		state.liabilities["Poor Record on Social Issues"] = 25;
-		state.liabilities["Negative Associations"] = 25;
-
 		renderAll();
-		els.message.textContent = "Andersen preset loaded: assets override = 78, liabilities = 20, starting equity = +58.";
+		els.message.textContent = preset.label + " preset loaded. Calculate each total yourself, enter it, and click Check.";
 	}
 
 	function resetNeutral() {
-		state.andersenMode = false;
+		state.assetsOverride = null;
 		state.spikeOverrideMap = null;
+		state.assetsRevealed = false;
+		state.liabilitiesRevealed = false;
+		state.equityRevealed = false;
 
 		ASSET_DIMENSIONS.forEach(function each(name) {
 			state.assets[name] = 50;
@@ -540,28 +639,21 @@ END SOURCE OF TRUTH
 		simulated[target] = 100;
 
 		// Locked Andersen verification scenario from spec.
-		if (state.andersenMode && target === "Questionable Practices") {
+		if (state.assetsOverride === 78 && target === "Questionable Practices") {
 			simulated["Product/Service Failures"] = 75;
 		}
 
 		state.spikeOverrideMap = simulated;
+		state.liabilitiesRevealed = false;
+		state.equityRevealed = false;
 		renderAll();
-
-		const postLiab = displayLiabilitiesScore();
-		const postEq = currentEquityScore();
-		const inRange = postEq >= 26 && postEq <= 30;
-
-		if (state.andersenMode && target === "Questionable Practices") {
-			els.message.textContent = "Spike applied (temporary) with Andersen verification scenario (QP=100, PF=75): post-spike liabilities = " +
-				formatOne(postLiab) + " and post-spike equity = +" + formatOne(postEq) +
-				(inRange ? " (within +26 to +30 instructional range)." : ".");
-		} else {
-			els.message.textContent = "Spike applied temporarily. Sliders remain unchanged.";
-		}
+		els.message.textContent = "Spike applied temporarily (sliders unchanged). Re-check the Liabilities Total (Tab B) and Brand Equity (Tab C).";
 	}
 
 	function resetSpikeView() {
 		state.spikeOverrideMap = null;
+		state.liabilitiesRevealed = false;
+		state.equityRevealed = false;
 		renderAll();
 		els.message.textContent = "Spike view reset. Original slider-driven values restored.";
 	}
@@ -583,10 +675,15 @@ END SOURCE OF TRUTH
 
 	function wireEvents() {
 		wireTabs();
-		els.loadAndersen.addEventListener("click", loadAndersenPreset);
+		els.loadPreset.addEventListener("click", function onLoadPreset() {
+			loadPreset(els.presetSelect.value);
+		});
 		els.resetAll.addEventListener("click", resetNeutral);
 		els.runSpike.addEventListener("click", runSpike);
 		els.resetSpike.addEventListener("click", resetSpikeView);
+		els.checkAssets.addEventListener("click", checkAssetsGuess);
+		els.checkLiabilities.addEventListener("click", checkLiabilitiesGuess);
+		els.checkEquity.addEventListener("click", checkEquityGuess);
 
 		if (els.focusModeBtn) {
 			els.focusModeBtn.addEventListener("click", function onFocusToggle() {

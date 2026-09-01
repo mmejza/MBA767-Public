@@ -181,7 +181,76 @@ body.focus-mode [data-focus-hide] {
 	margin-top: 0.7rem;
 	display: flex;
 	gap: 0.5rem;
+	align-items: end;
 	flex-wrap: wrap;
+}
+
+.preset-label {
+	display: grid;
+	gap: 0.2rem;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: var(--muted);
+}
+
+.preset-label select {
+	min-width: 260px;
+}
+
+.reveal-hint-global {
+	margin: 0;
+	font-size: 0.86rem;
+	color: #6b4800;
+	border: 1px solid var(--amber);
+	border-radius: 10px;
+	background: #fff8e6;
+	padding: 0.55rem 0.7rem;
+}
+
+.hidden-total {
+	color: var(--muted) !important;
+	letter-spacing: 0.1em;
+}
+
+.check-row {
+	margin-top: 0.55rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+.check-row input[type="number"] {
+	width: auto;
+	min-width: 200px;
+	flex: 0 1 220px;
+}
+
+.check-row button {
+	background: var(--amber);
+	border-color: #c98f00;
+	color: #2a1c00;
+	white-space: nowrap;
+}
+
+.check-feedback {
+	font-size: 0.88rem;
+	font-weight: 600;
+}
+
+.check-feedback.correct {
+	color: #1e8f58;
+}
+
+.check-feedback.incorrect {
+	color: #b23a3a;
+}
+
+.equity-board-note {
+	margin: 0.2rem 0 0;
+	font-size: 0.72rem;
+	font-weight: 500;
+	color: var(--muted);
 }
 
 .tabs {

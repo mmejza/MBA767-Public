@@ -844,16 +844,19 @@ function getB(){
 }
 
 function buildPeriodInputs(){
-  const inp = getB();
+  const periods = parseInt(document.getElementById('b-periods').value)||5;
   const grid = document.getElementById('b-period-inputs');
   const defaults = [38,44,51,58,65,72,80,88,96,105];
+  const priorValues = {};
+  grid.querySelectorAll('input').forEach((el, idx) => { priorValues[idx+1] = el.value; });
   grid.innerHTML = '';
-  for(let p=1; p<=inp.periods; p++){
+  for(let p=1; p<=periods; p++){
     const cell = document.createElement('div');
     cell.className = 'period-input-cell';
+    const val = priorValues[p] !== undefined ? priorValues[p] : (defaults[p-1]||0);
     cell.innerHTML = `
       <div class="period-label">Period ${p}</div>
-      <input type="number" id="b-cf-${p}" value="${defaults[p-1]||0}" min="-10000" max="100000" step="1">`;
+      <input type="number" id="b-cf-${p}" value="${val}" min="-10000" max="100000" step="1">`;
     grid.appendChild(cell);
     cell.querySelector('input').addEventListener('input', updateB);
   }
@@ -863,8 +866,6 @@ function updateB(){
   const d = getB();
   document.getElementById('b-int-v').textContent    = (d.intR*100).toFixed(1)+'%';
   document.getElementById('b-periods-v').textContent = d.periods;
-
-  buildPeriodInputs();
 
   const rows = [];
   let cumCLV = -d.ac;
@@ -1028,7 +1029,7 @@ function bindSlider(id,valId,scale,dec){
     const v = parseInt(this.value);
     document.getElementById(valId).textContent = (v/scale).toFixed(dec)+'%';
     if(id.startsWith('a')) updateA();
-    else { buildPeriodInputs(); updateB(); }
+    else updateB();
   });
 }
 

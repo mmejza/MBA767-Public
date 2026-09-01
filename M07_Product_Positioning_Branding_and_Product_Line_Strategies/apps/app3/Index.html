@@ -54,8 +54,8 @@
 			<p class="quiz-workflow-banner">Quiz Workflow: Read Question → Use App → Submit Answer</p>
 
 		<nav class="tabs" aria-label="Analyzer tabs">
-			<button class="tab-btn active" data-tab="roa" type="button" aria-controls="tab-roa" aria-selected="true">Product Line ROA Simulator</button>
-			<button class="tab-btn" data-tab="strategy" type="button" aria-controls="tab-strategy" aria-selected="false">Brand Growth Strategy Classifier</button>
+			<button class="tab-btn active" data-tab="roa" type="button" aria-controls="tab-roa" aria-selected="true">Tab A - Product Line ROA Simulator</button>
+			<button class="tab-btn" data-tab="strategy" type="button" aria-controls="tab-strategy" aria-selected="false">Tab B - Brand Growth Strategy Classifier</button>
 		</nav>
 
 		<section id="tab-roa" class="tab-panel">
@@ -228,11 +228,56 @@
 
 			<section class="examples-card">
 				<h3>Reference Examples</h3>
-				<ul>
-					<li>Brand Extension: Honda outboard motors; Amazon Echo</li>
-					<li>New Brand: Lexus; Aquafina</li>
-					<li>Fighter / Flanker Brand: Intel Celeron; Cricket Wireless</li>
-				</ul>
+				<p class="hint">Look up the decision inputs for each real example below, enter them into the three dropdowns above, and read the classification the app produces &mdash; the table does not tell you the output.</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Real Example</th>
+							<th>Existing Brand?</th>
+							<th>Existing Category?</th>
+							<th>Strategic Intent</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Honda outboard motors</td>
+							<td>Yes</td>
+							<td>No</td>
+							<td>Enter a new product market</td>
+						</tr>
+						<tr>
+							<td>Amazon Echo</td>
+							<td>Yes</td>
+							<td>No</td>
+							<td>Enter a new product market</td>
+						</tr>
+						<tr>
+							<td>Lexus</td>
+							<td>No</td>
+							<td>No</td>
+							<td>Enter a new product market</td>
+						</tr>
+						<tr>
+							<td>Aquafina</td>
+							<td>No</td>
+							<td>No</td>
+							<td>Enter a new product market</td>
+						</tr>
+						<tr>
+							<td>Intel Celeron</td>
+							<td>Yes</td>
+							<td>Yes</td>
+							<td>Fight a low-price competitor</td>
+						</tr>
+						<tr>
+							<td>Cricket Wireless</td>
+							<td>Yes</td>
+							<td>Yes</td>
+							<td>Fight a low-price competitor</td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="hint">Note: when Existing Brand = No, the app always classifies as New Brand regardless of the other two inputs &mdash; Existing Category and Strategic Intent are shown above for Lexus and Aquafina as one valid combination, not the only one that works.</p>
 			</section>
 		</section>
 		</section>

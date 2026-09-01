@@ -148,17 +148,30 @@
 
 			<p id="pops-message" class="message" role="status" aria-live="polite"></p>
 
+			<section class="attribute-ideas">
+				<h3>Attribute Ideas (optional)</h3>
+				<p class="hint">Hard-pressed to name attributes for your chosen category? A few starting points &mdash; write your own in the boxes above; these are only examples.</p>
+				<div class="idea-grid">
+					<div><strong>Streaming service:</strong> content library size, original series, ad-free tier, offline downloads, multi-device streaming, recommendation quality, price</div>
+					<div><strong>Retail / e-commerce:</strong> delivery speed, return policy, price matching, product range, loyalty rewards, in-store pickup, customer service</div>
+					<div><strong>Restaurant / QSR:</strong> order accuracy, wait time, menu customization, ingredient sourcing, app ordering, loyalty points, portion size</div>
+					<div><strong>General:</strong> brand reputation, warranty length, customer support hours, sustainability practices, design/aesthetics, ease of use</div>
+				</div>
+			</section>
+
 			<div class="venn-wrap">
-				<svg id="venn" viewBox="0 0 760 360" role="img" aria-label="Venn diagram for POP and POD analysis">
-					<circle cx="280" cy="180" r="120" class="circle-a"></circle>
-					<circle cx="480" cy="180" r="120" class="circle-b"></circle>
-					<text x="205" y="52" class="venn-label" id="label-a">Brand A PODs</text>
-					<text x="438" y="52" class="venn-label" id="label-b">Brand B PODs</text>
-					<text x="350" y="84" class="venn-label">POPs</text>
-					<text x="170" y="110" id="pod-a-text" class="venn-items"></text>
-					<text x="450" y="110" id="pod-b-text" class="venn-items"></text>
-					<text x="330" y="120" id="pop-text" class="venn-items"></text>
-				</svg>
+				<div class="venn-stage">
+					<svg id="venn" viewBox="0 0 620 350" role="img" aria-label="Venn diagram for POP and POD analysis">
+						<circle cx="245" cy="190" r="140" class="circle-a"></circle>
+						<circle cx="395" cy="190" r="140" class="circle-b"></circle>
+					</svg>
+					<div class="venn-label-box" id="label-a" style="left:2%; top:1%; width:44%; height:12%;">Brand A PODs</div>
+					<div class="venn-label-box" id="label-b" style="left:54%; top:1%; width:44%; height:12%;">Brand B PODs</div>
+					<div class="venn-label-box venn-label-pop" style="left:39%; top:14.5%; width:24%; height:6%;">POPs</div>
+					<div class="venn-zone-box" id="pod-a-box" style="left:20.2%; top:41.4%; width:20.2%; height:31.4%;"></div>
+					<div class="venn-zone-box venn-zone-pop" id="pop-box" style="left:44.0%; top:41.4%; width:15.2%; height:31.4%;"></div>
+					<div class="venn-zone-box" id="pod-b-box" style="left:62.9%; top:41.4%; width:20.2%; height:31.4%;"></div>
+				</div>
 			</div>
 
 			<label for="gap-summary">Positioning-gap summary (editable)</label>
