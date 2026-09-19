@@ -478,10 +478,10 @@ function renderPortfolioPlot(sdi, mdi, productLabel) {
          <line x1="${pad + inner / 2}" y1="${pad}" x2="${pad + inner / 2}" y2="${pad + inner}" stroke="#94a3b8" stroke-dasharray="4 4" />
          <line x1="${pad}" y1="${pad + inner / 2}" x2="${pad + inner}" y2="${pad + inner / 2}" stroke="#94a3b8" stroke-dasharray="4 4" />
 
-         <text x="${pad + 6}" y="${pad + 16}" font-size="11" fill="#334155">Market Development</text>
+         <text x="${pad + 6}" y="${pad + 16}" font-size="11" fill="#334155">Share Growth</text>
          <text x="${pad + inner / 2 + 6}" y="${pad + 16}" font-size="11" fill="#334155">Mature/Selective</text>
          <text x="${pad + 6}" y="${pad + inner - 8}" font-size="11" fill="#334155">Very High Growth</text>
-         <text x="${pad + inner / 2 + 6}" y="${pad + inner - 8}" font-size="11" fill="#334155">Share Growth</text>
+         <text x="${pad + inner / 2 + 6}" y="${pad + inner - 8}" font-size="11" fill="#334155">Market Development</text>
 
          <circle cx="${px}" cy="${py}" r="7" fill="#0f4c81" />
          <text x="${px + 10}" y="${py - 8}" font-size="12" fill="#0f172a">${productLabel}</text>
