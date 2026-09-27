@@ -728,7 +728,10 @@
                 <label for="frequency">Frequency</label>
                 <span class="val" id="frequencyVal">4.0</span>
               </div>
-              <input id="frequency" type="number" min="0.5" max="10" step="0.5" value="4.0" />
+              <div class="control-row">
+                <input id="frequencySlider" type="range" min="0.5" max="10" step="0.5" value="4.0" />
+                <input id="frequency" type="number" min="0.5" max="10" step="0.5" value="4.0" />
+              </div>
             </div>
 
             <div class="field">
@@ -736,7 +739,10 @@
                 <label for="cpm">CPM Rate</label>
                 <span class="val" id="cpmVal">$18.00</span>
               </div>
-              <input id="cpm" type="number" min="1" max="200" step="0.01" value="18.00" />
+              <div class="control-row">
+                <input id="cpmSlider" type="range" min="1" max="200" step="0.5" value="18.00" />
+                <input id="cpm" type="number" min="1" max="200" step="0.01" value="18.00" />
+              </div>
             </div>
 
             <div class="field">
@@ -943,7 +949,9 @@
       document.getElementById('reach').value = state.media.reach;
       document.getElementById('reachNum').value = state.media.reach;
       document.getElementById('frequency').value = state.media.frequency.toFixed(1);
+      document.getElementById('frequencySlider').value = state.media.frequency.toFixed(1);
       document.getElementById('cpm').value = state.media.cpm.toFixed(2);
+      document.getElementById('cpmSlider').value = state.media.cpm;
 
       renderAll();
     }
@@ -961,43 +969,50 @@
     function wirePairedInput(rangeId, numId, onChange) {
       const rangeEl = document.getElementById(rangeId);
       const numEl = document.getElementById(numId);
-      const sync = (event) => {
-        const value = onChange(event.currentTarget.value);
+
+      // Overwriting the number box's own text on every keystroke fights the user:
+      // clearing the field to type a new value, or typing a decimal like 4.5 into
+      // Frequency, gets reset/reformatted before they finish. `updateOwnText` is only
+      // true for slider drags (no typing conflict there) and on blur (safe to finalize).
+      const commit = (raw, updateOwnText) => {
+        const value = onChange(raw);
         rangeEl.value = value;
-        numEl.value = value;
+        if (updateOwnText) numEl.value = value;
         renderAll();
       };
-      rangeEl.addEventListener('input', sync);
-      numEl.addEventListener('input', sync);
+
+      rangeEl.addEventListener('input', (event) => commit(event.currentTarget.value, true));
+      numEl.addEventListener('input', (event) => commit(event.currentTarget.value, false));
+      numEl.addEventListener('blur', (event) => commit(event.currentTarget.value, true));
     }
 
     function wireInputs() {
       ['exposure', 'awareness', 'comprehension', 'intention', 'purchase'].forEach((id) => {
         wirePairedInput(id, `${id}Num`, (raw) => {
-          state.cri[id] = clamp(parseInt(raw, 10) || 0, 0, 100);
+          const parsed = parseInt(raw, 10);
+          state.cri[id] = Number.isFinite(parsed) ? clamp(parsed, 0, 100) : state.cri[id];
           return state.cri[id];
         });
       });
 
       wirePairedInput('reach', 'reachNum', (raw) => {
-        state.media.reach = clamp(parseInt(raw, 10) || 1, 1, 100);
+        const parsed = parseInt(raw, 10);
+        state.media.reach = Number.isFinite(parsed) ? clamp(parsed, 1, 100) : state.media.reach;
         return state.media.reach;
       });
 
-      document.getElementById('frequency').addEventListener('input', (event) => {
-        const raw = parseFloat(event.currentTarget.value);
-        const normalized = clamp(Math.round((raw || 0.5) * 2) / 2, 0.5, 10);
-        state.media.frequency = normalized;
-        event.currentTarget.value = normalized.toFixed(1);
-        renderAll();
+      wirePairedInput('frequencySlider', 'frequency', (raw) => {
+        const parsed = parseFloat(raw);
+        const start = Number.isFinite(parsed) ? parsed : state.media.frequency;
+        state.media.frequency = clamp(Math.round(start * 2) / 2, 0.5, 10);
+        return state.media.frequency.toFixed(1);
       });
 
-      document.getElementById('cpm').addEventListener('input', (event) => {
-        const raw = parseFloat(event.currentTarget.value);
-        const normalized = clamp(raw || 1, 1, 200);
-        state.media.cpm = Math.round(normalized * 100) / 100;
-        event.currentTarget.value = state.media.cpm.toFixed(2);
-        renderAll();
+      wirePairedInput('cpmSlider', 'cpm', (raw) => {
+        const parsed = parseFloat(raw);
+        const start = Number.isFinite(parsed) ? parsed : state.media.cpm;
+        state.media.cpm = Math.round(clamp(start, 1, 200) * 100) / 100;
+        return state.media.cpm.toFixed(2);
       });
     }
 

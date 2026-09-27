@@ -804,7 +804,7 @@
       };
     }
 
-    function syncPairDisplays() {
+    function syncPairDisplays(skipId) {
       document.getElementById('spendDisplay').textContent = fmtMoneyM(state.spend, 0);
       document.getElementById('multiplierDisplay').textContent = state.multiplier.toFixed(0);
       document.getElementById('carryoverDisplay').textContent = state.c.toFixed(2);
@@ -816,8 +816,8 @@
         const value = state[key];
         const decimals = specs[key].decimals;
         const display = decimals > 0 ? value.toFixed(decimals) : value.toFixed(0);
-        document.getElementById(rangeId).value = display;
-        document.getElementById(numberId).value = display;
+        if (rangeId !== skipId) document.getElementById(rangeId).value = display;
+        if (numberId !== skipId) document.getElementById(numberId).value = display;
       });
     }
 
@@ -877,24 +877,32 @@
       });
     }
 
-    function renderAll() {
-      syncPairDisplays();
+    function renderAll(skipId) {
+      syncPairDisplays(skipId);
       const result = compute();
       renderMetrics(result);
       renderTable(result);
       renderChart(result);
     }
 
-    function setStateValue(key, raw) {
+    function setStateValue(key, raw, skipId) {
       state[key] = normalizeValue(key, raw);
-      renderAll();
+      renderAll(skipId);
     }
 
     function wireInputs() {
       Object.keys(pairMap).forEach((key) => {
         const [rangeId, numberId] = pairMap[key];
+        const numEl = document.getElementById(numberId);
         document.getElementById(rangeId).addEventListener('input', (e) => setStateValue(key, e.currentTarget.value));
-        document.getElementById(numberId).addEventListener('input', (e) => setStateValue(key, e.currentTarget.value));
+        // While the number box itself is being typed into, don't overwrite its own text on
+        // every keystroke (that fights the user - clearing the field or typing a decimal like
+        // 0.35 into the Carryover field gets immediately reformatted/reset mid-edit). Update
+        // the paired slider and all computed outputs live, but leave this box's own text alone
+        // until the user leaves it.
+        numEl.addEventListener('input', (e) => setStateValue(key, e.currentTarget.value, numberId));
+        // On blur, normalize/clamp/snap and write the final formatted value back into the box.
+        numEl.addEventListener('blur', (e) => setStateValue(key, e.currentTarget.value));
       });
     }
 
