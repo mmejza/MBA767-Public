@@ -383,6 +383,25 @@
       background: #fff;
     }
 
+    .control-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 110px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .input-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    @media (max-width: 520px) {
+      .control-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .fixed {
       padding: 8px 10px;
       border: 1px dashed #BFD5E8;
@@ -598,13 +617,17 @@
         <div class="layout">
           <article class="card">
             <h3>CRI Calculator Inputs</h3>
+            <p class="input-note">Drag the slider or type an exact value in the number box; both stay in sync.</p>
 
             <div class="field">
               <div class="field-head">
                 <label for="exposure">Exposure %</label>
                 <span class="val" id="exposureVal">75%</span>
               </div>
-              <input id="exposure" type="range" min="0" max="100" step="1" value="75" />
+              <div class="control-row">
+                <input id="exposure" type="range" min="0" max="100" step="1" value="75" />
+                <input id="exposureNum" type="number" min="0" max="100" step="1" value="75" />
+              </div>
             </div>
 
             <div class="field">
@@ -612,7 +635,10 @@
                 <label for="awareness">Awareness %</label>
                 <span class="val" id="awarenessVal">68%</span>
               </div>
-              <input id="awareness" type="range" min="0" max="100" step="1" value="68" />
+              <div class="control-row">
+                <input id="awareness" type="range" min="0" max="100" step="1" value="68" />
+                <input id="awarenessNum" type="number" min="0" max="100" step="1" value="68" />
+              </div>
             </div>
 
             <div class="field">
@@ -620,7 +646,10 @@
                 <label for="comprehension">Comprehension %</label>
                 <span class="val" id="comprehensionVal">43%</span>
               </div>
-              <input id="comprehension" type="range" min="0" max="100" step="1" value="43" />
+              <div class="control-row">
+                <input id="comprehension" type="range" min="0" max="100" step="1" value="43" />
+                <input id="comprehensionNum" type="number" min="0" max="100" step="1" value="43" />
+              </div>
             </div>
 
             <div class="field">
@@ -628,7 +657,10 @@
                 <label for="intention">Intention %</label>
                 <span class="val" id="intentionVal">33%</span>
               </div>
-              <input id="intention" type="range" min="0" max="100" step="1" value="33" />
+              <div class="control-row">
+                <input id="intention" type="range" min="0" max="100" step="1" value="33" />
+                <input id="intentionNum" type="number" min="0" max="100" step="1" value="33" />
+              </div>
             </div>
 
             <div class="field">
@@ -636,7 +668,10 @@
                 <label for="purchase">Purchase %</label>
                 <span class="val" id="purchaseVal">61%</span>
               </div>
-              <input id="purchase" type="range" min="0" max="100" step="1" value="61" />
+              <div class="control-row">
+                <input id="purchase" type="range" min="0" max="100" step="1" value="61" />
+                <input id="purchaseNum" type="number" min="0" max="100" step="1" value="61" />
+              </div>
             </div>
 
             <div class="field">
@@ -675,13 +710,17 @@
         <div class="layout">
           <article class="card">
             <h3>Media Mix Calculator Inputs</h3>
+            <p class="input-note">Drag the slider or type an exact value in the number box; both stay in sync.</p>
 
             <div class="field">
               <div class="field-head">
                 <label for="reach">Reach %</label>
                 <span class="val" id="reachVal">60%</span>
               </div>
-              <input id="reach" type="range" min="1" max="100" step="1" value="60" />
+              <div class="control-row">
+                <input id="reach" type="range" min="1" max="100" step="1" value="60" />
+                <input id="reachNum" type="number" min="1" max="100" step="1" value="60" />
+              </div>
             </div>
 
             <div class="field">
@@ -897,12 +936,12 @@
       state.cri = { ...preset.cri };
       state.media = { ...preset.media };
 
-      document.getElementById('exposure').value = state.cri.exposure;
-      document.getElementById('awareness').value = state.cri.awareness;
-      document.getElementById('comprehension').value = state.cri.comprehension;
-      document.getElementById('intention').value = state.cri.intention;
-      document.getElementById('purchase').value = state.cri.purchase;
+      ['exposure', 'awareness', 'comprehension', 'intention', 'purchase'].forEach((id) => {
+        document.getElementById(id).value = state.cri[id];
+        document.getElementById(`${id}Num`).value = state.cri[id];
+      });
       document.getElementById('reach').value = state.media.reach;
+      document.getElementById('reachNum').value = state.media.reach;
       document.getElementById('frequency').value = state.media.frequency.toFixed(1);
       document.getElementById('cpm').value = state.media.cpm.toFixed(2);
 
@@ -919,20 +958,30 @@
       });
     }
 
+    function wirePairedInput(rangeId, numId, onChange) {
+      const rangeEl = document.getElementById(rangeId);
+      const numEl = document.getElementById(numId);
+      const sync = (event) => {
+        const value = onChange(event.currentTarget.value);
+        rangeEl.value = value;
+        numEl.value = value;
+        renderAll();
+      };
+      rangeEl.addEventListener('input', sync);
+      numEl.addEventListener('input', sync);
+    }
+
     function wireInputs() {
       ['exposure', 'awareness', 'comprehension', 'intention', 'purchase'].forEach((id) => {
-        const el = document.getElementById(id);
-        el.addEventListener('input', (event) => {
-          state.cri[id] = clamp(parseInt(event.currentTarget.value, 10) || 0, 0, 100);
-          event.currentTarget.value = state.cri[id];
-          renderAll();
+        wirePairedInput(id, `${id}Num`, (raw) => {
+          state.cri[id] = clamp(parseInt(raw, 10) || 0, 0, 100);
+          return state.cri[id];
         });
       });
 
-      document.getElementById('reach').addEventListener('input', (event) => {
-        state.media.reach = clamp(parseInt(event.currentTarget.value, 10) || 1, 1, 100);
-        event.currentTarget.value = state.media.reach;
-        renderAll();
+      wirePairedInput('reach', 'reachNum', (raw) => {
+        state.media.reach = clamp(parseInt(raw, 10) || 1, 1, 100);
+        return state.media.reach;
       });
 
       document.getElementById('frequency').addEventListener('input', (event) => {
