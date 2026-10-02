@@ -470,7 +470,13 @@
 
 		<section id="tab-optimizer" class="tab-panel" hidden>
 			<h2>Portfolio Optimizer</h2>
-			<p class="note">Shows all seven combinations with total NMC and average Marketing ROI.</p>
+			<p class="note">Shows all seven combinations with total NMC and average Marketing ROI. Enter a marketing budget below; all seven combinations stay visible at any budget level so you can compare them.</p>
+			<div class="budget-row">
+				<label>Marketing budget ($M)
+					<input type="number" id="budget-input" min="0" step="1" placeholder="e.g. 50">
+				</label>
+				<p class="budget-status" id="budget-status" role="status" aria-live="polite">No budget entered.</p>
+			</div>
 			<table class="portfolio-table">
 				<thead>
 					<tr>
@@ -498,6 +504,12 @@
 		<p class="canvas-reminder">Submit final answers through the Canvas quiz questions below the app.</p>
 	</main>
 
+	<style>
+		.budget-row { display: flex; flex-wrap: wrap; gap: 0.8rem 1.2rem; align-items: flex-end; margin: 0.5rem 0 0.9rem; }
+		.budget-row label { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.88rem; }
+		.budget-row input { width: 8rem; }
+		.budget-status { margin: 0; font-weight: 700; font-size: 0.9rem; }
+	</style>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 	<script src="script.js"></script>
 	<script>
@@ -998,6 +1010,12 @@
 			}
 
 			function wireEvents() {
+				document.querySelector("#budget-input").addEventListener("input", function onBudget(event) {
+					const v = parseFloat(event.target.value);
+					document.querySelector("#budget-status").textContent = isFinite(v) && v >= 0
+						? "Budget: $" + fmtNumber(v, 0) + "M. All seven combinations are shown below."
+						: "No budget entered.";
+				});
 				els.tabButtons.forEach(function each(btn) {
 					btn.addEventListener("click", function onTab() {
 						switchTab(btn.dataset.tab);
