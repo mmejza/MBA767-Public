@@ -790,7 +790,7 @@
       <h2>Worksheet Quiz Instructions</h2>
       <ol>
         <li>Read the Canvas quiz question first.</li>
-        <li>Follow the preset, scenario, or modifications specified in the question.</li>
+        <li>Follow the values and modifications specified in the question.</li>
         <li>Use this app to perform the required calculations and analysis.</li>
         <li>Enter your answers in the Canvas quiz.</li>
         <li>Answers are submitted through Canvas, not through this app.</li>
@@ -799,13 +799,13 @@
 
     <section class="required-callout" data-focus-hide>
       <p class="required-label">Required for Quiz</p>
-      <p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Vantage Alpha.</p>
+      <p>The Canvas quiz question gives the values to enter. Click Reset, then type them into the app's own boxes. If a question does not specify otherwise, start from the default values shown after Reset.</p>
     </section>
 
     <details class="how-to" data-focus-hide>
       <summary>How to Use This App</summary>
       <ol>
-        <li>Select a preset or edit metric importance and rating values in MAI and CPI tabs.</li>
+        <li>Edit metric importance and rating values in the MAI and CPI tabs.</li>
         <li>Ensure each dimension's metric weights sum to 100% before reading index outputs.</li>
         <li>Review MAI/CPI scores, zone badges, and sensitivity analysis results.</li>
         <li>Use Plot on Grid and the portfolio tab to interpret recommended strategy and type.</li>
@@ -823,8 +823,6 @@
         <div class="course-label">MBA 767 · Module 11</div>
         <div class="title">Portfolio Index Calculator</div>
         <div class="preset-row" aria-label="Preset controls">
-          <button class="btn" id="presetAlpha" type="button">Vantage Alpha</button>
-          <button class="btn" id="presetBeta" type="button">Vantage Beta</button>
           <button class="btn secondary" id="presetReset" type="button">Reset</button>
         </div>
       </header>
@@ -849,6 +847,21 @@
                 <span id="maiStatus">Waiting for valid metric weights</span>
                 <span class="zone-badge" id="maiZone">--</span>
               </div>
+            </div>
+
+            <div class="sensitivity" aria-live="polite">
+              <h4>Dimension Scores</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Dimension</th>
+                    <th scope="col">Dimension Score</th>
+                    <th scope="col">Weight</th>
+                    <th scope="col">Weighted Contribution</th>
+                  </tr>
+                </thead>
+                <tbody id="maiDimBody"></tbody>
+              </table>
             </div>
 
             <div class="sensitivity" aria-live="polite">
@@ -885,6 +898,21 @@
                 <span id="cpiStatus">Waiting for valid metric weights</span>
                 <span class="zone-badge" id="cpiZone">--</span>
               </div>
+            </div>
+
+            <div class="sensitivity" aria-live="polite">
+              <h4>Dimension Scores</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Dimension</th>
+                    <th scope="col">Dimension Score</th>
+                    <th scope="col">Weight</th>
+                    <th scope="col">Weighted Contribution</th>
+                  </tr>
+                </thead>
+                <tbody id="cpiDimBody"></tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -1018,65 +1046,19 @@
       }
     };
 
-    const presetAlpha = {
-      mai: {
-        market_size: { importance: 40, rating: 70 },
-        growth_rate: { importance: 30, rating: 40 },
-        buyer_power: { importance: 30, rating: 60 },
-        price_rivalry: { importance: 50, rating: 50 },
-        ease_of_entry: { importance: 30, rating: 60 },
-        num_competitors: { importance: 20, rating: 50 },
-        customer_familiarity: { importance: 40, rating: 80 },
-        channel_access: { importance: 40, rating: 90 },
-        sales_requirements: { importance: 20, rating: 70 }
-      },
-      cpi: {
-        product_quality: { importance: 40, rating: 85 },
-        service_quality: { importance: 30, rating: 75 },
-        brand_image_reputation: { importance: 30, rating: 80 },
-        cogs: { importance: 70, rating: 70 },
-        mkt_sales_expenses: { importance: 20, rating: 75 },
-        overhead_expenses: { importance: 10, rating: 65 },
-        market_share: { importance: 40, rating: 80 },
-        brand_awareness: { importance: 30, rating: 75 },
-        distribution: { importance: 30, rating: 70 }
-      }
-    };
-
-    const presetBeta = {
-      mai: {
-        market_size: { importance: 40, rating: 60 },
-        growth_rate: { importance: 30, rating: 90 },
-        buyer_power: { importance: 30, rating: 50 },
-        price_rivalry: { importance: 50, rating: 40 },
-        ease_of_entry: { importance: 30, rating: 30 },
-        num_competitors: { importance: 20, rating: 50 },
-        customer_familiarity: { importance: 40, rating: 50 },
-        channel_access: { importance: 40, rating: 60 },
-        sales_requirements: { importance: 20, rating: 40 }
-      },
-      cpi: {
-        product_quality: { importance: 40, rating: 50 },
-        service_quality: { importance: 30, rating: 55 },
-        brand_image_reputation: { importance: 30, rating: 40 },
-        cogs: { importance: 70, rating: 55 },
-        mkt_sales_expenses: { importance: 20, rating: 60 },
-        overhead_expenses: { importance: 10, rating: 50 },
-        market_share: { importance: 40, rating: 35 },
-        brand_awareness: { importance: 30, rating: 40 },
-        distribution: { importance: 30, rating: 45 }
-      }
-    };
-
     const strategyMap = {
-      'High|High': { strategy: 'Invest to Grow / Protect Position', type: 'Offensive' },
-      'High|Medium': { strategy: 'Invest to Grow / Improve Position', type: 'Offensive' },
+      // Cell strategies are the textbook's (Figure 11-13, Chapter 11, p. 390). A cell is Offensive only when
+      // every strategy in it is offensive (Invest to Grow, Improve Position, New Market Entry), Defensive only
+      // when every strategy is defensive (Protect Position, Optimize Position, Monetize, Harvest/Divest), and
+      // Judgment when it offers both kinds.
+      'High|High': { strategy: 'Invest to Grow / Protect Position', type: 'Judgment' },
+      'High|Medium': { strategy: 'Invest to Grow / Improve Position / Protect Position', type: 'Judgment' },
       'High|Low': { strategy: 'New Market Entry / Improve Position', type: 'Offensive' },
-      'Medium|High': { strategy: 'Protect Position / Optimize Position', type: 'Defensive' },
+      'Medium|High': { strategy: 'Invest to Grow / Protect Position / Optimize Position', type: 'Judgment' },
       'Medium|Medium': { strategy: 'Improve Position / Optimize Position', type: 'Judgment' },
-      'Medium|Low': { strategy: 'Improve Position / Optimize Position', type: 'Judgment' },
-      'Low|High': { strategy: 'Optimize Position / Monetize', type: 'Defensive' },
-      'Low|Medium': { strategy: 'Monetize / Harvest-Divest', type: 'Defensive' },
+      'Medium|Low': { strategy: 'Improve Position / Optimize Position / Harvest', type: 'Judgment' },
+      'Low|High': { strategy: 'Monetize / Harvest / Divest', type: 'Defensive' },
+      'Low|Medium': { strategy: 'Monetize / Harvest / Divest', type: 'Defensive' },
       'Low|Low': { strategy: 'Harvest / Divest', type: 'Defensive' }
     };
 
@@ -1239,11 +1221,39 @@
         renderZoneBadge(zoneEl, result.zone);
       }
 
+      updateDimensionTable(kind, result.valid);
+
       if (kind === 'mai') {
         updateSensitivityTable();
       }
 
       updateGrid();
+    }
+
+    // Dimension Score = the sum of that dimension's metric scores (relative importance x rating);
+    // Weighted Contribution = the Dimension Score x the dimension weight, so the contributions add up
+    // to the overall index shown in the banner. Both update live as the ratings change.
+    function updateDimensionTable(kind, isValid) {
+      const config = appState.calculators[kind];
+      const tbody = document.getElementById(`${kind}DimBody`);
+      tbody.innerHTML = '';
+
+      config.dimensions.forEach((dimension) => {
+        const score = dimension.metrics.reduce((sum, metric) => sum + (metric.importance / 100) * metric.rating, 0);
+        const row = document.createElement('tr');
+        const cells = [
+          dimension.name,
+          isValid ? score.toFixed(1) : '--',
+          `${dimension.weight}%`,
+          isValid ? ((dimension.weight / 100) * score).toFixed(1) : '--'
+        ];
+        cells.forEach((text) => {
+          const cell = document.createElement('td');
+          cell.textContent = text;
+          row.appendChild(cell);
+        });
+        tbody.appendChild(row);
+      });
     }
 
     function updateSensitivityTable() {
@@ -1353,36 +1363,28 @@
 
     function wireInputs() {
       document.querySelectorAll('input[type="number"]').forEach((input) => {
-        input.addEventListener('input', (event) => {
-          const el = event.currentTarget;
+        const commit = (el, writeBack) => {
           const kind = el.dataset.kind;
           const dimIndex = Number.parseInt(el.dataset.dimension, 10);
           const metricIndex = Number.parseInt(el.dataset.metric, 10);
           const field = el.dataset.field;
 
           const normalized = readNumericInput(el);
-          el.value = normalized;
+          // While the box is being typed into, leave its own text alone: rewriting it on every
+          // keystroke erased a typed decimal point ("63." became "63") and refilled a cleared box
+          // with 0, so decimal values could not be entered by hand. Outputs still update live;
+          // the cleaned value is written back when the student leaves the box.
+          if (writeBack) {
+            el.value = normalized;
+          }
 
           appState.calculators[kind].dimensions[dimIndex].metrics[metricIndex][field] = normalized;
 
           updateCalculatorOutput(kind);
-        });
+        };
+        input.addEventListener('input', (event) => commit(event.currentTarget, false));
+        input.addEventListener('blur', (event) => commit(event.currentTarget, true));
       });
-    }
-
-    function applyPresetData(preset) {
-      ['mai', 'cpi'].forEach((kind) => {
-        appState.calculators[kind].dimensions.forEach((dimension) => {
-          dimension.metrics.forEach((metric) => {
-            const source = preset[kind][metric.key];
-            metric.importance = source.importance;
-            metric.rating = source.rating;
-          });
-        });
-      });
-
-      renderAllInputs();
-      recomputeAll();
     }
 
     function resetToDefault() {
@@ -1419,37 +1421,11 @@
     }
 
     function wireButtons() {
-      document.getElementById('presetAlpha').addEventListener('click', () => applyPresetData(presetAlpha));
-      document.getElementById('presetBeta').addEventListener('click', () => applyPresetData(presetBeta));
       document.getElementById('presetReset').addEventListener('click', resetToDefault);
 
       document.getElementById('plotGridBtn').addEventListener('click', () => {
         setActiveTab('grid');
       });
-    }
-
-    function runAcceptanceChecks() {
-      const check = (name, actual, expected, tolerance = 0.1) => {
-        if (Math.abs(actual - expected) > tolerance) {
-          console.error(`Acceptance check failed: ${name}. Expected ${expected}, got ${actual}`);
-        }
-      };
-
-      applyPresetData(presetAlpha);
-      check('Alpha MAI', appState.results.mai.value, 63.2);
-      check('Alpha CPI', appState.results.cpi.value, 75.5);
-      if (!(appState.results.mai.zone === 'Medium' && appState.results.cpi.zone === 'High')) {
-        console.error('Acceptance check failed: Alpha grid zone mismatch');
-      }
-
-      applyPresetData(presetBeta);
-      check('Beta MAI', appState.results.mai.value, 51.0);
-      check('Beta CPI', appState.results.cpi.value, 49.5);
-      if (!(appState.results.mai.zone === 'Medium' && appState.results.cpi.zone === 'Medium')) {
-        console.error('Acceptance check failed: Beta grid zone mismatch');
-      }
-
-      resetToDefault();
     }
 
     function init() {
@@ -1465,7 +1441,6 @@
         });
       }
       recomputeAll();
-      runAcceptanceChecks();
     }
 
     init();

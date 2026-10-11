@@ -502,7 +502,7 @@
       <h2>Worksheet Quiz Instructions</h2>
       <ol>
         <li>Read the Canvas quiz question first.</li>
-        <li>Follow the preset, scenario, or modifications specified in the question.</li>
+        <li>Follow the values and modifications specified in the question.</li>
         <li>Use this app to perform the required calculations and analysis.</li>
         <li>Enter your answers in the Canvas quiz.</li>
         <li>Answers are submitted through Canvas, not through this app.</li>
@@ -511,7 +511,7 @@
 
     <section class="required-callout" data-focus-hide>
       <p class="required-label">Required for Quiz</p>
-      <p>The Canvas quiz question determines which preset, scenario, or modifications to use. If a question does not specify otherwise, begin with the default preset shown in this app. Default preset: Vantage Beta.</p>
+      <p>The Canvas quiz question gives the values to enter. Click Reset, then type them into the app's own boxes. If a question does not specify otherwise, start from the default values shown after Reset.</p>
     </section>
 
     <details class="how-to" data-focus-hide>
@@ -535,7 +535,6 @@
         <div class="course-label">MBA 767 · Module 11</div>
         <div class="title">Strategy Performance Projector</div>
         <div class="top-actions">
-          <button class="btn" id="presetBeta" type="button">Vantage Beta</button>
           <button class="btn secondary" id="resetBtn" type="button">Reset</button>
         </div>
       </header>
@@ -606,19 +605,6 @@
       offensiveMarginErosion: 1.2,
       offensiveMktgIncrease: 1.5,
       defensiveMarginErosion: 0.6,
-      defensiveMktgAdjustment: 0
-    };
-
-    const betaPreset = {
-      baseDemand: 400,
-      growthRate: 15,
-      baseShare: 10,
-      baseMargin: 42,
-      baseMktgExp: 10,
-      offensiveTargetShare: 16,
-      offensiveMarginErosion: 1.5,
-      offensiveMktgIncrease: 2,
-      defensiveMarginErosion: 0.5,
       defensiveMktgAdjustment: 0
     };
 
@@ -884,18 +870,26 @@
 
     function wireInputs() {
       document.querySelectorAll('input[type="number"]').forEach((input) => {
-        input.addEventListener('input', (event) => {
-          const key = event.currentTarget.dataset.key;
-          const value = toNumber(event.currentTarget.value);
+        const commit = (el, writeBack) => {
+          const key = el.dataset.key;
+          const value = toNumber(el.value);
           const normalized = key === 'baseDemand'
             ? clamp(value, 0, 100000)
             : clamp(value, -100, 1000);
 
-          event.currentTarget.value = normalized;
+          // While the box is being typed into, leave its own text alone: rewriting it on every
+          // keystroke erased a typed decimal point ("1." became "1") and refilled a cleared box
+          // with 0, so decimal values could not be entered by hand. Outputs still update live;
+          // the cleaned value is written back when the student leaves the box.
+          if (writeBack) {
+            el.value = normalized;
+          }
           state.inputs[key] = normalized;
           syncHoldShare();
           recompute();
-        });
+        };
+        input.addEventListener('input', (event) => commit(event.currentTarget, false));
+        input.addEventListener('blur', (event) => commit(event.currentTarget, true));
       });
     }
 
@@ -912,39 +906,6 @@
       recompute();
     }
 
-    function checkWithinTolerance(actual, expected, tolerance) {
-      return Math.abs(actual - expected) <= tolerance;
-    }
-
-    function runAcceptanceChecks() {
-      applyPreset(betaPreset);
-
-      const y3off = state.projections.offensive[3];
-      const y3def = state.projections.defensive[3];
-
-      const checks = [
-        ['Year-3 Offensive NMC', y3off.nmc, 20.9, 0.2],
-        ['Year-3 Defensive NMC', y3def.nmc, 18.6, 0.2],
-        ['Year-3 Offensive ROS', y3off.ros, 21.5, 0.3],
-        ['Year-3 Defensive ROS', y3def.ros, 30.5, 0.3],
-        ['Year-3 Offensive ROI', y3off.roi, 134, 1.5],
-        ['Year-3 Defensive ROI', y3def.roi, 305, 1.5]
-      ];
-
-      checks.forEach(([name, actual, expected, tol]) => {
-        if (!checkWithinTolerance(actual, expected, tol)) {
-          console.error(`Acceptance check failed: ${name}. Expected ${expected}, got ${actual.toFixed(2)}`);
-        }
-      });
-
-      const bannerVisible = !document.getElementById('paradoxBanner').hidden;
-      if (!bannerVisible) {
-        console.error('Acceptance check failed: Efficiency paradox banner not visible for Beta preset');
-      }
-
-      applyPreset(defaultInputs);
-    }
-
     function init() {
       renderInputs();
       recompute();
@@ -958,10 +919,8 @@
         });
       }
 
-      document.getElementById('presetBeta').addEventListener('click', () => applyPreset(betaPreset));
       document.getElementById('resetBtn').addEventListener('click', () => applyPreset(defaultInputs));
 
-      runAcceptanceChecks();
     }
 
     init();

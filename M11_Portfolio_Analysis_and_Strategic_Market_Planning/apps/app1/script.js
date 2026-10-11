@@ -160,14 +160,15 @@ Thresholds:
 - High: 68–100
 
 Cell strategies:
-High MAI / High CPI: Invest to Grow / Protect Position / Offensive
-High MAI / Medium CPI: Invest to Grow / Improve Position / Offensive
+(Textbook Figure 11-13, Chapter 11 p. 390; Judgment = the cell offers both offensive and defensive strategies)
+High MAI / High CPI: Invest to Grow / Protect Position / Judgment
+High MAI / Medium CPI: Invest to Grow / Improve Position / Protect Position / Judgment
 High MAI / Low CPI: New Market Entry / Improve Position / Offensive
-Medium MAI / High CPI: Protect Position / Optimize Position / Defensive
+Medium MAI / High CPI: Invest to Grow / Protect Position / Optimize Position / Judgment
 Medium MAI / Medium CPI: Improve Position / Optimize Position / Judgment
-Medium MAI / Low CPI: Improve Position / Optimize Position / Judgment
-Low MAI / High CPI: Optimize Position / Monetize / Defensive
-Low MAI / Medium CPI: Monetize / Harvest-Divest / Defensive
+Medium MAI / Low CPI: Improve Position / Optimize Position / Harvest / Judgment
+Low MAI / High CPI: Monetize / Harvest / Divest / Defensive
+Low MAI / Medium CPI: Monetize / Harvest / Divest / Defensive
 Low MAI / Low CPI: Harvest / Divest / Defensive
 
 Grid requirements:
@@ -203,8 +204,8 @@ Brand Awareness 30%, rating 75
 Distribution 30%, rating 70
 Expected CPI = 75.5, High
 Grid = Medium MAI / High CPI
-Recommended = Protect Position / Optimize Position
-Type = Defensive
+Recommended = Invest to Grow / Protect Position / Optimize Position
+Type = Judgment
 
 Vantage Beta MAI:
 Market Size 40%, rating 60

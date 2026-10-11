@@ -308,11 +308,11 @@ What conclusions can we draw from this data alone?
 
 Product    Market Stage      Sales ($M)    % of Total Revenue
 ───────    ────────────      ──────────    ──────────────────
-Alpha      Mature            $180          45%
-Beta       Mature            $120          30%
-Gamma      Late Growth       $60           15%
-Delta      Mature            $30           8%
-Epsilon    Mature/Declining  $10           2%
+Pumps      Mature            $180          45%
+Valves       Mature            $120          30%
+Sensors      Late Growth       $60           15%
+Gaskets      Mature            $30           8%
+Seals    Mature/Declining  $10           2%
 
 Total                        $400          100%
 
@@ -351,15 +351,15 @@ It is a revenue cliff in 3–5 years.
 
 Product    Market Stage      Sales ($M)    Strategic Reality
 ───────    ────────────      ──────────    ─────────────────
-Alpha      Mature            $180          45% of revenue — declining
-Beta       Mature            $120          Shrinking market, no growth
-Gamma      Late Growth       $60           Future profits, but needs investment
-Delta      Mature            $30           Harvest candidate
-Epsilon    Mature/Declining  $10           Exit candidate
+Pumps      Mature            $180          45% of revenue — declining
+Valves       Mature            $120          Shrinking market, no growth
+Sensors      Late Growth       $60           Future profits, but needs investment
+Gaskets      Mature            $30           Harvest candidate
+Seals    Mature/Declining  $10           Exit candidate
 
 Key reveal:
 No products in Emerging or Early Growth stages.
-When Alpha and Beta decline, nothing replaces them.
+When Pumps and Valves decline, nothing replaces them.
 
 Takeaway:
 A balanced portfolio requires products at multiple life-cycle stages —
@@ -830,20 +830,22 @@ GE/McKinsey Portfolio Grid — Strategy Selection
                     ──────────        ───────────       ────────────
 Market    High      New Market        Invest to Grow    Invest to Grow
 Attrac-   (68–100)  Entry /           Improve Position  Protect Position
-tiveness            Improve Pos.
+tiveness            Improve Pos.      Protect Position
           ─────────────────────────────────────────────────────────
-          Med       Improve Pos.      Improve Pos.      Protect Pos.
-          (34–67)   Optimize Pos.     Optimize Pos.     Optimize Pos.
+          Med       Improve Pos.      Improve Pos.      Invest to Grow
+          (34–67)   Optimize Pos.     Optimize Pos.     Protect Pos.
+                    Harvest                             Optimize Pos.
           ─────────────────────────────────────────────────────────
-          Low       Monetize /        Monetize /        Optimize Pos.
-          (0–33)    Harvest /         Harvest /         Monetize /
-                    Divest            Divest            Harvest
+          Low       Harvest or        Monetize,         Monetize,
+          (0–33)    Divest            Harvest, or       Harvest, or
+                                      Divest            Divest
 
+Strategies are the textbook's (Figure 11-13, Chapter 11 p. 390), set by instructor decision D259.
 Thresholds: Low = 0–33 · Medium = 34–67 · High = 68–100 (both axes)
 
 Bottom rule:
-Offensive strategies occupy top/right zones.
-Defensive strategies occupy bottom/left zones.
+A cell is offensive only when every strategy in it is offensive and defensive only when every strategy in it is defensive.
+Most cells offer both, so life-cycle stage and competitive trend decide.
 Center cell = judgment call based on life-cycle stage and trend.
 ```
 
@@ -932,7 +934,7 @@ Sets objectives for:             Specifies tactics for:
 Reviewed: annually against       Reviewed: quarterly; adjusted
 long-run trajectory              when market conditions shift
 
-Example: "Grow Beta's share      Example: "Reduce Beta's price
+Example: "Grow the brand's share      Example: "Reduce the brand's price
 from 10% to 16% in 3 years"     5% and increase digital ad
                                  spend by $400K this quarter"
 
@@ -948,7 +950,7 @@ Marketing mix is how you navigate to it — adjusted along the way.
 - No paragraph blocks ✓
 
 **Build notes:**
-The examples column is critical — abstract definitions without examples do not pass the style rules. Use Beta (from the case) as the example to maintain coherence across the deck. The "destination vs. navigation" metaphor (echoing the chapter's cruise-ship analogy) is acceptable as a bridge but must not dominate — examples do the real work.
+The examples column is critical — abstract definitions without examples do not pass the style rules. Use a generic brand (not a case product line) as the example to maintain coherence across the deck. The "destination vs. navigation" metaphor (echoing the chapter's cruise-ship analogy) is acceptable as a bridge but must not dominate — examples do the real work.
 
 ---
 
