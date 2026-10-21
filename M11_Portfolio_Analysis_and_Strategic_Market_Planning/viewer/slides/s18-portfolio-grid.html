@@ -1,125 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M11 · S18 · Portfolio Grid</title>
-<link rel="stylesheet" href="../slides.css">
-</head>
-<body>
-<div class="slide">
-
-  <div class="slide-header">
-    <div class="slide-title">GE/McKinsey Portfolio Grid — Strategy Selection</div>
-    <div class="slide-meta">
-      <span class="lo-tag">LO 5</span>
-      <span class="pattern-tag">Portfolio / Matrix</span>
-      <span class="slide-num">18 / 21</span>
+<section class="slide-page" data-title="GE/McKinsey Portfolio Grid — Strategy Selection" data-lo="LO5" data-notes="Gate 2 Q3 target: given MAI = X and CPI = Y, identify the correct grid cell using 0/33/67/100 thresholds and name the strategy. The threshold values come from Figure 11-18 (Zi-Tech, p. 399) — chapter-exclusive. Figure 11-13 (p. 390) is the full 9-cell grid with all seven strategies. The 0/33/67/100 zone thresholds are visible in Figure 11-18 (p. 399). Both are required reading before Gate 2.">
+  <div class="le-accent"></div>
+  <div class="le-bg-circle"></div>
+  <div class="le-topbar">
+    <div style="display:flex;align-items:center;gap:7px;">
+      <span class="le-tag">LO5</span>
+      <span class="le-course">MBA 767 · Module 11 · Portfolio / Matrix</span>
     </div>
+    <span class="le-pagenum">18 / 21</span>
   </div>
-
-  <div class="slide-body">
-
-    <!-- Axis labels -->
+  <div class="le-titleblock">
+    <div class="le-title">GE/McKinsey Portfolio Grid — <span>Strategy Selection</span></div>
+    <div class="le-sub">Strategies from textbook Fig. 11-13 · Thresholds: Low = 0–33 · Medium = 34–67 · High = 68–100 (both axes)</div>
+  </div>
+  <div class="le-body" style="gap:6px;">
     <div style="display:flex;gap:8px;flex:1;">
-
-      <!-- Y-axis label -->
-      <div style="display:flex;align-items:center;justify-content:center;width:18px;flex-shrink:0;">
-        <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-sec);letter-spacing:0.1em;text-transform:uppercase;writing-mode:vertical-rl;transform:rotate(180deg);">Market Attractiveness (MAI)</span>
+      <div style="display:flex;align-items:center;justify-content:center;width:16px;flex-shrink:0;">
+        <span class="slide-label" style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg);">Market Attractiveness (MAI) →</span>
       </div>
+      <div style="flex:1;display:grid;grid-template-columns:60px repeat(3,1fr);grid-template-rows:auto repeat(3,1fr) auto;gap:3px;">
+        <div></div>
+        <div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center;">Low CPI<br>0–33</div>
+        <div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center;">Medium CPI<br>34–67</div>
+        <div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center;">High CPI<br>68–100</div>
 
-      <!-- Grid + X-axis -->
-      <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+        <div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;text-align:right;padding-right:5px;">High MAI<br>68–100</div>
+        <div style="background:var(--teal-lt);border:.5px solid var(--teal);border-radius:3px;padding:5px 7px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;"><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:var(--teal-dk);">New Market Entry</div><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:var(--teal-dk);">Improve Position</div></div>
+        <div style="background:var(--amb-lt);border:.5px solid var(--amb-bd);border-radius:3px;padding:5px 7px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;"><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Invest to Grow</div><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Improve Position</div><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Protect Position</div></div>
+        <div style="background:var(--amb-lt);border:.5px solid var(--amb-bd);border-radius:3px;padding:5px 7px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;"><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Invest to Grow</div><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Protect Position</div></div>
 
-        <!-- X-axis labels -->
-        <div style="display:grid;grid-template-columns:52px repeat(3,1fr);gap:3px;margin-bottom:0;">
-          <div></div>
-          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:center;letter-spacing:0.06em;text-transform:uppercase;">Low CPI<br>0–33</div>
-          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:center;letter-spacing:0.06em;text-transform:uppercase;">Medium CPI<br>34–67</div>
-          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:center;letter-spacing:0.06em;text-transform:uppercase;">High CPI<br>68–100</div>
-        </div>
+        <div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;text-align:right;padding-right:5px;">Medium MAI<br>34–67</div>
+        <div style="background:var(--amb-lt);border:.5px solid var(--amb-bd);border-radius:3px;padding:5px 7px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;"><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Improve Position</div><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Optimize Position</div><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Harvest</div></div>
+        <div style="background:#FFFBEF;border:1.5px solid var(--amber);border-radius:3px;padding:5px 7px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;"><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:var(--text);">Improve Position</div><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:var(--text);">Optimize Position</div></div>
+        <div style="background:var(--amb-lt);border:.5px solid var(--amb-bd);border-radius:3px;padding:5px 7px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;"><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Invest to Grow</div><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Protect Position</div><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:#8A6000;">Optimize Position</div></div>
 
-        <!-- Grid rows -->
-        <div style="display:grid;grid-template-columns:52px repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3px;flex:1;">
+        <div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;text-align:right;padding-right:5px;">Low MAI<br>0–33</div>
+        <div style="background:var(--gray);border:.5px solid #D8E0DF;border-radius:3px;padding:5px 7px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;"><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:var(--muted);">Harvest or Divest</div></div>
+        <div style="background:var(--gray);border:.5px solid #D8E0DF;border-radius:3px;padding:5px 7px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;"><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:var(--muted);">Monetize, Harvest, or Divest</div></div>
+        <div style="background:var(--gray);border:.5px solid #D8E0DF;border-radius:3px;padding:5px 7px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;"><div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;color:var(--muted);">Monetize, Harvest, or Divest</div></div>
 
-          <!-- Row: High MAI 68-100 -->
-          <div style="display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:right;line-height:1.3;">High<br>68–100</div>
-          <div class="pg-cell offensive">
-            <div class="pg-strategy">New Market Entry</div>
-            <div class="pg-strategy">Improve Position</div>
-          </div>
-          <div class="pg-cell neutral">
-            <div class="pg-strategy">Invest to Grow</div>
-            <div class="pg-strategy">Improve Position</div>
-            <div class="pg-strategy">Protect Position</div>
-          </div>
-          <div class="pg-cell neutral">
-            <div class="pg-strategy">Invest to Grow</div>
-            <div class="pg-strategy">Protect Position</div>
-          </div>
-
-          <!-- Row: Medium MAI 34-67 -->
-          <div style="display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:right;line-height:1.3;">Medium<br>34–67</div>
-          <div class="pg-cell neutral">
-            <div class="pg-strategy">Improve Position</div>
-            <div class="pg-strategy">Optimize Position</div>
-            <div class="pg-strategy">Harvest</div>
-          </div>
-          <div class="pg-cell neutral" style="border-color:var(--accent);background:rgba(232,160,32,0.1);">
-            <div class="pg-strategy">Improve Position</div>
-            <div class="pg-strategy">Optimize Position</div>
-          </div>
-          <div class="pg-cell neutral">
-            <div class="pg-strategy">Invest to Grow</div>
-            <div class="pg-strategy">Protect Position</div>
-            <div class="pg-strategy">Optimize Position</div>
-          </div>
-
-          <!-- Row: Low MAI 0-33 -->
-          <div style="display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--font-mono);font-size:9px;color:var(--text-sec);text-align:right;line-height:1.3;">Low<br>0–33</div>
-          <div class="pg-cell defensive">
-            <div class="pg-strategy" style="color:var(--red);">Harvest or Divest</div>
-          </div>
-          <div class="pg-cell defensive">
-            <div class="pg-strategy" style="color:var(--red);">Monetize, Harvest, or Divest</div>
-          </div>
-          <div class="pg-cell defensive">
-            <div class="pg-strategy" style="color:var(--red);">Monetize, Harvest, or Divest</div>
-          </div>
-
-        </div>
-
-        <!-- X-axis title -->
-        <div style="text-align:center;font-family:var(--font-mono);font-size:9px;color:var(--text-sec);letter-spacing:0.1em;text-transform:uppercase;">Competitive Position (CPI) →</div>
-
+        <div></div>
+        <div class="slide-label" style="grid-column:2 / 5;text-align:center;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Competitive Position (CPI) →</div>
       </div>
-
-      <!-- Legend -->
-      <div style="width:120px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;justify-content:center;">
-        <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-sec);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px;">Legend</div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <div style="width:12px;height:12px;border:1px solid var(--teal);background:rgba(26,179,166,0.1);border-radius:2px;flex-shrink:0;"></div>
-          <span style="font-size:10px;color:var(--teal);">Offensive</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <div style="width:12px;height:12px;border:1px solid var(--accent-dim);background:rgba(232,160,32,0.06);border-radius:2px;flex-shrink:0;"></div>
-          <span style="font-size:10px;color:var(--accent);">Judgment zone</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <div style="width:12px;height:12px;border:1px solid var(--rule);background:var(--navy-mid);border-radius:2px;flex-shrink:0;"></div>
-          <span style="font-size:10px;color:var(--text-sec);">Defensive</span>
-        </div>
+      <div style="width:96px;flex-shrink:0;display:flex;flex-direction:column;gap:5px;justify-content:center;">
+        <div class="slide-label" style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Legend</div>
+        <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;flex-shrink:0;background:var(--teal-lt);border:.5px solid var(--teal);"></div><span class="slide-caption" style="color:var(--teal-dk);">Offensive</span></div>
+        <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;flex-shrink:0;background:var(--amb-lt);border:.5px solid var(--amb-bd);"></div><span class="slide-caption" style="color:#8A6000;">Judgment zone</span></div>
+        <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;flex-shrink:0;background:var(--gray);border:.5px solid #D8E0DF;"></div><span class="slide-caption">Defensive</span></div>
+        <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;flex-shrink:0;background:#FFFBEF;border:1.5px solid var(--amber);"></div><span class="slide-caption" style="color:#B87800;">S19 placement</span></div>
       </div>
-
     </div>
-
-    <div class="rule-line" style="margin-top:6px;">
-      Strategies as in textbook Figure 11-13 · Thresholds: Low = 0–33 · Medium = 34–67 · High = 68–100 (both axes) &nbsp;|&nbsp;
-      Offensive = every strategy in the cell is offensive · Defensive = every strategy is defensive ·
-      Judgment = the cell offers both, so life-cycle stage and competitive trend decide
+    <div class="callout amber">
+      <div class="callout-label">Bottom rule</div>
+      <p>A cell is offensive only when every strategy in it is offensive, and defensive only when every strategy in it is defensive. Most cells offer both kinds, so life-cycle stage and competitive trend decide.</p>
     </div>
-
   </div>
-</div>
-</body>
-</html>
+  <div class="le-footer">
+    <div class="le-lo-pills"><span class="le-lo-pill">LO5</span></div>
+    <div><span class="le-gate-note">Gate 2 Q3 — thresholds from Fig. 11-18</span></div>
+  </div>
+</section>
